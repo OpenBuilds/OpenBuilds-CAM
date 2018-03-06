@@ -1,5 +1,40 @@
 var collapsedGroups = {};
 
+// runs in threejs animate() loop: Sets colors and checkboxes of items based on userdata.selected=true/false
+function animateTree() {
+  var selectCount = 0;
+  for (i=0; i<objectsInScene.length; i++) {
+    var obj = objectsInScene[i]
+    obj.traverse( function ( child ) {
+        if (child.type == "Line" && child.userData.selected) {
+            child.material.color.setRGB(1, 0.1, 0.1);
+            var $link = $('#'+child.userData.link);
+            var $parent = $link.parent();
+            var $input = $parent.children('input');
+            $link.css('color', 'red');
+            $input.prop('checked', true);
+            selectCount ++
+        } else if (child.type == "Line" && !child.userData.selected) {
+            child.material.color.setRGB(0.1, 0.1, 0.1);
+            var $link = $('#'+child.userData.link);
+            var $parent = $link.parent();
+            var $input = $parent.children('input');
+            $link.css('color', 'black');
+            $input.prop('checked', false);
+        }
+    });
+  }
+  if (selectCount > 0) {
+    $("#selectCount").text(selectCount)
+    $("#tpaddpath").removeClass('disabled')
+  } else {
+    $("#selectCount").text("")
+    $("#tpaddpath").addClass('disabled')
+  }
+  updateTreeSelection();
+}
+
+// move toolpath order up/down
 var moveOp = function(index, delta) {
   var array = toolpathsInScene;
   // var index = array.indexOf(element);
@@ -9,8 +44,111 @@ var moveOp = function(index, delta) {
   array.splice(indexes[0], 2, array[indexes[1]], array[indexes[0]]); //Replace from lowest index, two elements, reverting the order
 };
 
+// select all children from document level
+function selectDocument(index, bool) {
+  var obj = objectsInScene[index]
+  obj.traverse( function ( child ) {
+      if (child.type == "Line") {
+          child.userData.selected = bool;
+      }
+  });
+}
+
+// event handlers after building tree template in filltree();
+function eventsTree() {
+  // display number of children on layer/component rows
+  $('.jobsetuptable .group').each(function(n, group) {
+      var $group = $(group);
+      var $items = $group.find('div .item');
+      var $counter = $group.find('.counter');
+      var groupId = $group.children('ul').attr('id');
+      $counter.html($items.length);
+
+      if (collapsedGroups[groupId]) {
+          $group.children('.toggle').trigger('click');
+      }
+  });
+
+
+  // select Document Label
+  $('.jobsetuptable .documentselect').on('change', function(e) {
+    var $input = $(this);
+    var $parent = $input.parent();
+    var checked = $input.prop('checked');
+    var idx, i, j;
+    var seq = $input.attr('objectseq');
+    var obj = objectsInScene[seq]
+    obj.traverse( function ( child ) {
+      if (child.type == "Line") {
+          child.userData.selected = checked;
+      }
+    });
+});
+
+  // select child of a layer/component
+  $('.jobsetuptable .chkaddjob').on('change', function(e) {
+    var $input = $(this);
+    var $parent = $input.parent();
+    var checked = $input.prop('checked');
+    var idx, i, j;
+    // console.log("change", $parent, checked)
+    if ($parent.hasClass('item')) {
+        idx = $parent.children('input').attr('id').split('.');
+        i = parseInt(idx[1]);
+        j = parseInt(idx[2]);
+        objectsInScene[i].children[j].userData.selected = checked;
+        return false;
+    }
+    $input.parent().find('ul .chkaddjob').each(function(n, input) {
+        $input = $(input);
+        $parent = $input.parent();
+        if ($parent.hasClass('item')) {
+            idx = $parent.children('input').attr('id').split('.');
+            i = parseInt(idx[1]);
+            j = parseInt(idx[2]);
+            objectsInScene[i].children[j].userData.selected = checked;
+        }
+    });
+  });
+
+  // remove a row
+  $('.jobsetupgroup .remove').on('click', function() {
+    var $parent = $(this).parent();
+    var idx, i, j;
+    if ($parent.hasClass('item')) {
+        // console.log('has item');
+        idx = $parent.find('input').attr('id').split('.');
+        i = parseInt(idx[1]);
+        j = parseInt(idx[2]);
+        objectsInScene[i].remove(objectsInScene[i].children[j]);
+    }
+    else {
+      // console.log('no item');
+      var children = [];
+      $parent.find('.item input').each(function(n, input) {
+        idx = $(input).attr('id').split('.');
+        i = parseInt(idx[1]);
+        j = parseInt(idx[2]);
+        children.push(objectsInScene[i].children[j]);
+      });
+      for (var n = 0; n < children.length; n++) {
+        objectsInScene[i].remove(children[n]);
+      }
+    }
+    fillTree();
+  });
+
+  // Edit Toolpath Name inplace
+  $('#toolpathstable .entity-job').on('input', function() {
+      var $this = $(this);
+      var data = $this.data();
+      toolpathsInScene[data.id].name = $this.text();
+  });
+
+}
+
+// supposed to update parent tick if all children are ticked/unticked
 function updateTreeSelection() {
-    console.log("called updateTreeSelection")
     $('.jobsetuptable .chkaddjob').each(function(n, input) {
         var $input = $(input);
         var $parent = $input.parent();
@@ -21,6 +159,19 @@ function updateTreeSelection() {
 
             $input.prop('checked', items == checkedItems);
         }
+    });
+    $('.jobsetuptable .jobsetupfile ').each(function(n, input) {
+        var $input = $(input);
+        var $parent = $input.parent();
+
+        // console.log($input,$parent )
+
+        // if (! $parent.hasClass('item')) {
+        //     var items = $parent.find('.item').length;
+        //     var checkedItems = $parent.find('.item > input:checked').length;
+        //
+        //     $input.prop('checked', items == checkedItems);
+        // }
     });
 }
 
@@ -86,11 +237,11 @@ function fillTree() {
                 var file = `
                 <tr class="jobsetupfile topborder">
                   <td>
-                    <input type="checkbox" value="" onclick="$('.chkchildof`+i+`').prop('checked', $(this).prop('checked'));" id="selectall`+i+`" />
+                    <input class="documentselect" type="checkbox" value="" objectseq="`+i+`" id="selectall`+i+`" />
                   </td>
                   <td class="filename">
                     <i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i>&nbsp;
-                    <a class="entity" href="#" onclick="attachBB(objectsInScene[`+i+`]);"><b>` + objectsInScene[i].name + `</b></a>
+                    <a class="entity" href="#"><b>` + objectsInScene[i].name + `</b></a>
                   </td>
                   <td id="buttons`+i+`">
                     <a class="btn btn-xs btn-primary" onclick="$('#move`+i+`').toggle(); $(this).toggleClass('active');"><i class="fa fa-arrows" aria-hidden="true"></i></a>
@@ -178,7 +329,7 @@ function fillTree() {
                   <div class="checkbox item">
                     <input type="checkbox" class="fr chkaddjob chkchildof`+i+`" id="child.`+i+`.`+j+`" />
                     <i class="fa fa-fw fa-sm fa-object-ungroup" aria-hidden="true"></i>
-                    <a class="entity" href="#" onclick="attachBB(objectsInScene[`+i+`].children[`+j+`])" id="link`+i+`_`+j+`">`+currentChild.name+`</a>
+                    <a class="entity" href="#" id="link`+i+`_`+j+`">`+currentChild.name+`</a>
                     <a class="fr remove btn btn-xs btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
                   </div>
                 </li>`;
@@ -227,115 +378,12 @@ function fillTree() {
                     }
                     $currentTable.append(childTemplate);
                 }
-                if (childData.selected) {
-                    attachBB(currentChild);
-                }
+                // if (childData.selected) {
+                //     attachBB(currentChild);
+                // }
             }
 
         }
-
-        updateTreeSelection();
-
-        // $('.jobsetuptable').on('lw:attachBB', function(e, $target) {
-        //     updateTreeSelection();
-        // });
-
-        $('.jobsetuptable .toggle').on('click', function() {
-            var $label = $(this);
-            var $group = $label.parent().children('ul');
-            var groupId = $group.attr('id');
-
-            $label.toggleClass('italic');
-            $group.toggleClass('hidden');
-
-            collapsedGroups[groupId] = $group.hasClass('hidden');
-        });
-
-        $('.jobsetuptable .group').each(function(n, group) {
-            var $group = $(group);
-            var $items = $group.find('div .item');
-            var $counter = $group.find('.counter');
-            var groupId = $group.children('ul').attr('id');
-            $counter.html($items.length);
-
-            if (collapsedGroups[groupId]) {
-                $group.children('.toggle').trigger('click');
-            }
-        });
-
-        $('.jobsetuptable .chkaddjob').on('change', function(e) {
-            var $input = $(this);
-            var $parent = $input.parent();
-            var checked = $input.prop('checked');
-            var idx, i, j;
-            console.log("change", $parent, checked)
-
-            if ($parent.hasClass('item')) {
-                // if (checked == $input.prop('checked')) {
-                //     $input.prop('checked', !checked);
-                // }
-
-                idx = $parent.children('input').attr('id').split('.');
-                i = parseInt(idx[1]);
-                j = parseInt(idx[2]);
-
-                attachBB(objectsInScene[i].children[j]);
-                updateTreeSelection();
-                return false;
-            }
-
-            $input.parent().find('ul .chkaddjob').each(function(n, input) {
-                $input = $(input);
-                $parent = $input.parent();
-
-                if ($parent.hasClass('item')) {
-                    if (checked == $input.prop('checked')) {
-                        $input.prop('checked', !checked);
-                    }
-
-                    idx = $parent.children('input').attr('id').split('.');
-                    i = parseInt(idx[1]);
-                    j = parseInt(idx[2]);
-
-                    attachBB(objectsInScene[i].children[j]);
-                }
-                else {
-                    $input.prop('checked', checked);
-                }
-            });
-        });
-
-        $('.jobsetupgroup .remove').on('click', function() {
-          var $parent = $(this).parent();
-          // console.log($parent)
-          var idx, i, j;
-
-          if ($parent.hasClass('item')) {
-              // console.log('has item');
-              idx = $parent.find('input').attr('id').split('.');
-              i = parseInt(idx[1]);
-              j = parseInt(idx[2]);
-              objectsInScene[i].remove(objectsInScene[i].children[j]);
-          }
-          else {
-              // console.log('no item');
-              var children = [];
-              $parent.find('.item input').each(function(n, input) {
-                  idx = $(input).attr('id').split('.');
-                  i = parseInt(idx[1]);
-                  j = parseInt(idx[2]);
-                  children.push(objectsInScene[i].children[j]);
-              });
-
-              for (var n = 0; n < children.length; n++) {
-                  objectsInScene[i].remove(children[n]);
-              }
-          }
-
-          fillTree();
-
-        });
-
         var tableend = `
         </table>
         `
@@ -410,12 +458,6 @@ function fillTree() {
         }
 
         // contentEditable for Toolpath Name field - edit directly in toolpath table
-        $('#toolpathstable .entity-job').on('input', function() {
-            var $this = $(this);
-            var data = $this.data();
-
-            toolpathsInScene[data.id].name = $this.text();
-        });
 
     } else {
         var instructions = `Please select some entities from the <b>Objects</b> above, or by clicking them in the viewer.  Hold down Ctrl to select more than one in the viewer. Add them to a toolpath using the <br><kbd><i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job</kbd> button...`
@@ -426,4 +468,6 @@ function fillTree() {
     </table>
     `
     $('#toolpathstable').append(tableend)
+
+    eventsTree();
 }

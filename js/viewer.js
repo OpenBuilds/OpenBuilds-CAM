@@ -289,35 +289,7 @@ function init3D() {
 
 function animate() {
 
-    var selectCount = 0;
-    for (i=0; i<objectsInScene.length; i++) {
-      var obj = objectsInScene[i]
-      obj.traverse( function ( child ) {
-          if (child.type == "Line" && child.userData.selected) {
-              child.material.color.setRGB(1, 0.1, 0.1);
-              var $link = $('#'+child.userData.link);
-              var $parent = $link.parent();
-              var $input = $parent.children('input');
-              $link.css('color', 'red');
-              $input.prop('checked', true);
-              selectCount ++
-          } else if (child.type == "Line" && !child.userData.selected) {
-              child.material.color.setRGB(0.1, 0.1, 0.1);
-              var $link = $('#'+child.userData.link);
-              var $parent = $link.parent();
-              var $input = $parent.children('input');
-              $link.css('color', 'black');
-              $input.prop('checked', false);
-          }
-      });
-    }
-    if (selectCount > 0) {
-      $("#selectCount").text(selectCount)
-      $("#tpaddpath").removeClass('disabled')
-    } else {
-      $("#selectCount").text("")
-      $("#tpaddpath").addClass('disabled')
-    }
+    animateTree();
 
     if (clearSceneFlag) {
       while (scene.children.length > 1) {
