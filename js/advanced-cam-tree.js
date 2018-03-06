@@ -56,6 +56,20 @@ function selectDocument(index, bool) {
 
 // event handlers after building tree template in filltree();
 function eventsTree() {
+
+  // collapse children
+  $('.jobsetuptable .toggle').on('click', function() {
+      var $label = $(this);
+      var $group = $label.parent().children('ul');
+      var groupId = $group.attr('id');
+
+      $label.toggleClass('italic');
+      $group.toggleClass('hidden');
+
+      collapsedGroups[groupId] = $group.hasClass('hidden');
+  });
+
+
   // display number of children on layer/component rows
   $('.jobsetuptable .group').each(function(n, group) {
       var $group = $(group);
@@ -160,19 +174,6 @@ function updateTreeSelection() {
             $input.prop('checked', items == checkedItems);
         }
     });
-    $('.jobsetuptable .jobsetupfile ').each(function(n, input) {
-        var $input = $(input);
-        var $parent = $input.parent();
-
-        // console.log($input,$parent )
-
-        // if (! $parent.hasClass('item')) {
-        //     var items = $parent.find('.item').length;
-        //     var checkedItems = $parent.find('.item > input:checked').length;
-        //
-        //     $input.prop('checked', items == checkedItems);
-        // }
-    });
 }
 
 function fillTree() {
@@ -236,10 +237,9 @@ function fillTree() {
             if (objectsInScene[i].type != "Mesh") {
                 var file = `
                 <tr class="jobsetupfile topborder">
-                  <td>
+                  <td colspan="2" class="filename">
                     <input class="documentselect" type="checkbox" value="" objectseq="`+i+`" id="selectall`+i+`" />
-                  </td>
-                  <td class="filename">
+
                     <i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i>&nbsp;
                     <a class="entity" href="#"><b>` + objectsInScene[i].name + `</b></a>
                   </td>
