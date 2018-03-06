@@ -549,37 +549,38 @@ function onMouseClick(e) {
     sceneWidth = document.getElementById("renderArea").offsetWidth;
     sceneHeight = document.getElementById("renderArea").offsetHeight;
     offset = $('#renderArea').offset();
-    mouseVector.x = ( ( e.clientX - offset.left ) / sceneWidth ) * 2 - 1;
-    mouseVector.y = - ( ( e.clientY - offset.top ) / sceneHeight ) * 2 + 1
-    raycaster.setFromCamera(mouseVector, camera);
-    // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
-    // upwards of 10k objects and slows the filter down immensely
-    var documents = scene.getObjectByName("Documents");
-    var intersects = raycaster.intersectObjects(documents.children, true)
-    // console.log("Mouse click intersected with " + intersects.length + " objects")
-    if (intersects.length > 0) {
-      for (var i = 0; i < intersects.length; i++) {
-          var intersection = intersects[i],
-          obj = intersection.object;
+    if (e.clientX > 390) { // the first 390px = sidebar - we dont want to catch the mouse there..
+      mouseVector.x = ( ( e.clientX - offset.left ) / sceneWidth ) * 2 - 1;
+      mouseVector.y = - ( ( e.clientY - offset.top ) / sceneHeight ) * 2 + 1
+      raycaster.setFromCamera(mouseVector, camera);
+      // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
+      // upwards of 10k objects and slows the filter down immensely
+      var documents = scene.getObjectByName("Documents");
+      var intersects = raycaster.intersectObjects(documents.children, true)
+      // console.log("Mouse click intersected with " + intersects.length + " objects")
+      if (intersects.length > 0) {
+        for (var i = 0; i < intersects.length; i++) {
+            var intersection = intersects[i],
+            obj = intersection.object;
 
-          if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
-              printLog('Clicked on : ' + obj.name, successcolor, "viewer")
-              // console.log('Clicked on : ' + obj.parent.name + '.' + obj.name);
-              // obj.material.color.setRGB(Math.random(), Math.random(), Math.random());
-              attachBB(obj, e)
-          }
-      }
-    } else {
-      for (i=0; i<objectsInScene.length; i++) {
-        var obj = objectsInScene[i]
-        obj.traverse( function ( child ) {
-            if (child.type == "Line" && child.userData.selected) {
-                child.userData.selected = false;
+            if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
+                printLog('Clicked on : ' + obj.name, successcolor, "viewer")
+                // console.log('Clicked on : ' + obj.parent.name + '.' + obj.name);
+                // obj.material.color.setRGB(Math.random(), Math.random(), Math.random());
+                attachBB(obj, e)
             }
-        });
+        }
+      } else {
+        for (i=0; i<objectsInScene.length; i++) {
+          var obj = objectsInScene[i]
+          obj.traverse( function ( child ) {
+              if (child.type == "Line" && child.userData.selected) {
+                  child.userData.selected = false;
+              }
+          });
+        }
       }
     }
-
 }
 
 // Set selection, add bounding box
