@@ -557,17 +557,29 @@ function onMouseClick(e) {
     var documents = scene.getObjectByName("Documents");
     var intersects = raycaster.intersectObjects(documents.children, true)
     // console.log("Mouse click intersected with " + intersects.length + " objects")
-    for (var i = 0; i < intersects.length; i++) {
-        var intersection = intersects[i],
-        obj = intersection.object;
+    if (intersects.length > 0) {
+      for (var i = 0; i < intersects.length; i++) {
+          var intersection = intersects[i],
+          obj = intersection.object;
 
-        if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
-            printLog('Clicked on : ' + obj.name, successcolor, "viewer")
-            // console.log('Clicked on : ' + obj.parent.name + '.' + obj.name);
-            // obj.material.color.setRGB(Math.random(), Math.random(), Math.random());
-            attachBB(obj, e)
-        }
+          if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
+              printLog('Clicked on : ' + obj.name, successcolor, "viewer")
+              // console.log('Clicked on : ' + obj.parent.name + '.' + obj.name);
+              // obj.material.color.setRGB(Math.random(), Math.random(), Math.random());
+              attachBB(obj, e)
+          }
+      }
+    } else {
+      for (i=0; i<objectsInScene.length; i++) {
+        var obj = objectsInScene[i]
+        obj.traverse( function ( child ) {
+            if (child.type == "Line" && child.userData.selected) {
+                child.userData.selected = false;
+            }
+        });
+      }
     }
+
 }
 
 // Set selection, add bounding box
