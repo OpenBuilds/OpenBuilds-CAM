@@ -1196,8 +1196,8 @@ createObjectFromGCode = function (gcode, indxMax) {
 
            //object.scale.multiplyScalar(scale);
            console.log("final object:", object);
-           object.translateX(laserxmax /2 * -1);
-           object.translateY(laserymax /2 * -1);
+           object.translateX(sizexmax /2 * -1);
+           object.translateY(sizeymax /2 * -1);
            object.name = "gcodeobject"
            scene.add(object);
            // viewObject();

@@ -329,7 +329,7 @@ function setupJob(i) {
       </tr>
     </table>`
     $('#statusBody2').html(template2);
-    $('#statusFooter').html(`<button type="button" class="btn btn-lg btn-success" data-dismiss="modal" onclick="toolpathPreview(`+i+`); fillTree();">Preview Toolpath </button>`);
+    $('#statusFooter').html(`<button type="button" class="btn btn-success" data-dismiss="modal" onclick="toolpathPreview(`+i+`); fillTree();">Apply and Preview Toolpath </button>`);
     noMode(); // Default to NOOP
 
     if (toolpathsInScene[i].userData.camOperation) {

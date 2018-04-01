@@ -10,9 +10,8 @@ function initLocalStorage() {
 localParams = [
   // [paramName, required]
   ['rapidspeed', true],
-  ['laserXMax', true],
-  ['laserYMax', true],
-  ['spotSize', true],
+  ['sizexmax', true],
+  ['sizeymax', true],
   ['startgcode', false],
   ['laseron', false],
   ['laseroff', false],

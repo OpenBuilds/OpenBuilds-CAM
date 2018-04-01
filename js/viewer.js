@@ -9,8 +9,8 @@ var camera, controls, control, scene, renderer;
 var clock = new THREE.Clock();
 
 var marker;
-var laserxmax;
-var laserymax;
+var sizexmax;
+var sizeymax;
 var lineincrement = 50
 var camvideo;
 var objectsInScene = []; //array that holds all objects we added to the scene.
@@ -28,10 +28,10 @@ containerHeight = window.innerHeight;
 function setBullseyePosition(x, y, z) {
     //console.log('Set Position: ', x, y, z)
     if (x) {
-        bullseye.position.x = (parseInt(x, 10) - (laserxmax / 2));
+        bullseye.position.x = (parseInt(x, 10) - (sizexmax / 2));
     };
     if (y) {
-        bullseye.position.y = (parseInt(y, 10) - (laserymax / 2));
+        bullseye.position.y = (parseInt(y, 10) - (sizeymax / 2));
     };
     if (z) {
         bullseye.position.z = (parseInt(z, 10) + 0.1);
@@ -121,18 +121,18 @@ function init3D() {
         workspace.remove(helper);
     }
 
-    laserxmax = $('#laserXMax').val();
-    laserymax = $('#laserYMax').val();
+    sizexmax = $('#sizexmax').val();
+    sizeymax = $('#sizeymax').val();
 
-    if (!laserxmax) {
-        laserxmax = 200;
+    if (!sizexmax) {
+        sizexmax = 200;
     };
 
-    if (!laserymax) {
-        laserymax = 200;
+    if (!sizeymax) {
+        sizeymax = 200;
     };
 
-    helper = new THREE.GridHelper(laserxmax, laserymax, 10);
+    helper = new THREE.GridHelper(sizexmax, sizeymax, 10);
     helper.setColors(0x0000ff, 0x707070);
     helper.position.y = 0;
     helper.position.x = 0;
@@ -175,8 +175,8 @@ function init3D() {
     bullseye.name = "Bullseye";
 
     workspace.add(bullseye);
-    bullseye.position.x = -(laserxmax / 2);
-    bullseye.position.y = -(laserymax / 2);
+    bullseye.position.x = -(sizexmax / 2);
+    bullseye.position.y = -(sizeymax / 2);
 
     raycaster.linePrecision = 15
 
@@ -189,7 +189,7 @@ function init3D() {
 
     var x = [];
     var y = [];
-    for (var i = 0; i <= laserxmax; i += lineincrement) {
+    for (var i = 0; i <= sizexmax; i += lineincrement) {
         x[i] = this.makeSprite(this.scene, "webgl", {
             x: i,
             y: -14,
@@ -200,7 +200,7 @@ function init3D() {
         axesgrp.add(x[i]);
     }
 
-    for (var i = 0; i <= laserymax; i += lineincrement) {
+    for (var i = 0; i <= sizeymax; i += lineincrement) {
 
         y[i] = this.makeSprite(this.scene, "webgl", {
             x: -14,
@@ -213,7 +213,7 @@ function init3D() {
     }
     // add axes labels
     var xlbl = this.makeSprite(this.scene, "webgl", {
-        x: laserxmax,
+        x: sizexmax,
         y: 0,
         z: 0,
         text: "X",
@@ -221,7 +221,7 @@ function init3D() {
     });
     var ylbl = this.makeSprite(this.scene, "webgl", {
         x: 0,
-        y: laserymax,
+        y: sizeymax,
         z: 0,
         text: "Y",
         color: "#006600"
@@ -250,13 +250,13 @@ function init3D() {
     var geometryX = new THREE.Geometry();
     geometryX.vertices.push(
         new THREE.Vector3(-0.1, 0, 0),
-        new THREE.Vector3(-0.1, (laserymax - 5), 0)
+        new THREE.Vector3(-0.1, (sizeymax - 5), 0)
     );
 
     var geometryY = new THREE.Geometry();
     geometryY.vertices.push(
         new THREE.Vector3(0, -0.1, 0),
-        new THREE.Vector3((laserxmax - 5), -0.1, 0)
+        new THREE.Vector3((sizexmax - 5), -0.1, 0)
     );
 
     var line1 = new THREE.Line(geometryX, materialY);
@@ -264,8 +264,8 @@ function init3D() {
     axesgrp.add(line1);
     axesgrp.add(line2);
 
-    axesgrp.translateX(laserxmax / 2 * -1);
-    axesgrp.translateY(laserymax / 2 * -1);
+    axesgrp.translateX(sizexmax / 2 * -1);
+    axesgrp.translateY(sizeymax / 2 * -1);
     //console.log('[VIEWER] - added Axesgrp');
     workspace.add(axesgrp);
 
@@ -600,7 +600,7 @@ function attachBB(object, e) { // e = mouseclick event)
 
     if (object.userData.selected) {
       var bbox2 = new THREE.Box3().setFromObject(object);
-      // console.log('bbox for Clicked Obj: '+ object +' Min X: ', (bbox2.min.x + (laserxmax / 2)), '  Max X:', (bbox2.max.x + (laserxmax / 2)), 'Min Y: ', (bbox2.min.y + (laserymax / 2)), '  Max Y:', (bbox2.max.y + (laserymax / 2)));
+      // console.log('bbox for Clicked Obj: '+ object +' Min X: ', (bbox2.min.x + (sizexmax / 2)), '  Max X:', (bbox2.max.x + (sizexmax / 2)), 'Min Y: ', (bbox2.min.y + (sizeymax / 2)), '  Max Y:', (bbox2.max.y + (sizeymax / 2)));
       BBmaterial =  new THREE.LineDashedMaterial( { color: 0xaaaaaa, dashSize: 5, gapSize: 4, linewidth: 2 } );
       BBgeometry = new THREE.Geometry();
       BBgeometry.vertices.push(

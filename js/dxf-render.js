@@ -38,8 +38,8 @@ function drawDXF(file, fileName) {
 
     fileObject.name = fileName;
     fileObject.userData.layers = $.unique(fileLayers);
-    fileObject.translateX((laserxmax / 2) * -1);
-    fileObject.translateY((laserymax / 2) * -1);
+    fileObject.translateX((sizexmax / 2) * -1);
+    fileObject.translateY((sizeymax / 2) * -1);
     // putFileObjectAtZero(fileObject);
     scene.add(fileObject);
     calcZeroOffset(fileObject)

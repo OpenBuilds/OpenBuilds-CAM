@@ -139,14 +139,14 @@ function putFileObjectAtZero(object) {
   }
 
   var bbox2 = new THREE.Box3().setFromObject(object);
-  // console.log('bbox for putFileObjectAtZero: Min X: ', (bbox2.min.x + (laserxmax / 2)), '  Max X:', (bbox2.max.x + (laserxmax / 2)), 'Min Y: ', (bbox2.min.y + (laserymax / 2)), '  Max Y:', (bbox2.max.y + (laserymax / 2)));
-  Xtofix = -(bbox2.min.x + (laserxmax / 2));
+  // console.log('bbox for putFileObjectAtZero: Min X: ', (bbox2.min.x + (sizexmax / 2)), '  Max X:', (bbox2.max.x + (sizexmax / 2)), 'Min Y: ', (bbox2.min.y + (sizeymax / 2)), '  Max Y:', (bbox2.max.y + (sizeymax / 2)));
+  Xtofix = -(bbox2.min.x + (sizexmax / 2));
   imagePosition = $('#imagePosition').val()
   // console.log('ImagePosition', imagePosition)
   if (imagePosition == "TopLeft") {
-      Ytofix = (laserymax / 2) - bbox2.max.y;
+      Ytofix = (sizeymax / 2) - bbox2.max.y;
   } else {
-      Ytofix = -(bbox2.min.y + (laserymax / 2));
+      Ytofix = -(bbox2.min.y + (sizeymax / 2));
   }
   // console.log('X Offset', Xtofix)
   // console.log('Y Offset', Ytofix)
@@ -160,14 +160,14 @@ function putFileObjectAtZero(object) {
 function calcZeroOffset(object) {
       if (object) {
         var bbox2 = new THREE.Box3().setFromObject(object);
-        // console.log('bbox for object: Min X: ', (bbox2.min.x + (laserxmax / 2)), '  Max X:', (bbox2.max.x + (laserxmax / 2)), 'Min Y: ', (bbox2.min.y + (laserymax / 2)), '  Max Y:', (bbox2.max.y + (laserymax / 2)));
-        xfromzero = -(bbox2.min.x + (laserxmax / 2));
+        // console.log('bbox for object: Min X: ', (bbox2.min.x + (sizexmax / 2)), '  Max X:', (bbox2.max.x + (sizexmax / 2)), 'Min Y: ', (bbox2.min.y + (sizeymax / 2)), '  Max Y:', (bbox2.max.y + (sizeymax / 2)));
+        xfromzero = -(bbox2.min.x + (sizexmax / 2));
         imagePosition = $('#imagePosition').val()
         // console.log('ImagePosition', imagePosition)
         if (imagePosition == "TopLeft") {
-            yfromzero = (laserymax / 2) - bbox2.max.y;
+            yfromzero = (sizeymax / 2) - bbox2.max.y;
         } else {
-            yfromzero = -(bbox2.min.y + (laserymax / 2));
+            yfromzero = -(bbox2.min.y + (sizeymax / 2));
         }
         var xoffset = ( object.position.x - xfromzero )
         var yoffset = ( object.position.y - yfromzero )

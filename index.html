@@ -17,6 +17,7 @@
         <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
         <link type="text/css" rel="stylesheet" media="all" href="css/sidebar.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
 
         <link type="text/css" rel="stylesheet" media="all" href="lib/nprogress/nprogress.css" />
         <link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
@@ -85,14 +86,6 @@
                                 <li>
                                     <a data-toggle="tab" href="#menu3">
                                         <span class="fa-stack">
-                                            <i class="fa fa-wrench fa-stack-1x"></i>
-                                            <strong class="fa-stack-1x icon-text" style="margin-left: -3px;">TOOL</strong>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#menu4">
-                                        <span class="fa-stack">
                                             <i class="fa fa-download fa-stack-1x"></i>
                                             <strong class="fa-stack-1x icon-text" style="margin-left: -10px;">BACKUP</strong>
                                         </span>
@@ -109,141 +102,175 @@
                                       Configure your machine specifics: <br />
                                       <i>(NB: Page needs a refresh for these settings to take effect!)</i>
                                   </p>
-                                  <form class="form-horizontal">
-                                      <label for="laserXMax" class="control-label">X-Length <span style="color:red;">(Required)</span></label>
+                                  <div class="grpblock grpblock-default">
+                                    <div class="shape">
+                                      <div class="shape-text">
+                                        size
+                                      </div>
+                                    </div>
+                                    <div class="grpblock-content" style="overflow-y: visible !important;">
+                                      <form class="form-horizontal">
+                                          <h4>Workarea</h4>
+                                          <label for="sizexmax" class="control-label">X-Axis Length</label>
+                                          <div class="input-group">
+                                            <input id="sizexmax" type="text" class="form-control" placeholder="600" />
+                                            <span class="input-group-addon">mm</span>
+                                          </div>
+                                          <label for="sizeymax" class="control-label">Y-Axis Length</label>
+                                          <div class="input-group">
+                                            <input id="sizeymax" type="text" class="form-control" placeholder="400" />
+                                            <span class="input-group-addon">mm</span>
+                                          </div>
+                                      </form>
+                                   </div>
+                                 </div>
 
-                                      <div class="input-group">
-                                        <input id="laserXMax" type="text" class="form-control" placeholder="600" />
-                                        <span class="input-group-addon">mm</span>
-                                      </div>
-                                      <label for="laserYMax" class="control-label">Y-Length <span style="color:red;">(Required)</span></label>
-                                      <div class="input-group">
-                                        <input id="laserYMax" type="text" class="form-control" placeholder="400" />
-                                        <span class="input-group-addon">mm</span>
-                                      </div>
-                                      <div id="lasersettings">
-                                        <label for="SpotSize" class="control-label">Laser Beam Diameter <span style="color:red;">(Required)</span></label>
-                                        <div class="input-group">
-                                          <input id="spotSize" type="text" class="form-control" placeholder="0.5" />
-                                          <span class="input-group-addon">mm</span>
-                                        </div>
+                                 <div class="grpblock grpblock-success">
+                                   <div class="shape">
+                                     <div class="shape-text">
+                                       import
+                                     </div>
+                                   </div>
+                                   <div class="grpblock-content" style="overflow-y: visible !important;">
+                                     <h4>Import Settings</h4>
+                                     <form class="form-horizontal">
+                                         <label for="defaultDPI" class="control-label">Generic SVG</label>
+                                         <div class="input-group">
+                                           <input id="defaultDPI" type="text" class="form-control" placeholder="96" />
+                                           <span class="input-group-addon">DPI</span>
+                                         </div>
+                                         <label for="inkscapeDPI" class="control-label">Inkscape</label>
+                                         <div class="input-group">
+                                           <input id="inkscapeDPI" type="text" class="form-control" placeholder="96" />
+                                           <span class="input-group-addon">DPI</span>
+                                         </div>
+                                         <label for="illustratorDPI" class="control-label">Illustrator</label>
+                                         <div class="input-group">
+                                           <input id="illustratorDPI" type="text" class="form-control" placeholder="92" />
+                                           <span class="input-group-addon">DPI</span>
+                                         </div>
+                                         <label for="defaultBitmapDPI" class="control-label">Bitmap</label>
+                                         <div class="input-group">
+                                           <input id="defaultBitmapDPI" type="text" class="form-control" placeholder="600" />
+                                           <span class="input-group-addon">DPI</span>
+                                         </div>
+                                         <span class="help-block">This is the default DPI at which opened SVG/Bitmap files will be imported. You can of course change it per file on the CAM tab afterwards</span>
+                                     </form>
+                                  </div>
+                                </div>
 
-                                      </div>
-                                  </form>
-                                  <hr />
-                                  <form class="form-horizontal">
-                                      <h4>Default Import DPI </h4>
-                                      <label for="defaultDPI" class="control-label">Generic SVG <span style="color:red;">(Required)</span></label>
-                                      <div class="input-group">
-                                        <input id="defaultDPI" type="text" class="form-control" placeholder="96" />
-                                        <span class="input-group-addon">DPI</span>
-                                      </div>
-                                      <label for="inkscapeDPI" class="control-label">Inkscape</label>
-                                      <div class="input-group">
-                                        <input id="inkscapeDPI" type="text" class="form-control" placeholder="96" />
-                                        <span class="input-group-addon">DPI</span>
-                                      </div>
-                                      <label for="illustratorDPI" class="control-label">Illustrator</label>
-                                      <div class="input-group">
-                                        <input id="illustratorDPI" type="text" class="form-control" placeholder="92" />
-                                        <span class="input-group-addon">DPI</span>
-                                      </div>
-                                      <label for="defaultBitmapDPI" class="control-label">Bitmap <span style="color:red;">(Required)</span></label>
-                                      <div class="input-group">
-                                        <input id="defaultBitmapDPI" type="text" class="form-control" placeholder="600" />
-                                        <span class="input-group-addon">DPI</span>
-                                      </div>
-                                      <span class="help-block">This is the default DPI at which opened SVG/Bitmap files will be imported. You can of course change it per file on the CAM tab afterwards</span>
-                                  </form>
-                              </div><!-- #menu1 -->
+                                <div class="grpblock grpblock-primary">
+                                  <div class="shape">
+                                    <div class="shape-text">
+                                      origin
+                                    </div>
+                                  </div>
+                                  <div class="grpblock-content" style="overflow-y: visible !important;">
+                                    <h4>Origin</h4>
+                                    <form class="form-horizontal">
+                                        <label for="imagePosition" class="control-label">Origin location (not home)</label>
+                                        <select id="imagePosition" class="form-control">
+                                            <option>BottomLeft</option>
+                                            <option>TopLeft</option>
+                                        </select>
+                                    </form>
+                                 </div>
+                               </div>
 
-                              <div id="menu2" class="tab-pane fade">
-                                  Configure pre/post/control GCode commands:
+                             </div><!-- #menu1 -->
+
+                             <div id="menu2" class="tab-pane fade">
+                               Configure G-CODE Dialect (Specific to your machine/firmware)
+                               <div class="grpblock grpblock-danger">
+                                 <div class="shape">
+                                   <div class="shape-text">
+                                     gcode
+                                   </div>
+                                 </div>
+                                 <div class="grpblock-content" style="overflow-y: visible !important;">
+                                   <h4>GCODE Settings</h4>
+                                   <form class="form-horizontal">
+                                     <label for="g0command" class="control-label">Rapid Move Command</label>
+                                     <input id="g0command" type="text" class="form-control " placeholder="Usually G0" />
+                                     <label for="g1command" class="control-label">Linear Move Command</label>
+                                     <input id="g1command" type="text" class="form-control " placeholder="Usually G1" />
+                                   </form>
+                                </div>
+                              </div>
+
+                              <div class="grpblock grpblock-success">
+                                <div class="shape">
+                                  <div class="shape-text">
+                                    tool
+                                  </div>
+                                </div>
+                                <div class="grpblock-content" style="overflow-y: visible !important;">
+                                  <h4>Tool Settings</h4>
                                   <form class="form-horizontal">
-                                      <label for="startgcode" class="control-label">Start G-Code <span style="color:#FFA500;">(Optional)</span></label>
-                                      <textarea id="startgcode" class="form-control uppercase" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
-                                      <span class="help-block">Prepended before jobs: Use to home machine, turn air assist on, etc</span>
-                                      <label for="lasermultiply" class="control-label">PWM Max S value <span style="color:red;">(Required)</span></label>
-                                      <input id="lasermultiply" type="text" class="form-control uppercase" placeholder="For example 255, 1, or 1000" />
-                                      <span class="help-block">For Smoothieware, set this to "1", for Grbl set this to the same value you have in $30</span>
-                                      <label for="homingseq" class="control-label">Homing Sequence <span style="color:red;">(Required)</span></label>
-                                      <input id="homingseq" type="text" class="form-control uppercase" placeholder="For example G28 or $H" />
-                                      <span class="help-block">Gets sent when you click the home buttons</span>
-                                      <label for="endgcode" class="control-label">End G-Code <span style="color:#FFA500;">(Optional)</span></label>
-                                      <textarea id="endgcode" class="form-control uppercase" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
-                                      <span class="help-block">Appended after jobs: Use to move carriage out of the way, turn air assist off, etc</span>
-                                      <label for="rapidspeed" class="control-label">Travel Moves <span style="color:red;">(Required)</span></label>
-                                      <div class="input-group">
-                                        <input id="rapidspeed" class="form-control uppercase" placeholder="For example 30" />
-                                        <span class="input-group-addon">mm/m</span>
-                                      </div>
-                                      <span class="help-block">Feedrate for G0 Moves</span>
-                                      <hr>
-                                      <div id="lasertest">
-                                        <label for="lasertestpower" class="control-label">LaserTest Power <span style="color:#FFA500;">(Optional)</span></label>
-                                        <div class="input-group">
-                                            <input id="lasertestpower" class="form-control uppercase" placeholder="For example 1" />
-                                            <span class="input-group-addon">S value</span>
-                                        </div>
-                                        <label for="lasertestduration" class="control-label">LaserTest Duration <span style="color:#FFA500;">(Optional)</span></label>
-                                        <div class="input-group">
-                                            <input id="lasertestduration" class="form-control uppercase" placeholder="For example 10 (0 means toggle)" />
-                                            <span class="input-group-addon">ms</span>
-                                        </div>
-                                        <span class="help-block">Parameters for the Laser Test button</span>
-                                      </div>
-                                      <hr>
-                                      <div id="lasercommands">
-                                      <span class="help-block">Optional commands to be run just before and after any G1 moves. Useful for Plasma/esoteric applications</span>
-                                       <label for="laseron" class="control-label">Pre-G1 Opt Command` <span style="color:#FFA500;">(Optional)</span></label>
-                                       <input id="laseron" type="text" class="form-control uppercase" placeholder="For example M3 / blank for firmwares that support G1" />
-                                       <span class="help-block">Most firmwares use G0 moves as laser off and G1 as laser on.  Usually you can leave this blank</span>
-                                       <label for="laseroff" class="control-label">Post-G1 Opt Command <span style="color:#FFA500;">(Optional)</span></label>
-                                       <input id="laseroff" type="text" class="form-control uppercase" placeholder="For example M5 / blank for firmwares that support G1" />
-                                       <span class="help-block">Most firmwares use G0 moves as laser off and G1 as laser on.  Usually you can leave this blank</span>
-                                      </div>
+                                    <label for="scommand" class="control-label">Spindle / Laser Command</label>
+                                    <input id="scommand" type="text" class="form-control " placeholder="Usually S" />
+                                    <label for="scommandscale" class="control-label">Power/Speed Scale</label>
+                                    <input id="scommandscale" type="text" class="form-control " placeholder="Usually 1000 or 1" />
+                                    <div class="checkbox">
+                                      <label>
+                                        <input type="checkbox" id="scommandnewline" value="option1">
+                                        Place command on new-line
+                                      </label>
+                                    </div>
                                   </form>
-                              </div><!-- #menu2 -->
+                               </div>
+                             </div>
+
+                             <div class="grpblock grpblock-warning">
+                               <div class="shape">
+                                 <div class="shape-text">
+                                   cam
+                                 </div>
+                               </div>
+                               <div class="grpblock-content" style="overflow-y: visible !important;">
+                                 <h4>Gcode Generator Settings</h4>
+                                 <form class="form-horizontal">
+                                   <label for="startgcode" class="control-label">Start G-Code</label>
+                                   <textarea id="startgcode" class="form-control" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
+                                   <label for="endgcode" class="control-label">End G-Code</label>
+                                   <textarea id="endgcode" class="form-control" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
+                                   <label for="endgcode" class="control-label">Initial Height Sensing G-Code</label>
+                                   <textarea id="endgcode" class="form-control" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
+                                 </form>
+                              </div>
+                            </div>
+                          </div><!-- #menu2 -->
 
                               <div id="menu3" class="tab-pane fade">
-                                  <p>Configure how the application works, turn features on/off:</p>
-                                  <form class="form-horizontal">
-                                      <label for="imagePosition" class="control-label">Origin location (not home)</label>
-                                      <select id="imagePosition" class="form-control">
-                                          <option>BottomLeft</option>
-                                          <option>TopLeft</option>
-                                      </select>
-                                  </form>
-                              </div><!-- #menu3 -->
+                                  <p>Download a backup profile or restore settings from a backup file:</p>
+                                  <div class="grpblock grpblock-primary">
+                                    <div class="shape">
+                                      <div class="shape-text">
+                                        tool
+                                      </div>
+                                    </div>
+                                    <div class="grpblock-content" style="overflow-y: visible !important;">
+                                      <form class="form-horizontal">
+                                          <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
+                                              <div class="btn-group" role="group">
+                                                  <a id="backup" class="btn btn-lg btn-default btn-file" title="Take a backup" onclick="backupSettingsLocal()">
+                                                      <i class="fa fa-download fa-fw"></i> Backup Settings
+                                                  </a>
+                                              </div>
+                                          </div>
+                                          </br>
+                                          <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Restore">
+                                              <div class="btn-group" role="group">
+                                                  <span id="restore" href="#" class="btn btn-lg btn-default btn-file" title="Open a backup settings file">
+                                                      <i class="fa fa-upload  fa-fw"></i> Restore from file <input id="jsonFile" type="file" accept=".json" />
+                                                  </span>
+                                              </div>
+                                          </div>
+                                      </form>
+                                   </div>
+                                 </div>
 
-                              <div id="menu4" class="tab-pane fade">
-                                  <p>Download a backup profile, restore settings from a backup file, or load a preconfigured profile:</p>
-                                  <form class="form-horizontal">
-                                      <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
-                                          <div class="btn-group" role="group">
-                                              <a id="backup" class="btn btn-lg btn-default btn-file" title="Take a backup" onclick="backupSettingsLocal()">
-                                                  <i class="fa fa-download fa-fw"></i> Backup Settings
-                                              </a>
-                                          </div>
-                                      </div>
-                                      </br>
-                                      <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Restore">
-                                          <div class="btn-group" role="group">
-                                              <span id="restore" href="#" class="btn btn-lg btn-default btn-file" title="Open a backup settings file">
-                                                  <i class="fa fa-upload  fa-fw"></i> Restore from file <input id="jsonFile" type="file" accept=".json" />
-                                              </span>
-                                          </div>
-                                      </div>
-                                      </br>
-                                      <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Load">
-                                            <div class="btn-group" role="group">
-                                                <span id="loadprofilemodal" href="#" class="btn btn-lg btn-default btn-file" data-toggle="modal" data-target="#profilemodal" title="Load a preconfigured profile">
-                                                    <i class="fa fa-cloud-download  fa-fw"></i> Load Preconfigured Profile
-                                                </span>
-                                            </div>
-                                       </div>
-                                  </form>
-                              </div><!-- #menu4 -->
+                              </div><!-- #menu3 -->
 
                               <hr />
 
