@@ -111,7 +111,7 @@ function filePrepInit() {
     scaleChange();
   });
 
-  
+
 
 }
 
@@ -143,7 +143,7 @@ function putFileObjectAtZero(object) {
   Xtofix = -(bbox2.min.x + (sizexmax / 2));
   imagePosition = $('#imagePosition').val()
   // console.log('ImagePosition', imagePosition)
-  if (imagePosition == "TopLeft") {
+  if (imagePosition == "Top Left") {
       Ytofix = (sizeymax / 2) - bbox2.max.y;
   } else {
       Ytofix = -(bbox2.min.y + (sizeymax / 2));
@@ -164,7 +164,7 @@ function calcZeroOffset(object) {
         xfromzero = -(bbox2.min.x + (sizexmax / 2));
         imagePosition = $('#imagePosition').val()
         // console.log('ImagePosition', imagePosition)
-        if (imagePosition == "TopLeft") {
+        if (imagePosition == "Top Left") {
             yfromzero = (sizeymax / 2) - bbox2.max.y;
         } else {
             yfromzero = -(bbox2.min.y + (sizeymax / 2));
