@@ -521,7 +521,8 @@ function onMouseClick(e) {
     sceneWidth = document.getElementById("renderArea").offsetWidth;
     sceneHeight = document.getElementById("renderArea").offsetHeight;
     offset = $('#renderArea').offset();
-    if (e.clientX > 390) { // the first 390px = sidebar - we dont want to catch the mouse there..
+    var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+    if (e.clientX > 390 && !isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
       mouseVector.x = ( ( e.clientX - offset.left ) / sceneWidth ) * 2 - 1;
       mouseVector.y = - ( ( e.clientY - offset.top ) / sceneHeight ) * 2 + 1
       raycaster.setFromCamera(mouseVector, camera);

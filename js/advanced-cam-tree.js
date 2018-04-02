@@ -11,7 +11,7 @@ function animateTree() {
             var $link = $('#'+child.userData.link);
             var $parent = $link.parent();
             var $input = $parent.children('input');
-            $link.parent().find('label').css('color', 'red');
+            $link.parent().find('label').css('color', '#e74c3c');
             $input.prop('checked', true);
             selectCount ++
         } else if (child.type == "Line" && !child.userData.selected) {
@@ -32,6 +32,24 @@ function animateTree() {
     $("#tpaddpath").addClass('disabled')
   }
   updateTreeSelection();
+}
+
+// to update parent tick if all children are ticked/unticked
+function updateTreeSelection() {
+    $('.jobsetuptable .chkaddjob').each(function(n, input) {
+        var $input = $(input);
+        var $parent = $input.parent();
+        if (! $input.hasClass('item')) {
+            var items         = $input.parent().parent().find('ul .chkaddjob').length;
+            var checkedItems  = $input.parent().parent().find('ul input:checked').length;
+            $input.prop('checked', items == checkedItems);
+            if (items == checkedItems) {
+              $input.parent().find('label').css('color', '#e74c3c');
+            } else {
+              $input.parent().find('label').css('color', 'white');
+            }
+        }
+    });
 }
 
 // move toolpath order up/down
@@ -138,24 +156,6 @@ function eventsTree() {
       toolpathsInScene[data.id].name = $this.text();
   });
 
-}
-
-// to update parent tick if all children are ticked/unticked
-function updateTreeSelection() {
-    $('.jobsetuptable .chkaddjob').each(function(n, input) {
-        var $input = $(input);
-        var $parent = $input.parent();
-        if (! $input.hasClass('item')) {
-            var items         = $input.parent().parent().find('ul .chkaddjob').length;
-            var checkedItems  = $input.parent().parent().find('ul input:checked').length;
-            $input.prop('checked', items == checkedItems);
-            if (items == checkedItems) {
-              $input.parent().find('label').css('color', 'red');
-            } else {
-              $input.parent().find('label').css('color', 'white');
-            }
-        }
-    });
 }
 
 function fillTree() {
