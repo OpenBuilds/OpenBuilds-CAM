@@ -536,8 +536,8 @@ function onMouseClick(e) {
         var intersects = raycaster.intersectObjects(documents.children, true)
         console.log("Mouse click intersected with " + intersects.length + " objects")
         if (intersects.length > 0) {
-          for (var i = 0; i < intersects.length; i++) {
-              var intersection = intersects[i],
+          // for (var i = 0; i < intersects.length; i++) {
+              var intersection = intersects[0],
               obj = intersection.object;
 
               if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
@@ -546,7 +546,7 @@ function onMouseClick(e) {
                   // obj.material.color.setRGB(Math.random(), Math.random(), Math.random());
                   attachBB(obj, e)
               }
-          }
+          // }
         } else {
           // Deselecting only if not ctrl.
           console.log(e.ctrlKey)
