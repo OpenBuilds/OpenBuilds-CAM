@@ -101,7 +101,7 @@
   top: 0px;
   left:0px;
   bottom: 0;
-  background-color:#fefefe;
+  background-color:#303030;
   color: #aaabae;
   z-index: 999;
 }
@@ -127,7 +127,7 @@
     position: relative;
     display: block;
     padding: 13px 5px;
-    color: #222;
+    color: #fff;
     white-space: nowrap;
     z-index: 2;
     font-size: 1.12em;
@@ -145,11 +145,11 @@
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border-left: solid 6px #68AE00;
-  border-top: solid 6px #fefefe;
-  border-bottom: solid 6px #fefefe;
+  border-top: solid 6px #303030;
+  border-bottom: solid 6px #303030;
   border-right: solid 6px #222;
 }
-#menu ul li { background-color:#fefefe; }
+#menu ul li { background-color:#303030; }
 #menu ul {
   list-style-type: none;
   margin: 0;
