@@ -178,7 +178,7 @@ function init3D() {
     bullseye.position.x = -(sizexmax / 2);
     bullseye.position.y = -(sizeymax / 2);
 
-    raycaster.linePrecision = 3
+    raycaster.linePrecision = 15
 
 
     if (axesgrp) {
