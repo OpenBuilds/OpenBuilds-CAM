@@ -1,7 +1,7 @@
 //"use strict";
 console.log("%c%s","color: #000; background: green; font-size: 24px;","STARTING...");
 // colors for the consolelog
-var msgcolor = '#000000';
+var msgcolor = '#ffffff';
 var successcolor = '#00aa00';
 var errorcolor = '#cc0000';
 var warncolor = '#ff6600';

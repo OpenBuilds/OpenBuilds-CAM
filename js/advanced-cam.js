@@ -40,14 +40,14 @@ function addJob() {
 
     // animation to move "doc" to Toolpath - helps user visualise what happened
 
-    var btnpos = $("#tpaddpath").position()
-    var targetpos = $("#toolpathtree").position()
+    var btnpos = $("#tpaddpath").offset()
+    var targetpos = $("#toolpathtree").offset()
 
     $("#flyingdoc").css('top', btnpos.top);
     $("#flyingdoc").css('left', (btnpos.left+50)+'px');
     // $("#flyingdoc").position({left: btnpos.left+ 'px', top: btnpos.top+ 'px'});
     $("#flyingdoc").fadeIn(100);
-    $("#flyingdoc").animate({left: (targetpos.left + 50)+ 'px', top: targetpos.top+ 'px', opacity: '0.8'}, "slow");
+    $("#flyingdoc").animate({left: (targetpos.left + 50)+ 'px', top: targetpos.top+ 'px'}, "slow");
     $("#flyingdoc").fadeOut();
 
 

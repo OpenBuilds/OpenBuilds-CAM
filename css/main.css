@@ -34,6 +34,8 @@
 }
 
 .cam-form-field {
+  background-color: #303030;
+  color: #fff;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   border-left: 0px solid #ddd;
@@ -307,7 +309,7 @@ font-family: '8bit'; /*a name to be used later*/
     overflow-y: auto;
     overflow-x: none;
     text-align: left;
-    background-color: #fff;
+    /* background-color: #fff; */
     padding: 5px;
     font-size: 10px;
     padding-left: 20px;

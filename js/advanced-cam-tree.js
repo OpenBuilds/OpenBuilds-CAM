@@ -11,7 +11,7 @@ function animateTree() {
             var $link = $('#'+child.userData.link);
             var $parent = $link.parent();
             var $input = $parent.children('input');
-            $link.css('color', 'red');
+            $link.children().css('color', 'red');
             $input.prop('checked', true);
             selectCount ++
         } else if (child.type == "Line" && !child.userData.selected) {
@@ -19,7 +19,7 @@ function animateTree() {
             var $link = $('#'+child.userData.link);
             var $parent = $link.parent();
             var $input = $parent.children('input');
-            $link.css('color', 'black');
+            $link.children().css('color', 'white');
             $input.prop('checked', false);
         }
     });
@@ -57,33 +57,6 @@ function selectDocument(index, bool) {
 // event handlers after building tree template in filltree();
 function eventsTree() {
 
-  // collapse children
-  $('.jobsetuptable .toggle').on('click', function() {
-      var $label = $(this);
-      var $group = $label.parent().children('ul');
-      var groupId = $group.attr('id');
-
-      $label.toggleClass('italic');
-      $group.toggleClass('hidden');
-
-      collapsedGroups[groupId] = $group.hasClass('hidden');
-  });
-
-
-  // display number of children on layer/component rows
-  $('.jobsetuptable .group').each(function(n, group) {
-      var $group = $(group);
-      var $items = $group.find('div .item');
-      var $counter = $group.find('.counter');
-      var groupId = $group.children('ul').attr('id');
-      $counter.html($items.length);
-
-      if (collapsedGroups[groupId]) {
-          $group.children('.toggle').trigger('click');
-      }
-  });
-
-
   // select Document Label
   $('.jobsetuptable .documentselect').on('change', function(e) {
     var $input = $(this);
@@ -92,6 +65,7 @@ function eventsTree() {
     var idx, i, j;
     var seq = $input.attr('objectseq');
     var obj = objectsInScene[seq]
+    // console.log($input)
     obj.traverse( function ( child ) {
       if (child.type == "Line") {
           child.userData.selected = checked;
@@ -106,18 +80,21 @@ function eventsTree() {
     var checked = $input.prop('checked');
     var idx, i, j;
     // console.log("change", $parent, checked)
-    if ($parent.hasClass('item')) {
+    // if clicked on Line's checkbox
+    if ($input.hasClass('item')) {
+        console.log('got here')
         idx = $parent.children('input').attr('id').split('.');
         i = parseInt(idx[1]);
         j = parseInt(idx[2]);
         objectsInScene[i].children[j].userData.selected = checked;
         return false;
     }
-    $input.parent().find('ul .chkaddjob').each(function(n, input) {
+    $input.parent().parent().find('ul .chkaddjob').each(function(n, input) {
+        console.log('got here')
         $input = $(input);
-        $parent = $input.parent();
-        if ($parent.hasClass('item')) {
-            idx = $parent.children('input').attr('id').split('.');
+        $parent = $input.parent().parent();
+        if ($input.hasClass('item')) {
+            idx = $input.attr('id').split('.');
             i = parseInt(idx[1]);
             j = parseInt(idx[2]);
             objectsInScene[i].children[j].userData.selected = checked;
@@ -127,19 +104,21 @@ function eventsTree() {
 
   // remove a row
   $('.jobsetupgroup .remove').on('click', function() {
+    console.log("Clicked on Remove Row")
     var $parent = $(this).parent();
+    console.log($parent)
     var idx, i, j;
-    if ($parent.hasClass('item')) {
-        // console.log('has item');
+    if ($parent.find('input').hasClass('item')) { // polyline
+        console.log('has item');
         idx = $parent.find('input').attr('id').split('.');
         i = parseInt(idx[1]);
         j = parseInt(idx[2]);
         objectsInScene[i].remove(objectsInScene[i].children[j]);
-    }
-    else {
-      // console.log('no item');
+    } else { // layer
+      console.log('no item');
       var children = [];
-      $parent.find('.item input').each(function(n, input) {
+      $parent.parent().find('ul .chkaddjob').each(function(n, input) {
+        console.log(input)
         idx = $(input).attr('id').split('.');
         i = parseInt(idx[1]);
         j = parseInt(idx[2]);
@@ -161,43 +140,31 @@ function eventsTree() {
 
 }
 
-// supposed to update parent tick if all children are ticked/unticked
+// to update parent tick if all children are ticked/unticked
 function updateTreeSelection() {
     $('.jobsetuptable .chkaddjob').each(function(n, input) {
         var $input = $(input);
         var $parent = $input.parent();
-
-        if (! $parent.hasClass('item')) {
-            var items = $parent.find('.item').length;
-            var checkedItems = $parent.find('.item > input:checked').length;
-
+        if (! $input.hasClass('item')) {
+            var items         = $input.parent().parent().find('ul .chkaddjob').length;
+            var checkedItems  = $input.parent().parent().find('ul input:checked').length;
             $input.prop('checked', items == checkedItems);
+            if (items == checkedItems) {
+              $input.parent().find('label').css('color', 'red');
+            } else {
+              $input.parent().find('label').css('color', 'white');
+            }
         }
     });
 }
 
 function fillTree() {
-    $('#filetreeheader').empty();
+    // $('#filetreeheader').empty();
     $('#filetree').empty();
-    $('#toolpathtreeheader').empty();
+    // $('#toolpathtreeheader').empty();
     $('#toolpathtree').empty();
 
     clearSceneFlag = true;
-
-    var header = `
-    <table style="width: 100%">
-    <tr class="jobsetupfile">
-    <td>
-    <label for="filetreetable">Objects</label>
-    </td>
-    <td>
-    <a class="btn btn-xs btn-success disabled" onclick="addJob();" id="tpaddpath"><i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge" id="selectCount"></span></a>
-    </td>
-    </tr>
-    </table>
-    `
-
-    $('#filetreeheader').append(header);
 
     if (objectsInScene.length > 0) {
 
@@ -238,10 +205,10 @@ function fillTree() {
                 var file = `
                 <tr class="jobsetupfile topborder">
                   <td colspan="2" class="filename">
-                    <input class="documentselect" type="checkbox" value="" objectseq="`+i+`" id="selectall`+i+`" />
-
-                    <i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i>&nbsp;
-                    <a class="entity" href="#"><b>` + objectsInScene[i].name + `</b></a>
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input documentselect" objectseq="`+i+`" id="selectall`+i+`">
+                      <label class="form-check-label" for=""><i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i>` + objectsInScene[i].name + `</label>
+                    </div>
                   </td>
                   <td id="buttons`+i+`">
                     <a class="btn btn-xs btn-primary" onclick="$('#move`+i+`').toggle(); $(this).toggleClass('active');"><i class="fa fa-arrows" aria-hidden="true"></i></a>
@@ -326,12 +293,14 @@ function fillTree() {
                 // Polyline Object
                 childTemplate = `
                 <li children`+i+`">
-                  <div class="checkbox item">
-                    <input type="checkbox" class="fr chkaddjob chkchildof`+i+`" id="child.`+i+`.`+j+`" />
-                    <i class="fa fa-fw fa-sm fa-object-ungroup" aria-hidden="true"></i>
-                    <a class="entity" href="#" id="link`+i+`_`+j+`">`+currentChild.name+`</a>
-                    <a class="fr remove btn btn-xs btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input chkaddjob chkchildof`+i+` item" id="child.`+i+`.`+j+` ">
+                    <label class="form-check-label" for="child.`+i+`.`+j+`" id="link`+i+`_`+j+`"><i class="fa fa-fw fa-object-ungroup" aria-hidden="true"></i>` + currentChild.name + `</label>
+                    <a class="remove btn btn-xs btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
                   </div>
+
+
                 </li>`;
 
                 if (! childLayer) {
@@ -349,7 +318,7 @@ function fillTree() {
                                 <input type="checkbox" class="fr chkaddjob chkchildof`+i+`" />
                                 <i class="fa fa-fw fa-sm fa-object-group" aria-hidden="true"></i>&nbsp;
                                 <a class="entity toggle" href="#" onclick="return false;">`+childLayer.parent.label+`</a>
-                                <span class="counter label label-info">0</span>
+                                <span class="counter label badge badge-info">0</span>
                                 <a class="fr remove btn btn-xs btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
                                 <ul id="`+childLayer.parent.id+`"></ul>
                               </div>
@@ -364,14 +333,12 @@ function fillTree() {
                         // Layer
                         currentTable = `
                         <li class="group">
-                          <div class="checkbox">
-                            <input type="checkbox" class="fr chkaddjob chkchildof`+i+`" />
-                            <i class="fa fa-fw fa-sm fa-object-group" aria-hidden="true"></i>&nbsp;
-                            <a class="entity toggle" href="#">`+childLayer.label+`</a>
-                            <span class="counter label label-info">0</span>
-                            <a class="fr remove btn btn-xs btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
-                            <ul id="`+childLayer.id+`"></ul>
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input chkaddjob chkchildof`+i+`">
+                            <label class="form-check-label" for=""><i class="fa fa-fw fa-sm fa-object-group" aria-hidden="true"></i>`+childLayer.label+`</label>
+                            <a class="remove btn btn-xs btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
                           </div>
+                          <ul id="`+childLayer.id+`"></ul>
                         </li>`;
                         $parentGroup.append(currentTable);
                         $currentTable = $('#' + childLayer.id);
@@ -394,20 +361,6 @@ function fillTree() {
 
     }// End of if (objectsInScene.length > 0)
 
-    var toolpatheader = `
-    <table style="width: 100%">
-    <tr class="jobsetupfile">
-    <td>
-    <label for="toolpathstable">Toolpaths</label>
-    </td>
-    <td>
-    <a class="btn btn-xs btn-success disabled" id="generatetpgcode" onclick="makeGcode();"><i class="fa fa-cubes" aria-hidden="true"></i> Generate G-Code</a>
-    <a class="btn btn-xs btn-primary disabled" id="savetpgcode" onclick="saveFile()"><i class="fa fa-save" aria-hidden="true"></i> Save</a>
-    </td>
-    </tr>
-    </table>`
-    $('#toolpathtreeheader').append(toolpatheader)
-
     if (toolpathsInScene.length > 0) {
 
         $('#generatetpgcode').removeClass('disabled');
@@ -425,7 +378,7 @@ function fillTree() {
                   operation = "not configured"
                 }
 
-                var toolp = `<tr class="jobsetupfile">
+                var toolp = `<tr class="jobsetupfile" id="toolpathrow`+i+`">
                 <td>
                 <i class="fa fa-fw fa-object-group" aria-hidden="true"></i>&nbsp;
                 <span class="entity-job" contenteditable="true" data-id="`+i+`">`+toolpathsInScene[i].name+`</span>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,8 +14,7 @@
         <meta name="author" content="" />
         <meta name="version" content="" />
 
-        <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootswatch-darkly.min.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="css/bootstrap4-fixes.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
         <link type="text/css" rel="stylesheet" media="all" href="css/sidebar.css" />
         <link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
@@ -33,45 +31,18 @@
                 <div id="container1">
                     <div id="col1">
                         <div id="tree-cam-menu-panel" class="mobtab" style="height: 98%;">
-                            <span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 200;">
-                              <i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
-                              <i class="fa fa-object-group fa-stack-1x"></i>
+                            <span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute;">
+                              <i class="fa fa-square fa-stack-2x text-danger" ></i>
+                              <i class="fa fa-object-group fa-stack-1x fa-inverse"></i>
                             </span>
-                            <div class="card" style="height: 48%;">
-                              <div class="card-header" id="filetreeheader">
-                                <table style="width: 100%">
-                                <tr class="jobsetupfile">
-                                <td>
-                                <label for="filetreetable">Objects</label>
-                                </td>
-                                <td>
-                                <button type="button" class="btn btn-success" onclick="addJob();" id="tpaddpath">
-                                  <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-dark" id="selectCount">4</span>
-                                </button>
-                                </td>
-                                </tr>
-                                </table>
-                              </div>
-                              <div class="card-body" id="filetree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
+                            <div class="panel panel-success" style="height: 48%;">
+                                <div id="filetreeheader" class="panel-heading"></div>
+                                <div id="filetree" class="panel-body" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
                             </div>
-                            <br>
-                            <div class="card" style="height: 48%;">
-                              <div class="card-header" id="toolpathtreeheader">
-                                <table style="width: 100%">
-                                <tr class="jobsetupfile">
-                                <td>
-                                <label for="toolpathstable">Toolpaths</label>
-                                </td>
-                                <td>
-                                <a class="btn btn-xs btn-success disabled" id="generatetpgcode" onclick="makeGcode();"><i class="fa fa-cubes" aria-hidden="true"></i> Generate G-Code</a>
-                                <a class="btn btn-xs btn-primary disabled" id="savetpgcode" onclick="saveFile()"><i class="fa fa-save" aria-hidden="true"></i> Save</a>
-                                </td>
-                                </tr>
-                                </table>
-                              </div>
-                              <div class="card-body" id="toolpathtree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
+                            <div class="panel panel-success" style="height: 48%;">
+                                <div id="toolpathtreeheader" class="panel-heading"></div>
+                                <div id="toolpathtree" class="panel-body" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
                             </div>
-
                         </div><!-- #tree-cam-menu-panel -->
 
                         <div id="gcode-menu-panel" class="mobtab" style="display: none;">
@@ -99,25 +70,25 @@
                                 <h4><i class="fa fa-fw fa-exclamation"></i> Incomplete Config</h4>
                                 <p>Please complete configuration</p>
                             </div>
-                            <ul class="nav nav-pills nav-fill">
-                                <li class="nav-item ">
-                                    <a class="nav-link active" data-toggle="tab" href="#menu1">
+                            <ul class="nav nav-pills">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#menu1">
                                         <span class="fa-stack">
                                             <i class="fa fa-line-chart fa-stack-1x"></i>
                                             <strong class="fa-stack-1x icon-text" style="margin-left: -2px;">SIZE</strong>
                                         </span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#menu2">
+                                <li>
+                                    <a data-toggle="tab" href="#menu2">
                                         <span class="fa-stack">
                                             <i class="fa fa-codepen fa-stack-1x"></i>
                                             <strong class="fa-stack-1x icon-text" style="margin-left: -6px;">GCODE</strong>
                                         </span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#menu3">
+                                <li>
+                                    <a data-toggle="tab" href="#menu3">
                                         <span class="fa-stack">
                                             <i class="fa fa-download fa-stack-1x"></i>
                                             <strong class="fa-stack-1x icon-text" style="margin-left: -10px;">BACKUP</strong>
@@ -130,7 +101,7 @@
 
                             <div class="tab-content">
 
-                              <div id="menu1" class="tab-pane fade show active">
+                              <div id="menu1" class="tab-pane fade in active">
                                   <p>
                                       Configure your machine specifics: <br />
                                       <i>(NB: Page needs a refresh for these settings to take effect!)</i>
@@ -286,7 +257,7 @@
                                       <form class="form-horizontal">
                                           <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
                                               <div class="btn-group" role="group">
-                                                  <a id="backup" class="btn btn-lg btn-primary btn-file" title="Take a backup" onclick="backupSettingsLocal()">
+                                                  <a id="backup" class="btn btn-lg btn-default btn-file" title="Take a backup" onclick="backupSettingsLocal()">
                                                       <i class="fa fa-download fa-fw"></i> Backup Settings
                                                   </a>
                                               </div>
@@ -294,7 +265,7 @@
                                           </br>
                                           <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Restore">
                                               <div class="btn-group" role="group">
-                                                  <span id="restore" href="#" class="btn btn-lg btn-primary btn-file" title="Open a backup settings file">
+                                                  <span id="restore" href="#" class="btn btn-lg btn-default btn-file" title="Open a backup settings file">
                                                       <i class="fa fa-upload  fa-fw"></i> Restore from file <input id="jsonFile" type="file" accept=".json" />
                                                   </span>
                                               </div>
@@ -472,14 +443,12 @@
 
         <!-- Modals Divs -->
         <div id="statusmodal" class="modal fade" role="dialog">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                      <h5 id="statusTitle" class="modal-title">Status title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="statusTitle">Status Title</h4>
                     </div>
                     <div class="modal-body">
                         <div id="statusBody"></div>
@@ -494,7 +463,7 @@
 
     <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
 
-    <script type="text/javascript" src="lib/bootstrap4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="lib/nprogress/nprogress.js"></script>
     <script type="text/javascript" src="lib/jquery/jquery-ui.js"></script>
