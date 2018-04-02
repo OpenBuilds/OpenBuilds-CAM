@@ -46,7 +46,7 @@ function init3D() {
 
     // ThreeJS Render/Control/Camera
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
     camera.position.z = 295;
 
 
@@ -178,7 +178,7 @@ function init3D() {
     bullseye.position.x = -(sizexmax / 2);
     bullseye.position.y = -(sizeymax / 2);
 
-    raycaster.linePrecision = 15
+    raycaster.linePrecision = 3
 
 
     if (axesgrp) {
