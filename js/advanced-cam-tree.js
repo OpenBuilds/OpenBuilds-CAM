@@ -11,7 +11,7 @@ function animateTree() {
             var $link = $('#'+child.userData.link);
             var $parent = $link.parent();
             var $input = $parent.children('input');
-            $link.children().css('color', 'red');
+            $link.parent().find('label').css('color', 'red');
             $input.prop('checked', true);
             selectCount ++
         } else if (child.type == "Line" && !child.userData.selected) {
@@ -19,7 +19,7 @@ function animateTree() {
             var $link = $('#'+child.userData.link);
             var $parent = $link.parent();
             var $input = $parent.children('input');
-            $link.children().css('color', 'white');
+            $link.parent().find('label').css('color', 'white');
             $input.prop('checked', false);
         }
     });
