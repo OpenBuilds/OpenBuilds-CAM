@@ -518,6 +518,8 @@ $(window).on('resize', function() {
 });
 
 function onMouseClick(e) {
+    // todo only on left mousedown
+    // todo weird new issue where ctrl+noIntersect causes deselect
     sceneWidth = document.getElementById("renderArea").offsetWidth;
     sceneHeight = document.getElementById("renderArea").offsetHeight;
     offset = $('#renderArea').offset();
@@ -530,7 +532,7 @@ function onMouseClick(e) {
       // upwards of 10k objects and slows the filter down immensely
       var documents = scene.getObjectByName("Documents");
       var intersects = raycaster.intersectObjects(documents.children, true)
-      // console.log("Mouse click intersected with " + intersects.length + " objects")
+      console.log("Mouse click intersected with " + intersects.length + " objects")
       if (intersects.length > 0) {
         for (var i = 0; i < intersects.length; i++) {
             var intersection = intersects[i],
@@ -544,14 +546,19 @@ function onMouseClick(e) {
             }
         }
       } else {
-        for (i=0; i<objectsInScene.length; i++) {
-          var obj = objectsInScene[i]
-          obj.traverse( function ( child ) {
-              if (child.type == "Line" && child.userData.selected) {
-                  child.userData.selected = false;
-              }
-          });
+        // Deselecting only if not ctrl.
+        console.log(e.ctrlKey)
+        if (!e.ctrlKey) {
+          for (i=0; i<objectsInScene.length; i++) {
+            var obj = objectsInScene[i]
+            obj.traverse( function ( child ) {
+                if (child.type == "Line" && child.userData.selected) {
+                    child.userData.selected = false;
+                }
+            });
+          }
         }
+
       }
     }
 }
