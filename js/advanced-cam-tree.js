@@ -26,10 +26,10 @@ function animateTree() {
   }
   if (selectCount > 0) {
     $("#selectCount").text(selectCount)
-    $("#tpaddpath").removeClass('disabled')
+    $("#tpaddpath").prop('disabled', false);
   } else {
     $("#selectCount").text("")
-    $("#tpaddpath").addClass('disabled')
+    $("#tpaddpath").prop('disabled', true);
   }
   updateTreeSelection();
 }
