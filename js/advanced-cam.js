@@ -37,6 +37,20 @@ function addJob() {
     // var toolpath = (select toolpath from modal popup)
     // else
     // var toolpath = new THREE.Group();
+
+    // animation to move "doc" to Toolpath - helps user visualise what happened
+
+    var btnpos = $("#tpaddpath").position()
+    var targetpos = $("#toolpathtree").position()
+
+    $("#flyingdoc").css('top', btnpos.top);
+    $("#flyingdoc").css('left', (btnpos.left+50)+'px');
+    // $("#flyingdoc").position({left: btnpos.left+ 'px', top: btnpos.top+ 'px'});
+    $("#flyingdoc").fadeIn(100);
+    $("#flyingdoc").animate({left: (targetpos.left + 50)+ 'px', top: targetpos.top+ 'px', opacity: '0.8'}, "slow");
+    $("#flyingdoc").fadeOut();
+
+
     var toolpath = new THREE.Group();
     // 2018: try to switch to this method
     for (i=0; i<objectsInScene.length; i++) {
@@ -55,6 +69,7 @@ function addJob() {
         toolpath.name = "Vector-"+(toolpathsInScene.length)
         toolpathsInScene.push(toolpath)
     }
-    fillTree();
-    setupJob(toolpathsInScene.length - 1); // launch modal
+
+    setTimeout(function(){ fillTree(); setupJob(toolpathsInScene.length - 1);  }, 800);// launch modal
+
 }
