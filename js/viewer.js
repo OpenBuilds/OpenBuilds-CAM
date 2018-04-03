@@ -518,10 +518,8 @@ $(window).on('resize', function() {
 });
 
 function onMouseClick(e) {
-  console.log(e.which)
-    if (e.which == 1) {
-      // todo only on left mousedown
-      // todo weird new issue where ctrl+noIntersect causes deselect
+  // console.log(e.which)
+    if (e.which == 1) { // only on left mousedown
       sceneWidth = document.getElementById("renderArea").offsetWidth;
       sceneHeight = document.getElementById("renderArea").offsetHeight;
       offset = $('#renderArea').offset();
@@ -534,22 +532,40 @@ function onMouseClick(e) {
         // upwards of 10k objects and slows the filter down immensely
         var documents = scene.getObjectByName("Documents");
         var intersects = raycaster.intersectObjects(documents.children, true)
-        console.log("Mouse click intersected with " + intersects.length + " objects")
         if (intersects.length > 0) {
-          // for (var i = 0; i < intersects.length; i++) {
-              var intersection = intersects[0],
-              obj = intersection.object;
+          var intersection = intersects[0],
+          obj = intersection.object;
+          if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
+              printLog('Clicked on : ' + obj.name, successcolor, "viewer")
+              // attachBB(obj, e)
+              // console.log("Ctrl: " +  e.ctrlKey)
 
-              if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
-                  printLog('Clicked on : ' + obj.name, successcolor, "viewer")
-                  // console.log('Clicked on : ' + obj.parent.name + '.' + obj.name);
-                  // obj.material.color.setRGB(Math.random(), Math.random(), Math.random());
-                  attachBB(obj, e)
+              // if Ctrl is not down, clear other selections and only select the object clicked on
+              if (!e.ctrlKey) {
+                for (i=0; i<objectsInScene.length; i++) {
+                  var object = objectsInScene[i]
+                  object.traverse( function ( child ) {
+                    if (child.type == "Line" && child.userData.selected) {
+                        child.userData.selected = false;
+                    }
+                  });
+                }
+              }// end clear all
+
+              // Select (or deselect if already selected and control is down)
+              if (!obj.userData.selected) {
+                obj.userData.selected = true;
+              } else {
+                obj.userData.selected = false;
+                // if (typeof(boundingBox) != 'undefined') {
+                //     scene.remove(boundingBox);
+                // }
               }
-          // }
-        } else {
+
+          }
+        } else { // if nothing intersected we clicked empty space and clear the selection if ctrl is not down
           // Deselecting only if not ctrl.
-          console.log(e.ctrlKey)
+          // console.log(e.ctrlKey)
           if (!e.ctrlKey) {
             for (i=0; i<objectsInScene.length; i++) {
               var obj = objectsInScene[i]
@@ -560,7 +576,6 @@ function onMouseClick(e) {
               });
             }
           }
-
         }
       }
     }
