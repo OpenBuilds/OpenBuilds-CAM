@@ -135,7 +135,7 @@ function updateCamUserData(i) {
     toolpathsInScene[i].userData.camSpotSize = $('#tspotsize'+i).val();
     toolpathsInScene[i].userData.camTabDepth = $('#tabdepth'+i).val();
     toolpathsInScene[i].name = $('#tOpName'+i).val();
-
+    $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
 
 };
 
@@ -144,7 +144,7 @@ function setupJob(i) {
 
     $('#statusmodal').modal('show');
     $('#statusTitle').empty();
-    $('#statusTitle').html('Configure Toolpath');
+    $('#statusTitle').html('Configure Toolpath: ');
     $('#statusBody').empty();
     $('#statusBody2').empty();
 
@@ -348,6 +348,7 @@ function setupJob(i) {
       $('#tabdepth'+i).val(toolpathsInScene[i].userData.camTabDepth);
       $('#tplasmaihs'+i).val(toolpathsInScene[i].userData.camPlasmaIHS).prop('selected', true);
       $('#tOpName'+i).val(toolpathsInScene[i].name);
+      $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
 
       typeofOperation(toolpathsInScene[i].userData.camOperation, i);
     };
