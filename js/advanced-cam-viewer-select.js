@@ -139,6 +139,7 @@ function mouseMove (event) {
       //  4 | 3
       // there are 4 ways a square can be gestured onto the screen.  the following detects these four variations
       // and creates/updates the CSS to draw the square on the screen
+      offset = $('#renderArea').offset();
       if (pos.x < 0 && pos.y < 0) {
           selection.style.left = event.clientX + "px";
           selection.style.top = event.clientY + "px";

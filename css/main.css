@@ -161,8 +161,9 @@ button:focus {outline:0 !important;}
 
 #selection {
   position: absolute;
-  background: rgba(128, 128, 128, 0.3);
-  border: 1px solid #888;
+  background: rgba(128, 128, 128, 0.2);
+  border: 1px dashed rgba(128, 128, 128, 0.5);
+  border-radius: 4px;
   opacity: 50%;
   width: 50px;
   height: 50px;
@@ -170,13 +171,9 @@ button:focus {outline:0 !important;}
 }
 
 #renderArea {
-    /* position: absolute;
-    left: 0px;
-    top: 0px; */
     display:inline-block;
     min-width: 100% !important;
     min-height: 100% !important;
-    /*cursor: none;*/
     border-bottom: dashed 1px #aaa;
 }
 
