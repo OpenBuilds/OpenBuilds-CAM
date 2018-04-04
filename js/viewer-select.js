@@ -1,4 +1,3 @@
-
 var mousedown = false,
     mouseup = true,
     mousedowncoords = {},
@@ -15,6 +14,10 @@ function listeners () {
   $('#renderArea').mousedown(mouseDown);
   $('#renderArea').mouseup(mouseUp);
   $('#renderArea').mousemove(mouseMove);
+}
+
+function delta(num1, num2){
+  return (num1 > num2)? num1-num2 : num2-num1
 }
 
 function resetMarquee () {
@@ -42,6 +45,7 @@ function mouseDown (event) {
   mousedowncoords.x = event.clientX;
   mousedowncoords.y = event.clientY;
 
+  // convert to threejs position
   var vector = new THREE.Vector3();
   sceneWidth = document.getElementById("renderArea").offsetWidth;
   sceneHeight = document.getElementById("renderArea").offsetHeight;
@@ -78,75 +82,79 @@ function mouseMove (event) {
   // make sure we are in a select mode.
   if(mousedown){
 
-    var pos = {};
-    pos.x = event.clientX - mousedowncoords.x;
-    pos.y = event.clientY - mousedowncoords.y;
+    // lets wait for mouse to move at least a few pixels, just to eliminate false "selections" if user is simply clicking on an object (hysteresys)
+    if (delta(event.clientX, mousedowncoords.x) > 10 && delta(event.clientX, mousedowncoords.x) > 10) {
+      var pos = {};
+      pos.x = event.clientX - mousedowncoords.x;
+      pos.y = event.clientY - mousedowncoords.y;
 
-    // square variations
-    // (0,0) origin is the TOP LEFT pixel of the canvas.
-    //
-    //  1 | 2
-    // ---.---
-    //  4 | 3
-    // there are 4 ways a square can be gestured onto the screen.  the following detects these four variations
-    // and creates/updates the CSS to draw the square on the screen
-    if (pos.x < 0 && pos.y < 0) {
-        selection.style.left = event.clientX + "px";
-        selection.style.top = event.clientY + "px";
-        selection.style.width = -pos.x + "px";
-        selection.style.height = -pos.y + "px";
-        selection.style.visibility = "visible";
-    } else if ( pos.x >= 0 && pos.y <= 0) {
-        selection.style.left = mousedowncoords.x + "px";
-        selection.style.top = event.clientY + "px";
-        selection.style.width = pos.x + "px";
-        selection.style.height = -pos.y + "px";
-        selection.style.visibility = "visible";
-    } else if (pos.x >= 0 && pos.y >= 0) {
-        selection.style.left = mousedowncoords.x + "px";
-        selection.style.top = mousedowncoords.y + "px";
-        selection.style.width = pos.x + "px";
-        selection.style.height = pos.y + "px";
-        selection.style.visibility = "visible";
-    } else if (pos.x < 0 && pos.y >= 0) {
-        selection.style.left = event.clientX + "px";
-        selection.style.top = mousedowncoords.y + "px";
-        selection.style.width = -pos.x + "px";
-        selection.style.height = pos.y + "px";
-        selection.style.visibility = "visible";
-    }
-    var vector = new THREE.Vector3();
-    sceneWidth = document.getElementById("renderArea").offsetWidth;
-    sceneHeight = document.getElementById("renderArea").offsetHeight;
-    offset = $('#renderArea').offset();
-    vector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
-    vector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1
-    vector.z = 0.5;
-    vector.unproject( camera );
-    var dir = vector.sub( camera.position ).normalize();
-    var distance = - camera.position.z / dir.z;
-    worldendcoords = camera.position.clone().add( dir.multiplyScalar( distance ) );
-    scene.updateMatrixWorld();
-    for (i=0; i<objectsInScene.length; i++) {
-      var obj = objectsInScene[i]
-      obj.traverse( function ( child ) {
-          if (child.type == "Line") {
-              var center = {}
-              center.x = child.geometry.boundingSphere.center.x - (sizexmax / 2)
-              center.y = child.geometry.boundingSphere.center.y - (sizeymax /2 )
-              if (XinSelectRange(center.x) && YinSelectRange(center.y))  {
-                if (event.ctrlKey) {
-                  child.userData.selected = !child.userData.lastSelected;
-                } else {
-                  child.userData.selected = true;
-                }
+      // square variations
+      // (0,0) origin is the TOP LEFT pixel of the canvas.
+      //
+      //  1 | 2
+      // ---.---
+      //  4 | 3
+      // there are 4 ways a square can be gestured onto the screen.  the following detects these four variations
+      // and creates/updates the CSS to draw the square on the screen
+      if (pos.x < 0 && pos.y < 0) {
+          selection.style.left = event.clientX + "px";
+          selection.style.top = event.clientY + "px";
+          selection.style.width = -pos.x + "px";
+          selection.style.height = -pos.y + "px";
+          selection.style.visibility = "visible";
+      } else if ( pos.x >= 0 && pos.y <= 0) {
+          selection.style.left = mousedowncoords.x + "px";
+          selection.style.top = event.clientY + "px";
+          selection.style.width = pos.x + "px";
+          selection.style.height = -pos.y + "px";
+          selection.style.visibility = "visible";
+      } else if (pos.x >= 0 && pos.y >= 0) {
+          selection.style.left = mousedowncoords.x + "px";
+          selection.style.top = mousedowncoords.y + "px";
+          selection.style.width = pos.x + "px";
+          selection.style.height = pos.y + "px";
+          selection.style.visibility = "visible";
+      } else if (pos.x < 0 && pos.y >= 0) {
+          selection.style.left = event.clientX + "px";
+          selection.style.top = mousedowncoords.y + "px";
+          selection.style.width = -pos.x + "px";
+          selection.style.height = pos.y + "px";
+          selection.style.visibility = "visible";
+      }
+      // convert to threejs position
+      var vector = new THREE.Vector3();
+      sceneWidth = document.getElementById("renderArea").offsetWidth;
+      sceneHeight = document.getElementById("renderArea").offsetHeight;
+      offset = $('#renderArea').offset();
+      vector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
+      vector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1;
+      vector.z = 0.5;
+      vector.unproject( camera );
+      var dir = vector.sub( camera.position ).normalize();
+      var distance = - camera.position.z / dir.z;
+      worldendcoords = camera.position.clone().add( dir.multiplyScalar( distance ) );
+      scene.updateMatrixWorld();
+      for (i=0; i<objectsInScene.length; i++) {
+        var obj = objectsInScene[i];
+        obj.traverse( function ( child ) {
+            if (child.type == "Line") {
+                var center = {};
+                center.x = child.geometry.boundingSphere.center.x - (sizexmax / 2)
+                center.y = child.geometry.boundingSphere.center.y - (sizeymax /2 )
+                if (XinSelectRange(center.x) && YinSelectRange(center.y))  {
+                  if (event.ctrlKey) {
+                    child.userData.selected = !child.userData.lastSelected;
+                  } else {
+                    child.userData.selected = true;
+                  };
 
-              }
-          }
-      });
-    }
-  }
-}
+                };
+            };
+        });
+      };
+    };
+  };
+};
 
 function XinSelectRange(x) {
   var a = worldstartcoords.x
