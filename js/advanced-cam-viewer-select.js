@@ -127,9 +127,16 @@ function mouseMove (event) {
   if(mousedown){
     // lets wait for mouse to move at least a few pixels, just to eliminate false "selections" if user is simply clicking on an object (hysteresys)
     if (delta(event.clientX, mousedowncoords.x) > 10 && delta(event.clientX, mousedowncoords.x) > 10) {
+      offset = $('#renderArea').offset();
+      var md = {};
+      md.x = mousedowncoords.x;
+      md.y = mousedowncoords.y;
+      var ev = {};
+      ev.x = event.clientX;
+      ev.y = event.clientY;
       var pos = {};
-      pos.x = event.clientX - mousedowncoords.x;
-      pos.y = event.clientY - mousedowncoords.y;
+      pos.x = ev.x - md.x;
+      pos.y = ev.y - md.y;
 
       // square variations
       // (0,0) origin is the TOP LEFT pixel of the canvas.
@@ -139,35 +146,49 @@ function mouseMove (event) {
       //  4 | 3
       // there are 4 ways a square can be gestured onto the screen.  the following detects these four variations
       // and creates/updates the CSS to draw the square on the screen
-      offset = $('#renderArea').offset();
       if (pos.x < 0 && pos.y < 0) {
-          selection.style.left = event.clientX + "px";
-          selection.style.top = event.clientY + "px";
+          console.log("dir0", -pos.x, -pos.y); // bottom right to top left
+          selection.style.left = ev.x - offset.left + "px";
+          selection.style.top = ev.y - offset.top + "px";
           selection.style.width = -pos.x + "px";
-          selection.style.height = -pos.y + "px";
+          selection.style.height = -pos.y  + "px";
           selection.style.visibility = "visible";
       } else if ( pos.x >= 0 && pos.y <= 0) {
-          selection.style.left = mousedowncoords.x + "px";
-          selection.style.top = event.clientY + "px";
+          console.log("dir1"); // bottom left to to right
+          selection.style.left = md.x - offset.left + "px";
+          selection.style.top = ev.y - offset.top + "px";
           selection.style.width = pos.x + "px";
           selection.style.height = -pos.y + "px";
           selection.style.visibility = "visible";
       } else if (pos.x >= 0 && pos.y >= 0) {
-          selection.style.left = mousedowncoords.x + "px";
-          selection.style.top = mousedowncoords.y + "px";
+          console.log("dir2"); // top left to bottom right
+          selection.style.left = md.x - offset.left + "px";
+          selection.style.top = md.y - offset.top + "px";
           selection.style.width = pos.x + "px";
           selection.style.height = pos.y + "px";
           selection.style.visibility = "visible";
       } else if (pos.x < 0 && pos.y >= 0) {
-          selection.style.left = event.clientX + "px";
-          selection.style.top = mousedowncoords.y + "px";
+          console.log("dir3");
+          selection.style.left = ev.x - offset.left + "px";
+          selection.style.top = md.y - offset.top + "px";
           selection.style.width = -pos.x + "px";
           selection.style.height = pos.y + "px";
           selection.style.visibility = "visible";
       }
       // convert to threejs position
       worldendcoords = mouseToWorldCoord(event)
-      // console.log(worldendcoords)
+      // clear selection in case marquee is shrinking
+      if (!event.ctrlKey) {
+        for (i=0; i<objectsInScene.length; i++) {
+          var obj = objectsInScene[i]
+          obj.traverse( function ( child ) {
+            if (child.type == "Line" && child.userData.selected) {
+                child.userData.selected = false;
+            };
+          });
+        };
+      };
+      // Update all children (check intersect of centers with marquee)
       scene.updateMatrixWorld();
       for (i=0; i<objectsInScene.length; i++) {
         var obj = objectsInScene[i];
@@ -186,7 +207,7 @@ function mouseMove (event) {
                 };
             };
         });
-      };
+      }; // end marquee set
     };
   };
 };
