@@ -7,6 +7,7 @@ var selectobj;
 
 function init() {
   selection = document.getElementById( "selection" );
+  helpoverlay = document.getElementById( "helpoverlay" );
   listeners();
 }
 
@@ -20,35 +21,29 @@ function delta(num1, num2){
   return (num1 > num2)? num1-num2 : num2-num1
 }
 
-function resetMarquee () {
-  mouseup = true;
-  mousedown = false;
-  selection.style.visibility = "hidden";
-  mousedowncoords = {};
-}
-
 function mouseDown (event) {
-  // event.preventDefault();
-  // create copy of all children's selected status so we can later check to ctrl/sel/unselect
-  // regular click select
+  helpoverlay.style.visibility = "visible";
+  helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Ctrl</kbd> = Multiple Select"
   if (event.which == 1) { // only on left mousedown
-  for (i=0; i<objectsInScene.length; i++) {
-    var obj = objectsInScene[i]
-    obj.traverse( function ( child ) {
+    var pos = {};
+    mousedown = true;
+    mousedowncoords = {};
+    mousedowncoords.x = event.clientX;
+    mousedowncoords.y = event.clientY;
+    // convert to threejs position
+    worldstartcoords = mouseToWorldCoord(event);
+
+    // create copy of all children's selected status so we can later check to ctrl/sel/unselect
+    for (i=0; i<objectsInScene.length; i++) {
+      var obj = objectsInScene[i]
+      obj.traverse( function ( child ) {
         if (child.type == "Line") {
           child.userData.lastSelected = child.userData.selected
         }
-    });
-  }
-  var pos = {};
-  mousedown = true;
-  mousedowncoords = {};
-  mousedowncoords.x = event.clientX;
-  mousedowncoords.y = event.clientY;
-  // convert to threejs position
-  worldstartcoords = mouseToWorldCoord(event);
-  // console.log(worldstartcoords)
+      });
+    }
 
+    // raycast single click selection
     sceneWidth = document.getElementById("renderArea").offsetWidth;
     sceneHeight = document.getElementById("renderArea").offsetHeight;
     offset = $('#renderArea').offset();
@@ -100,7 +95,7 @@ function mouseDown (event) {
           }
         }
       }
-    }
+    } // end raycast single click select
   }
 }
 
@@ -108,7 +103,11 @@ function mouseUp (event) {
   // event.preventDefault();
   // event.stopPropagation();
   // reset the marquee selection
-  resetMarquee();
+  mouseup = true;
+  mousedown = false;
+  selection.style.visibility = "hidden";
+  helpoverlay.style.visibility = "hidden";
+  mousedowncoords = {};
   for (i=0; i<objectsInScene.length; i++) {
     var obj = objectsInScene[i]
     obj.traverse( function ( child ) {
@@ -147,28 +146,28 @@ function mouseMove (event) {
       // there are 4 ways a square can be gestured onto the screen.  the following detects these four variations
       // and creates/updates the CSS to draw the square on the screen
       if (pos.x < 0 && pos.y < 0) {
-          console.log("dir0", -pos.x, -pos.y); // bottom right to top left
+          // console.log("dir0", -pos.x, -pos.y); // bottom right to top left
           selection.style.left = ev.x - offset.left + "px";
           selection.style.top = ev.y - offset.top + "px";
           selection.style.width = -pos.x + "px";
           selection.style.height = -pos.y  + "px";
           selection.style.visibility = "visible";
       } else if ( pos.x >= 0 && pos.y <= 0) {
-          console.log("dir1"); // bottom left to to right
+          // console.log("dir1"); // bottom left to to right
           selection.style.left = md.x - offset.left + "px";
           selection.style.top = ev.y - offset.top + "px";
           selection.style.width = pos.x + "px";
           selection.style.height = -pos.y + "px";
           selection.style.visibility = "visible";
       } else if (pos.x >= 0 && pos.y >= 0) {
-          console.log("dir2"); // top left to bottom right
+          // console.log("dir2"); // top left to bottom right
           selection.style.left = md.x - offset.left + "px";
           selection.style.top = md.y - offset.top + "px";
           selection.style.width = pos.x + "px";
           selection.style.height = pos.y + "px";
           selection.style.visibility = "visible";
       } else if (pos.x < 0 && pos.y >= 0) {
-          console.log("dir3");
+          // console.log("dir3");
           selection.style.left = ev.x - offset.left + "px";
           selection.style.top = md.y - offset.top + "px";
           selection.style.width = -pos.x + "px";
