@@ -82,16 +82,10 @@ function init3D() {
 
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.target.set(0, 0, 0); // view direction perpendicular to XY-plane
+    controls.mouseButtons = { ORBIT: THREE.MOUSE.MIDDLE, ZOOM: false, PAN: THREE.MOUSE.RIGHT };
 
-    cncMode = $('#cncMode').val()
-    if (cncMode == "Enable") {
-        controls.enableRotate = true;
-        $('#3dview').prop('checked', true);
-    } else {
-        controls.enableRotate = false;
-    }
-
-
+    controls.enableRotate = true;
+    
     controls.enableZoom = true; // optional
     controls.enableKeys = false; // Disable Keyboard on canvas
     //controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons

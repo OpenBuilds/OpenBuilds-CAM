@@ -13,5 +13,7 @@ function exportWorkspace() {
     obspace.toolpaths[j] = toolpathsInScene[j].toJSON();
   }
 
+  var blob = new Blob([JSON.stringify(obspace),null, 4], {type: "text/plain"});
+  invokeSaveAsDialog(blob, 'workspace.json');
   // console.log(JSON.stringify(obspace));
 }
