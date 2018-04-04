@@ -199,6 +199,7 @@ function XinSelectRange(x) {
     return false;
   }
 }
+
 function YinSelectRange(y) {
   var a = worldstartcoords.y
   var b = worldendcoords.y
@@ -208,10 +209,6 @@ function YinSelectRange(y) {
     return false;
   }
 }
-
-$(document).ready(function () {
-  init();
-});
 
 function mouseToWorldCoord(e) {
   var vector = new THREE.Vector3();
@@ -227,3 +224,7 @@ function mouseToWorldCoord(e) {
   var coords = camera.position.clone().add( dir.multiplyScalar( distance ) );
   return coords;
 }
+
+$(document).ready(function () {
+  init();
+});
