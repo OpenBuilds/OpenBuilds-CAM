@@ -48,12 +48,13 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
     var isSeekrateSpecifiedAlready = false;
 
     //todo: settings applet
-    var g0 = "G0";
-    var g1 = "G1";
-    var sOnSeperateLine = false; // Marlin, Stepcraft, Mach3, LinuxCNC
-    var s = "S" // or Stepcraft:  M10 Qxxx, or LinuxCNC/Mach3: M67 E(PWMSigNo) Qxxx \n G1 Move \n M68 E(PWMSigNo) Q0
-    var useZ = false;
-    var IHScommand = "G0 " + clearanceHeight + "\nG32.2 Z-30 F100\nG10 P2 L1 Z0" // Plasma IHS
+    var g0 = $("#g0command").val();
+    var g1 = $("#g1command").val();
+    var sOnSeperateLine = $("#scommandnewline").is(":checked");; // Marlin, Stepcraft, Mach3, LinuxCNC
+    var s = $("#scommand").val(); // or Stepcraft:  M10 Qxxx, or LinuxCNC/Mach3: M67 E(PWMSigNo) Qxxx \n G1 Move \n M68 E(PWMSigNo) Q0
+    var sScale = $("#scommandscale").val()
+    var useZ = true;
+    var IHScommand = document.getElementById('ihsgcode').value;  // or "G0 " + clearanceHeight + "\nG32.2 Z-30 F100\nG10 P2 L1 Z0" // Plasma IHS
 
     toolpathGrp.traverse(function(child) {
         // console.log(child);

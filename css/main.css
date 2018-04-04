@@ -162,7 +162,7 @@ button:focus {outline:0 !important;}
 #selection {
   position: absolute;
   background: rgba(128, 128, 128, 0.2);
-  border: 1px dashed rgba(128, 128, 128, 0.5);
+  border: 1px dashed rgba(55, 55, 55, 0.5);
   border-radius: 4px;
   opacity: 50%;
   width: 50px;
