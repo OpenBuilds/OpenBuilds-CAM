@@ -28,8 +28,10 @@ function resetMarquee () {
 }
 
 function mouseDown (event) {
-  event.preventDefault();
+  // event.preventDefault();
   // create copy of all children's selected status so we can later check to ctrl/sel/unselect
+  // regular click select
+  if (event.which == 1) { // only on left mousedown
   for (i=0; i<objectsInScene.length; i++) {
     var obj = objectsInScene[i]
     obj.traverse( function ( child ) {
@@ -45,10 +47,8 @@ function mouseDown (event) {
   mousedowncoords.y = event.clientY;
   // convert to threejs position
   worldstartcoords = mouseToWorldCoord(event);
-  console.log(worldstartcoords)
+  // console.log(worldstartcoords)
 
-  // regular click select
-  if (event.which == 1) { // only on left mousedown
     sceneWidth = document.getElementById("renderArea").offsetWidth;
     sceneHeight = document.getElementById("renderArea").offsetHeight;
     offset = $('#renderArea').offset();
@@ -105,8 +105,8 @@ function mouseDown (event) {
 }
 
 function mouseUp (event) {
-  event.preventDefault();
-  event.stopPropagation();
+  // event.preventDefault();
+  // event.stopPropagation();
   // reset the marquee selection
   resetMarquee();
   for (i=0; i<objectsInScene.length; i++) {
@@ -120,8 +120,8 @@ function mouseUp (event) {
 }
 
 function mouseMove (event) {
-  event.preventDefault();
-  event.stopPropagation();
+  // event.preventDefault();
+  // event.stopPropagation();
 
   // make sure we are in a select mode.
   if(mousedown){
@@ -166,7 +166,7 @@ function mouseMove (event) {
       }
       // convert to threejs position
       worldendcoords = mouseToWorldCoord(event)
-      console.log(worldendcoords)
+      // console.log(worldendcoords)
       scene.updateMatrixWorld();
       for (i=0; i<objectsInScene.length; i++) {
         var obj = objectsInScene[i];

@@ -14,8 +14,9 @@ var sizeymax;
 var lineincrement = 50
 var camvideo;
 var objectsInScene = []; //array that holds all objects we added to the scene.
-
 var clearSceneFlag = false;
+
+var size = new THREE.Vector3();
 
 var workspace = new THREE.Group();
 workspace.name = "Workspace"
@@ -333,22 +334,16 @@ function viewExtents(objecttosee) {
     // generated one
     // get its bounding box
     if (objecttosee) {
-        var helper = new THREE.BoundingBoxHelper(objecttosee, 0xff0000);
+        var helper = new THREE.BoxHelper (objecttosee);
         helper.update();
-        //if (this.bboxHelper)
-        //    this.scene.remove(this.bboxHelper);
-        bboxHelper = helper;
-
-        // If you want a visible bounding box
-        //this.scene.add(this.bboxHelper);
-        // console.log("helper bbox:", helper);
-
-        var minx = helper.box.min.x;
-        var miny = helper.box.min.y;
-        var maxx = helper.box.max.x;
-        var maxy = helper.box.max.y;
-        var minz = helper.box.min.z;
-        var maxz = helper.box.max.z;
+        var box3 = new THREE.Box3();
+        box3.setFromObject( helper );
+        var minx = box3.min.x;
+        var miny = box3.min.y;
+        var maxx = box3.max.x;
+        var maxy = box3.max.y;
+        var minz = box3.min.z;
+        var maxz = box3.max.z;
 
 
         controls.reset();
