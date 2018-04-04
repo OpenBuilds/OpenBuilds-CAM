@@ -358,7 +358,7 @@ function init3D() {
 		topColor:    { value: new THREE.Color( 0x0077ff ) },
 		bottomColor: { value: new THREE.Color( 0xffffff ) },
 		offset:      { value: 63 },
-		exponent:    { value: 0.8 }
+		exponent:    { value: 0.3 }
 	};
   uniforms.topColor.value.copy( hemiLight.color );
 
