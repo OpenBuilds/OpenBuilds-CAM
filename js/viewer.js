@@ -531,52 +531,52 @@ function onMouseClick(e) {
         // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
         // upwards of 10k objects and slows the filter down immensely
         var documents = scene.getObjectByName("Documents");
-        var intersects = raycaster.intersectObjects(documents.children, true)
-        if (intersects.length > 0) {
-          var intersection = intersects[0],
-          obj = intersection.object;
-          if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
-              printLog('Clicked on : ' + obj.name, successcolor, "viewer")
-              // attachBB(obj, e)
-              // console.log("Ctrl: " +  e.ctrlKey)
+        if (documents) {
+          var intersects = raycaster.intersectObjects(documents.children, true)
+          if (intersects.length > 0) {
+            var intersection = intersects[0],
+            obj = intersection.object;
+            if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
+                printLog('Clicked on : ' + obj.name, successcolor, "viewer")
+                if (!e.ctrlKey) {
+                  for (i=0; i<objectsInScene.length; i++) {
+                    var object = objectsInScene[i]
+                    object.traverse( function ( child ) {
+                      if (child.type == "Line" && child.userData.selected) {
+                          child.userData.selected = false;
+                      }
+                    });
+                  }
+                }// end clear all
 
-              // if Ctrl is not down, clear other selections and only select the object clicked on
-              if (!e.ctrlKey) {
-                for (i=0; i<objectsInScene.length; i++) {
-                  var object = objectsInScene[i]
-                  object.traverse( function ( child ) {
+                // Select (or deselect if already selected and control is down)
+                if (!obj.userData.selected) {
+                  obj.userData.selected = true;
+                } else {
+                  obj.userData.selected = false;
+                  // if (typeof(boundingBox) != 'undefined') {
+                  //     scene.remove(boundingBox);
+                  // }
+                }
+
+            }
+          } else { // if nothing intersected we clicked empty space and clear the selection if ctrl is not down
+            // Deselecting only if not ctrl.
+            // console.log(e.ctrlKey)
+            if (!e.ctrlKey) {
+              for (i=0; i<objectsInScene.length; i++) {
+                var obj = objectsInScene[i]
+                obj.traverse( function ( child ) {
                     if (child.type == "Line" && child.userData.selected) {
                         child.userData.selected = false;
                     }
-                  });
-                }
-              }// end clear all
-
-              // Select (or deselect if already selected and control is down)
-              if (!obj.userData.selected) {
-                obj.userData.selected = true;
-              } else {
-                obj.userData.selected = false;
-                // if (typeof(boundingBox) != 'undefined') {
-                //     scene.remove(boundingBox);
-                // }
+                });
               }
-
-          }
-        } else { // if nothing intersected we clicked empty space and clear the selection if ctrl is not down
-          // Deselecting only if not ctrl.
-          // console.log(e.ctrlKey)
-          if (!e.ctrlKey) {
-            for (i=0; i<objectsInScene.length; i++) {
-              var obj = objectsInScene[i]
-              obj.traverse( function ( child ) {
-                  if (child.type == "Line" && child.userData.selected) {
-                      child.userData.selected = false;
-                  }
-              });
             }
           }
         }
+
+
       }
     }
 }

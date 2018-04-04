@@ -317,22 +317,13 @@
                     </div><!-- #col1 (sidebar) -->
 
                     <div id="col2">
-
-                        <table>
-                            <tr>
-                                <td>
-                                    <span id="openbutton" class="btn btn-primary btn-lg btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .tap, .nc, .gc, .svg, .dxf, or .stl file">
-                                        <i class="fa fa-folder-open fa-fw"></i> Open
-                                        <input id="file" type="file" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple />
-                                    </span>
-                                </td>
-                                <td>
-
-                                </td>
-                            </tr>
-                        </table> <!-- layers tabs -->
-
-                        <div id="renderArea"></div>
+                        <span id="openbutton" class="btn btn-primary btn-lg btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .tap, .nc, .gc, .svg, .dxf, or .stl file">
+                          <i class="fa fa-folder-open fa-fw"></i> Open
+                          <input id="file" type="file" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple />
+                        </span>
+                        <div id="renderArea">
+                          <div id="selection" style="visibility: hidden;"></div>
+                        </div>
 
                         <div id="viewer_container">
 
@@ -522,6 +513,7 @@
     <script type="text/javascript" src="lib/threejs/TransformControls.js"></script>
     <script type="text/javascript" src="lib/threejs/TweenMax.min.js"></script>
 
+    <script type="text/javascript" src="js/viewer-select.js"></script>
     <script type="text/javascript" src="js/viewer.js"></script>
 
     <!-- Socket.io -->
