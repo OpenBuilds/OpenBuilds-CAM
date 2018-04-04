@@ -304,7 +304,7 @@ function fillTree() {
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input chkaddjob chkchildof`+i+` item" id="child.`+i+`.`+j+` ">
                     <label class="form-check-label" for="child.`+i+`.`+j+`" id="link`+i+`_`+j+`"><i class="fa fa-fw fa-object-ungroup" aria-hidden="true"></i>` + currentChild.name + `</label>
-                    <a class="remove btn btn-xs btn-secondary"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a class="remove btn btn-xs btn-light"><i class="fa fa-trash" aria-hidden="true"></i></a>
                   </div>
 
 
@@ -343,7 +343,7 @@ function fillTree() {
                           <div class="form-check">
                             <input type="checkbox" class="form-check-input chkaddjob chkchildof`+i+`">
                             <label class="form-check-label" for=""><i class="fa fa-fw fa-sm fa-object-group" aria-hidden="true"></i>`+childLayer.label+`</label>
-                            <a class="remove btn btn-xs btn-secondary"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a class="remove btn btn-xs btn-light"><i class="fa fa-trash" aria-hidden="true"></i></a>
                           </div>
                           <ul id="`+childLayer.id+`"></ul>
                         </li>`;
