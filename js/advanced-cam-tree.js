@@ -394,22 +394,23 @@ function fillTree() {
                 <td>
 
                 </td>
-                <td>`
-
+                <td>
+                  <div class="btn-group" role="group" aria-label="Toolpath Options">`
                 if (i > 0) {
-                  toolp += `<a class="btn btn-xs btn-success" onclick="moveOp(`+i+`, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>`
+                  toolp += `<button class="btn btn-xs btn-success" onclick="moveOp(`+i+`, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
                 } else {
-                  toolp += `<a class="btn btn-xs btn-success disabled" onclick="moveOp(`+i+`, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>`
+                  toolp += `<button class="btn btn-xs btn-success disabled" onclick="moveOp(`+i+`, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
                 }
 
                 if (i < toolpathsInScene.length -1) {
-                  toolp += `<a class="btn btn-xs btn-success" onclick="moveOp(`+i+`, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>`
+                  toolp += `<button class="btn btn-xs btn-success" onclick="moveOp(`+i+`, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
                 } else {
-                  toolp += `<a class="btn btn-xs btn-success disabled" onclick="moveOp(`+i+`, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>`
+                  toolp += `<button class="btn btn-xs btn-success disabled" onclick="moveOp(`+i+`, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
                 }
 
-                toolp += `<a class="btn btn-xs btn-danger" onclick="toolpathsInScene.splice('`+i+`', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></a>
-                <a class="btn btn-xs btn-primary" onclick="setupJob(`+i+`);"><i class="fa fa-fw fa-sliders" aria-hidden="true"></i></a>
+                toolp += `<button class="btn btn-xs btn-danger" onclick="toolpathsInScene.splice('`+i+`', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button class="btn btn-xs btn-primary" onclick="setupJob(`+i+`);"><i class="fa fa-fw fa-sliders" aria-hidden="true"></i></button>
+                </div>
                 </td>
                 </tr>
                 `

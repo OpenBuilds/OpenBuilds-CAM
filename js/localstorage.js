@@ -25,7 +25,12 @@ localParams = [
   ['illustratorDPI', false],
   ['inkscapeDPI', false],
   ['defaultBitmapDPI', true],
-  ['optimisegcode', false]
+  ['g0command', true],
+  ['g1command', true],
+  ['scommandnewline', true],
+  ['scommand', true],
+  ['scommandscale', true],
+  ['ihsgcode', true]
 ];
 
 
