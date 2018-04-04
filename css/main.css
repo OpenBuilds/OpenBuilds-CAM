@@ -51,7 +51,19 @@ body {
     height: 100%;
     width: 100%;
     position: absolute;
-    /* padding-top: 45px; */
+    background: #e3e3e3 url(../images/xenzine_bk.png) repeat;
+}
+
+.card {
+  /* background-color: rgba(255, 255, 255, 0.0);
+  z-index: 10;
+  position: absolute;
+  top: 5px;
+  right: 20px; */
+  -webkit-box-shadow: 0 0 5px 0 rgba(0,0,0,0.86);
+  -moz-box-shadow: 0 0 5px 0 rgba(0,0,0,0.86);
+  -khtml-box-shadow: 0 0 5px 0 rgba(0,0,0,0.86);
+  box-shadow: 0 0 5px 0 rgba(0,0,0,0.86);
 }
 
 button:focus {outline:0 !important;}
@@ -171,8 +183,9 @@ button:focus {outline:0 !important;}
 }
 
 #helpoverlay {
-  margin: auto;
-   text-align: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
   position: absolute;
   bottom: 10px;
   left: 0px;
@@ -196,7 +209,6 @@ button:focus {outline:0 !important;}
     display:inline-block;
     min-width: 100% !important;
     min-height: 100% !important;
-    border-bottom: dashed 1px #aaa;
 }
 
 .btn-file {

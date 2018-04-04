@@ -318,14 +318,19 @@
                     </div><!-- #col1 (sidebar) -->
 
                     <div id="col2">
-                        <span id="openbutton" class="btn btn-primary btn-lg btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .tap, .nc, .gc, .svg, .dxf, or .stl file">
-                          <i class="fa fa-folder-open fa-fw"></i> Open
-                          <input id="file" type="file" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple />
-                        </span>
-                        <div id="renderArea">
-                          <div id="helpoverlay">
+                      <div class="card" style="height: 100%;">
+                        <div class="card-header" id="toolpathtreeheader">
+                          <span id="openbutton" class="btn btn-primary btn-lg btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .tap, .nc, .gc, .svg, .dxf, or .stl file">
+                            <i class="fa fa-folder-open fa-fw"></i> Open
+                            <input id="file" type="file" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple />
+                          </span>
+                        </div>
+                        <div class="card-body" style="height: calc(100% - 80px); padding: 0; margin-bottom: 20px; ">
+                          <div id="renderArea">
+                            <div id="helpoverlay">
+                            </div>
+                            <div id="selection" style="visibility: hidden;"></div>
                           </div>
-                          <div id="selection" style="visibility: hidden;"></div>
                         </div>
 
                         <div id="viewer_container">
@@ -424,6 +429,8 @@
                             </table>
 
                         </div><!-- #viewer_container -->
+
+                      </div>
                     </div><!-- #col2 (main content)-->
 
                 </div><!-- #container1 -->
