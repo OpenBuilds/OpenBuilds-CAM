@@ -41,23 +41,67 @@ function mouseDown (event) {
   var pos = {};
   mousedown = true;
   mousedowncoords = {};
-
   mousedowncoords.x = event.clientX;
   mousedowncoords.y = event.clientY;
-
   // convert to threejs position
-  var vector = new THREE.Vector3();
-  sceneWidth = document.getElementById("renderArea").offsetWidth;
-  sceneHeight = document.getElementById("renderArea").offsetHeight;
-  offset = $('#renderArea').offset();
-  vector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
-  vector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1
-  vector.z = 0.5;
-  vector.unproject( camera );
-  var dir = vector.sub( camera.position ).normalize();
-  var distance = - camera.position.z / dir.z;
-  worldstartcoords = camera.position.clone().add( dir.multiplyScalar( distance ) );
+  worldstartcoords = mouseToWorldCoord(event);
+  console.log(worldstartcoords)
 
+  // regular click select
+  if (event.which == 1) { // only on left mousedown
+    sceneWidth = document.getElementById("renderArea").offsetWidth;
+    sceneHeight = document.getElementById("renderArea").offsetHeight;
+    offset = $('#renderArea').offset();
+    var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+    if (event.clientX > 390 && !isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
+      mouseVector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
+      mouseVector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1
+      raycaster.setFromCamera(mouseVector, camera);
+      // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
+      // upwards of 10k objects and slows the filter down immensely
+      var documents = scene.getObjectByName("Documents");
+      if (documents) {
+        var intersects = raycaster.intersectObjects(documents.children, true)
+        if (intersects.length > 0) {
+          var intersection = intersects[0],
+          obj = intersection.object;
+          if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
+            // printLog('Clicked on : ' + obj.name, successcolor, "viewer")
+            if (!event.ctrlKey) {
+              for (i=0; i<objectsInScene.length; i++) {
+                var object = objectsInScene[i]
+                object.traverse( function ( child ) {
+                  if (child.type == "Line" && child.userData.selected) {
+                      child.userData.selected = false;
+                  }
+                });
+              }
+            }// end clear all
+
+            // Select (or deselect if already selected and control is down)
+            if (!obj.userData.selected) {
+              obj.userData.selected = true;
+            } else {
+              obj.userData.selected = false;
+            }
+          }
+        } else { // if nothing intersected we clicked empty space and clear the selection if ctrl is not down
+          // Deselecting only if not ctrl.
+          // console.log(e.ctrlKey)
+          if (!event.ctrlKey) {
+            for (i=0; i<objectsInScene.length; i++) {
+              var obj = objectsInScene[i]
+              obj.traverse( function ( child ) {
+                if (child.type == "Line" && child.userData.selected) {
+                    child.userData.selected = false;
+                }
+              });
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 function mouseUp (event) {
@@ -68,9 +112,9 @@ function mouseUp (event) {
   for (i=0; i<objectsInScene.length; i++) {
     var obj = objectsInScene[i]
     obj.traverse( function ( child ) {
-        if (child.type == "Line") {
-          delete child.userData.lastSelected;
-        }
+      if (child.type == "Line") {
+        delete child.userData.lastSelected;
+      }
     });
   }
 }
@@ -81,7 +125,6 @@ function mouseMove (event) {
 
   // make sure we are in a select mode.
   if(mousedown){
-
     // lets wait for mouse to move at least a few pixels, just to eliminate false "selections" if user is simply clicking on an object (hysteresys)
     if (delta(event.clientX, mousedowncoords.x) > 10 && delta(event.clientX, mousedowncoords.x) > 10) {
       var pos = {};
@@ -122,17 +165,8 @@ function mouseMove (event) {
           selection.style.visibility = "visible";
       }
       // convert to threejs position
-      var vector = new THREE.Vector3();
-      sceneWidth = document.getElementById("renderArea").offsetWidth;
-      sceneHeight = document.getElementById("renderArea").offsetHeight;
-      offset = $('#renderArea').offset();
-      vector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
-      vector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1;
-      vector.z = 0.5;
-      vector.unproject( camera );
-      var dir = vector.sub( camera.position ).normalize();
-      var distance = - camera.position.z / dir.z;
-      worldendcoords = camera.position.clone().add( dir.multiplyScalar( distance ) );
+      worldendcoords = mouseToWorldCoord(event)
+      console.log(worldendcoords)
       scene.updateMatrixWorld();
       for (i=0; i<objectsInScene.length; i++) {
         var obj = objectsInScene[i];
@@ -178,3 +212,18 @@ function YinSelectRange(y) {
 $(document).ready(function () {
   init();
 });
+
+function mouseToWorldCoord(e) {
+  var vector = new THREE.Vector3();
+  sceneWidth = document.getElementById("renderArea").offsetWidth;
+  sceneHeight = document.getElementById("renderArea").offsetHeight;
+  offset = $('#renderArea').offset();
+  vector.x = ( ( e.clientX - offset.left ) / sceneWidth ) * 2 - 1;
+  vector.y = - ( ( e.clientY - offset.top ) / sceneHeight ) * 2 + 1;
+  vector.z = 0.5;
+  vector.unproject( camera );
+  var dir = vector.sub( camera.position ).normalize();
+  var distance = - camera.position.z / dir.z;
+  var coords = camera.position.clone().add( dir.multiplyScalar( distance ) );
+  return coords;
+}

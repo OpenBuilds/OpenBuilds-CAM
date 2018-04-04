@@ -39,11 +39,6 @@ function setBullseyePosition(x, y, z) {
 }
 
 function init3D() {
-
-    window.addEventListener('mousedown', onMouseClick, false);
-    // window.addEventListener('mousemove', onMouseMove, false);
-
-
     // ThreeJS Render/Control/Camera
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
@@ -516,70 +511,6 @@ $(window).on('resize', function() {
 
 
 });
-
-function onMouseClick(e) {
-  // console.log(e.which)
-    if (e.which == 1) { // only on left mousedown
-      sceneWidth = document.getElementById("renderArea").offsetWidth;
-      sceneHeight = document.getElementById("renderArea").offsetHeight;
-      offset = $('#renderArea').offset();
-      var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
-      if (e.clientX > 390 && !isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
-        mouseVector.x = ( ( e.clientX - offset.left ) / sceneWidth ) * 2 - 1;
-        mouseVector.y = - ( ( e.clientY - offset.top ) / sceneHeight ) * 2 + 1
-        raycaster.setFromCamera(mouseVector, camera);
-        // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
-        // upwards of 10k objects and slows the filter down immensely
-        var documents = scene.getObjectByName("Documents");
-        if (documents) {
-          var intersects = raycaster.intersectObjects(documents.children, true)
-          if (intersects.length > 0) {
-            var intersection = intersects[0],
-            obj = intersection.object;
-            if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
-                printLog('Clicked on : ' + obj.name, successcolor, "viewer")
-                if (!e.ctrlKey) {
-                  for (i=0; i<objectsInScene.length; i++) {
-                    var object = objectsInScene[i]
-                    object.traverse( function ( child ) {
-                      if (child.type == "Line" && child.userData.selected) {
-                          child.userData.selected = false;
-                      }
-                    });
-                  }
-                }// end clear all
-
-                // Select (or deselect if already selected and control is down)
-                if (!obj.userData.selected) {
-                  obj.userData.selected = true;
-                } else {
-                  obj.userData.selected = false;
-                  // if (typeof(boundingBox) != 'undefined') {
-                  //     scene.remove(boundingBox);
-                  // }
-                }
-
-            }
-          } else { // if nothing intersected we clicked empty space and clear the selection if ctrl is not down
-            // Deselecting only if not ctrl.
-            // console.log(e.ctrlKey)
-            if (!e.ctrlKey) {
-              for (i=0; i<objectsInScene.length; i++) {
-                var obj = objectsInScene[i]
-                obj.traverse( function ( child ) {
-                    if (child.type == "Line" && child.userData.selected) {
-                        child.userData.selected = false;
-                    }
-                });
-              }
-            }
-          }
-        }
-
-
-      }
-    }
-}
 
 // Set selection, add bounding box
 function attachBB(object, e) { // e = mouseclick event)
