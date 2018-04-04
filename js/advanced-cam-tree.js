@@ -218,8 +218,8 @@ function fillTree() {
                     </div>
                   </td>
                   <td id="buttons`+i+`">
-                    <a class="btn btn-xs btn-primary" onclick="$('#move`+i+`').toggle(); $(this).toggleClass('active');"><i class="fa fa-arrows" aria-hidden="true"></i></a>
-                    <a class="btn btn-xs btn-danger remove" onclick="objectsInScene.splice('`+i+`', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <button class="btn btn-xs btn-primary" onclick="$('#move`+i+`').toggle(); $(this).toggleClass('active');"><i class="fa fa-arrows" aria-hidden="true"></i></button>
+                    <button class="btn btn-xs btn-danger remove" onclick="objectsInScene.splice('`+i+`', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
                   </td>
                 </tr>
                 <tr class="jobsetupfile" id="move`+i+`" style="display: none;">

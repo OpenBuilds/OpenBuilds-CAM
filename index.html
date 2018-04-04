@@ -64,8 +64,8 @@
                                 <label for="toolpathstable">Toolpaths</label>
                                 </td>
                                 <td>
-                                <a class="btn btn-xs btn-success disabled" id="generatetpgcode" onclick="makeGcode();"><i class="fa fa-cubes" aria-hidden="true"></i> Generate G-Code</a>
-                                <a class="btn btn-xs btn-primary disabled" id="savetpgcode" onclick="saveFile()"><i class="fa fa-save" aria-hidden="true"></i> Save</a>
+                                <button class="btn btn-xs btn-success disabled" id="generatetpgcode" onclick="makeGcode();"><i class="fa fa-cubes" aria-hidden="true"></i> Generate G-Code</button>
+                                <button class="btn btn-xs btn-primary disabled" id="savetpgcode" onclick="saveFile()"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
                                 </td>
                                 </tr>
                                 </table>
@@ -77,7 +77,7 @@
 
                         <div id="gcode-menu-panel" class="mobtab" style="display: none;">
                             <h4>G-CODE</h4>
-                            <button class="btn btn-lg btn-default btn-file" title="Export GCODE to a file" onclick="saveFile()">
+                            <button class="btn btn-lg btn-primary btn-file" title="Export GCODE to a file" onclick="saveFile()">
                                 <i class="fa fa-save fa-fw"></i> Export to File
                             </button>
                             <form class="form-horizontal">
