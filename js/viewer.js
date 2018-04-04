@@ -85,7 +85,7 @@ function init3D() {
     controls.mouseButtons = { ORBIT: THREE.MOUSE.MIDDLE, ZOOM: false, PAN: THREE.MOUSE.RIGHT };
 
     controls.enableRotate = true;
-    
+
     controls.enableZoom = true; // optional
     controls.enableKeys = false; // Disable Keyboard on canvas
     //controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
@@ -122,7 +122,7 @@ function init3D() {
         sizeymax = 200;
     };
 
-    helper = new THREE.GridHelper(sizexmax, sizeymax, 10);
+    helper = new THREE.GridHelper(sizexmax, sizeymax, 1, 0xdddddd);
     helper.setColors(0x0000ff, 0x707070);
     helper.position.y = 0;
     helper.position.x = 0;
@@ -135,8 +135,36 @@ function init3D() {
     this.grid = helper;
     //this.sceneAdd(this.grid);
     //console.log('[VIEWER] - added Helpert');
-    helper.name = "GridHelper"
+    helper.name = "GridHelper1mm"
     workspace.add(helper);
+    helper2 = new THREE.GridHelper(sizexmax, sizeymax, 10, 0x888888);
+    helper2.setColors(0x0000ff, 0x707070);
+    helper2.position.y = 0;
+    helper2.position.x = 0;
+    helper2.position.z = 0;
+    //helper.rotation.x = 90 * Math.PI / 180;
+    helper2.material.opacity = 0.15;
+    helper2.material.transparent = true;
+    helper2.receiveShadow = false;
+    //console.log("helper grid:", helper);
+    //this.sceneAdd(this.grid);
+    //console.log('[VIEWER] - added Helpert');
+    helper2.name = "GridHelper10mm"
+    workspace.add(helper2);
+    helper2 = new THREE.GridHelper(sizexmax, sizeymax, 100, 0x666666);
+    helper2.setColors(0x0000ff, 0x707070);
+    helper2.position.y = 0;
+    helper2.position.x = 0;
+    helper2.position.z = 0;
+    //helper.rotation.x = 90 * Math.PI / 180;
+    helper2.material.opacity = 0.15;
+    helper2.material.transparent = true;
+    helper2.receiveShadow = false;
+    //console.log("helper grid:", helper);
+    //this.sceneAdd(this.grid);
+    //console.log('[VIEWER] - added Helpert');
+    helper2.name = "GridHelper50mm"
+    workspace.add(helper2);
 
     if (bullseye) {
         scene.remove(bullseye);
