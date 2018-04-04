@@ -18,8 +18,12 @@ var clearSceneFlag = false;
 
 var size = new THREE.Vector3();
 
+var sky;
+
 var workspace = new THREE.Group();
 workspace.name = "Workspace"
+
+var ground;
 
 containerWidth = window.innerWidth;
 containerHeight = window.innerHeight;
@@ -96,15 +100,37 @@ function init3D() {
     workspace.add(control);
     control.setMode("translate");
 
-    var light = new THREE.DirectionalLight(0xffffff);
-    light.position.set(-500, -500, 1).normalize();
+    var light = new THREE.DirectionalLight(0xffffff,  0.8);
+    light.position.set(0, 2, 25).normalize();
     light.name = "Light1;"
     workspace.add(light);
 
     var light2 = new THREE.DirectionalLight(0xffffff);
     light2.name = "Light2"
-    light2.position.set(1, 0, 1).normalize();
+    light2.position.set(-500, -500, 1).normalize();
     workspace.add(light2);
+
+    dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+				dirLight.color.setHSL( 0.1, 1, 0.95 );
+				dirLight.position.set( -1, 1.75, 1 );
+				dirLight.position.multiplyScalar( 30 );
+				workspace.add( dirLight );
+
+				dirLight.castShadow = true;
+
+				dirLight.shadow.mapSize.width = 2048;
+				dirLight.shadow.mapSize.height = 2048;
+
+				var d = 50;
+
+				dirLight.shadow.camera.left = -d;
+				dirLight.shadow.camera.right = d;
+				dirLight.shadow.camera.top = d;
+				dirLight.shadow.camera.bottom = -d;
+
+				dirLight.shadow.camera.far = 3500;
+				dirLight.shadow.bias = -0.0001;
+
 
 
     if (helper) {
@@ -137,34 +163,43 @@ function init3D() {
     //console.log('[VIEWER] - added Helpert');
     helper.name = "GridHelper1mm"
     workspace.add(helper);
-    helper2 = new THREE.GridHelper(sizexmax, sizeymax, 10, 0x888888);
-    helper2.setColors(0x0000ff, 0x707070);
-    helper2.position.y = 0;
-    helper2.position.x = 0;
-    helper2.position.z = 0;
+    helper = new THREE.GridHelper(sizexmax, sizeymax, 10, 0x888888);
+    helper.setColors(0x0000ff, 0x707070);
+    helper.position.y = 0;
+    helper.position.x = 0;
+    helper.position.z = 0;
     //helper.rotation.x = 90 * Math.PI / 180;
-    helper2.material.opacity = 0.15;
-    helper2.material.transparent = true;
-    helper2.receiveShadow = false;
+    helper.material.opacity = 0.15;
+    helper.material.transparent = true;
+    helper.receiveShadow = false;
     //console.log("helper grid:", helper);
     //this.sceneAdd(this.grid);
     //console.log('[VIEWER] - added Helpert');
-    helper2.name = "GridHelper10mm"
-    workspace.add(helper2);
-    helper2 = new THREE.GridHelper(sizexmax, sizeymax, 100, 0x666666);
-    helper2.setColors(0x0000ff, 0x707070);
-    helper2.position.y = 0;
-    helper2.position.x = 0;
-    helper2.position.z = 0;
+    helper.name = "GridHelper10mm"
+    workspace.add(helper);
+    helper = new THREE.GridHelper(sizexmax, sizeymax, 100, 0x666666);
+    helper.setColors(0x0000ff, 0x707070);
+    helper.position.y = 0;
+    helper.position.x = 0;
+    helper.position.z = 0;
     //helper.rotation.x = 90 * Math.PI / 180;
-    helper2.material.opacity = 0.15;
-    helper2.material.transparent = true;
-    helper2.receiveShadow = false;
+    helper.material.opacity = 0.15;
+    helper.material.transparent = true;
+    helper.receiveShadow = false;
     //console.log("helper grid:", helper);
     //this.sceneAdd(this.grid);
     //console.log('[VIEWER] - added Helpert');
-    helper2.name = "GridHelper50mm"
-    workspace.add(helper2);
+    helper.name = "GridHelper50mm"
+    workspace.add(helper);
+
+    var material = new THREE.LineBasicMaterial( { color: 0x666666 } );
+    material.opacity = 0.15;
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3( sizexmax/2, -sizeymax/2+5, 0) );
+    geometry.vertices.push(new THREE.Vector3( sizexmax/2, sizeymax/2, 0) );
+    geometry.vertices.push(new THREE.Vector3( -sizexmax/2+5, sizeymax/2, 0) );
+    var line = new THREE.Line( geometry, material );
+    workspace.add(line);
 
     if (bullseye) {
         scene.remove(bullseye);
@@ -302,6 +337,44 @@ function init3D() {
     });
 
     scene.add(workspace)
+
+    material = new THREE.MeshPhongMaterial({
+		color: 0xffcccc,
+		specular: 0xffffff,
+		shininess: 8
+	});
+
+	scene.fog = new THREE.Fog( 0xffffff, 1, 2000 );
+
+  hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+  hemiLight.color.setHSL( 0.6, 1, 0.6 );
+  hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+  hemiLight.position.set( 0, 50, 0 );
+  hemiLight.visible = true;
+  workspace.add( hemiLight );
+
+  // SKYDOME
+	var uniforms = {
+		topColor:    { value: new THREE.Color( 0x0077ff ) },
+		bottomColor: { value: new THREE.Color( 0xffffff ) },
+		offset:      { value: 63 },
+		exponent:    { value: 0.8 }
+	};
+  uniforms.topColor.value.copy( hemiLight.color );
+
+	scene.fog.color.copy( uniforms.bottomColor.value );
+
+  var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+  var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+
+	var skyGeo = new THREE.SphereGeometry( 2000, 32, 15 );
+	var skyMat = new THREE.ShaderMaterial( { vertexShader: vertexShader, fragmentShader: fragmentShader, uniforms: uniforms, side: THREE.BackSide } );
+
+	sky = new THREE.Mesh( skyGeo, skyMat );
+  // sky.rotation.x = -Math.PI/4;
+  // sky.rotation.y = -Math.PI/4;
+	workspace.add( sky );
+
 
 }
 

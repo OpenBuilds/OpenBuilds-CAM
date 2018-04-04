@@ -384,7 +384,7 @@
 
                                         <div id="viewcontrols" class="btn-group" role="group" style="vertical-align: bottom; margin-left: 18px;">
                                             <div class="btn-group input-group  btn-group-vertical" role="group" style="vertical-align: bottom;">
-                                                <button id="viewReset" type="button" data-title="Link Aspect" class="btn btn-lg btn-default">
+                                                <button id="viewReset" type="button" data-title="Link Aspect" class="btn btn-lg btn-light">
                                                     <span class="fa-stack fa-1x">
                                                         <i class="fa fa-search fa-stack-1x"></i>
                                                         <strong class="fa-stack-1x icon-top-text">Reset</strong>
@@ -518,7 +518,6 @@
     <script type="text/javascript" src="lib/threejs/TransformControls.js"></script>
     <script type="text/javascript" src="lib/threejs/TweenMax.min.js"></script>
 
-
     <script type="text/javascript" src="js/viewer.js"></script>
 
     <!-- Socket.io -->
@@ -551,7 +550,38 @@
     <!-- Left Menu -->
     <script type="text/javascript" src="js/menu.js"></script>
 
+    <script type="x-shader/x-vertex" id="vertexShader">
 
+    			varying vec3 vWorldPosition;
+
+    			void main() {
+
+    				vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+    				vWorldPosition = worldPosition.xyz;
+
+    				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+    			}
+
+    		</script>
+
+    		<script type="x-shader/x-fragment" id="fragmentShader">
+
+    			uniform vec3 topColor;
+    			uniform vec3 bottomColor;
+    			uniform float offset;
+    			uniform float exponent;
+
+    			varying vec3 vWorldPosition;
+
+    			void main() {
+
+    				float h = normalize( vWorldPosition + offset ).z;
+    				gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+
+    			}
+
+    		</script>
 
 
 </html>

@@ -23,7 +23,7 @@ function delta(num1, num2){
 
 function mouseDown (event) {
   helpoverlay.style.visibility = "visible";
-  helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Ctrl</kbd> = Multiple Select"
+  helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select"
   if (event.which == 1) { // only on left mousedown
     var pos = {};
     mousedown = true;
