@@ -272,7 +272,7 @@ function invokeSaveAsDialog(file, fileName) {
 
     var hyperlink = document.createElement('a');
     hyperlink.href = URL.createObjectURL(file);
-    hyperlink.target = '_blank';
+    // hyperlink.target = '_blank';
     hyperlink.download = fileFullName;
 
     if (!!navigator.mozGetUserMedia) {
