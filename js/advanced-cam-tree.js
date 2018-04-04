@@ -19,7 +19,7 @@ function animateTree() {
             var $link = $('#'+child.userData.link);
             var $parent = $link.parent();
             var $input = $parent.children('input');
-            $link.parent().find('label').css('color', 'white');
+            $link.parent().find('label').css('color', '#222');
             $input.prop('checked', false);
         }
     });
@@ -46,7 +46,7 @@ function updateTreeSelection() {
             if (items == checkedItems) {
               $input.parent().find('label').css('color', '#e74c3c');
             } else {
-              $input.parent().find('label').css('color', 'white');
+              $input.parent().find('label').css('color', 'black');
             }
         }
     });

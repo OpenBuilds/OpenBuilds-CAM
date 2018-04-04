@@ -140,14 +140,14 @@
   /*transition: color 250ms ease-in-out, background-color 250ms ease-in-out;*/
 }
 #menu li.active > a {
-  background-color: #222;
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border-left: solid 6px #68AE00;
   border-top: solid 6px #303030;
   border-bottom: solid 6px #303030;
-  border-right: solid 6px #222;
+  border-right: solid 6px #fff;
 }
 #menu ul li { background-color:#303030; }
 #menu ul {
