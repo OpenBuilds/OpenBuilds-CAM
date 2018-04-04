@@ -262,7 +262,7 @@ function fillTree() {
                 </tr>`
                 $('#filetreetable').append(svgfile)
 
-                var scalebtn = `<a class="btn btn-xs btn-primary" onclick="$('#scale`+i+`').toggle(); $(this).toggleClass('active');"><i class="fa fa-expand" aria-hidden="true"></i></a>`
+                var scalebtn = `<button class="btn btn-xs btn-primary" onclick="$('#scale`+i+`').toggle(); $(this).toggleClass('active');"><i class="fa fa-expand" aria-hidden="true"></i></button>`
                 $('#buttons'+i).prepend(scalebtn)
             }
 
