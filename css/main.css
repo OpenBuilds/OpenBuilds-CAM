@@ -77,7 +77,7 @@ button:focus {outline:0 !important;}
 }
 .icon-bot-text { margin-top: 16px; font-size: 10px;}
 .icon-top-text { margin-top: -16px; font-size: 10px; }
-.icon-text { margin-top: 16px; font-size: 11px; font-weight: bold;}
+.icon-text { margin-top: 16px; font-size: 8px; font-weight: bold;}
 
 .btn-ctl {
     padding: 15px 12px;

@@ -1,548 +1,469 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
-    <head>
-
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <title>OpenBuilds CAM Gcode Creator</title>
-
-        <meta name="description" content=""/>
-        <meta name="keywords" content=""/>
-        <meta name="author" content="" />
-        <meta name="version" content="" />
-
-        <!-- <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootswatch-darkly.min.css" /> -->
-        <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootstrap.min.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="css/bootstrap4-fixes.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="css/sidebar.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
-
-        <link type="text/css" rel="stylesheet" media="all" href="lib/nprogress/nprogress.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="css/font-awesome.css" />
-
-    </head>
-    <body>
-
-        <div class="page-container sidebar-collapsed">
-            <div class="container-fluid" style="height: 100%; width: 100%; padding-left: 2px; padding-right: 2px;">
-                <div id="container1">
-                    <div id="col1">
-                        <div id="tree-cam-menu-panel" class="mobtab" style="height: 99%;">
-                            <span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 200;">
-                              <i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
-                              <i class="fa fa-object-group fa-stack-1x"></i>
-                            </span>
-                            <div class="card" style="height: 48%; margin-bottom: 12px;">
-                              <div class="card-header" id="filetreeheader">
-                                <table style="width: 100%">
-                                <tr class="jobsetupfile">
-                                <td>
-                                <label for="filetreetable">Objects</label>
-                                </td>
-                                <td>
-                                <button type="button" class="btn btn-success" onclick="addJob();" id="tpaddpath">
-                                  <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-danger" id="selectCount">4</span>
-                                </button>
-                                </td>
-                                </tr>
-                                </table>
-                              </div>
-                              <div class="card-body" id="filetree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
-                            </div>
-
-                            <div class="card" style="height: 48%;">
-                              <div class="card-header" id="toolpathtreeheader">
-                                <table style="width: 100%">
-                                <tr class="jobsetupfile">
-                                <td>
-                                <label for="toolpathstable">Toolpaths</label>
-                                </td>
-                                <td>
-                                <button class="btn btn-xs btn-success disabled" id="generatetpgcode" onclick="makeGcode();"><i class="fa fa-cubes" aria-hidden="true"></i> Generate G-Code</button>
-                                <button class="btn btn-xs btn-primary disabled" id="savetpgcode" onclick="saveFile()"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
-                                </td>
-                                </tr>
-                                </table>
-                              </div>
-                              <div class="card-body" id="toolpathtree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
-                            </div>
-
-                        </div><!-- #tree-cam-menu-panel -->
-
-                        <div id="gcode-menu-panel" class="mobtab" style="display: none;">
-                            <h4>G-CODE</h4>
-                            <button class="btn btn-lg btn-primary btn-file" title="Export GCODE to a file" onclick="saveFile()">
-                                <i class="fa fa-save fa-fw"></i> Export to File
-                            </button>
-                            <form class="form-horizontal">
-                                <label for="startgcodefinal" class="control-label">Start GCODE</label>
-                                <textarea id="startgcodefinal" spellcheck="false" style="width: 100%; height: 80px;" disabled></textarea>
-                            </form>
-                            <form id="gcodefile" class="form-horizontal" style="display: none;">
-                                <label for="gcodepreview" class="control-label">GCODE opened from File</label>
-                                <textarea id="gcodepreview" spellcheck="false" style="width: 100%; height: 80px;" disabled></textarea>
-                            </form>
-                            <div id="gcodejobs"></div>
-                            <form class="form-horizontal">
-                                <label for="endgcodefinal" class="control-label">End GCODE</label>
-                                <textarea id="endgcodefinal" spellcheck="false" style="width: 100%; height: 80px;" disabled></textarea>
-                            </form>
-                        </div><!-- #gcode-menu-panel -->
-
-                        <div id="settings-menu-panel" class="mobtab" style="display: none;">
-                            <div id="settingsstatus" class="bs-callout bs-callout-danger">
-                                <h4><i class="fa fa-fw fa-exclamation"></i> Incomplete Config</h4>
-                                <p>Please complete configuration</p>
-                            </div>
-                            <ul class="nav nav-pills nav-fill">
-                                <li class="nav-item ">
-                                    <a class="nav-link active" data-toggle="tab" href="#menu1">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-line-chart fa-stack-1x"></i>
-                                            <strong class="fa-stack-1x icon-text" style="margin-left: -2px;">SIZE</strong>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#menu2">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-codepen fa-stack-1x"></i>
-                                            <strong class="fa-stack-1x icon-text" style="margin-left: -6px;">GCODE</strong>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#menu3">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-download fa-stack-1x"></i>
-                                            <strong class="fa-stack-1x icon-text" style="margin-left: -10px;">BACKUP</strong>
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-
-                            <br />
-
-                            <div class="tab-content">
-
+   <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>OpenBuilds CAM Gcode Creator</title>
+      <meta name="description" content=""/>
+      <meta name="keywords" content=""/>
+      <meta name="author" content="" />
+      <meta name="version" content="" />
+      <!-- <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootswatch-darkly.min.css" /> -->
+      <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootstrap.min.css" />
+      <link type="text/css" rel="stylesheet" media="all" href="css/bootstrap4-fixes.css" />
+      <link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
+      <link type="text/css" rel="stylesheet" media="all" href="css/sidebar.css" />
+      <link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
+      <link type="text/css" rel="stylesheet" media="all" href="lib/nprogress/nprogress.css" />
+      <link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
+      <link type="text/css" rel="stylesheet" media="all" href="css/font-awesome.css" />
+   </head>
+   <body>
+      <div class="page-container sidebar-collapsed">
+         <div class="container-fluid" style="height: 100%; width: 100%; padding-left: 2px; padding-right: 2px;">
+            <div id="container1">
+               <div id="col1">
+                  <div id="tree-cam-menu-panel" class="mobtab" style="height: 99%;">
+                     <span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 200;">
+                     <i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
+                     <i class="fa fa-object-group fa-stack-1x"></i>
+                     </span>
+                     <div class="card" style="height: 48%; margin-bottom: 12px;">
+                        <div class="card-header" id="filetreeheader">
+                           <table style="width: 100%">
+                              <tr class="jobsetupfile">
+                                 <td>
+                                    <label for="filetreetable">Objects</label>
+                                 </td>
+                                 <td>
+                                    <button type="button" class="btn btn-success" onclick="addJob();" id="tpaddpath">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-danger" id="selectCount">4</span>
+                                    </button>
+                                 </td>
+                              </tr>
+                           </table>
+                        </div>
+                        <div class="card-body" id="filetree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
+                     </div>
+                     <div class="card" style="height: 48%;">
+                        <div class="card-header" id="toolpathtreeheader">
+                           <table style="width: 100%">
+                              <tr class="jobsetupfile">
+                                 <td>
+                                    <label for="toolpathstable">Toolpaths</label>
+                                 </td>
+                                 <td>
+                                    <button class="btn btn-xs btn-success disabled" id="generatetpgcode" onclick="makeGcode();"><i class="fa fa-cubes" aria-hidden="true"></i> Generate G-Code</button>
+                                    <button class="btn btn-xs btn-primary disabled" id="savetpgcode" onclick="saveFile()"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
+                                 </td>
+                              </tr>
+                           </table>
+                        </div>
+                        <div class="card-body" id="toolpathtree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
+                     </div>
+                  </div>
+                  <!-- #tree-cam-menu-panel -->
+                  <div id="gcode-menu-panel" class="mobtab" style="display: none;">
+                     <div class="card" style="height: 48%; margin-bottom: 12px;">
+                        <div class="card-header">
+                           <table style="width: 100%">
+                              <tr class="jobsetupfile">
+                                 <td>
+                                    <label>G-CODE</label>
+                                 </td>
+                                 <td>
+                                    <button class="btn btn-primary btn-file" title="Export GCODE to a file" onclick="saveFile()">
+                                    <i class="fa fa-save fa-fw"></i> Export to File
+                                    </button>
+                                 </td>
+                              </tr>
+                           </table>
+                        </div>
+                        <div class="card-body" style="height:calc(100% - 56px); overflow-y:scroll;">
+                           <form class="form-horizontal">
+                              <label for="startgcodefinal" class="control-label">Start GCODE</label>
+                              <textarea id="startgcodefinal" spellcheck="false" style="width: 100%; height: 80px;" disabled></textarea>
+                           </form>
+                           <form id="gcodefile" class="form-horizontal" style="display: none;">
+                              <label for="gcodepreview" class="control-label">GCODE opened from File</label>
+                              <textarea id="gcodepreview" spellcheck="false" style="width: 100%; height: 80px;" disabled></textarea>
+                           </form>
+                           <div id="gcodejobs"></div>
+                           <form class="form-horizontal">
+                              <label for="endgcodefinal" class="control-label">End GCODE</label>
+                              <textarea id="endgcodefinal" spellcheck="false" style="width: 100%; height: 80px;" disabled></textarea>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- #gcode-menu-panel -->
+                  <div id="settings-menu-panel" class="mobtab" style="display: none;">
+                     <div class="card" style="height: 48%; margin-bottom: 12px;">
+                        <div class="card-header" id="filetreeheader">
+                           <table style="width: 100%">
+                              <tr class="jobsetupfile">
+                                 <td>
+                                    <label for="filetreetable">Settings</label>
+                                 </td>
+                                 <td>
+                                    <button id="savesettings" type="button" class="btn btn-success">Save</button>
+                                    <button type="button" class="btn btn-default">Cancel</button>
+                                 </td>
+                              </tr>
+                           </table>
+                        </div>
+                        <div class="card-body" style="height:calc(100% - 56px); overflow-y:scroll; ">
+                           <div id="settingsstatus" class="bs-callout bs-callout-danger">
+                              <h4><i class="fa fa-fw fa-exclamation"></i> Incomplete Config</h4>
+                              <p>Please complete configuration</p>
+                           </div>
+                           <ul class="nav nav-pills nav-fill">
+                              <li class="nav-item ">
+                                 <a class="nav-link active" data-toggle="tab" href="#menu1">
+                                 <span class="fa-stack">
+                                 <i class="fa fa-line-chart fa-stack-1x"></i>
+                                 <strong class="fa-stack-1x icon-text" style="margin-left: -2px;">SIZE</strong>
+                                 </span>
+                                 </a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" data-toggle="tab" href="#menu2">
+                                 <span class="fa-stack">
+                                 <i class="fa fa-codepen fa-stack-1x"></i>
+                                 <strong class="fa-stack-1x icon-text" style="margin-left: -6px;">GCODE</strong>
+                                 </span>
+                                 </a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" data-toggle="tab" href="#menu3">
+                                 <span class="fa-stack">
+                                 <i class="fa fa-download fa-stack-1x"></i>
+                                 <strong class="fa-stack-1x icon-text" style="margin-left: -10px;">BACKUP</strong>
+                                 </span>
+                                 </a>
+                              </li>
+                           </ul>
+                           <br />
+                           <div class="tab-content">
                               <div id="menu1" class="tab-pane fade show active">
-                                  <p>
-                                      Configure your machine specifics: <br />
-                                      <i>(NB: Page needs a refresh for these settings to take effect!)</i>
-                                  </p>
-                                  <div class="grpblock grpblock-default">
-                                    <div class="shape">
-                                      <div class="shape-text">
-                                        size
-                                      </div>
+                                 <p>
+                                    Configure your machine specifics: <br />
+                                    <i>(NB: Page needs a refresh for these settings to take effect!)</i>
+                                 </p>
+                                 <form class="form-horizontal">
+                                    <h4>Workarea</h4>
+                                    <label for="sizexmax" class="control-label">X-Axis Length</label>
+                                    <div class="input-group">
+                                       <input id="sizexmax" type="text" class="form-control" placeholder="600" />
+                                       <span class="input-group-addon">mm</span>
                                     </div>
-                                    <div class="grpblock-content" style="overflow-y: visible !important;">
-                                      <form class="form-horizontal">
-                                          <h4>Workarea</h4>
-                                          <label for="sizexmax" class="control-label">X-Axis Length</label>
-                                          <div class="input-group">
-                                            <input id="sizexmax" type="text" class="form-control" placeholder="600" />
-                                            <span class="input-group-addon">mm</span>
-                                          </div>
-                                          <label for="sizeymax" class="control-label">Y-Axis Length</label>
-                                          <div class="input-group">
-                                            <input id="sizeymax" type="text" class="form-control" placeholder="400" />
-                                            <span class="input-group-addon">mm</span>
-                                          </div>
-                                      </form>
-                                   </div>
-                                 </div>
-
-                                 <div class="grpblock grpblock-success">
-                                   <div class="shape">
-                                     <div class="shape-text">
-                                       import
-                                     </div>
-                                   </div>
-                                   <div class="grpblock-content" style="overflow-y: visible !important;">
-                                     <h4>Import Settings</h4>
-                                     <form class="form-horizontal">
-                                         <label for="defaultDPI" class="control-label">Generic SVG</label>
-                                         <div class="input-group">
-                                           <input id="defaultDPI" type="text" class="form-control" placeholder="96" />
-                                           <span class="input-group-addon">DPI</span>
-                                         </div>
-                                         <label for="inkscapeDPI" class="control-label">Inkscape</label>
-                                         <div class="input-group">
-                                           <input id="inkscapeDPI" type="text" class="form-control" placeholder="96" />
-                                           <span class="input-group-addon">DPI</span>
-                                         </div>
-                                         <label for="illustratorDPI" class="control-label">Illustrator</label>
-                                         <div class="input-group">
-                                           <input id="illustratorDPI" type="text" class="form-control" placeholder="92" />
-                                           <span class="input-group-addon">DPI</span>
-                                         </div>
-                                         <label for="defaultBitmapDPI" class="control-label">Bitmap</label>
-                                         <div class="input-group">
-                                           <input id="defaultBitmapDPI" type="text" class="form-control" placeholder="600" />
-                                           <span class="input-group-addon">DPI</span>
-                                         </div>
-                                         <span class="help-block">This is the default DPI at which opened SVG/Bitmap files will be imported. You can of course change it per file on the CAM tab afterwards</span>
-                                     </form>
-                                  </div>
-                                </div>
-
-                                <div class="grpblock grpblock-primary">
-                                  <div class="shape">
-                                    <div class="shape-text">
-                                      origin
+                                    <label for="sizeymax" class="control-label">Y-Axis Length</label>
+                                    <div class="input-group">
+                                       <input id="sizeymax" type="text" class="form-control" placeholder="400" />
+                                       <span class="input-group-addon">mm</span>
                                     </div>
-                                  </div>
-                                  <div class="grpblock-content" style="overflow-y: visible !important;">
-                                    <h4>Origin</h4>
-                                    <form class="form-horizontal">
-                                        <label for="imagePosition" class="control-label">Origin location (not home)</label>
-                                        <select id="imagePosition" class="form-control">
-                                            <option>Bottom Left</option>
-                                            <option>Top Left</option>
-                                        </select>
-                                    </form>
-                                 </div>
-                               </div>
-
-                             </div><!-- #menu1 -->
-
-                             <div id="menu2" class="tab-pane fade">
-                               Configure G-CODE Dialect (Specific to your machine/firmware)
-                               <div class="grpblock grpblock-danger">
-                                 <div class="shape">
-                                   <div class="shape-text">
-                                     gcode
-                                   </div>
-                                 </div>
-                                 <div class="grpblock-content" style="overflow-y: visible !important;">
-                                   <h4>GCODE Settings</h4>
-                                   <form class="form-horizontal">
-                                     <label for="g0command" class="control-label">Rapid Move Command</label>
-                                     <input id="g0command" type="text" class="form-control " placeholder="Usually G0" />
-                                     <label for="g1command" class="control-label">Linear Move Command</label>
-                                     <input id="g1command" type="text" class="form-control " placeholder="Usually G1" />
-                                   </form>
-                                </div>
+                                 </form>
+                                 <h4>Import Settings</h4>
+                                 <form class="form-horizontal">
+                                    <label for="defaultDPI" class="control-label">Generic SVG</label>
+                                    <div class="input-group">
+                                       <input id="defaultDPI" type="text" class="form-control" placeholder="96" />
+                                       <span class="input-group-addon">DPI</span>
+                                    </div>
+                                    <label for="inkscapeDPI" class="control-label">Inkscape</label>
+                                    <div class="input-group">
+                                       <input id="inkscapeDPI" type="text" class="form-control" placeholder="96" />
+                                       <span class="input-group-addon">DPI</span>
+                                    </div>
+                                    <label for="illustratorDPI" class="control-label">Illustrator</label>
+                                    <div class="input-group">
+                                       <input id="illustratorDPI" type="text" class="form-control" placeholder="92" />
+                                       <span class="input-group-addon">DPI</span>
+                                    </div>
+                                    <label for="defaultBitmapDPI" class="control-label">Bitmap</label>
+                                    <div class="input-group">
+                                       <input id="defaultBitmapDPI" type="text" class="form-control" placeholder="600" />
+                                       <span class="input-group-addon">DPI</span>
+                                    </div>
+                                    <span class="help-block">This is the default DPI at which opened SVG/Bitmap files will be imported. You can of course change it per file on the CAM tab afterwards</span>
+                                 </form>
+                                 <h4>Origin</h4>
+                                 <form class="form-horizontal">
+                                    <label for="imagePosition" class="control-label">Origin location (not home)</label>
+                                    <select id="imagePosition" class="form-control">
+                                       <option>Bottom Left</option>
+                                       <option>Top Left</option>
+                                    </select>
+                                 </form>
                               </div>
-
-                              <div class="grpblock grpblock-success">
-                                <div class="shape">
-                                  <div class="shape-text">
-                                    tool
-                                  </div>
-                                </div>
-                                <div class="grpblock-content" style="overflow-y: visible !important;">
-                                  <h4>Tool Settings</h4>
-                                  <form class="form-horizontal">
+                              <!-- #menu1 -->
+                              <div id="menu2" class="tab-pane fade">
+                                 Configure G-CODE Dialect (Specific to your machine/firmware)
+                                 <h4>GCODE Settings</h4>
+                                 <form class="form-horizontal">
+                                    <label for="g0command" class="control-label">Rapid Move Command</label>
+                                    <input id="g0command" type="text" class="form-control " placeholder="Usually G0" />
+                                    <label for="g1command" class="control-label">Linear Move Command</label>
+                                    <input id="g1command" type="text" class="form-control " placeholder="Usually G1" />
+                                 </form>
+                                 <h4>Tool Settings</h4>
+                                 <form class="form-horizontal">
                                     <label for="scommand" class="control-label">Spindle / Laser Command</label>
                                     <input id="scommand" type="text" class="form-control " placeholder="Usually S" />
                                     <label for="scommandscale" class="control-label">Power/Speed Scale</label>
                                     <input id="scommandscale" type="text" class="form-control " placeholder="Usually 1000 or 1" />
                                     <div class="checkbox">
-                                      <label>
-                                        <input type="checkbox" id="scommandnewline" value="option1">
-                                        Place command on new-line
-                                      </label>
+                                       <label>
+                                       <input type="checkbox" id="scommandnewline" value="option1">
+                                       Place command on new-line
+                                       </label>
                                     </div>
-                                  </form>
-                               </div>
-                             </div>
-
-                             <div class="grpblock grpblock-warning">
-                               <div class="shape">
-                                 <div class="shape-text">
-                                   cam
-                                 </div>
-                               </div>
-                               <div class="grpblock-content" style="overflow-y: visible !important;">
+                                 </form>
                                  <h4>Gcode Generator Settings</h4>
                                  <form class="form-horizontal">
-                                   <label for="startgcode" class="control-label">Start G-Code</label>
-                                   <textarea id="startgcode" class="form-control" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
-                                   <label for="endgcode" class="control-label">End G-Code</label>
-                                   <textarea id="endgcode" class="form-control" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
-                                   <label for="ihsgcode" class="control-label">Initial Height Sensing G-Code</label>
-                                   <textarea id="ihsgcode" class="form-control" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
+                                    <label for="startgcode" class="control-label">Start G-Code</label>
+                                    <textarea id="startgcode" class="form-control" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
+                                    <label for="endgcode" class="control-label">End G-Code</label>
+                                    <textarea id="endgcode" class="form-control" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
+                                    <label for="ihsgcode" class="control-label">Initial Height Sensing G-Code</label>
+                                    <textarea id="ihsgcode" class="form-control" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
                                  </form>
                               </div>
-                            </div>
-                          </div><!-- #menu2 -->
-
+                              <!-- #menu2 -->
                               <div id="menu3" class="tab-pane fade">
-                                  <p>Download a backup profile or restore settings from a backup file:</p>
-                                  <div class="grpblock grpblock-primary">
-                                    <div class="shape">
-                                      <div class="shape-text">
-                                        tool
-                                      </div>
+                                 <p>Download a backup profile or restore settings from a backup file:</p>
+                                 <form class="form-horizontal">
+                                    <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
+                                       <div class="btn-group" role="group">
+                                          <button id="backup" class="btn btn-lg btn-primary btn-file" title="Take a backup" onclick="backupSettingsLocal()">
+                                            <i class="fa fa-download fa-fw"></i> Backup Settings
+                                          </button>
+                                       </div>
                                     </div>
-                                    <div class="grpblock-content" style="overflow-y: visible !important;">
-                                      <form class="form-horizontal">
-                                          <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
-                                              <div class="btn-group" role="group">
-                                                  <a id="backup" class="btn btn-lg btn-primary btn-file" title="Take a backup" onclick="backupSettingsLocal()">
-                                                      <i class="fa fa-download fa-fw"></i> Backup Settings
-                                                  </a>
-                                              </div>
-                                          </div>
-                                          </br>
-                                          <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Restore">
-                                              <div class="btn-group" role="group">
-                                                  <span id="restore" href="#" class="btn btn-lg btn-primary btn-file" title="Open a backup settings file">
-                                                      <i class="fa fa-upload  fa-fw"></i> Restore from file <input id="jsonFile" type="file" accept=".json" />
-                                                  </span>
-                                              </div>
-                                          </div>
-                                      </form>
-                                   </div>
-                                 </div>
-
-                              </div><!-- #menu3 -->
-
-                              <hr />
-
-                              <button id="savesettings" type="button" class="btn btn-lg btn-success">Save</button>
-                              <button type="button" class="btn btn-lg btn-default">Cancel</button>
-
-                          </div><!-- .tab-content -->
-
-                        </div><!-- #settings-menu-panel -->
-
-                    </div><!-- #col1 (sidebar) -->
-
-                    <div id="col2">
-                      <div class="card" style="height: 100%;">
-                        <div class="card-header" id="toolpathtreeheader" style="padding: 0px;">
-                          <nav class="navbar navbar-expand-sm navbar-light bg-light">
-                            <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-                            <form class="form-inline my-2 my-lg-0">
-                              <span id="openbutton" class="btn btn-primary btn-lg btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .tap, .nc, .gc, .svg, .dxf, or .stl file">
-                                <i class="fa fa-folder-open fa-fw"></i> Open
-                                <input id="file" type="file" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple />
+                                    </br>
+                                    <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Restore">
+                                       <div class="btn-group" role="group">
+                                          <span id="restore" href="#" class="btn btn-lg btn-primary btn-file" title="Open a backup settings file">
+                                          <i class="fa fa-upload  fa-fw"></i> Restore from file <input id="jsonFile" type="file" accept=".json" />
+                                          </span>
+                                       </div>
+                                    </div>
+                                 </form>
+                              </div>
+                              <!-- #menu3 -->
+                           </div>
+                           <!-- .tab-content -->
+                        </div>
+                     </div>
+                  </div>
+                  <!-- #settings-menu-panel -->
+               </div>
+               <!-- #col1 (sidebar) -->
+               <div id="col2">
+                  <div class="card" style="height: 100%;">
+                     <div class="card-header" id="toolpathtreeheader" style="padding: 0px;">
+                        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+                           <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+                           <form class="form-inline my-2 my-lg-0">
+                              <span id="openbutton" class="btn btn-primary btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .tap, .nc, .gc, .svg, .dxf, or .stl file">
+                              <i class="fa fa-folder-open fa-fw"></i> Open
+                              <input id="file" type="file" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple />
                               </span>
-                            </form>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                              <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                           </form>
+                           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                           <span class="navbar-toggler-icon"></span>
+                           </button>
+                           <div class="collapse navbar-collapse" id="navbarSupportedContent">
                               <ul class="navbar-nav mr-auto">
-                                <li class="nav-item dropdown">
-                                  <a class="nav-link dropdown-toggle" href="#" id="fileDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="fileDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     File
-                                  </a>
-                                  <div class="dropdown-menu" aria-labelledby="fileDropDown">
-                                    <a class="dropdown-item" href="#" onclick="exportWorkspace();"><i class="fa fa-fw fa-download" aria-hidden="true"></i></i>Export Job</a>
-                                    <a class="dropdown-item disabled" href="#"><i class="fa fa-fw fa-upload" aria-hidden="true"></i>Import Job</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item disabled" href="#" id="exportGcodeMenu" onclick="saveFile()"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i>Export G-Code</a>
-                                  </div>
-                                </li>
-                                <li class="nav-item dropdown">
-                                  <a class="nav-link dropdown-toggle" href="#" id="selectDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="fileDropDown">
+                                       <a class="dropdown-item" href="#" onclick="exportWorkspace();"><i class="fa fa-fw fa-download" aria-hidden="true"></i></i>Export Job</a>
+                                       <a class="dropdown-item disabled" href="#"><i class="fa fa-fw fa-upload" aria-hidden="true"></i>Import Job</a>
+                                       <div class="dropdown-divider"></div>
+                                       <a class="dropdown-item disabled" href="#" id="exportGcodeMenu" onclick="saveFile()"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i>Export G-Code</a>
+                                    </div>
+                                 </li>
+                                 <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="selectDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Select
-                                  </a>
-                                  <div class="dropdown-menu" aria-labelledby="selectDropDown">
-                                    <a class="dropdown-item" href="#" id="selectAll"><i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>Select All</a>
-                                    <a class="dropdown-item" href="#" id="selectNone"><i class="fa fa-fw fa-square-o" aria-hidden="true"></i>Select None</a>
-                                    <!-- <div class="dropdown-divider"></div> -->
-                                    <a class="dropdown-item" href="#" id="selectInv"><i class="fa fa-fw fa-check" aria-hidden="true"></i>Invert Selection</a>
-                                  </div>
-                                </li>
-                                <li class="nav-item dropdown">
-                                  <a class="nav-link dropdown-toggle" href="#" id="viewDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="selectDropDown">
+                                       <a class="dropdown-item" href="#" id="selectAll"><i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>Select All</a>
+                                       <a class="dropdown-item" href="#" id="selectNone"><i class="fa fa-fw fa-square-o" aria-hidden="true"></i>Select None</a>
+                                       <!-- <div class="dropdown-divider"></div> -->
+                                       <a class="dropdown-item" href="#" id="selectInv"><i class="fa fa-fw fa-check" aria-hidden="true"></i>Invert Selection</a>
+                                    </div>
+                                 </li>
+                                 <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="viewDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     View
-                                  </a>
-                                  <div class="dropdown-menu" aria-labelledby="viewDropDown">
-                                    <a class="dropdown-item" href="#" id="viewReset"><i class="fa fa-fw fa-eye" aria-hidden="true"></i>Reset View</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" id="selectNone"><i class="fa fa-fw fa-th" aria-hidden="true"></i>2D Mode</a>
-                                    <a class="dropdown-item" href="#" id="selectInv"><i class="fa fa-fw fa-cube" aria-hidden="true"></i>3D Mode</a>
-                                  </div>
-                                </li>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="viewDropDown">
+                                       <a class="dropdown-item" href="#" id="viewReset"><i class="fa fa-fw fa-eye" aria-hidden="true"></i>Reset View</a>
+                                       <div class="dropdown-divider"></div>
+                                       <a class="dropdown-item" href="#" id="selectNone" onclick="controls.enableRotate = false; resetView(); printLog('Disabled Orbit', warncolor, 'viewer');"><i class="fa fa-fw fa-th" aria-hidden="true"></i>2D Mode</a>
+                                       <a class="dropdown-item" href="#" id="selectInv" onclick="controls.enableRotate = true; resetView(); printLog('Enabled Orbit', successcolor, 'viewer');"><i class="fa fa-fw fa-cube" aria-hidden="true"></i>3D Mode</a>
+                                    </div>
+                                 </li>
                               </ul>
-                            </div>
-                          </nav>
+                           </div>
+                        </nav>
+                     </div>
+                     <div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 10px; ">
+                        <div id="renderArea">
+                           <div id="rendermenu">
+                           </div>
+                           <div id="helpoverlay"></div>
+                           <div id="selection" style="visibility: hidden;"></div>
                         </div>
-                        <div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 10px; ">
-                          <div id="renderArea">
-                            <div id="rendermenu">
-                            </div>
-                            <div id="helpoverlay"></div>
-                            <div id="selection" style="visibility: hidden;"></div>
-                          </div>
-                        </div>
-                        <div id="viewer_container">
-                          <div class="card">
-                            <div class="card-body">
+                     </div>
+                     <div id="viewer_container">
+                        <div class="card">
+                           <div class="card-body">
                               <div id="console"></div>
-                            </div>
-                          </div>
-                        </div><!-- #viewer_container -->
-                      </div>
-                    </div><!-- #col2 (main content)-->
-                </div><!-- #container1 -->
-            </div><!-- .container-fluid -->
-
-            <div class="sidebar-menu">
-                <div class="menu">
-                    <ul id="menu" >
-                        <li id="tree-cam-menu" class="leftmenuitem active">
-                            <a href="#"><i class="fa fa-pencil"></i><span>CAM</span></a>
-                        </li>
-                        <li id="gcode-menu" class="leftmenuitem">
-                            <a href="#"><i class="fa fa-file-code-o"></i><span>GCode</span></a>
-                        </li>
-                        <li id="settings-menu" class="leftmenuitem">
-                            <a href="#"><i class="fa fa-cogs"></i><span>Settings</span></a>
-                        </li>
-
-                    </ul>
-                </div>
-            </div><!-- .sidebar-menu -->
-
-            <div class="clearfix"></div>
-
-        </div><!-- #page-container -->
-
-        <div id="draganddrop" style="display: none;">
-            <div class="well">Drop File(s) Here!</div>
-            <img src="images/draganddrop.svg" />
-        </div><!-- #draganddrop -->
-
-        <!-- Hidden divs, used by components -->
-        <img id="imageDetect" crossOrigin width="160" height="120" style="display: none; visibility: hidden; float:left;" />
-
-        <div id="work-area" style="display: none; visibility: hidden; float:left;">
-            <div id="svgpreview"></div>
-        </div>
-
-        <!-- End Hidden Divs -->
-
-        <!-- Modals Divs -->
-        <div id="statusmodal" class="modal fade" role="dialog">
-            <div class="modal-dialog" role="document">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 id="statusTitle" class="modal-title">Status title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="statusBody"></div>
-                        <div id="statusBody2"></div>
-                    </div>
-                    <div class="modal-footer" id="statusFooter"></div>
-                </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- #viewer_container -->
+                  </div>
+               </div>
+               <!-- #col2 (main content)-->
             </div>
-        </div><!-- #statusmodal -->
+            <!-- #container1 -->
+         </div>
+         <!-- .container-fluid -->
+         <div class="sidebar-menu">
+            <div class="menu">
+               <ul id="menu" >
+                  <li id="tree-cam-menu" class="leftmenuitem active">
+                     <a href="#"><i class="fa fa-pencil"></i><span>CAM</span></a>
+                  </li>
+                  <li id="gcode-menu" class="leftmenuitem">
+                     <a href="#"><i class="fa fa-file-code-o"></i><span>GCode</span></a>
+                  </li>
+                  <li id="settings-menu" class="leftmenuitem">
+                     <a href="#"><i class="fa fa-cogs"></i><span>Settings</span></a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <!-- .sidebar-menu -->
+         <div class="clearfix"></div>
+      </div>
+      <!-- #page-container -->
+      <div id="draganddrop" style="display: none;">
+         <div class="well">Drop File(s) Here!</div>
+         <img src="images/draganddrop.svg" />
+      </div>
+      <!-- #draganddrop -->
+      <!-- Hidden divs, used by components -->
+      <img id="imageDetect" crossOrigin width="160" height="120" style="display: none; visibility: hidden; float:left;" />
+      <div id="work-area" style="display: none; visibility: hidden; float:left;">
+         <div id="svgpreview"></div>
+      </div>
+      <!-- End Hidden Divs -->
+      <!-- Modals Divs -->
+      <div id="statusmodal" class="modal fade" role="dialog">
+         <div class="modal-dialog" role="document">
+            <!-- Modal content-->
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 id="statusTitle" class="modal-title">Status title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div id="statusBody"></div>
+                  <div id="statusBody2"></div>
+               </div>
+               <div class="modal-footer" id="statusFooter"></div>
+            </div>
+         </div>
+      </div>
+      <!-- #statusmodal -->
+   </body>
+   <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+   <script type="text/javascript" src="lib/bootstrap4/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="lib/nprogress/nprogress.js"></script>
+   <script type="text/javascript" src="lib/jquery/jquery-ui.js"></script>
+   <script type="text/javascript" src="lib/jquery/jquery.ui.touch-punch.min.js"></script>
+   <!-- Helpers -->
+   <script type="text/javascript" src="js/helpers.js"></script>
+   <script type="text/javascript" src="js/fileprep.js"></script>
+   <!-- CAM populated from threejs objects -->
+   <script type="text/javascript" src="lib/clipperjs/clipper_unminified.js"></script>
+   <script type="text/javascript" src="js/advanced-cam-threegcode.js"></script>
+   <script type="text/javascript" src="js/advanced-cam.js"></script>
+   <script type="text/javascript" src="js/advanced-cam-tree.js"></script>
+   <script type="text/javascript" src="js/advanced-cam-modal.js"></script>
+   <script type="text/javascript" src="js/advanced-cam-preview.js"></script>
+   <script type="text/javascript" src="js/advanced-cam-gcode.js"></script>
+   <script type="text/javascript" src="js/advanced-cam-viewer-select.js"></script>
+   <script type="text/javascript" src="js/advanced-cam-workspace-export.js"></script>
+   <!-- ThreeJS -->
+   <script type="text/javascript" src="lib/threejs/three.min.js"></script>
+   <script type="text/javascript" src="lib/threejs/GridRect.js"></script>
+   <script type="text/javascript" src="lib/threejs/OrbitControls.js"></script>
+   <script type="text/javascript" src="lib/threejs/Projector.js"></script>
+   <script type="text/javascript" src="lib/threejs/CanvasRenderer.js"></script>
+   <script type="text/javascript" src="lib/threejs/TransformControls.js"></script>
+   <script type="text/javascript" src="lib/threejs/TweenMax.min.js"></script>
+   <script type="text/javascript" src="js/viewer.js"></script>
+   <script type="text/javascript" src="js/viewer-ruler.js"></script>
+   <!-- Socket.io -->
+   <!-- <script type="text/javascript" src="/socket.io/socket.io.js"></script> -->
+   <!-- DXF Library -->
+   <script type="text/javascript" src="lib/dxf/dxf-parser.js"></script>
+   <script type="text/javascript" src="lib/dxf/three-dxf.js"></script>
+   <script type="text/javascript" src="js/dxf-render.js"></script>
+   <!-- SVG Lasersaur Library -->
+   <script type="text/javascript" src="lib/svgreader/SVGReader.js"></script>
+   <script type="text/javascript" src="lib/svgreader/svg2three.js"></script>
+   <script type="text/javascript" src="lib/svgreader/vec2.js"></script>
+   <!-- Saved/load settings -->
+   <script type="text/javascript" src="js/localstorage.js"></script>
+   <!-- Gcode Viewer -->
+   <!-- <script type="text/javascript" src="lib/gcode-viewer/gcode-parser.js"></script>
+      <script type="text/javascript" src="lib/gcode-viewer/ui.js"></script> -->
+   <script type="text/javascript" src="js/gcodeviewer.js"></script>
+   <!-- User Interface -->
+   <script type="text/javascript" src="js/main.js"></script>
+   <!-- Tabbed CAM -->
+   <!-- <script type="text/javascript" src="js/tabs.js"></script> -->
+   <!-- Left Menu -->
+   <script type="text/javascript" src="js/menu.js"></script>
+   <script type="x-shader/x-vertex" id="vertexShader">
+      varying vec3 vWorldPosition;
 
-    </body>
+      void main() {
 
-    <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+      	vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+      	vWorldPosition = worldPosition.xyz;
 
-    <script type="text/javascript" src="lib/bootstrap4/js/bootstrap.min.js"></script>
+      	gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 
-    <script type="text/javascript" src="lib/nprogress/nprogress.js"></script>
-    <script type="text/javascript" src="lib/jquery/jquery-ui.js"></script>
-    <script type="text/javascript" src="lib/jquery/jquery.ui.touch-punch.min.js"></script>
+      }
 
-    <!-- Helpers -->
-    <script type="text/javascript" src="js/helpers.js"></script>
-    <script type="text/javascript" src="js/fileprep.js"></script>
+   </script>
+   <script type="x-shader/x-fragment" id="fragmentShader">
+      uniform vec3 topColor;
+      uniform vec3 bottomColor;
+      uniform float offset;
+      uniform float exponent;
 
-    <!-- CAM populated from threejs objects -->
-    <script type="text/javascript" src="lib/clipperjs/clipper_unminified.js"></script>
-    <script type="text/javascript" src="js/advanced-cam-threegcode.js"></script>
-    <script type="text/javascript" src="js/advanced-cam.js"></script>
-    <script type="text/javascript" src="js/advanced-cam-tree.js"></script>
-    <script type="text/javascript" src="js/advanced-cam-modal.js"></script>
-    <script type="text/javascript" src="js/advanced-cam-preview.js"></script>
-    <script type="text/javascript" src="js/advanced-cam-gcode.js"></script>
-    <script type="text/javascript" src="js/advanced-cam-viewer-select.js"></script>
-    <script type="text/javascript" src="js/advanced-cam-workspace-export.js"></script>
+      varying vec3 vWorldPosition;
 
-    <!-- ThreeJS -->
-    <script type="text/javascript" src="lib/threejs/three.min.js"></script>
-    <script type="text/javascript" src="lib/threejs/GridRect.js"></script>
-    <script type="text/javascript" src="lib/threejs/OrbitControls.js"></script>
-    <script type="text/javascript" src="lib/threejs/Projector.js"></script>
-    <script type="text/javascript" src="lib/threejs/CanvasRenderer.js"></script>
-    <script type="text/javascript" src="lib/threejs/TransformControls.js"></script>
-    <script type="text/javascript" src="lib/threejs/TweenMax.min.js"></script>
+      void main() {
 
-    <script type="text/javascript" src="js/viewer.js"></script>
+      	float h = normalize( vWorldPosition + offset ).z;
+      	gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
 
-    <!-- Socket.io -->
-    <!-- <script type="text/javascript" src="/socket.io/socket.io.js"></script> -->
+      }
 
-    <!-- DXF Library -->
-    <script type="text/javascript" src="lib/dxf/dxf-parser.js"></script>
-    <script type="text/javascript" src="lib/dxf/three-dxf.js"></script>
-    <script type="text/javascript" src="js/dxf-render.js"></script>
-
-    <!-- SVG Lasersaur Library -->
-    <script type="text/javascript" src="lib/svgreader/SVGReader.js"></script>
-    <script type="text/javascript" src="lib/svgreader/svg2three.js"></script>
-    <script type="text/javascript" src="lib/svgreader/vec2.js"></script>
-
-    <!-- Saved/load settings -->
-    <script type="text/javascript" src="js/localstorage.js"></script>
-
-    <!-- Gcode Viewer -->
-    <!-- <script type="text/javascript" src="lib/gcode-viewer/gcode-parser.js"></script>
-    <script type="text/javascript" src="lib/gcode-viewer/ui.js"></script> -->
-    <script type="text/javascript" src="js/gcodeviewer.js"></script>
-
-    <!-- User Interface -->
-    <script type="text/javascript" src="js/main.js"></script>
-
-    <!-- Tabbed CAM -->
-    <!-- <script type="text/javascript" src="js/tabs.js"></script> -->
-
-    <!-- Left Menu -->
-    <script type="text/javascript" src="js/menu.js"></script>
-
-    <script type="x-shader/x-vertex" id="vertexShader">
-
-    			varying vec3 vWorldPosition;
-
-    			void main() {
-
-    				vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
-    				vWorldPosition = worldPosition.xyz;
-
-    				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-
-    			}
-
-    		</script>
-
-    		<script type="x-shader/x-fragment" id="fragmentShader">
-
-    			uniform vec3 topColor;
-    			uniform vec3 bottomColor;
-    			uniform float offset;
-    			uniform float exponent;
-
-    			varying vec3 vWorldPosition;
-
-    			void main() {
-
-    				float h = normalize( vWorldPosition + offset ).z;
-    				gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
-
-    			}
-
-    		</script>
-
-
+   </script>
 </html>

@@ -111,25 +111,25 @@ function init3D() {
     workspace.add(light2);
 
     dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
-				dirLight.color.setHSL( 0.1, 1, 0.95 );
-				dirLight.position.set( -1, 1.75, 1 );
-				dirLight.position.multiplyScalar( 30 );
-				workspace.add( dirLight );
+		dirLight.color.setHSL( 0.1, 1, 0.95 );
+		dirLight.position.set( -1, 1.75, 1 );
+		dirLight.position.multiplyScalar( 30 );
+		workspace.add( dirLight );
 
-				dirLight.castShadow = true;
+		dirLight.castShadow = true;
 
-				dirLight.shadow.mapSize.width = 2048;
-				dirLight.shadow.mapSize.height = 2048;
+		dirLight.shadow.mapSize.width = 2048;
+		dirLight.shadow.mapSize.height = 2048;
 
-				var d = 50;
+		var d = 50;
 
-				dirLight.shadow.camera.left = -d;
-				dirLight.shadow.camera.right = d;
-				dirLight.shadow.camera.top = d;
-				dirLight.shadow.camera.bottom = -d;
+		dirLight.shadow.camera.left = -d;
+		dirLight.shadow.camera.right = d;
+		dirLight.shadow.camera.top = d;
+		dirLight.shadow.camera.bottom = -d;
 
-				dirLight.shadow.camera.far = 3500;
-				dirLight.shadow.bias = -0.0001;
+		dirLight.shadow.camera.far = 3500;
+		dirLight.shadow.bias = -0.0001;
 
 
 
@@ -195,9 +195,17 @@ function init3D() {
     var material = new THREE.LineBasicMaterial( { color: 0x666666 } );
     material.opacity = 0.15;
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( sizexmax/2, -sizeymax/2+5, 0) );
+    geometry.vertices.push(new THREE.Vector3( sizexmax/2, -sizeymax/2, 0) );
     geometry.vertices.push(new THREE.Vector3( sizexmax/2, sizeymax/2, 0) );
-    geometry.vertices.push(new THREE.Vector3( -sizexmax/2+5, sizeymax/2, 0) );
+    geometry.vertices.push(new THREE.Vector3( -sizexmax/2, sizeymax/2, 0) );
+    var line = new THREE.Line( geometry, material );
+    workspace.add(line);
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3( sizexmax/2+1, -sizeymax/2-1, 0) );
+    geometry.vertices.push(new THREE.Vector3( sizexmax/2+1, sizeymax/2+1, 0) );
+    geometry.vertices.push(new THREE.Vector3( -sizexmax/2-1, sizeymax/2+1, 0) );
+    geometry.vertices.push(new THREE.Vector3( -sizexmax/2-1, -sizeymax/2-1, 0) );
+    geometry.vertices.push(new THREE.Vector3( sizexmax/2+1, -sizeymax/2-1, 0) );
     var line = new THREE.Line( geometry, material );
     workspace.add(line);
 
@@ -222,6 +230,7 @@ function init3D() {
     cone.material.opacity = 0.6;
     cone.material.transparent = true;
     cone.castShadow = false;
+    cone.visible=false;
 
     bullseye.add(cone);
 
@@ -240,33 +249,9 @@ function init3D() {
     axesgrp = new THREE.Object3D();
     axesgrp.name = "Grid System"
 
-    var x = [];
-    var y = [];
-    for (var i = 0; i <= sizexmax; i += lineincrement) {
-        x[i] = this.makeSprite(this.scene, "webgl", {
-            x: i,
-            y: -14,
-            z: 0,
-            text: i,
-            color: "#ff0000"
-        });
-        axesgrp.add(x[i]);
-    }
-
-    for (var i = 0; i <= sizeymax; i += lineincrement) {
-
-        y[i] = this.makeSprite(this.scene, "webgl", {
-            x: -14,
-            y: i,
-            z: 0,
-            text: i,
-            color: "#006600"
-        });
-        axesgrp.add(y[i]);
-    }
     // add axes labels
     var xlbl = this.makeSprite(this.scene, "webgl", {
-        x: sizexmax,
+        x: parseInt(sizexmax)+5,
         y: 0,
         z: 0,
         text: "X",
@@ -274,7 +259,7 @@ function init3D() {
     });
     var ylbl = this.makeSprite(this.scene, "webgl", {
         x: 0,
-        y: sizeymax,
+        y: parseInt(sizeymax)+5,
         z: 0,
         text: "Y",
         color: "#006600"
@@ -303,13 +288,13 @@ function init3D() {
     var geometryX = new THREE.Geometry();
     geometryX.vertices.push(
         new THREE.Vector3(-0.1, 0, 0),
-        new THREE.Vector3(-0.1, (sizeymax - 5), 0)
+        new THREE.Vector3(-0.1, (sizeymax ), 0)
     );
 
     var geometryY = new THREE.Geometry();
     geometryY.vertices.push(
         new THREE.Vector3(0, -0.1, 0),
-        new THREE.Vector3((sizexmax - 5), -0.1, 0)
+        new THREE.Vector3((sizexmax ), -0.1, 0)
     );
 
     var line1 = new THREE.Line(geometryX, materialY);
@@ -326,17 +311,9 @@ function init3D() {
     projector = new THREE.Projector();
     mouseVector = new THREE.Vector3();
 
-    // $('#3dview').change(function() {
-    //     if($(this).is(":checked")) {
-    //         controls.enableRotate = true;
-    //         resetView();
-    //     } else {
-    //         controls.enableRotate = false;
-    //         resetView();
-    //     }
-    // });
-
     scene.add(workspace)
+
+    drawRuler();
 
     material = new THREE.MeshPhongMaterial({
 		color: 0xffcccc,
@@ -344,7 +321,7 @@ function init3D() {
 		shininess: 8
 	});
 
-	scene.fog = new THREE.Fog( 0xffffff, 1, 2000 );
+	scene.fog = new THREE.Fog( 0xffffff, 1, 5000 );
 
   hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
   hemiLight.color.setHSL( 0.6, 1, 0.6 );
