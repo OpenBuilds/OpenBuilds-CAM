@@ -150,25 +150,20 @@ button:focus {outline:0 !important;}
     padding: 0px;
 }
 #col1 {
-    border-right: dashed 1px #aaa;
+    /* border-right: dashed 1px #aaa; */
     float:left;
-    width: 300px;
+    width: 330px;
     height: 100%;
-    padding: 10px 5px 5px 0px;
+    padding: 2px 5px 5px 5px;
     /*overflow-y: auto;*/
     overflow-x: none;
     overflow-x: hidden;
 }
 #col2 {
     float:left;
-    width:calc(100% - 300px);
+    width:calc(100% - 331px);
     height: calc(100% - 210px);
-    padding: 10px;
-}
-
-.mobtab {
-    margin: 0;
-    padding: 0;
+    padding: 2px 5px 5px 5px;
 }
 
 #selection {
@@ -182,13 +177,39 @@ button:focus {outline:0 !important;}
   z-index: 2;
 }
 
+#rendermenu {
+  /* margin-left: 20px;
+  margin-right: 20px; */
+  text-align: center;
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  background: rgba(128, 128, 128, 0.2);
+  color: #444;
+  /* border: 1px dashed rgba(55, 55, 55, 0.5); */
+  border-radius: 4px;
+  width: 100%;
+  z-index: 1;
+  /* visibility: hidden; */
+  text-shadow: rgba(0,0,0,.2) 0 0 1px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.navbar {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
 #helpoverlay {
   margin-left: 20px;
   margin-right: 20px;
   text-align: center;
   position: absolute;
-  bottom: 10px;
-  left: 0px;
+  bottom: 20px;
+  left: -20px;
   background: rgba(128, 128, 128, 0.2);
   color: #444;
   /* border: 1px dashed rgba(55, 55, 55, 0.5); */
@@ -337,21 +358,20 @@ font-family: '8bit'; /*a name to be used later*/
 .btn-override {
 
 }
+
+.pf {
+    margin-top: -12px;
+}
+
 #console {
-    height: 110px;
+    height: 120px;
     width: 100%;
     overflow-y: auto;
     overflow-x: none;
     text-align: left;
-    /* background-color: #fff; */
     padding: 5px;
     font-size: 10px;
     padding-left: 20px;
-    /*word-break: break-all;*/
-    white-space:normal;
-    border-left: dashed 1px #aaa;
-    /*border-top: dashed 1px #aaa;*/
-    /*border-bottom: dashed 1px #aaa;*/
     margin-top: 5px;
 }
 
@@ -370,9 +390,6 @@ font-family: '8bit'; /*a name to be used later*/
     transform: rotate(-90.0deg);
 }
 
-.pf {
-    margin-top: -8px;
-}
 .ui-slider {
     background: #ccc;
 }

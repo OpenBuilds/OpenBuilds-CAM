@@ -15,6 +15,39 @@ function listeners () {
   $('#renderArea').mousedown(mouseDown);
   $('#renderArea').mouseup(mouseUp);
   $('#renderArea').mousemove(mouseMove);
+
+  $('#selectAll').on('click', function() {
+    for (i=0; i<objectsInScene.length; i++) {
+      var obj = objectsInScene[i]
+      obj.traverse( function ( child ) {
+        if (child.type == "Line") {
+          child.userData.selected = true
+        }
+      });
+    }
+  });
+
+  $('#selectNone').on('click', function() {
+    for (i=0; i<objectsInScene.length; i++) {
+      var obj = objectsInScene[i]
+      obj.traverse( function ( child ) {
+        if (child.type == "Line") {
+          child.userData.selected = false
+        }
+      });
+    }
+  });
+
+  $('#selectInv').on('click', function() {
+    for (i=0; i<objectsInScene.length; i++) {
+      var obj = objectsInScene[i]
+      obj.traverse( function ( child ) {
+        if (child.type == "Line") {
+          child.userData.selected = !child.userData.selected
+        }
+      });
+    }
+  });
 }
 
 function delta(num1, num2){

@@ -40,6 +40,9 @@ function addJob() {
 
     // animation to move "doc" to Toolpath - helps user visualise what happened
 
+    $("#savetpgcode").addClass("disabled");
+    $("#exportGcodeMenu").addClass("disabled");
+
     var btnpos = $("#tpaddpath").offset()
     var targetpos = $("#toolpathtree").offset()
 

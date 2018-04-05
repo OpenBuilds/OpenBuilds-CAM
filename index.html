@@ -30,15 +30,15 @@
     <body>
 
         <div class="page-container sidebar-collapsed">
-            <div class="container-fluid" style="height: 100%; width: 100%;">
+            <div class="container-fluid" style="height: 100%; width: 100%; padding-left: 2px; padding-right: 2px;">
                 <div id="container1">
                     <div id="col1">
-                        <div id="tree-cam-menu-panel" class="mobtab" style="height: 98%;">
+                        <div id="tree-cam-menu-panel" class="mobtab" style="height: 99%;">
                             <span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 200;">
                               <i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
                               <i class="fa fa-object-group fa-stack-1x"></i>
                             </span>
-                            <div class="card" style="height: 48%;">
+                            <div class="card" style="height: 48%; margin-bottom: 12px;">
                               <div class="card-header" id="filetreeheader">
                                 <table style="width: 100%">
                                 <tr class="jobsetupfile">
@@ -55,7 +55,7 @@
                               </div>
                               <div class="card-body" id="filetree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
                             </div>
-                            <br>
+
                             <div class="card" style="height: 48%;">
                               <div class="card-header" id="toolpathtreeheader">
                                 <table style="width: 100%">
@@ -319,120 +319,74 @@
 
                     <div id="col2">
                       <div class="card" style="height: 100%;">
-                        <div class="card-header" id="toolpathtreeheader">
-                          <span id="openbutton" class="btn btn-primary btn-lg btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .tap, .nc, .gc, .svg, .dxf, or .stl file">
-                            <i class="fa fa-folder-open fa-fw"></i> Open
-                            <input id="file" type="file" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple />
-                          </span>
-                        </div>
-                        <div class="card-body" style="height: calc(100% - 80px); padding: 0; margin-bottom: 20px; ">
-                          <div id="renderArea">
-                            <div id="helpoverlay">
+                        <div class="card-header" id="toolpathtreeheader" style="padding: 0px;">
+                          <nav class="navbar navbar-expand-sm navbar-light bg-light">
+                            <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+                            <form class="form-inline my-2 my-lg-0">
+                              <span id="openbutton" class="btn btn-primary btn-lg btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .tap, .nc, .gc, .svg, .dxf, or .stl file">
+                                <i class="fa fa-folder-open fa-fw"></i> Open
+                                <input id="file" type="file" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple />
+                              </span>
+                            </form>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                              <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                              <ul class="navbar-nav mr-auto">
+                                <li class="nav-item dropdown">
+                                  <a class="nav-link dropdown-toggle" href="#" id="fileDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    File
+                                  </a>
+                                  <div class="dropdown-menu" aria-labelledby="fileDropDown">
+                                    <a class="dropdown-item" href="#" onclick="exportWorkspace();"><i class="fa fa-fw fa-download" aria-hidden="true"></i></i>Export Job</a>
+                                    <a class="dropdown-item disabled" href="#"><i class="fa fa-fw fa-upload" aria-hidden="true"></i>Import Job</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item disabled" href="#" id="exportGcodeMenu" onclick="saveFile()"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i>Export G-Code</a>
+                                  </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                  <a class="nav-link dropdown-toggle" href="#" id="selectDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Select
+                                  </a>
+                                  <div class="dropdown-menu" aria-labelledby="selectDropDown">
+                                    <a class="dropdown-item" href="#" id="selectAll"><i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>Select All</a>
+                                    <a class="dropdown-item" href="#" id="selectNone"><i class="fa fa-fw fa-square-o" aria-hidden="true"></i>Select None</a>
+                                    <!-- <div class="dropdown-divider"></div> -->
+                                    <a class="dropdown-item" href="#" id="selectInv"><i class="fa fa-fw fa-check" aria-hidden="true"></i>Invert Selection</a>
+                                  </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                  <a class="nav-link dropdown-toggle" href="#" id="viewDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    View
+                                  </a>
+                                  <div class="dropdown-menu" aria-labelledby="viewDropDown">
+                                    <a class="dropdown-item" href="#" id="viewReset"><i class="fa fa-fw fa-eye" aria-hidden="true"></i>Reset View</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" id="selectNone"><i class="fa fa-fw fa-th" aria-hidden="true"></i>2D Mode</a>
+                                    <a class="dropdown-item" href="#" id="selectInv"><i class="fa fa-fw fa-cube" aria-hidden="true"></i>3D Mode</a>
+                                  </div>
+                                </li>
+                              </ul>
                             </div>
+                          </nav>
+                        </div>
+                        <div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 10px; ">
+                          <div id="renderArea">
+                            <div id="rendermenu">
+                            </div>
+                            <div id="helpoverlay"></div>
                             <div id="selection" style="visibility: hidden;"></div>
                           </div>
                         </div>
-
                         <div id="viewer_container">
-
-                            <table style="width: 100%">
-                                <tr>
-                                    <td style="width: 100px;">
-                                        <div id="transformcontrols" class="btn-group" role="group" style="vertical-align: bottom; margin-left: 18px; display: none;">
-                                            <div class="btn-group input-group  btn-group-vertical" role="group" style="vertical-align: bottom;">
-                                                <button id="rotLeftBtn" type="button" data-title="Move Object" class="btn btn-lg btn-default">
-                                                    <span class="fa-stack fa-1x">
-                                                        <i class="fa fa-undo fa-stack-1x"></i>
-                                                        <strong class="fa-stack-1x icon-top-text">Rotate</strong>
-                                                        <strong class="fa-stack-1x rotsizeval icon-bot-text">45&deg;</strong>
-                                                    </span>
-                                                </button>
-                                                <button id="translateBtn" type="button" data-title="Move Object" class="btn btn-lg btn-default">
-                                                    <span class="fa-stack fa-1x">
-                                                        <i class="fa fa-arrows fa-stack-1x"></i>
-                                                        <strong class="fa-stack-1x icon-top-text">Move</strong>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div class="btn-group input-group  btn-group-vertical" role="group" style="vertical-align: bottom;">
-                                                <button id="rotRightBtn" type="button" data-title="Move Object" class="btn btn-lg btn-default">
-                                                    <span class="fa-stack fa-1x">
-                                                        <i class="fa fa-repeat fa-stack-1x"></i>
-                                                        <strong class="fa-stack-1x icon-top-text">Rotate</strong>
-                                                        <strong class="fa-stack-1x rotsizeval icon-bot-text">45&deg;</strong>
-                                                    </span>
-                                                </button>
-                                                <button id="resizeBtn" type="button" data-title="Resize Object" class="btn btn-lg btn-default">
-                                                    <span class="fa-stack fa-1x">
-                                                        <i class="fa fa-expand fa-stack-1x"></i>
-                                                        <strong class="fa-stack-1x icon-top-text">Resize</strong>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div class="btn-group input-group  btn-group-vertical" role="group" style="vertical-align: bottom;">
-                                                <button id="resetRot" type="button" data-title="Link Aspect" class="btn btn-lg btn-default">
-                                                    <span class="fa-stack fa-1x">
-                                                        <i class="fa fa-circle-o-notch fa-stack-1x"></i>
-                                                        <strong class="fa-stack-1x icon-top-text">Reset</strong>
-                                                        <strong class="fa-stack-1x icon-bot-text">Rotation</strong>
-                                                    </span>
-                                                </button>
-                                                <button id="linkAspectBtn" type="button" data-title="Link Aspect" class="btn btn-lg btn-default">
-                                                    <span class="fa-stack fa-1x">
-                                                        <i id="linkAspect" class="fa fa-link fa-stack-1x"></i>
-                                                        <strong class="fa-stack-1x icon-top-text">Aspect</strong>
-                                                        <strong id="linkval" class="fa-stack-1x icon-bot-text">Linked</strong>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </div><!-- #transformcontrols -->
-
-                                        <div id="viewcontrols" class="btn-group" role="group" style="vertical-align: bottom; margin-left: 18px;">
-                                            <div class="btn-group input-group  btn-group-vertical" role="group" style="vertical-align: bottom;">
-                                                <button id="viewReset" type="button" data-title="Link Aspect" class="btn btn-lg btn-light">
-                                                    <span class="fa-stack fa-1x">
-                                                        <i class="fa fa-search fa-stack-1x"></i>
-                                                        <strong class="fa-stack-1x icon-top-text">Reset</strong>
-                                                        <strong id="linkval" class="fa-stack-1x icon-bot-text">View</strong>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </div><!-- #viewcontrols -->
-
-                                    </td>
-                                    <td style="width: 160px;">
-
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <!-- <div class="checkbox">
-                                                        <label><input id="3dview" type="checkbox" value="" />Enable 3D View</label>
-                                                    </div> -->
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                  <!--  -->
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                    </td>
-                                    <td align="right">
-                                        <div class="rotate">SysLog</div>
-                                    </td>
-                                    <td>
-                                        <div id="console"></div><!-- console -->
-
-                                    </td>
-                                </tr>
-                            </table>
-
+                          <div class="card">
+                            <div class="card-body">
+                              <div id="console"></div>
+                            </div>
+                          </div>
                         </div><!-- #viewer_container -->
-
                       </div>
                     </div><!-- #col2 (main content)-->
-
                 </div><!-- #container1 -->
             </div><!-- .container-fluid -->
 

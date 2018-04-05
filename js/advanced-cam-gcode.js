@@ -14,6 +14,7 @@ function makeGcode() {
 
     toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS);
     $("#savetpgcode").removeClass("disabled");
+    $("#exportGcodeMenu").removeClass("disabled");
 
     var template = `
     <form class="form-horizontal">

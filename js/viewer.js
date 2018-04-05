@@ -326,15 +326,15 @@ function init3D() {
     projector = new THREE.Projector();
     mouseVector = new THREE.Vector3();
 
-    $('#3dview').change(function() {
-        if($(this).is(":checked")) {
-            controls.enableRotate = true;
-            resetView();
-        } else {
-            controls.enableRotate = false;
-            resetView();
-        }
-    });
+    // $('#3dview').change(function() {
+    //     if($(this).is(":checked")) {
+    //         controls.enableRotate = true;
+    //         resetView();
+    //     } else {
+    //         controls.enableRotate = false;
+    //         resetView();
+    //     }
+    // });
 
     scene.add(workspace)
 
