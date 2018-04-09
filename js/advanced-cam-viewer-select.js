@@ -210,6 +210,8 @@ function mouseMove (event) {
           selection.style.width = -pos.x + "px";
           selection.style.height = pos.y + "px";
           selection.style.visibility = "visible";
+      } else {
+        console.log("Failed to Marquee")
       }
       // convert to threejs position
       worldendcoords = mouseToWorldCoord(event)

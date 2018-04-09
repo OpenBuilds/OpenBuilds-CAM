@@ -1,5 +1,6 @@
 function toolpathPreview(i) {
-
+  $("#savetpgcode").addClass("disabled");
+  $("#exportGcodeMenu").addClass("disabled");
   var operation = toolpathsInScene[i].userData.camOperation
   var ToolDia = toolpathsInScene[i].userData.camToolDia
   var ZClearance = toolpathsInScene[i].userData.camZClearance

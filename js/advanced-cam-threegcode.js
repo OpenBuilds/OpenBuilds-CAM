@@ -56,31 +56,38 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, leadinval, tabdepth
 
     // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
     var newClipperPaths = simplifyPolygons(clipperPaths);
-
     if (newClipperPaths.length < 1) {
         console.error("Clipper Simplification Failed!:");
         printLog('Clipper Simplification Failed!', errorcolor, "viewer");
+    } else {
+      // console.log(newClipperPaths);
     }
 
+    for (j=0; j<newClipperPaths.length; j++) {
+      var pathobj = [];
+      pathobj.push(newClipperPaths[j])
+      var inflatedPaths = getInflatePath(pathobj, inflateVal);
+      // console.log(inflatedPaths);
+      // plasma lead-in
+      if (leadinval > 0 ) {
+        var leadInPaths = getInflatePath(newClipperPaths[j], inflateVal*2);
+      }
+      for (i = 0; i < zdepth; i += zstep) {
+          inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
+          inflateGrp.name = 'inflateGrp'+j+"_"+i;
+          inflateGrp.userData.material = inflateGrp.material;
+          if (inflateGrp.userData.color) {
+            inflateGrp.userData.color = inflateGrp.material.color.getHex();
+          }
+
+          inflateGrp.position = infobject.position;
+          // console.log(j+"_"+i);
+          inflateGrpZ.add(inflateGrp);
+      }
+
+    }
     // get the inflated/deflated path
-    var inflatedPaths = getInflatePath(newClipperPaths, inflateVal);
-
-    console.log(leadinval);
-    // plasma lead-in
-    if (leadinval > 0 ) {
-      var leadInPaths = getInflatePath(newClipperPaths, inflateVal*2);
-    }
-
-    for (i = 0; i < zdepth; i += zstep) {
-        inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
-        inflateGrp.name = 'inflateGrp';
-        if (inflateGrp.userData.color) {
-          inflateGrp.userData.color = inflateGrp.material.color.getHex();
-        }
-        inflateGrp.position = infobject.position;
-        // console.log(i);
-        inflateGrpZ.add(inflateGrp);
-    }
+    // console.log(inflateGrpZ)
     return inflateGrpZ;
 };
 
@@ -121,9 +128,6 @@ pocketPath = function(infobject, inflateVal, zstep, zdepth) {
                      xpos = (xpos + xpos_offset);
                      ypos = (ypos + ypos_offset);
                     }
-
-
-
                     clipperArr.push({
                         X: xpos,
                         Y: ypos
