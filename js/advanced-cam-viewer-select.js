@@ -158,11 +158,10 @@ function mouseUp (event) {
 function mouseMove (event) {
   // event.preventDefault();
   // event.stopPropagation();
-
   // make sure we are in a select mode.
   if(mousedown){
     // lets wait for mouse to move at least a few pixels, just to eliminate false "selections" if user is simply clicking on an object (hysteresys)
-    if (delta(event.clientX, mousedowncoords.x) > 10 && delta(event.clientX, mousedowncoords.x) > 10) {
+    if (delta(event.clientX, mousedowncoords.x) > 10 && delta(event.clientX, mousedowncoords.x) > 10 || delta(event.clientX, mousedowncoords.x) < -10 && delta(event.clientX, mousedowncoords.x) < -10) {
       offset = $('#renderArea').offset();
       var md = {};
       md.x = mousedowncoords.x;
@@ -174,6 +173,7 @@ function mouseMove (event) {
       pos.x = ev.x - md.x;
       pos.y = ev.y - md.y;
 
+      // console.log(pos)
       // square variations
       // (0,0) origin is the TOP LEFT pixel of the canvas.
       //
@@ -189,14 +189,14 @@ function mouseMove (event) {
           selection.style.width = -pos.x + "px";
           selection.style.height = -pos.y  + "px";
           selection.style.visibility = "visible";
-      } else if ( pos.x >= 0 && pos.y <= 0) {
+      } else if ( pos.x > 0 && pos.y < 0) {
           // console.log("dir1"); // bottom left to to right
           selection.style.left = md.x - offset.left + "px";
           selection.style.top = ev.y - offset.top + "px";
           selection.style.width = pos.x + "px";
           selection.style.height = -pos.y + "px";
           selection.style.visibility = "visible";
-      } else if (pos.x >= 0 && pos.y >= 0) {
+      } else if (pos.x > 0 && pos.y > 0) {
           // console.log("dir2"); // top left to bottom right
           selection.style.left = md.x - offset.left + "px";
           selection.style.top = md.y - offset.top + "px";
@@ -246,6 +246,10 @@ function mouseMove (event) {
             };
         });
       }; // end marquee set
+    } else {
+      // console.log("delta issue")
+      // console.log(delta(event.clientX, mousedowncoords.x))
+      // console.log(delta(event.clientX, mousedowncoords.x))
     };
   };
 };

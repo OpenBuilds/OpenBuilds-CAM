@@ -114,28 +114,21 @@ function init3D() {
 		dirLight.color.setHSL( 0.1, 1, 0.95 );
 		dirLight.position.set( -1, 1.75, 1 );
 		dirLight.position.multiplyScalar( 30 );
-		workspace.add( dirLight );
-
 		dirLight.castShadow = true;
-
 		dirLight.shadow.mapSize.width = 2048;
 		dirLight.shadow.mapSize.height = 2048;
-
 		var d = 50;
-
 		dirLight.shadow.camera.left = -d;
 		dirLight.shadow.camera.right = d;
 		dirLight.shadow.camera.top = d;
 		dirLight.shadow.camera.bottom = -d;
-
 		dirLight.shadow.camera.far = 3500;
 		dirLight.shadow.bias = -0.0001;
+    workspace.add( dirLight );
 
-
-
-    if (helper) {
-        workspace.remove(helper);
-    }
+    // if (helper) {
+    //     workspace.remove(helper);
+    // }
 
     sizexmax = $('#sizexmax').val();
     sizeymax = $('#sizeymax').val();
@@ -148,47 +141,32 @@ function init3D() {
         sizeymax = 200;
     };
 
-    helper = new THREE.GridHelper(sizexmax, sizeymax, 1, 0xdddddd);
-    helper.setColors(0x0000ff, 0x707070);
-    helper.position.y = 0;
-    helper.position.x = 0;
-    helper.position.z = 0;
-    //helper.rotation.x = 90 * Math.PI / 180;
-    helper.material.opacity = 0.15;
-    helper.material.transparent = true;
-    helper.receiveShadow = false;
-    //console.log("helper grid:", helper);
-    this.grid = helper;
-    //this.sceneAdd(this.grid);
-    //console.log('[VIEWER] - added Helpert');
-    helper.name = "GridHelper1mm"
-    workspace.add(helper);
+    // helper = new THREE.GridHelper(sizexmax, sizeymax, 1, 0xdddddd);
+    // helper.position.y = 0;
+    // helper.position.x = 0;
+    // helper.position.z = 0;
+    // helper.material.opacity = 0.15;
+    // helper.material.transparent = true;
+    // helper.receiveShadow = false;
+    // this.grid = helper;
+    // helper.name = "GridHelper1mm"
+    // workspace.add(helper);
     helper = new THREE.GridHelper(sizexmax, sizeymax, 10, 0x888888);
-    helper.setColors(0x0000ff, 0x707070);
     helper.position.y = 0;
     helper.position.x = 0;
     helper.position.z = 0;
-    //helper.rotation.x = 90 * Math.PI / 180;
     helper.material.opacity = 0.15;
     helper.material.transparent = true;
     helper.receiveShadow = false;
-    //console.log("helper grid:", helper);
-    //this.sceneAdd(this.grid);
-    //console.log('[VIEWER] - added Helpert');
     helper.name = "GridHelper10mm"
     workspace.add(helper);
     helper = new THREE.GridHelper(sizexmax, sizeymax, 100, 0x666666);
-    helper.setColors(0x0000ff, 0x707070);
     helper.position.y = 0;
     helper.position.x = 0;
     helper.position.z = 0;
-    //helper.rotation.x = 90 * Math.PI / 180;
     helper.material.opacity = 0.15;
     helper.material.transparent = true;
     helper.receiveShadow = false;
-    //console.log("helper grid:", helper);
-    //this.sceneAdd(this.grid);
-    //console.log('[VIEWER] - added Helpert');
     helper.name = "GridHelper50mm"
     workspace.add(helper);
 
@@ -226,7 +204,6 @@ function init3D() {
     cone.overdraw = true;
     cone.rotation.x = -90 * Math.PI / 180;
     cone.position.z = 20;
-    //cylinder.position.z = 40;
     cone.material.opacity = 0.6;
     cone.material.transparent = true;
     cone.castShadow = false;

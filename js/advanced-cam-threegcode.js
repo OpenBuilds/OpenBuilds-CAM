@@ -5,9 +5,10 @@
 var inflateGrp, fileParentGroup, svgPath, y, shape, lines, line;
 var options = {};
 
-inflatePath = function(infobject, inflateVal, zstep, zdepth, leadinval, tabdepth) {
+inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, tabdepth, union) {
     var zstep = parseFloat(zstep, 2);
     var zdepth = parseFloat(zdepth, 2);
+    var zstart = parseFloat(zstart, 2);
     var inflateGrpZ = new THREE.Group();
     if (typeof(inflateGrp) != 'undefined') {
         scene.remove(inflateGrp);
@@ -52,49 +53,54 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, leadinval, tabdepth
             // console.log("type of ", child.type, " being skipped");
         }
     });
-    // console.log("clipperPaths:", clipperPaths);
-
-    // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
-    var newClipperPaths = simplifyPolygons(clipperPaths);
-    if (newClipperPaths.length < 1) {
-        console.error("Clipper Simplification Failed!:");
-        printLog('Clipper Simplification Failed!', errorcolor, "viewer");
-    } else {
-      // console.log(newClipperPaths);
-    }
-
-    for (j=0; j<newClipperPaths.length; j++) {
-      var pathobj = [];
-      pathobj.push(newClipperPaths[j])
-      var inflatedPaths = getInflatePath(pathobj, inflateVal);
-      // console.log(inflatedPaths);
-      // plasma lead-in
-      if (leadinval > 0 ) {
-        var leadInPaths = getInflatePath(newClipperPaths[j], inflateVal*2);
+    if (union == "Yes") {
+      // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
+      var newClipperPaths = simplifyPolygons(clipperPaths);
+      if (newClipperPaths.length < 1) {
+          console.error("Clipper Simplification Failed!:");
+          printLog('Clipper Simplification Failed!', errorcolor, "viewer");
+      } else {
+        // var newClipperPaths = clipperPaths;
       }
-      for (i = 0; i < zdepth; i += zstep) {
+      var inflatedPaths = getInflatePath(newClipperPaths, inflateVal);
+      if (leadinval > 0 ) { // plasma lead-in
+        var leadInPaths = getInflatePath(newClipperPaths, inflateVal*2);
+      }
+      for (i = zstart; i < zdepth; i += zstep) {
           inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
-          inflateGrp.name = 'inflateGrp'+j+"_"+i;
+          inflateGrp.name = 'inflateGrp'+i;
           inflateGrp.userData.material = inflateGrp.material;
-          if (inflateGrp.userData.color) {
-            inflateGrp.userData.color = inflateGrp.material.color.getHex();
-          }
-
           inflateGrp.position = infobject.position;
-          // console.log(j+"_"+i);
           inflateGrpZ.add(inflateGrp);
       }
-
+    } else {
+      var newClipperPaths = clipperPaths;
+      for (j=0; j<newClipperPaths.length; j++) {
+        var pathobj = [];
+        pathobj.push(newClipperPaths[j])
+        var inflatedPaths = getInflatePath(pathobj, inflateVal);
+        // console.log(inflatedPaths);
+        // plasma lead-in
+        if (leadinval > 0 ) {
+          var leadInPaths = getInflatePath(pathobj, inflateVal*2);
+        }
+        for (i = zstart; i < zdepth; i += zstep) {
+            inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
+            inflateGrp.name = 'inflateGrp'+j+'_'+i;
+            inflateGrp.userData.material = inflateGrp.material;
+            inflateGrp.position = infobject.position;
+            inflateGrpZ.add(inflateGrp);
+        }
+      }
     }
-    // get the inflated/deflated path
-    // console.log(inflateGrpZ)
     return inflateGrpZ;
 };
 
 
-pocketPath = function(infobject, inflateVal, zstep, zdepth) {
+pocketPath = function(infobject, inflateVal, zstep, zdepth, zstart) {
     var zstep = parseFloat(zstep, 2);
     var zdepth = parseFloat(zdepth, 2);
+    var zstart = parseFloat(zstart, 2);
     var pocketGrp = new THREE.Group();
     if (typeof(inflateGrp) != 'undefined') {
         scene.remove(inflateGrp);
@@ -151,9 +157,9 @@ pocketPath = function(infobject, inflateVal, zstep, zdepth) {
             printLog('Clipper Simplification Failed!', errorcolor, "viewer");
         }
 
-        for (j = 0; j < zdepth; j += zstep) {
-            // get the inflated/deflated path
-
+        for (j = zstart; j < zdepth; j += zstep) {
+          // get the inflated/deflated path
+          // todo: Start at center and work outward, also, dont use 100 loop, figure out correct size..
           for (i = 1; i < 100; i++) {  // Rather 100 than a while loop, just in case
             inflateValUsed = inflateVal * i;
             var inflatedPaths = getInflatePath(newClipperPaths, -inflateValUsed);
@@ -406,7 +412,7 @@ drawClipperPaths = function(paths, color, opacity, z, isClosed, name, leadInPath
     if (name) group.name = name;
 
     if (z < tabdepth) {
-      console.log("tab layer at depth " + z + " - below tab of " + tabdepth )
+      // console.log("tab layer at depth " + z + " - below tab of " + tabdepth )
     }
 
     for (var i = 0; i < paths.length; i++) {

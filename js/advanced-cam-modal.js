@@ -44,9 +44,9 @@ function typeofOperation(newval, objectseq) {
 }
 
 function initAdvancedCAM() {
-  $('#statusBody2').on('keyup change','input', function() {
+  $('#statusBody2').on('keyup change','input, select', function() {
       var inputVal = $(this).val();
-      var newval = parseFloat(inputVal, 3)
+      var newval = inputVal
       var id = $(this).attr('id');
       var objectseq = $(this).attr('objectseq');
       // console.log('Value for ' +id+ ' changed to ' +newval+ ' for object ' +objectseq );
@@ -80,9 +80,12 @@ function initAdvancedCAM() {
       } else if ( id.indexOf('tclearanceHeight') == 0 ) {
           $('#svgZClear-8').text(newval + 'mm');
           updateCamUserData(objectseq);
-      } else if ( id.indexOf('tdragoffset') == 0 ) {
-          $('#dragKnifeRadius').text(newval + 'mm');
+      } else if ( id.indexOf('tstartHeight') == 0 ) {
+          $('#svgZStart').text(newval + 'mm');
           updateCamUserData(objectseq);
+      } else if ( id.indexOf('tdragoffset') == 0 ) {
+        $('#dragKnifeRadius').text(newval + 'mm');
+        updateCamUserData(objectseq);
       } else if ( id.indexOf('tspotsize') == 0 ) {
           $('#svgToolDia-4').text(newval + 'mm');
           updateCamUserData(objectseq);
@@ -95,6 +98,9 @@ function initAdvancedCAM() {
       } else if ( id.indexOf('tplasmaihs') == 0 ) {
           $('#svgPlasmaIHS').text(newval);
           updateCamUserData(objectseq);
+      } else if ( id.indexOf('tunion') == 0 ) {
+          // $('#svgPlasmaIHS').text(newval);
+          updateCamUserData(objectseq);
       } else if ( id.indexOf('tabdepth') == 0 ) {
           $('#svgtabdepth').text(newval);
           console.log("tabdepth")
@@ -102,7 +108,11 @@ function initAdvancedCAM() {
       } else if ( id.indexOf('tOpName') == 0 ) {
           $('#svgOpName').text(newval);
           updateCamUserData(objectseq);
+      } else if ( id.indexOf('advanced') == 0 ) {
+          // $('#svgUnion').text(newval);
+          updateCamUserData(objectseq);
       }
+
 
 
   });
@@ -123,6 +133,7 @@ function updateCamUserData(i) {
     toolpathsInScene[i].userData.camOperation = $('#toperation'+i).val();
     toolpathsInScene[i].userData.camToolDia = $('#ttooldia'+i).val();
     toolpathsInScene[i].userData.camZClearance = $('#tclearanceHeight'+i).val();
+    toolpathsInScene[i].userData.camZStart = $('#tstartHeight'+i).val();
     toolpathsInScene[i].userData.camDragOffset = $('#tdragoffset'+i).val();
     toolpathsInScene[i].userData.camLaserPower = $('#tpwr'+i).val();
     toolpathsInScene[i].userData.camZStep = $('#tzstep'+i).val();
@@ -132,10 +143,15 @@ function updateCamUserData(i) {
     toolpathsInScene[i].userData.camPlasmaKerf = $('#tplasmakerf'+i).val();
     toolpathsInScene[i].userData.camPlasmaZHeight = $('#tplasmazheight'+i).val();
     toolpathsInScene[i].userData.camPlasmaIHS = $('#tplasmaihs'+i).val();
+    toolpathsInScene[i].userData.camUnion = $('#tunion'+i).val();
     toolpathsInScene[i].userData.camSpotSize = $('#tspotsize'+i).val();
     toolpathsInScene[i].userData.camTabDepth = $('#tabdepth'+i).val();
+    toolpathsInScene[i].userData.advanced = $('#advanced'+i).is(":checked");; // Marlin, Stepcraft, Mach3, LinuxCNC
     toolpathsInScene[i].name = $('#tOpName'+i).val();
     $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
+
+    // store last used values in localStorage
+    localStorage.setItem('lastCamOperation',  JSON.stringify(toolpathsInScene[i].userData));
 
 };
 
@@ -194,7 +210,7 @@ function setupJob(i) {
         </td>
 
       </tr>
-      <tr class="inputcnc">
+      <tr class="inputcnc inputpocket">
         <td>Endmill Diameter</td>
         <td>
           <div class="input-addon">
@@ -204,7 +220,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc inputplasma inputdragknife">
+      <tr class="inputcnc  inputpocket inputplasma inputdragknife">
         <td>Z Safe Height</td>
         <td>
           <div class="input-addon">
@@ -244,7 +260,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc">
+      <tr class="inputcnc inputpocket">
         <td>Cut Depth: per Pass</td>
         <td>
           <div class="input-addon">
@@ -254,7 +270,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc">
+      <tr class="inputcnc inputpocket">
         <td>Cut Depth: Final</td>
         <td>
           <div class="input-addon">
@@ -264,7 +280,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc inputdragknife inputlaser inputplasma">
+      <tr class="inputcnc inputpocket inputdragknife inputlaser inputplasma">
         <td>Feedrate: Cut</td>
         <td>
           <div class="input-addon">
@@ -274,23 +290,13 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc">
+      <tr class="inputcnc inputpocket">
         <td>Feedrate: Plunge</td>
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left"><i class="fa fa-exchange fa-rotate-90" aria-hidden="true"></i></span>
             <input type="number" class="cam-form-field" value="300" id="tplungespeed`+i+`" objectseq="`+i+`" min="0" step="1">
             <span class="input-addon-label-right">mm/min</span>
-          </div>
-        </td>
-      </tr>
-      <tr class="inputcnc">
-        <td>Tabs: Depth</td>
-        <td>
-          <div class="input-addon">
-            <span class="input-addon-label-left"><i class="fa fa-exchange fa-rotate-90" aria-hidden="true"></i></span>
-            <input type="number" class="cam-form-field" value="0" id="tabdepth`+i+`" objectseq="`+i+`" step="1">
-            <span class="input-addon-label-right">mm</span>
           </div>
         </td>
       </tr>
@@ -314,16 +320,62 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputplasma">
-        <td>Plasma: Use IHS</td>
-        <td>
-          <div class="input-addon">
-            <span class="input-addon-label-left"><i class="fa fa-wrench" aria-hidden="true"></i></span>
-            <select class="cam-form-field" id="tplasmaihs`+i+`" objectseq="`+i+`" style="border-right: 1px solid #ddd; width: 180px;">
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-
+      <tr class="inputcnc inputpocket inputplasma inputdragknife inputlaser">
+        <td colspan="2">
+          <div>
+            <input type='checkbox' data-toggle='collapse' data-target='#collapsediv1' id="advanced`+i+`" objectseq="`+i+`"> Advanced Settings
+            </input>
+          </div>
+          <div id='collapsediv1' class='collapse div1'>
+          <table>
+            <tr>
+              <th style="width: 150px;"></th><th style="width: 210px;"></th>
+            </tr>
+            <tr class="inputcnc inputpocket">
+              <td>Cut Depth: Start</td>
+              <td>
+                <div class="input-addon">
+                  <span class="input-addon-label-left"><i class="fa fa-arrows-v" aria-hidden="true"></i></span>
+                  <input type="number" class="cam-form-field" value="0" id="tstartHeight`+i+`"  objectseq="`+i+`" min="1">
+                  <span class="input-addon-label-right">mm</span>
+                </div>
+              </td>
+            </tr>
+            <tr class="inputcnc">
+              <td>Tabs: Depth</td>
+              <td>
+                <div class="input-addon">
+                  <span class="input-addon-label-left"><i class="fa fa-exchange fa-rotate-90" aria-hidden="true"></i></span>
+                    <input type="number" class="cam-form-field" value="0" id="tabdepth`+i+`" objectseq="`+i+`" step="1">
+                  <span class="input-addon-label-right">mm</span>
+                </div>
+              </td>
+            </tr>
+            <tr class="inputplasma">
+              <td>Plasma: Use IHS</td>
+              <td>
+                <div class="input-addon">
+                  <span class="input-addon-label-left"><i class="fa fa-wrench" aria-hidden="true"></i></span>
+                  <select class="cam-form-field" id="tplasmaihs`+i+`" objectseq="`+i+`" style="border-right: 1px solid #ddd; width: 180px;">
+                    <option selected>No</option>
+                    <option>Yes</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr class="inputplasma inputcnc inputpocket inputdragknife inputlaser">
+              <td>Geometry: Merge</td>
+              <td>
+                <div class="input-addon">
+                  <span class="input-addon-label-left"><i class="fa fa-compress" aria-hidden="true"></i></span>
+                  <select class="cam-form-field" id="tunion`+i+`" objectseq="`+i+`" style="border-right: 1px solid #ddd; width: 180px;">
+                    <option selected>No</option>
+                    <option>Yes</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+          </table>
           </div>
         </td>
       </tr>
@@ -336,6 +388,7 @@ function setupJob(i) {
       $('#toperation'+i).val(toolpathsInScene[i].userData.camOperation).prop('selected', true)
       $('#ttooldia'+i).val(toolpathsInScene[i].userData.camToolDia);
       $('#tclearanceHeight'+i).val(toolpathsInScene[i].userData.camZClearance);
+      $('#tstartHeight'+i).val(toolpathsInScene[i].userData.camZStart);
       $('#tdragoffset'+i).val(toolpathsInScene[i].userData.camDragOffset);
       $('#tspotsize'+i).val(toolpathsInScene[i].userData.camSpotSize);
       $('#tpwr'+i).val(toolpathsInScene[i].userData.camLaserPower);
@@ -347,10 +400,35 @@ function setupJob(i) {
       $('#tplasmazheight'+i).val(toolpathsInScene[i].userData.camPlasmaZHeight);
       $('#tabdepth'+i).val(toolpathsInScene[i].userData.camTabDepth);
       $('#tplasmaihs'+i).val(toolpathsInScene[i].userData.camPlasmaIHS).prop('selected', true);
+      $('#tunion'+i).val(toolpathsInScene[i].userData.camUnion).prop('selected', true);
       $('#tOpName'+i).val(toolpathsInScene[i].name);
       $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
-
+      $('#advanced'+i).prop('checked', toolpathsInScene[i].userData.advanced);
+      if (toolpathsInScene[i].userData.advanced) {
+        $("#collapsediv1").collapse('show')
+      } else {
+        $("#collapsediv1").collapse('hide')
+      }
       typeofOperation(toolpathsInScene[i].userData.camOperation, i);
+    } else {
+      // if we don't already have an Operation, perhaps we can pull from last-used values to make it easier
+      var lastused = JSON.parse(localStorage.getItem('lastCamOperation'));
+      if (lastused) {
+        // console.log(lastused)
+        $('#ttooldia'+i).val(lastused.camToolDia);
+        $('#tclearanceHeight'+i).val(lastused.camZClearance);
+        $('#tstartHeight'+i).val(lastused.camZStart);
+        $('#tdragoffset'+i).val(lastused.camDragOffset);
+        $('#tspotsize'+i).val(lastused.camSpotSize);
+        $('#tpwr'+i).val(lastused.camLaserPower);
+        $('#tzstep'+i).val(lastused.camZStep);
+        $('#tzdepth'+i).val(lastused.camZDepth);
+        $('#tspeed'+i).val(lastused.camFeedrate);
+        $('#tplungespeed'+i).val(lastused.camPlungerate);
+        $('#tplasmakerf'+i).val(lastused.camPlasmaKerf);
+        $('#tplasmazheight'+i).val(lastused.camPlasmaZHeight);
+      }
+
     };
 
 
@@ -358,6 +436,7 @@ function setupJob(i) {
 
 function noMode() {
   $('.inputcnc').hide();
+  $('.inputpocket').hide();
   $('.inputlaser').hide();
   $('.inputdragknife').hide();
   $('.inputplasma').hide();
@@ -365,6 +444,7 @@ function noMode() {
 
 function laserMode() {
     $('.inputcnc').hide();
+    $('.inputpocket').hide();
     $('.inputdragknife').hide();
     $('.inputplasma').hide();
     $('.inputlaser').show();
@@ -372,6 +452,7 @@ function laserMode() {
 
 function laserInsideMode() {
     $('.inputcnc').hide();
+    $('.inputpocket').hide();
     $('.inputdragknife').hide();
     $('.inputplasma').hide();
     $('.inputlaser').show();
@@ -379,6 +460,7 @@ function laserInsideMode() {
 
 function laserOutsideMode() {
     $('.inputcnc').hide();
+    $('.inputpocket').hide();
     $('.inputdragknife').hide();
     $('.inputplasma').hide();
     $('.inputlaser').show();
@@ -386,6 +468,7 @@ function laserOutsideMode() {
 
 function cncInsideMode() {
     $('.inputlaser').hide();
+    $('.inputpocket').hide();
     $('.inputdragknife').hide();
     $('.inputplasma').hide();
     $('.inputcnc').show();
@@ -393,6 +476,7 @@ function cncInsideMode() {
 
 function cncOutsideMode() {
     $('.inputlaser').hide();
+    $('.inputpocket').hide();
     $('.inputdragknife').hide();
     $('.inputplasma').hide();
     $('.inputcnc').show();
@@ -402,11 +486,13 @@ function cncPocketMode() {
     $('.inputlaser').hide();
     $('.inputdragknife').hide();
     $('.inputplasma').hide();
-    $('.inputcnc').show();
+    $('.inputcnc').hide();
+    $('.inputpocket').show();
 };
 
 function plasmaMode() {
     $('.inputcnc').hide();
+    $('.inputpocket').hide();
     $('.inputlaser').hide();
     $('.inputdragknife').hide();
     $('.inputplasma').show();
@@ -415,6 +501,7 @@ function plasmaMode() {
 
 function dragKnifeMode() {
     $('.inputcnc').hide();
+    $('.inputpocket').hide();
     $('.inputlaser').hide();
     $('.inputplasma').hide();
     $('.inputdragknife').show();
