@@ -25,9 +25,9 @@
             <div id="container1">
                <div id="col1">
                   <div id="tree-cam-menu-panel" class="mobtab" style="height: 99%;">
-                     <span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 200;">
-                     <i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
-                     <i class="fa fa-object-group fa-stack-1x"></i>
+                     <span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 200; color: #fff;">
+                       <i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
+                       <i class="fa fa-object-group fa-stack-1x"></i>
                      </span>
                      <div class="card" id="renderToolpath" style="height: 48%;  margin-bottom: 12px;">
                         <div class="card-header" id="toolpathtreeheader">
@@ -50,7 +50,7 @@
                            <table style="width: 100%">
                               <tr class="jobsetupfile">
                                  <td>
-                                    <label for="filetreetable">Objects</label>
+                                    <label for="filetreetable">Documents</label>
                                  </td>
                                  <td>
                                  </td>
@@ -286,6 +286,11 @@
                                     File
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="fileDropDown">
+                                       <label class="dropdown-item" style="margin: 0px;">
+                                        <i class="fa fa-folder-open fa-fw"></i> Open Document
+                                        <input type="file" id="filemenu" class="custom-file-input" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple style="height: 26px;"/>
+                                       </label>
+                                       <div class="dropdown-divider"></div>
                                        <a class="dropdown-item" href="#" onclick="exportWorkspace();"><i class="fa fa-fw fa-download" aria-hidden="true"></i></i>Export Job</a>
                                        <a class="dropdown-item disabled" href="#"><i class="fa fa-fw fa-upload" aria-hidden="true"></i>Import Job</a>
                                        <div class="dropdown-divider"></div>
@@ -330,9 +335,9 @@
                             <label class="btn btn-xs btn-secondary">
                               <input type="radio" value="move" name="options" autocomplete="off"> <i class="fa fa-arrows" aria-hidden="true"></i>
                             </label>
-                            <!-- <label class="btn btn-xs btn-secondary">
+                            <label class="btn btn-xs btn-secondary">
                               <input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fa fa-eraser" aria-hidden="true"></i>
-                            </label> -->
+                            </label>
                           </div>
                         </div>
                         <div id="renderArea">

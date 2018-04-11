@@ -421,7 +421,7 @@ function fillTree() {
         // contentEditable for Toolpath Name field - edit directly in toolpath table
 
     } else {
-        var instructions = `Please select some entities from the <b>Objects</b> above, or by clicking them in the viewer.  Hold down Ctrl to select more than one in the viewer. Add them to a toolpath using the <br><kbd><i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job</kbd> button...`
+        var instructions = `Please select some entities from the <b>Documents</b>, or by clicking them in the viewer.  Hold down Ctrl to select more than one in the viewer. Add them to a toolpath using the <br><kbd><i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job</kbd> button...`
         $('#toolpathtree').append(instructions)
 
     }  // End of if (toolpathsInScene.length > 0)

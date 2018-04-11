@@ -83,11 +83,13 @@ function mouseDown (event) {
       }
 
       // raycast single click selection
+
+
       sceneWidth = document.getElementById("renderArea").offsetWidth;
       sceneHeight = document.getElementById("renderArea").offsetHeight;
       offset = $('#renderArea').offset();
       var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
-      if (event.clientX > 390 && !isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
+      if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
         mouseVector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
         mouseVector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1
         raycaster.setFromCamera(mouseVector, camera);
@@ -132,6 +134,52 @@ function mouseDown (event) {
                 });
               }
             }
+          }
+        }
+      } // end raycast single click select
+    }
+  } else if (mouseState == "delete") {
+    helpoverlay.style.visibility = "visible";
+    helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = delete Entity / <kbd>Ctrl + Left Mouse Click</kbd> = Delete entire Document"
+    if (event.which == 1) { // only on left mousedown
+      // raycast single click selection
+      sceneWidth = document.getElementById("renderArea").offsetWidth;
+      sceneHeight = document.getElementById("renderArea").offsetHeight;
+      offset = $('#renderArea').offset();
+      var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
+        mouseVector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
+        mouseVector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1
+        raycaster.setFromCamera(mouseVector, camera);
+        // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
+        // upwards of 10k objects and slows the filter down immensely
+        var documents = scene.getObjectByName("Documents");
+        if (documents) {
+          var intersects = raycaster.intersectObjects(documents.children, true)
+          if (intersects.length > 0) {
+            var intersection = intersects[0],
+            obj = intersection.object;
+            if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
+              printLog('Clicked on : ' + obj.name, successcolor, "viewer")
+              console.log(obj.userData.link)
+              if (event.ctrlKey) {
+                idx = $("#"+obj.userData.link).parent().find('input').attr('id').split('.');
+                i = parseInt(idx[1]);
+                j = parseInt(idx[2]);
+                console.log(i, j);
+                objectsInScene.splice('`+i+`', 1)
+                fillTree();
+              } else {
+                idx = $("#"+obj.userData.link).parent().find('input').attr('id').split('.');
+                i = parseInt(idx[1]);
+                j = parseInt(idx[2]);
+                console.log(i, j);
+                objectsInScene[i].remove(objectsInScene[i].children[j]);
+                fillTree();
+              }
+            }
+          } else {
+            // if nothing intersected we clicked empty space
           }
         }
       } // end raycast single click select
@@ -237,8 +285,8 @@ function mouseMove (event) {
             if (child.type == "Line") {
                 child.geometry.computeBoundingSphere()
                 var center = {};
-                center.x = child.geometry.boundingSphere.center.x + (child.parent.position.x)
-                center.y = child.geometry.boundingSphere.center.y + (child.parent.position.y )
+                center.x = child.geometry.boundingSphere.center.x + (child.parent.position.x) + (child.position.x)
+                center.y = child.geometry.boundingSphere.center.y + (child.parent.position.y ) + (child.position.y)
                 if (XinSelectRange(center.x) && YinSelectRange(center.y))  {
                   if (event.ctrlKey) {
                     child.userData.selected = !child.userData.lastSelected;
