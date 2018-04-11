@@ -417,18 +417,13 @@ function viewExtents(objecttosee) {
         controls.target.y = centery;
         controls.target.z = centerz;
         // console.log("maxlen:", maxlen, "dist:", dist);
-        var fov = 2.2 * Math.atan(maxlen / (2 * dist)) * (180 / Math.PI);
+        var fov = 1.4 * Math.atan(maxlen / (2 * dist)) * (180 / Math.PI);
         // console.log("new fov:", fov, " old fov:", controls.object.fov);
         if (isNaN(fov)) {
             console.log("giving up on viewing extents because fov could not be calculated");
             return;
         } else {
             controls.object.fov = fov;
-            //this.controls.object.setRotationFromEuler(THREE.Euler(0.5,0.5,0.5));
-            //this.controls.object.rotation.set(0.5,0.5,0.5,"XYZ");
-            //this.controls.object.rotateX(2);
-            //this.controls.object.rotateY(0.5);
-
             var L = dist;
             var camera = controls.object;
             var vector = controls.target.clone();
@@ -453,20 +448,8 @@ function viewExtents(objecttosee) {
             up.x = 0;
             up.z = 1;
             quaternion.setFromAxisAngle(up, 0);
-            //camera.position.applyQuaternion(quaternion);
-
             camera.lookAt(vector);
-
-            //this.camera.rotateX(90);
-
             controls.object.updateProjectionMatrix();
-            containerWidth = window.innerWidth;
-            containerHeight = window.innerHeight;
-            //this.controls.enabled = true;
-            //this.scaleInView();
-            //this.controls.rotateCamera(0.5);
-            //this.controls.noRoll = true;
-            //this.controls.noRotate = true;
         }
 
     }
