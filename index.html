@@ -287,12 +287,15 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="fileDropDown">
                                        <label class="dropdown-item" style="margin: 0px;">
-                                        <i class="fa fa-folder-open fa-fw"></i> Open Document
+                                        <i class="fa fa-folder-open fa-fw"></i>Open Document
                                         <input type="file" id="filemenu" class="custom-file-input" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple style="height: 26px;"/>
                                        </label>
                                        <div class="dropdown-divider"></div>
                                        <a class="dropdown-item" href="#" onclick="exportWorkspace();"><i class="fa fa-fw fa-download" aria-hidden="true"></i></i>Export Job</a>
-                                       <a class="dropdown-item disabled" href="#"><i class="fa fa-fw fa-upload" aria-hidden="true"></i>Import Job</a>
+                                       <label class="dropdown-item" style="margin: 0px;">
+                                        <i class="fa fa-upload fa-fw"></i>Import Job
+                                        <input type="file" id="workspaceImport" class="custom-file-input" accept=".json" multiple style="height: 26px;"/>
+                                       </label>
                                        <div class="dropdown-divider"></div>
                                        <a class="dropdown-item disabled" href="#" id="exportGcodeMenu" onclick="saveFile()"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i>Export G-Code</a>
                                     </div>

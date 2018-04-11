@@ -22,6 +22,7 @@ $(document).ready(function() {
     initTree();
     initAdvancedCAM();
     initDragDrop();
+    initExportworkspace();
 
     // Tooltips
     // $(document).tooltip();
