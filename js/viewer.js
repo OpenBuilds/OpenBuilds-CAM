@@ -353,7 +353,7 @@ function animate() {
       for (i = 0; i < toolpathsInScene.length; i++) {
         if (toolpathsInScene[i].userData.inflated) {
           toolpaths.add(toolpathsInScene[i].userData.inflated);
-          toolpaths.add(toolpathsInScene[i]);
+          // toolpaths.add(toolpathsInScene[i]);
         }
       }
       scene.add(toolpaths)
