@@ -417,7 +417,6 @@ function setupJob(i) {
         // console.log(lastused)
         $('#ttooldia'+i).val(lastused.camToolDia);
         $('#tclearanceHeight'+i).val(lastused.camZClearance);
-        $('#tstartHeight'+i).val(lastused.camZStart);
         $('#tdragoffset'+i).val(lastused.camDragOffset);
         $('#tspotsize'+i).val(lastused.camSpotSize);
         $('#tpwr'+i).val(lastused.camLaserPower);

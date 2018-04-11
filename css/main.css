@@ -151,7 +151,7 @@ button:focus {outline:0 !important;}
 }
 #col1 {
     /* border-right: dashed 1px #aaa; */
-    float:left;
+    float:right;
     width: 330px;
     height: 100%;
     padding: 2px 5px 5px 5px;
@@ -203,6 +203,18 @@ button:focus {outline:0 !important;}
   user-select: none;
 }
 
+#buttonbar {
+  margin-left: 0px;
+  margin-right: 0px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0);
+  border-radius: 4px;
+  width: 100%;
+  z-index: 1;
+  text-shadow: rgba(0,0,0,.2) 0 0 1px;
+  -webkit-font-smoothing: antialiased;
+}
+
 #helpoverlay {
   margin-left: 20px;
   margin-right: 20px;
@@ -228,8 +240,8 @@ button:focus {outline:0 !important;}
 #renderArea {
   position: relative;
     display:inline-block;
-    min-width: 100% !important;
-    min-height: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .btn-file {

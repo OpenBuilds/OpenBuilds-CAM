@@ -6,6 +6,7 @@ var inflateGrp, fileParentGroup, svgPath, y, shape, lines, line;
 var options = {};
 
 inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, tabdepth, union) {
+  console.log(infobject)
     var zstep = parseFloat(zstep, 2);
     var zdepth = parseFloat(zdepth, 2);
     var zstart = parseFloat(zstart, 2);
@@ -18,7 +19,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
     var grp = infobject;
     var clipperPaths = [];
     grp.traverse(function(child) {
-        // console.log('Traverse: ', child)
+        console.log('Traverse: ', child.position, grp.position)
         if (child.name == "inflatedGroup") {
             console.log("this is the inflated path from a previous run. ignore.");
             return;
@@ -29,9 +30,9 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
             // Fix world Coordinates
             for (i = 0; i < child.geometry.vertices.length; i++) {
                 var localPt = child.geometry.vertices[i];
-                var worldPt = grp.localToWorld(localPt.clone());
-                var xpos = worldPt.x;
-                var ypos = worldPt.y;
+                var worldPt = child.localToWorld(localPt.clone());
+                var xpos = worldPt.x + (sizexmax /2);
+                var ypos = worldPt.y + (sizeymax /2);
 
                 var xpos_offset = (parseFloat(child.position.x.toFixed(3)));
                 var ypos_offset = (parseFloat(child.position.y.toFixed(3)));
@@ -46,6 +47,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
                     Y: ypos
                 });
             }
+            // console.log(clipperArr)
             clipperPaths.push(clipperArr);
         } else if (child.type == "Points") {
             child.visible = false;
@@ -55,6 +57,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
     });
     if (union == "Yes") {
       // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
+      // console.log(clipperPaths[0])
       var newClipperPaths = simplifyPolygons(clipperPaths);
       if (newClipperPaths.length < 1) {
           console.error("Clipper Simplification Failed!:");
@@ -70,10 +73,11 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
           inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
           inflateGrp.name = 'inflateGrp'+i;
           inflateGrp.userData.material = inflateGrp.material;
-          inflateGrp.position = infobject.position;
+          // inflateGrp.position = infobject.position;
           inflateGrpZ.add(inflateGrp);
       }
     } else {
+      // console.log(clipperPaths[0])
       var newClipperPaths = clipperPaths;
       for (j=0; j<newClipperPaths.length; j++) {
         var pathobj = [];
@@ -88,11 +92,12 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
             inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
             inflateGrp.name = 'inflateGrp'+j+'_'+i;
             inflateGrp.userData.material = inflateGrp.material;
-            inflateGrp.position = infobject.position;
+            // inflateGrp.position = infobject.position;
             inflateGrpZ.add(inflateGrp);
         }
       }
     }
+    inflateGrpZ.position
     return inflateGrpZ;
 };
 
@@ -123,9 +128,9 @@ pocketPath = function(infobject, inflateVal, zstep, zdepth, zstart) {
                 // Fix world Coordinates
                 for (i = 0; i < child.geometry.vertices.length; i++) {
                     var localPt = child.geometry.vertices[i];
-                    var worldPt = grp.localToWorld(localPt.clone());
-                    var xpos = (parseFloat(worldPt.x.toFixed(3)));
-                    var ypos = (parseFloat(worldPt.y.toFixed(3)));
+                    var worldPt = child.localToWorld(localPt.clone());
+                    var xpos = worldPt.x + (sizexmax /2);
+                    var ypos = worldPt.y + (sizeymax /2);
 
                     var xpos_offset = (parseFloat(child.position.x.toFixed(3)));
                     var ypos_offset = (parseFloat(child.position.y.toFixed(3)));
@@ -205,9 +210,9 @@ dragknifePath = function(infobject, inflateVal, zstep, zdepth) {
                 // Fix world Coordinates
                 for (i = 0; i < child.geometry.vertices.length; i++) {
                     var localPt = child.geometry.vertices[i];
-                    var worldPt = grp.localToWorld(localPt.clone());
-                    var xpos = worldPt.x;
-                    var ypos = worldPt.y;
+                    var worldPt = child.localToWorld(localPt.clone());
+                    var xpos = worldPt.x + (sizexmax /2);
+                    var ypos = worldPt.y + (sizeymax /2);
 
                     var xpos_offset = child.position.x;
                     var ypos_offset = child.position.y;

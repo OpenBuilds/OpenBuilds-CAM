@@ -29,24 +29,7 @@
                      <i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
                      <i class="fa fa-object-group fa-stack-1x"></i>
                      </span>
-                     <div class="card" style="height: 48%; margin-bottom: 12px;">
-                        <div class="card-header" id="filetreeheader">
-                           <table style="width: 100%">
-                              <tr class="jobsetupfile">
-                                 <td>
-                                    <label for="filetreetable">Objects</label>
-                                 </td>
-                                 <td>
-                                    <button type="button" class="btn btn-success" onclick="addJob();" id="tpaddpath">
-                                    <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-danger" id="selectCount">4</span>
-                                    </button>
-                                 </td>
-                              </tr>
-                           </table>
-                        </div>
-                        <div class="card-body" id="filetree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
-                     </div>
-                     <div class="card" style="height: 48%;">
+                     <div class="card" id="renderToolpath" style="height: 48%;  margin-bottom: 12px;">
                         <div class="card-header" id="toolpathtreeheader">
                            <table style="width: 100%">
                               <tr class="jobsetupfile">
@@ -61,6 +44,20 @@
                            </table>
                         </div>
                         <div class="card-body" id="toolpathtree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
+                     </div>
+                     <div class="card" style="height: 48%;">
+                        <div class="card-header" id="filetreeheader">
+                           <table style="width: 100%">
+                              <tr class="jobsetupfile">
+                                 <td>
+                                    <label for="filetreetable">Objects</label>
+                                 </td>
+                                 <td>
+                                 </td>
+                              </tr>
+                           </table>
+                        </div>
+                        <div class="card-body" id="filetree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
                      </div>
                   </div>
                   <!-- #tree-cam-menu-panel -->
@@ -249,6 +246,14 @@
                                           </span>
                                        </div>
                                     </div>
+                                    </br>
+                                    <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
+                                       <div class="btn-group" role="group">
+                                          <button class="btn btn-lg btn-primary btn-file" title="Reset all settings to default" onclick="ConfirmDelete()">
+                                            <i class="fa fa-exclamation-triangle fa-fw"></i> Factory Reset
+                                          </button>
+                                       </div>
+                                    </div>
                                  </form>
                               </div>
                               <!-- #menu3 -->
@@ -310,10 +315,26 @@
                                     </div>
                                  </li>
                               </ul>
+                              <button type="button" class="btn btn-success" onclick="addJob();" id="tpaddpath">
+                              <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-danger" id="selectCount">4</span>
+                              </button>
                            </div>
                         </nav>
                      </div>
-                     <div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 10px; ">
+                     <div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 15px; ">
+                        <div id="buttonbar">
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-xs btn-secondary active">
+                              <input type="radio" value="select" name="options" autocomplete="off" checked> <i class="fa fa-mouse-pointer" aria-hidden="true"></i>
+                            </label>
+                            <label class="btn btn-xs btn-secondary">
+                              <input type="radio" value="move" name="options" autocomplete="off"> <i class="fa fa-arrows" aria-hidden="true"></i>
+                            </label>
+                            <!-- <label class="btn btn-xs btn-secondary">
+                              <input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fa fa-eraser" aria-hidden="true"></i>
+                            </label> -->
+                          </div>
+                        </div>
                         <div id="renderArea">
                            <div id="rendermenu">
                            </div>
@@ -388,6 +409,7 @@
       <!-- #statusmodal -->
    </body>
    <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+   <script type="text/javascript" src="lib/jquery/jquery.awesome-cursor.min.js"></script>
    <script type="text/javascript" src="lib/bootstrap4/js/bootstrap.min.js"></script>
    <script type="text/javascript" src="lib/nprogress/nprogress.js"></script>
    <script type="text/javascript" src="lib/jquery/jquery-ui.js"></script>
@@ -403,12 +425,14 @@
    <script type="text/javascript" src="js/advanced-cam-modal.js"></script>
    <script type="text/javascript" src="js/advanced-cam-preview.js"></script>
    <script type="text/javascript" src="js/advanced-cam-gcode.js"></script>
+   <script type="text/javascript" src="js/advanced-cam-viewer-mouse.js"></script>
    <script type="text/javascript" src="js/advanced-cam-viewer-select.js"></script>
    <script type="text/javascript" src="js/advanced-cam-workspace-export.js"></script>
    <!-- ThreeJS -->
    <script type="text/javascript" src="lib/threejs/three.min.js"></script>
    <script type="text/javascript" src="lib/threejs/GridRect.js"></script>
    <script type="text/javascript" src="lib/threejs/OrbitControls.js"></script>
+   <script type="text/javascript" src="lib/threejs/DragControls.js"></script>
    <script type="text/javascript" src="lib/threejs/Projector.js"></script>
    <script type="text/javascript" src="lib/threejs/CanvasRenderer.js"></script>
    <script type="text/javascript" src="lib/threejs/TransformControls.js"></script>

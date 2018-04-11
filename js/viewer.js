@@ -353,6 +353,7 @@ function animate() {
       for (i = 0; i < toolpathsInScene.length; i++) {
         if (toolpathsInScene[i].userData.inflated) {
           toolpaths.add(toolpathsInScene[i].userData.inflated);
+          toolpaths.add(toolpathsInScene[i]);
         }
       }
       scene.add(toolpaths)
@@ -541,6 +542,7 @@ function makeSprite(scene, rendererType, vals) {
 
 // Global Function to keep three fullscreen
 $(window).on('resize', function() {
+  console.log("Window Resize")
     //renderer.setSize(element.width(), element.height());
 
     sceneWidth = document.getElementById("renderArea").offsetWidth;

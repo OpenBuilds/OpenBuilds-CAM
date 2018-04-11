@@ -61,8 +61,9 @@ function addJob() {
       obj.traverse( function ( child ) {
         if (child.userData.selected) {
           var copy = child.clone()
-          copy.translateX( child.parent.position.x );
-          copy.translateY( child.parent.position.y );
+          // console.log(copy)
+          copy.position.x = obj.position.x
+          copy.position.y = obj.position.y
           toolpath.add(copy);
         }
       });
@@ -70,6 +71,7 @@ function addJob() {
 
     if (toolpath.children.length > 0) {
         toolpath.name = "Vector-"+(toolpathsInScene.length)
+
         toolpathsInScene.push(toolpath)
     }
 

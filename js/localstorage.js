@@ -1,3 +1,15 @@
+function ConfirmDelete()
+{
+  var x = confirm("Are you sure you want to restore to factory defaults?");
+  if (x) {
+    window.localStorage.clear()
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
 function initLocalStorage() {
     var settingsOpen = document.getElementById('jsonFile');
     settingsOpen.addEventListener('change', restoreSettingsLocal, false);
