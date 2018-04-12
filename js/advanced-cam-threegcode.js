@@ -77,16 +77,16 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
           isSolid: true,
           opacity: 0.2,
           isShowOutline: true,
-          color: 0x666666,
+          color: 0x660000,
       });
       for (i = zstart; i < zdepth; i += zstep) {
           inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
           inflateGrp.name = 'inflateGrp'+i;
           inflateGrp.userData.material = inflateGrp.material;
           inflateGrpZ.add(inflateGrp);
-
-          lineMesh.position.z = -i;
-          prettyGrp.add(lineMesh)
+          var prettyLayer = lineMesh.clone();
+          prettyLayer.position.z = -i;
+          prettyGrp.add(prettyLayer)
       }
     } else {
       // console.log(clipperPaths[0])
@@ -107,23 +107,16 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
             isSolid: true,
             opacity: 0.2,
             isShowOutline: true,
-            color: 0x666666,
+            color: 0x660000,
         });
         for (i = zstart; i < zdepth; i += zstep) {
             inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
             inflateGrp.name = 'inflateGrp'+j+'_'+i;
             inflateGrp.userData.material = inflateGrp.material;
             inflateGrpZ.add(inflateGrp);
-            var lineMesh = this.getMeshLineFromClipperPath({
-                width: inflateVal*2,
-                clipperPath: inflatedPaths,
-                isSolid: true,
-                opacity: 0.2,
-                isShowOutline: true,
-                color: 0x666666,
-            });
-            lineMesh.position.z = -i;
-            prettyGrp.add(lineMesh)
+            var prettyLayer = lineMesh.clone();
+            prettyLayer.position.z = -i;
+            prettyGrp.add(prettyLayer)
         }
       }
     }

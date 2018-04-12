@@ -67,8 +67,8 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
                 // Convert to World Coordinates
                 var localPt = child.geometry.vertices[i];
                 var worldPt = toolpathGrp.localToWorld(localPt.clone());
-                var xpos = worldPt.x + (parseFloat(sizexmax) / 2);
-                var ypos = worldPt.y + (parseFloat(sizeymax) / 2);
+                var xpos = worldPt.x
+                var ypos = worldPt.y
                 if (child.geometry.type == "CircleGeometry") {
                   xpos = (xpos + xpos_offset);
                   ypos = (ypos + ypos_offset);
