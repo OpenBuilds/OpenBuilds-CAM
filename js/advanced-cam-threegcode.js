@@ -11,6 +11,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
     var zdepth = parseFloat(zdepth, 2);
     var zstart = parseFloat(zstart, 2);
     var inflateGrpZ = new THREE.Group();
+    var prettyGrp = new THREE.Group();
     if (typeof(inflateGrp) != 'undefined') {
         scene.remove(inflateGrp);
         inflateGrp = null;
@@ -69,12 +70,23 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
       if (leadinval > 0 ) { // plasma lead-in
         var leadInPaths = getInflatePath(newClipperPaths, inflateVal*2);
       }
+      // generate once use again for each z
+      var lineMesh = this.getMeshLineFromClipperPath({
+          width: inflateVal*2,
+          clipperPath: inflatedPaths,
+          isSolid: true,
+          opacity: 0.2,
+          isShowOutline: true,
+          color: 0x666666,
+      });
       for (i = zstart; i < zdepth; i += zstep) {
           inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
           inflateGrp.name = 'inflateGrp'+i;
           inflateGrp.userData.material = inflateGrp.material;
-          // inflateGrp.position = infobject.position;
           inflateGrpZ.add(inflateGrp);
+
+          lineMesh.position.z = -i;
+          prettyGrp.add(lineMesh)
       }
     } else {
       // console.log(clipperPaths[0])
@@ -88,15 +100,36 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
         if (leadinval > 0 ) {
           var leadInPaths = getInflatePath(pathobj, inflateVal*2);
         }
+        // generate once use again for each z
+        var lineMesh = this.getMeshLineFromClipperPath({
+            width: inflateVal*2,
+            clipperPath: inflatedPaths,
+            isSolid: true,
+            opacity: 0.2,
+            isShowOutline: true,
+            color: 0x666666,
+        });
         for (i = zstart; i < zdepth; i += zstep) {
             inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
             inflateGrp.name = 'inflateGrp'+j+'_'+i;
             inflateGrp.userData.material = inflateGrp.material;
-            // inflateGrp.position = infobject.position;
             inflateGrpZ.add(inflateGrp);
+            var lineMesh = this.getMeshLineFromClipperPath({
+                width: inflateVal*2,
+                clipperPath: inflatedPaths,
+                isSolid: true,
+                opacity: 0.2,
+                isShowOutline: true,
+                color: 0x666666,
+            });
+            lineMesh.position.z = -i;
+            prettyGrp.add(lineMesh)
         }
       }
     }
+    prettyGrp.translateX(-sizexmax/2)
+    prettyGrp.translateY(-sizeymax/2)
+    inflateGrpZ.userData.pretty = prettyGrp
     inflateGrpZ.position
     return inflateGrpZ;
 };
