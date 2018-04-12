@@ -188,8 +188,16 @@ function fillTree() {
             currentObject = objectsInScene[i];
             currentObjectData = currentObject.userData;
 
-            var xoffset = currentObjectData.offsetX.toFixed(1);
-            var yoffset = currentObjectData.offsetY.toFixed(1);
+            if (currentObjectData.offsetX) {
+              var xoffset = currentObjectData.offsetX.toFixed(1);
+            } else {
+              var xoffset = 0;
+            }
+            if (currentObjectData.offsetX) {
+              var yoffset = currentObjectData.offsetY.toFixed(1);
+            } else {
+              var yoffset = 0;
+            }
             var xpos = currentObject.position.x.toFixed(1);
             var ypos = currentObject.position.y.toFixed(1);
             var scale = currentObject.scale.y;

@@ -342,6 +342,9 @@
                               <input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fa fa-eraser" aria-hidden="true"></i>
                             </label>
                           </div>
+                          <!-- <div class="btn-group" data-toggle="buttons">
+                            <button id="AddCircle" class="btn btn-xs btn-secondary active"><i class="fa fa-circle-o" aria-hidden="true"></i></button>
+                          </div> -->
                         </div>
                         <div id="renderArea">
                            <div id="rendermenu">
@@ -415,6 +418,82 @@
          </div>
       </div>
       <!-- #statusmodal -->
+
+      <div id="addShape" class="modal fade" role="dialog">
+         <div class="modal-dialog" role="document">
+            <!-- Modal content-->
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 id="statusTitle" class="modal-title">Add shape</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                 <form>
+                    <div class="form-group row">
+                      <label for="circleRadius" class="col-sm-2 col-form-label">Radius</label>
+                      <div class="col-sm-5">
+                        <input type="number" class="form-control" id="circleRadius" value="10">
+                      </div>
+                      <label for="circleRadius" class="col-sm-5 col-form-label">mm</label>
+                    </div>
+                    <!-- <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                      <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                      </div>
+                    </div>
+                    <fieldset class="form-group">
+                      <div class="row">
+                        <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+                        <div class="col-sm-10">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                            <label class="form-check-label" for="gridRadios1">
+                              First radio
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                            <label class="form-check-label" for="gridRadios2">
+                              Second radio
+                            </label>
+                          </div>
+                          <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
+                            <label class="form-check-label" for="gridRadios3">
+                              Third disabled radio
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div class="form-group row">
+                      <div class="col-sm-2">Checkbox</div>
+                      <div class="col-sm-10">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="gridCheck1">
+                          <label class="form-check-label" for="gridCheck1">
+                            Example checkbox
+                          </label>
+                        </div>
+                      </div>
+                    </div> -->
+                    <div class="form-group row">
+                      <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                      </div>
+                    </div>
+                  </form>
+               </div>
+               <div class="modal-footer" id="statusFooter"></div>
+            </div>
+         </div>
+      </div>
+      <!-- #statusmodal -->
+
+
    </body>
    <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
    <script type="text/javascript" src="lib/jquery/jquery.awesome-cursor.min.js"></script>
@@ -437,6 +516,7 @@
    <script type="text/javascript" src="js/advanced-cam-viewer-select.js"></script>
    <script type="text/javascript" src="js/advanced-cam-workspace-export.js"></script>
    <script type="text/javascript" src="js/advanced-cam-pretty-render.js"></script>
+   <script type="text/javascript" src="js/advanced-cam-basic-shapes.js"></script>
 
    <!-- ThreeJS -->
    <script type="text/javascript" src="lib/threejs/three.min.js"></script>
