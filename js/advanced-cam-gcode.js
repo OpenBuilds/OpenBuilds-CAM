@@ -77,6 +77,8 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
                 if (zoffset) {
                   zpos = zpos - zoffset;
                 }
+                xpos = xpos + (sizexmax /2)
+                ypos = ypos + (sizeymax /2)
 
                 // First Move To
                 if (i == 0) {

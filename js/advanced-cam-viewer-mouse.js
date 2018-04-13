@@ -6,6 +6,14 @@ $(document).ready(function() {
       mouseState=this.value
       console.log(mouseState)
       if (this.value == "select") {
+        for (i=0; i<toolpathsInScene.length; i++) {
+          var obj = toolpathsInScene[i]
+          obj.traverse( function ( child ) {
+            if (child.material) {
+              child.material.opacity = 0.6;
+            }
+          });
+        }
         if (dragcontrols) {
           dragcontrols.dispose();
         }
@@ -13,8 +21,8 @@ $(document).ready(function() {
       }
       if (this.value == "move") {
         // $('#renderArea').css('cursor','move');
-        for (i=0; i<objectsInScene.length; i++) {
-          var object = objectsInScene[i]
+        for (i=0; i<toolpathsInScene.length; i++) {
+          var object = toolpathsInScene[i]
           object.traverse( function ( child ) {
             if (child.type == "Line" && child.userData.selected) {
                 child.userData.selected = false;
@@ -27,6 +35,16 @@ $(document).ready(function() {
       if (this.value == "delete") {
         if (dragcontrols) {
           dragcontrols.dispose();
+        }
+        for (i=0; i<toolpathsInScene.length; i++) {
+          var obj = toolpathsInScene[i]
+          obj.traverse( function ( child ) {
+            // if (child.type == "Line") {
+            if (child.material) {
+              child.material.opacity = 0.01;
+            }
+            // }
+          });
         }
         $('#renderArea').awesomeCursor('eraser', {
           color: '#000',

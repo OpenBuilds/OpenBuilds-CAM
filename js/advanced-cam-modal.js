@@ -77,6 +77,9 @@ function initAdvancedCAM() {
       } else if ( id.indexOf('ttooldia') == 0 ) {
           $('#svgToolDia').text(newval + 'mm');
           updateCamUserData(objectseq);
+      } else if ( id.indexOf('tstepover') == 0 ) {
+          $('#svgStepover').text(newval + '%');
+          updateCamUserData(objectseq);
       } else if ( id.indexOf('tclearanceHeight') == 0 ) {
           $('#svgZClear-8').text(newval + 'mm');
           updateCamUserData(objectseq);
@@ -132,6 +135,7 @@ function initAdvancedCAM() {
 function updateCamUserData(i) {
     toolpathsInScene[i].userData.camOperation = $('#toperation'+i).val();
     toolpathsInScene[i].userData.camToolDia = $('#ttooldia'+i).val();
+    toolpathsInScene[i].userData.camStepover = $('#tstepover'+i).val();
     toolpathsInScene[i].userData.camZClearance = $('#tclearanceHeight'+i).val();
     toolpathsInScene[i].userData.camZStart = $('#tstartHeight'+i).val();
     toolpathsInScene[i].userData.camDragOffset = $('#tdragoffset'+i).val();
@@ -217,6 +221,16 @@ function setupJob(i) {
             <span class="input-addon-label-left"><img src="images/endmilldia.svg" width="16px" height="16px"></img></span>
             <input type="number" class="cam-form-field" value="6.35" id="ttooldia`+i+`"  objectseq="`+i+`" min="0">
             <span class="input-addon-label-right">mm</span>
+          </div>
+        </td>
+      </tr>
+      <tr class="inputpocket">
+        <td>Stepover</td>
+        <td>
+          <div class="input-addon">
+            <span class="input-addon-label-left"><img src="images/endmilldia.svg" width="16px" height="16px"></img></span>
+            <input type="number" class="cam-form-field" value="40" id="tstepover`+i+`"  objectseq="`+i+`" min="0">
+            <span class="input-addon-label-right">%</span>
           </div>
         </td>
       </tr>
@@ -387,6 +401,7 @@ function setupJob(i) {
     if (toolpathsInScene[i].userData.camOperation) {
       $('#toperation'+i).val(toolpathsInScene[i].userData.camOperation).prop('selected', true)
       $('#ttooldia'+i).val(toolpathsInScene[i].userData.camToolDia);
+      $('#tstepover'+i).val(toolpathsInScene[i].userData.camStepover);
       $('#tclearanceHeight'+i).val(toolpathsInScene[i].userData.camZClearance);
       $('#tstartHeight'+i).val(toolpathsInScene[i].userData.camZStart);
       $('#tdragoffset'+i).val(toolpathsInScene[i].userData.camDragOffset);
@@ -416,6 +431,7 @@ function setupJob(i) {
       if (lastused) {
         // console.log(lastused)
         $('#ttooldia'+i).val(lastused.camToolDia);
+        $('#tstepover'+i).val(lastused.camStepover);
         $('#tclearanceHeight'+i).val(lastused.camZClearance);
         $('#tdragoffset'+i).val(lastused.camDragOffset);
         $('#tspotsize'+i).val(lastused.camSpotSize);
