@@ -12,6 +12,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
     var zstart = parseFloat(zstart, 2);
     var inflateGrpZ = new THREE.Group();
     var prettyGrp = new THREE.Group();
+    var prettyGrpColor = (inflateVal < 0) ? 0x660000:0x000066;
     if (typeof(inflateGrp) != 'undefined') {
         scene.remove(inflateGrp);
         inflateGrp = null;
@@ -78,7 +79,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
             isSolid: true,
             opacity: 0.2,
             isShowOutline: true,
-            color: 0x660000,
+            color: prettyGrpColor,
         });
       }
       for (i = zstart; i < zdepth; i += zstep) {
@@ -112,7 +113,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
               isSolid: true,
               opacity: 0.2,
               isShowOutline: true,
-              color: 0x660000,
+              color: prettyGrpColor,
           });
         };
         for (i = zstart; i < zdepth; i += zstep) {
@@ -139,12 +140,9 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
 
 
 pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart) {
-    // console.log("Stepover: ", stepOver)
     var zstep = parseFloat(zstep, 2);
     var zdepth = parseFloat(zdepth, 2);
-    console.log(zstart)
     var zstart = parseFloat(zstart, 2);
-    console.log(zstart)
     var pocketGrp = new THREE.Group();
     var prettyGrp = new THREE.Group();
     if (typeof(inflateGrp) != 'undefined') {
@@ -152,7 +150,7 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart) {
         inflateGrp = null;
     }
     if (inflateVal != 0) {
-        // console.log("user wants to inflate. val:", inflateVal);
+        console.log("user wants to inflate. val:", inflateVal);
         infobject.updateMatrix();
         var grp = infobject;
         var clipperPaths = [];
@@ -188,62 +186,62 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart) {
             } else if (child.type == "Points") {
                 child.visible = false;
             } else {
-                // console.log("type of ", child.type, " being skipped");
+                console.log("type of ", child.type, " being skipped");
             }
         });
         // console.log("clipperPaths:", clipperPaths);
 
         // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
         var newClipperPaths = simplifyPolygons(clipperPaths);
+
         if (newClipperPaths.length < 1) {
             console.error("Clipper Simplification Failed!:");
             printLog('Clipper Simplification Failed!', errorcolor, "viewer");
         }
 
-        // lets calculate how many loops we need to make:
-        //1 calc the max x/y size from infobject
+        // calc Stepover
         var box = new THREE.Box3().setFromObject(infobject);
         var xsize = (box.max.x - box.min.x)
         var ysize = (box.max.y - box.min.y)
         var maxsize = Math.max(xsize, ysize); // max width/height
-        var cutwidth = ((inflateVal*2) * (stepOver / 100)) / 2 //mm per cut
-        var numOfLoops = (maxsize/2) / cutwidth
-        console.log(numOfLoops, zstart, zdepth, zstep)
-        var lineMesh = new THREE.Group();
-        for (i = numOfLoops; i > 1; i--) {
-          inflateValUsed = cutwidth * i;
-          var inflatedPaths = getInflatePath(newClipperPaths, -inflateValUsed);
-          var loopMesh = this.getMeshLineFromClipperPath({
-              width: inflateVal*2,
-              clipperPath: inflatedPaths,
-              isSolid: true,
-              opacity: 0.2,
-              isShowOutline: true,
-              color: 0x006600,
-          });
-          lineMesh.add(loopMesh)
-        }
+        var cutwidth = ((inflateVal*2) * (stepOver / 100)) //mm per cut
+        var numOfLoops = parseInt((maxsize/2) / cutwidth);
+        // console.log("NumLoops: ", numOfLoops, " / at ", cutwidth, "mm. with a tooldia of ", inflateVal)
         for (j = zstart; j < zdepth; j += zstep) {
           // get the inflated/deflated path
-          for (i = numOfLoops; i > 1; i--) {
-            inflateValUsed = inflateVal * i;
+          for (i = numOfLoops+1; i >= 0; i--) {  // Rather 100 than a while loop, just in case
+            // console.log("Path: ", i, " / cutwidth*i = ", cutwidth * i, " / inflateVal*2:  ", inflateVal*2)
+            if ((cutwidth * i) < (inflateVal*2)) {
+              inflateValUsed = inflateVal;
+            } else {
+              inflateValUsed = cutwidth * i;
+            }
+
             var inflatedPaths = getInflatePath(newClipperPaths, -inflateValUsed);
-            inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, 0, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
+            inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -j, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
             if (inflateGrp.children.length) {
               inflateGrp.name = 'inflateGrp';
-              // inflateGrp.position = infobject.position;
+              inflateGrp.position = infobject.position;
               // pocketGrp.userData.color = pocketGrp.material.color.getHex();
+              var lineMesh = this.getMeshLineFromClipperPath({
+                  width: inflateVal*2,
+                  clipperPath: inflatedPaths,
+                  isSolid: true,
+                  opacity: 0.2,
+                  isShowOutline: true,
+                  color: 0x006600,
+              });
+              prettyGrp.add(lineMesh)
               pocketGrp.add(inflateGrp);
             } else {
+              // console.log('Pocket failed at ' + i + ' iterations');
+              // break;
             }
           }
-          var prettyLayer = lineMesh.clone();
-          prettyLayer.position.z = -j;
-          prettyGrp.add(prettyLayer)
         }
         prettyGrp.translateX(-sizexmax/2)
         prettyGrp.translateY(-sizeymax/2)
-        pocketGrp.userData.pretty = prettyGrp
+        pocketGrp.userData.pretty = prettyGrp;
         return pocketGrp;
     }
 };
