@@ -231,7 +231,9 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart) {
                   isShowOutline: true,
                   color: 0x006600,
               });
-              prettyGrp.add(lineMesh)
+              var prettyLayer = lineMesh.clone();
+              prettyLayer.position.z = -j;
+              prettyGrp.add(prettyLayer)
               pocketGrp.add(inflateGrp);
             } else {
               // console.log('Pocket failed at ' + i + ' iterations');
