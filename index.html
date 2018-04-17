@@ -70,7 +70,7 @@
                                     <label>G-CODE</label>
                                  </td>
                                  <td>
-                                    <button class="btn btn-primary btn-file" title="Export GCODE to a file" onclick="saveFile()">
+                                    <button class="btn btn-primary btn-file" data-toggle="tooltip" data-placement="bottom" title="Export GCODE to a file" onclick="saveFile()">
                                     <i class="fa fa-save fa-fw"></i> Export to File
                                     </button>
                                  </td>
@@ -233,7 +233,7 @@
                                  <form class="form-horizontal">
                                     <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
                                        <div class="btn-group" role="group">
-                                          <button id="backup" class="btn btn-lg btn-primary btn-file" title="Take a backup" onclick="backupSettingsLocal()">
+                                          <button id="backup" class="btn btn-lg btn-primary btn-file" data-toggle="tooltip" data-placement="bottom" title="Take a backup" onclick="backupSettingsLocal()">
                                             <i class="fa fa-download fa-fw"></i> Backup Settings
                                           </button>
                                        </div>
@@ -241,7 +241,7 @@
                                     </br>
                                     <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Restore">
                                        <div class="btn-group" role="group">
-                                          <span id="restore" href="#" class="btn btn-lg btn-primary btn-file" title="Open a backup settings file">
+                                          <span id="restore" href="#" class="btn btn-lg btn-primary btn-file" data-toggle="tooltip" data-placement="bottom" title="Open a backup settings file">
                                           <i class="fa fa-upload  fa-fw"></i> Restore from file <input id="jsonFile" type="file" accept=".json" />
                                           </span>
                                        </div>
@@ -249,7 +249,7 @@
                                     </br>
                                     <div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
                                        <div class="btn-group" role="group">
-                                          <button class="btn btn-lg btn-primary btn-file" title="Reset all settings to default" onclick="ConfirmDelete()">
+                                          <button class="btn btn-lg btn-primary btn-file" data-toggle="tooltip" data-placement="bottom" title="Reset all settings to default" onclick="ConfirmDelete()">
                                             <i class="fa fa-exclamation-triangle fa-fw"></i> Factory Reset
                                           </button>
                                        </div>
@@ -271,7 +271,7 @@
                         <nav class="navbar navbar-expand-sm navbar-light bg-light">
                            <!-- <a class="navbar-brand" href="#">Navbar</a> -->
                            <form class="form-inline my-2 my-lg-0">
-                              <span id="openbutton" class="btn btn-primary btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .tap, .nc, .gc, .svg, .dxf, or .stl file">
+                              <span id="openbutton" class="btn btn-primary btn-file" data-toggle="tooltip" data-placement="bottom" title="Open a drawing">
                               <i class="fa fa-folder-open fa-fw"></i> Open
                               <input id="file" type="file" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple />
                               </span>
@@ -316,7 +316,7 @@
                                     View
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="viewDropDown">
-                                       <a class="dropdown-item" href="#" id="viewReset"><i class="fa fa-fw fa-eye" aria-hidden="true"></i>Reset View</a>
+                                       <a class="dropdown-item" href="#" id="viewReset" onclick="resetView();"><i class="fa fa-fw fa-eye" aria-hidden="true"></i>Reset View</a>
                                        <div class="dropdown-divider"></div>
                                        <a class="dropdown-item" href="#" id="selectNone" onclick="controls.enableRotate = false; resetView(); printLog('Disabled Orbit', warncolor, 'viewer');"><i class="fa fa-fw fa-th" aria-hidden="true"></i>2D Mode</a>
                                        <a class="dropdown-item" href="#" id="selectInv" onclick="controls.enableRotate = true; resetView(); printLog('Enabled Orbit', successcolor, 'viewer');"><i class="fa fa-fw fa-cube" aria-hidden="true"></i>3D Mode</a>
@@ -332,18 +332,21 @@
                      <div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 15px; ">
                         <div id="buttonbar">
                           <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-xs btn-secondary active">
+                            <label class="btn btn-xs btn-secondary active" data-toggle="tooltip" data-placement="bottom" title="Select Mode">
                               <input type="radio" value="select" name="options" autocomplete="off" checked> <i class="fa fa-mouse-pointer" aria-hidden="true"></i>
                             </label>
-                            <label class="btn btn-xs btn-secondary">
+                            <label class="btn btn-xs btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Move Mode">
                               <input type="radio" value="move" name="options" autocomplete="off"> <i class="fa fa-arrows" aria-hidden="true"></i>
                             </label>
-                            <label class="btn btn-xs btn-secondary">
+                            <label class="btn btn-xs btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Delete Mode">
                               <input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fa fa-eraser" aria-hidden="true"></i>
                             </label>
                           </div>
                           <div class="btn-group" data-toggle="buttons">
-                            <button id="AddCircle" class="btn btn-xs btn-secondary active"><i class="fa fa-circle-o" aria-hidden="true"></i></button>
+                            <button id="AddCircle" class="btn btn-xs btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Add Circle"><i class="fa fa-circle-o" aria-hidden="true"></i></button>
+                          </div>
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <button class="btn btn-xs btn-secondary" onclick="resetView();" data-toggle="tooltip" data-placement="bottom" title="Reset View"><i class="fa fa-eye" aria-hidden="true"></i></button>
                           </div>
                         </div>
                         <div id="renderArea">

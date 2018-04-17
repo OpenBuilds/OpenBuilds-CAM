@@ -48,9 +48,9 @@ $(document).ready(function() {
     });
 
     // View -> reset
-    $('#viewReset').on('click', function() {
-        resetView();
-    });
+    // $('#viewReset').on('click', function() {
+    //     resetView();
+    // });
 
 
     $('#savesettings').on('click', function() {

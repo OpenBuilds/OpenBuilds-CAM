@@ -56,6 +56,7 @@ function toolpathPreview(i) {
   }
   fillTree()
   clearSceneFlag = true;
+  
 }
 
 function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, leadinval, tabdepth, union) {

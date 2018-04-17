@@ -333,49 +333,47 @@ function init3D() {
 }
 
 function animate() {
+  animateTree();
 
-    animateTree();
+  // half-hide toolpaths in delete/move mode
+  if (mouseState == "select") {
+    setOpacity(toolpathsInScene, 0.6);
+  } else {
+    setOpacity(toolpathsInScene, 0.1);
+  }
 
-    if (clearSceneFlag) {
-      while (scene.children.length > 1) {
-        scene.remove(scene.children[1])
-      }
 
-      var documents = new THREE.Group();
-      documents.name = "Documents";
-      for (i = 0; i < objectsInScene.length; i++) {
-        documents.add(objectsInScene[i])
-      }
-      scene.add(documents)
-
-      var toolpaths = new THREE.Group();
-      toolpaths.name = "Toolpaths";
-      for (i = 0; i < toolpathsInScene.length; i++) {
-        if(toolpathsInScene[i].userData.inflated) {
-          if (toolpathsInScene[i].userData.inflated.userData.pretty) {
-            toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
-            // toolpaths.add(toolpathsInScene[i].userData.inflated);
-          } else {
-            toolpaths.add(toolpathsInScene[i].userData.inflated);
-          }
-        };
-
-      }
-      scene.add(toolpaths)
-
-      clearSceneFlag = false;
+  if (clearSceneFlag) {
+    while (scene.children.length > 1) {
+      scene.remove(scene.children[1])
     }
 
+    var documents = new THREE.Group();
+    documents.name = "Documents";
+    for (i = 0; i < objectsInScene.length; i++) {
+      documents.add(objectsInScene[i])
+    }
+    scene.add(documents)
 
-    requestAnimationFrame(animate);
+    var toolpaths = new THREE.Group();
+    toolpaths.name = "Toolpaths";
+    for (i = 0; i < toolpathsInScene.length; i++) {
+      if(toolpathsInScene[i].userData.inflated) {
+        if (toolpathsInScene[i].userData.inflated.userData.pretty) {
+          toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
+          // toolpaths.add(toolpathsInScene[i].userData.inflated);
+        } else {
+          toolpaths.add(toolpathsInScene[i].userData.inflated);
+        }
+      };
 
+    }
+    scene.add(toolpaths)
+    clearSceneFlag = false;
+  }  // end clearSceneFlag
 
-    // mesh.rotation.x += 0.01;
-    // mesh.rotation.y += 0.02;
-    renderer.render(scene, camera);
-    sceneWidth = document.getElementById("renderArea").offsetWidth,
-    sceneHeight = document.getElementById("renderArea").offsetHeight;
-    camera.aspect = sceneWidth / sceneHeight;
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
 }
 
 
