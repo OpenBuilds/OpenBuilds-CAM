@@ -155,9 +155,16 @@ function updateCamUserData(i) {
     $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
 
     // store last used values in localStorage
-    localStorage.setItem('lastCamOperation',  JSON.stringify(toolpathsInScene[i].userData));
+    localStorage.setItem('lastCamOperation',  JSON.stringify(toolpathsInScene[i].userData, inflatedReplacer));
 
 };
+
+function inflatedReplacer(key,value)
+{
+    if (key=="inflated") return undefined;
+    else if (key=="pretty") return undefined;
+    else return value;
+}
 
 
 function setupJob(i) {
