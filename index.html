@@ -331,42 +331,37 @@
                                   <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <div class="dropdown-menu" id="toolpathsmenu">
-                                  <!-- <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" href="#">Something else here</a>
-                                  <div role="separator" class="dropdown-divider"></div>
-                                  <a class="dropdown-item" href="#">Separated link</a> -->
+                                  <!-- toolpaths here -->
                                 </div>
                               </div>
                            </div>
                         </nav>
                      </div>
                      <div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 15px; ">
-                        <div id="buttonbar">
-                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-xs btn-secondary active" data-toggle="tooltip" data-placement="bottom" title="Select Mode">
-                              <input type="radio" value="select" name="options" autocomplete="off" checked> <i class="fa fa-mouse-pointer" aria-hidden="true"></i>
-                            </label>
-                            <label class="btn btn-xs btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Move Mode">
-                              <input type="radio" value="move" name="options" autocomplete="off"> <i class="fa fa-arrows" aria-hidden="true"></i>
-                            </label>
-                            <label class="btn btn-xs btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Delete Mode">
-                              <input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fa fa-eraser" aria-hidden="true"></i>
-                            </label>
-                          </div>
-                          <div class="btn-group" data-toggle="buttons">
-                            <button id="AddCircle" class="btn btn-xs btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Add Circle"><i class="fa fa-circle-o" aria-hidden="true"></i></button>
-                          </div>
-                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <button class="btn btn-xs btn-secondary" onclick="resetView();" data-toggle="tooltip" data-placement="bottom" title="View Extents"><i class="fa fa-eye" aria-hidden="true"></i></button>
-                            <button class="btn btn-xs btn-secondary" onclick="resetView(grid);" data-toggle="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
-                          </div>
-                        </div>
                         <div id="renderArea">
-                           <div id="rendermenu">
-                           </div>
-                           <div id="helpoverlay"></div>
-                           <div id="selection" style="visibility: hidden;"></div>
+                          <div id="buttonbar">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              <label class="btn btn-sm btn-dark active" data-toggle="tooltip" data-placement="bottom" title="Select Mode">
+                                <input type="radio" value="select" name="options" autocomplete="off" checked> <i class="fa fa-mouse-pointer" aria-hidden="true"></i>
+                              </label>
+                              <label class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="bottom" title="Move Mode">
+                                <input type="radio" value="move" name="options" autocomplete="off"> <i class="fa fa-arrows" aria-hidden="true"></i>
+                              </label>
+                              <label class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="bottom" title="Delete Mode">
+                                <input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fa fa-eraser" aria-hidden="true"></i>
+                              </label>
+                            </div>
+                            <!-- <div class="btn-group" data-toggle="buttons">
+                              <button id="AddCircle" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Add Circle"><i class="fa fa-circle-o" aria-hidden="true"></i></button>
+                            </div> -->
+                            <div class="btn-group" data-toggle="buttons">
+                              <button class="btn btn-sm btn-dark" onclick="resetView();" data-toggle="tooltip" data-placement="bottom" title="View Extents"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                              <button class="btn btn-sm btn-dark" onclick="resetView(grid);" data-toggle="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
+                            </div>
+                          </div>
+                          <div id="rendermenu"></div>
+                          <div id="helpoverlay"></div>
+                          <div id="selection" style="visibility: hidden;"></div>
                         </div>
                      </div>
                      <div id="viewer_container">

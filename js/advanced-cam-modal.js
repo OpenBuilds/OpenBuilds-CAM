@@ -18,7 +18,7 @@ function typeofOperation(newval, objectseq) {
       cncInsideMode();
       updateCamUserData(objectseq);
   } else if (newval == "CNC: Pocket") {
-      cncPocketMode();
+      cncPocketMode(objectseq);
       updateCamUserData(objectseq);
   } else if (newval == "CNC: V-Engrave") {
       cncVEngMode();
@@ -504,12 +504,16 @@ function cncOutsideMode() {
     $('.inputcnc').show();
 };
 
-function cncPocketMode() {
+function cncPocketMode(i) {
     $('.inputlaser').hide();
     $('.inputdragknife').hide();
     $('.inputplasma').hide();
     $('.inputcnc').hide();
     $('.inputpocket').show();
+    // force open Advanced and force Union by default
+    $('#advanced'+i).prop('checked', true);
+    $("#collapsediv1").collapse('show')
+    $('#tunion'+i).val("Yes").prop('selected', true);
 };
 
 function plasmaMode() {
