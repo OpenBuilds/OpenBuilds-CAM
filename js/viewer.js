@@ -1,6 +1,6 @@
 // Global Vars
 var scene, camera, renderer;
-var geometry, material, mesh, helper, axes, axesgrp, light, bullseye, cursor;
+var geometry, material, mesh, helper, axes, axesgrp, light, bullseye, cursor, grid;
 var projector, mouseVector, containerWidth, containerHeight;
 var raycaster = new THREE.Raycaster();
 
@@ -151,6 +151,7 @@ function init3D() {
     // this.grid = helper;
     // helper.name = "GridHelper1mm"
     // workspace.add(helper);
+    grid = new THREE.Group();
     helper = new THREE.GridHelper(sizexmax, sizeymax, 10, 0x888888);
     helper.position.y = 0;
     helper.position.x = 0;
@@ -159,7 +160,7 @@ function init3D() {
     helper.material.transparent = true;
     helper.receiveShadow = false;
     helper.name = "GridHelper10mm"
-    workspace.add(helper);
+    grid.add(helper);
     helper = new THREE.GridHelper(sizexmax, sizeymax, 100, 0x666666);
     helper.position.y = 0;
     helper.position.x = 0;
@@ -168,7 +169,8 @@ function init3D() {
     helper.material.transparent = true;
     helper.receiveShadow = false;
     helper.name = "GridHelper50mm"
-    workspace.add(helper);
+    grid.add(helper);
+    workspace.add(grid);
 
     var material = new THREE.LineBasicMaterial( { color: 0x666666 } );
     material.opacity = 0.15;

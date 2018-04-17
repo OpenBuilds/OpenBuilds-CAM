@@ -115,19 +115,24 @@ function filePrepInit() {
 
 }
 
-function resetView() {
-  if (objectsInScene.length > 0) {
-      var insceneGrp = new THREE.Group()
-      for (i = 0; i < objectsInScene.length; i++) {
-        var object = objectsInScene[i].clone();
-        insceneGrp.add(object)
-      }
-      // scene.add(insceneGrp)
-      viewExtents(insceneGrp);
-      // scene.remove(insceneGrp)
-    } else {
-      viewExtents(helper);
+function resetView(object) {
+  if (!object) {
+    if (objectsInScene.length > 0) {
+        var insceneGrp = new THREE.Group()
+        for (i = 0; i < objectsInScene.length; i++) {
+          var object = objectsInScene[i].clone();
+          insceneGrp.add(object)
+        }
+        // scene.add(insceneGrp)
+        viewExtents(insceneGrp);
+        // scene.remove(insceneGrp)
+      } else {
+        viewExtents(helper);
+    }
+  } else {
+    viewExtents(object);
   }
+
 
 }
 
