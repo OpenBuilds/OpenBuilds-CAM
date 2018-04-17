@@ -323,9 +323,21 @@
                                     </div>
                                  </li>
                               </ul>
-                              <button type="button" class="btn btn-success" onclick="addJob();" id="tpaddpath">
-                              <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-danger" id="selectCount">4</span>
-                              </button>
+                              <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-success" onclick="addJob(-1);" id="tpaddpath">
+                                  <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-danger" id="selectCount">4</span>
+                                </button>
+                                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="tpaddpath-dropdown">
+                                  <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="toolpathsmenu">
+                                  <!-- <a class="dropdown-item" href="#">Action</a>
+                                  <a class="dropdown-item" href="#">Another action</a>
+                                  <a class="dropdown-item" href="#">Something else here</a>
+                                  <div role="separator" class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="#">Separated link</a> -->
+                                </div>
+                              </div>
                            </div>
                         </nav>
                      </div>

@@ -5,12 +5,12 @@
 
 // todo union for pocketGrp, etc...
 // todo select and then Move
-// todo: keyb, delete
+
 var inflateGrp, fileParentGroup, svgPath, y, shape, lines, line;
 var options = {};
 
 inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, tabdepth, union) {
-  console.log(infobject)
+    // console.log(infobject)
     var zstep = parseFloat(zstep, 2);
     var zdepth = parseFloat(zdepth, 2);
     var zstart = parseFloat(zstart, 2);
@@ -25,7 +25,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
     var grp = infobject;
     var clipperPaths = [];
     grp.traverse(function(child) {
-        console.log('Traverse: ', child.position, grp.position)
+        // console.log('Traverse: ', child.position, grp.position)
         if (child.name == "inflatedGroup") {
             console.log("this is the inflated path from a previous run. ignore.");
             return;

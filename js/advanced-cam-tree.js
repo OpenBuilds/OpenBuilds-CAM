@@ -27,9 +27,13 @@ function animateTree() {
   if (selectCount > 0) {
     $("#selectCount").text(selectCount)
     $("#tpaddpath").prop('disabled', false);
+    if (toolpathsInScene.length > 0) {
+      $("#tpaddpath-dropdown").prop('disabled', false);
+    }
   } else {
     $("#selectCount").text("")
     $("#tpaddpath").prop('disabled', true);
+    $("#tpaddpath-dropdown").prop('disabled', true);
   }
   updateTreeSelection();
 }
@@ -163,7 +167,7 @@ function fillTree() {
     $('#filetree').empty();
     // $('#toolpathtreeheader').empty();
     $('#toolpathtree').empty();
-
+    $('#toolpathsmenu').empty();
     clearSceneFlag = true;
 
     if (objectsInScene.length > 0) {
@@ -176,6 +180,7 @@ function fillTree() {
         };
 
         $('#tpaddpath').removeClass('disabled');
+        $('#tpaddpath-dropdown').removeClass('disabled');
 
         var table = `<table class="jobsetuptable" style="width: 100%" id="filetreetable">`
         $('#filetree').append(table);
@@ -381,8 +386,11 @@ function fillTree() {
         $('#generatetpgcode').removeClass('disabled');
 
         var table = `<table class="jobsetuptable" style="width: 100%" id="toolpathstable">`
-
         $('#toolpathtree').append(table)
+
+        var menuheader = `<h6 class="dropdown-header">Add selection to existing toolpath:</h6>`
+        $('#toolpathsmenu').append(menuheader);
+
         for (i = 0; i < toolpathsInScene.length; i++) {
             if (toolpathsInScene[i].type != "Mesh") {
 
@@ -424,6 +432,11 @@ function fillTree() {
                 `
             }
             $('#toolpathstable').append(toolp);
+
+            // append toolpath to menu
+            var menuitem = `<a class="dropdown-item" href="#" onclick="addJob(`+i+`)">`+toolpathsInScene[i].name+`: `+operation+`</a>`;
+            $('#toolpathsmenu').append(menuitem);
+
         }
 
         // contentEditable for Toolpath Name field - edit directly in toolpath table

@@ -32,29 +32,28 @@ function initTree() {
     fillTree()
 }
 
-function addJob() {
-    // if (already have toolpaths in toolpathsInScene ) {
-    // var toolpath = (select toolpath from modal popup)
-    // else
-    // var toolpath = new THREE.Group();
-
-    // animation to move "doc" to Toolpath - helps user visualise what happened
-
+function addJob(id) {
     $("#savetpgcode").addClass("disabled");
     $("#exportGcodeMenu").addClass("disabled");
 
+    // animation to move "doc" to Toolpath - helps user visualise what happened
     var btnpos = $("#tpaddpath").offset()
     var targetpos = $("#toolpathtree").offset()
-
     $("#flyingdoc").css('top', btnpos.top);
     $("#flyingdoc").css('left', (btnpos.left+50)+'px');
-    // $("#flyingdoc").position({left: btnpos.left+ 'px', top: btnpos.top+ 'px'});
     $("#flyingdoc").fadeIn(100);
     $("#flyingdoc").animate({left: (targetpos.left + 50)+ 'px', top: targetpos.top+ 'px'}, "slow");
     $("#flyingdoc").fadeOut();
 
+    var toolpath;
+    if (id > -1) {
+      console.log("Using existing toolpath: " + id)
+      toolpath = toolpathsInScene[id];
+    } else {
+      console.log("Creating new toolpath")
+      toolpath = new THREE.Group();
+    }
 
-    var toolpath = new THREE.Group();
     // 2018: try to switch to this method
     for (i=0; i<objectsInScene.length; i++) {
       var obj = objectsInScene[i];
@@ -70,12 +69,14 @@ function addJob() {
       });
     };
 
-    if (toolpath.children.length > 0) {
-        toolpath.name = "Vector-"+(toolpathsInScene.length)
-
-        toolpathsInScene.push(toolpath)
+    if (id == -1) {
+      if (toolpath.children.length > 0) {
+          toolpath.name = "Vector-"+(toolpathsInScene.length)
+          toolpathsInScene.push(toolpath)
+      }
+      setTimeout(function(){ fillTree(); setupJob(toolpathsInScene.length - 1);  }, 800);// launch modal
+    } else {
+      setTimeout(function(){ fillTree(); toolpathPreview(id);  }, 800);// launch modal
     }
-
-    setTimeout(function(){ fillTree(); setupJob(toolpathsInScene.length - 1);  }, 800);// launch modal
 
 }
