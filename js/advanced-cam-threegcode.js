@@ -120,14 +120,19 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
               color: prettyGrpColor,
           });
         };
-        for (i = zstart; i < zdepth; i += zstep) {
-            inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
+        for (i = zstart; i < zdepth+1; i += zstep) {
+            if (i*zstep < zdepth) {
+              var zval = -i
+            } else {
+              var zval = -zdepth;
+            }
+            inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
             inflateGrp.name = 'inflateGrp'+j+'_'+i;
             inflateGrp.userData.material = inflateGrp.material;
             inflateGrpZ.add(inflateGrp);
             if(inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
               var prettyLayer = lineMesh.clone();
-              prettyLayer.position.z = -i;
+              prettyLayer.position.z = zval;
               prettyGrp.add(prettyLayer)
             };
         }
@@ -199,6 +204,7 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart) {
         var newClipperPaths = simplifyPolygons(clipperPaths);
 
         if (newClipperPaths.length < 1) {
+            //
             console.error("Clipper Simplification Failed!:");
             printLog('Clipper Simplification Failed!', errorcolor, "viewer");
         }
@@ -212,6 +218,11 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart) {
         var numOfLoops = parseInt((maxsize/2) / cutwidth);
         // console.log("NumLoops: ", numOfLoops, " / at ", cutwidth, "mm. with a tooldia of ", inflateVal)
         for (j = zstart; j < zdepth; j += zstep) {
+          if (j*zstep < zdepth) {
+            var zval = -j
+          } else {
+            var zval = -zdepth;
+          }
           // get the inflated/deflated path
           for (i = numOfLoops+1; i >= 0; i--) {  // Rather 100 than a while loop, just in case
             // console.log("Path: ", i, " / cutwidth*i = ", cutwidth * i, " / inflateVal*2:  ", inflateVal*2)
@@ -222,7 +233,7 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart) {
             }
 
             var inflatedPaths = getInflatePath(newClipperPaths, -inflateValUsed);
-            inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -j, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
+            inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
             if (inflateGrp.children.length) {
               inflateGrp.name = 'inflateGrp';
               inflateGrp.position = infobject.position;
@@ -236,7 +247,7 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart) {
                   color: 0x006600,
               });
               var prettyLayer = lineMesh.clone();
-              prettyLayer.position.z = -j;
+              prettyLayer.position.z = zval;
               prettyGrp.add(prettyLayer)
               pocketGrp.add(inflateGrp);
             } else {
@@ -316,12 +327,17 @@ dragknifePath = function(infobject, inflateVal, zstep, zdepth) {
 
 
         for (j = 0; j < zdepth; j += zstep) {
+            if (j*zstep < zdepth) {
+              var zval = -j
+            } else {
+              var zval = -zdepth;
+            }
             var polygons = newClipperPaths;
             polygons = polygons.map(function (poly) {
               // return addCornerActions(poly, Math.pow(2, 20) * 5, 20 / 180 * Math.PI);
               return addCornerActions(poly, inflateVal, 20 / 180 * Math.PI);
             });
-            inflateGrp = drawClipperPaths(polygons, 0xff00ff, 0.8, -j, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
+            inflateGrp = drawClipperPaths(polygons, 0xff00ff, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
             if (inflateGrp.children.length) {
               inflateGrp.name = 'dragknifeGrp';
               inflateGrp.position = infobject.position;
