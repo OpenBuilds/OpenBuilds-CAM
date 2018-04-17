@@ -219,35 +219,39 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
           var cutwidth = ((inflateVal*2) * (stepOver / 100)) //mm per cut
           var numOfLoops = parseInt((maxsize/2) / cutwidth);
           // console.log("NumLoops: ", numOfLoops, " / at ", cutwidth, "mm. with a tooldia of ", inflateVal)
-          for (j = zstart; j < zdepth; j += zstep) {
-            if (j*zstep < zdepth) {
-              var zval = -j
-            } else {
-              var zval = -zdepth;
-            }
-            // get the inflated/deflated path
-            for (i = numOfLoops+1; i >= 0; i--) {  // Rather 100 than a while loop, just in case
-              // console.log("Path: ", i, " / cutwidth*i = ", cutwidth * i, " / inflateVal*2:  ", inflateVal*2)
-              if ((cutwidth * i) < (inflateVal*2)) {
-                inflateValUsed = inflateVal;
-              } else {
-                inflateValUsed = cutwidth * i;
-              }
 
-              var inflatedPaths = getInflatePath(newClipperPaths, -inflateValUsed);
+          for (i = numOfLoops+1; i >= 0; i--) {  // Rather 100 than a while loop, just in case
+            // console.log("Path: ", i, " / cutwidth*i = ", cutwidth * i, " / inflateVal*2:  ", inflateVal*2)
+            if ((cutwidth * i) < (inflateVal*2)) {
+              inflateValUsed = inflateVal;
+            } else {
+              inflateValUsed = cutwidth * i;
+            }
+            var inflatedPaths = getInflatePath(newClipperPaths, -inflateValUsed);
+            var lineMesh = this.getMeshLineFromClipperPath({
+                width: inflateVal*2,
+                clipperPath: inflatedPaths,
+                isSolid: true,
+                opacity: 0.2,
+                isShowOutline: true,
+                color: 0x006600,
+            });
+            for (j = zstart; j < zdepth; j += zstep) {
+              if (j*zstep < zdepth) {
+                var zval = -j
+              } else {
+                var zval = -zdepth;
+              }
+              // get the inflated/deflated path
+
+
+
               inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
               if (inflateGrp.children.length) {
                 inflateGrp.name = 'inflateGrp';
                 inflateGrp.position = infobject.position;
                 // pocketGrp.userData.color = pocketGrp.material.color.getHex();
-                var lineMesh = this.getMeshLineFromClipperPath({
-                    width: inflateVal*2,
-                    clipperPath: inflatedPaths,
-                    isSolid: true,
-                    opacity: 0.2,
-                    isShowOutline: true,
-                    color: 0x006600,
-                });
+
                 var prettyLayer = lineMesh.clone();
                 prettyLayer.position.z = zval;
                 prettyGrp.add(prettyLayer)
