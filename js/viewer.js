@@ -420,7 +420,7 @@ function viewExtents(objecttosee) {
         controls.target.y = centery;
         controls.target.z = centerz;
         // console.log("maxlen:", maxlen, "dist:", dist);
-        var fov = 1.4 * Math.atan(maxlen / (2 * dist)) * (180 / Math.PI);
+        var fov = 2.2 * Math.atan(maxlen / (2 * dist)) * (180 / Math.PI);
         // console.log("new fov:", fov, " old fov:", controls.object.fov);
         if (isNaN(fov)) {
             console.log("giving up on viewing extents because fov could not be calculated");
