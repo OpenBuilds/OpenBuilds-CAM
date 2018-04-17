@@ -59,8 +59,12 @@ function setOpacity(array, opacity) {
         if (child.userData.inflated.userData.pretty) {
           var pretty = child.userData.inflated.userData.pretty
           pretty.traverse( function ( child ) {
-            if (child.material) {
-              child.material.opacity = (1/depth) * opacity;
+            if (child.material && child.type == "Mesh") {
+              // child.material.opacity = opacity / depth;
+              child.material.opacity = opacity;
+            } else if (child.material && child.type == "Line") {
+              // child.material.opacity = (opacity / depth )+0.25;
+              child.material.opacity = opacity+0.25;
             }
           });
         }

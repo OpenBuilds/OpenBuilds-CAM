@@ -48,7 +48,7 @@ function getMeshLineFromClipperPath(opts) {
 
 		if (isShowOutline) {
 			// console.log("isShowOutline")
-			var threeObj = drawClipperPaths(csUnion, color, opacity + 0.4, 0);
+			var threeObj = drawClipperPaths(csUnion, color, opacity + 0.25, 0);
 			retGrp.add(threeObj);
 		}
 

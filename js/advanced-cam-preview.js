@@ -40,7 +40,7 @@ function toolpathPreview(i) {
   } else if (operation == "CNC: Vector (path outside)") {
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, (ToolDia/2), 0, ZStep, ZDepth, ZStart, false, tabDepth, union);
   } else if (operation == "CNC: Pocket") {
-    toolpathsInScene[i].userData.inflated = getToolpath("pocket", i, (ToolDia/2), StepOver, ZStep, ZDepth, ZStart, false, false);
+    toolpathsInScene[i].userData.inflated = getToolpath("pocket", i, (ToolDia/2), StepOver, ZStep, ZDepth, ZStart, false, false, union);
   } else if (operation == "CNC: V-Engrave") {
     // no op yet
   } else if (operation == "Plasma: Vector (path outside)") {
@@ -56,7 +56,7 @@ function toolpathPreview(i) {
   }
   fillTree()
   clearSceneFlag = true;
-  
+
 }
 
 function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, leadinval, tabdepth, union) {
@@ -64,7 +64,7 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
     var toolpath = inflatePath(toolpathsInScene[index], offset, zstep, zdepth, zstart, leadinval, tabdepth, union);
   }
   if (operation == "pocket") {
-    var toolpath = pocketPath(toolpathsInScene[index], offset, StepOver, zstep, zdepth, zstart );
+    var toolpath = pocketPath(toolpathsInScene[index], offset, StepOver, zstep, zdepth, zstart, union );
   }
   if (operation == "dragknife") {
     var toolpath = dragknifePath(toolpathsInScene[index], offset, zstep, zdepth );
