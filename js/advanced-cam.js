@@ -72,6 +72,7 @@ function addJob(id) {
     if (id == -1) {
       if (toolpath.children.length > 0) {
           toolpath.name = "Vector-"+(toolpathsInScene.length)
+          toolpath.userData.visible = true;
           toolpathsInScene.push(toolpath)
       }
       setTimeout(function(){ fillTree(); setupJob(toolpathsInScene.length - 1);  }, 800);// launch modal

@@ -56,6 +56,11 @@ function updateTreeSelection() {
     });
 }
 
+function toggleToolpathVisibility(i, bool) {
+  toolpathsInScene[i].userData.visible = bool
+  fillTree();
+}
+
 // move toolpath order up/down
 var moveOp = function(index, delta) {
   var array = toolpathsInScene;
@@ -405,27 +410,38 @@ function fillTree() {
                 <td>
                 <i class="fa fa-fw fa-object-group" aria-hidden="true"></i>&nbsp;
                 <span class="entity-job" contenteditable="true" data-id="`+i+`">`+toolpathsInScene[i].name+`</span>
-                <h6 style="margin: 0px 0px;"><small><b>`+ operation+`</b></small></h6>
+                <h6 style="margin: 0px 0px;"><small><b>`+ operation+`</b>`
+                if (!toolpathsInScene[i].userData.visible) {
+                  toolp += " (hidden) "
+                }
+                toolp += `</small></h6>
                 </td>
                 <td>
 
                 </td>
                 <td>
-                  <div class="btn-group" role="group" aria-label="Toolpath Options">`
-                if (i > 0) {
-                  toolp += `<button class="btn btn-xs btn-success" onclick="moveOp(`+i+`, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
+                <div class="btn-group" role="group" aria-label="Toolpath Options">`
+
+                if (toolpathsInScene[i].userData.visible) {
+                  toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Hide toolpath" class="btn btn-xs btn-warning" onclick="toggleToolpathVisibility(`+i+`, false);"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></button>`
                 } else {
-                  toolp += `<button class="btn btn-xs btn-success disabled" onclick="moveOp(`+i+`, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
+                  toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Show toolpath" class="btn btn-xs btn-warning" onclick="toggleToolpathVisibility(`+i+`, true);"><i class="fa fa-fw fa-eye" aria-hidden="true"></i></button>`
+                }
+
+                if (i > 0) {
+                  toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move down" class="btn btn-xs btn-success" onclick="moveOp(`+i+`, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
+                } else {
+                  toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move down" class="btn btn-xs btn-success disabled" onclick="moveOp(`+i+`, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
                 }
 
                 if (i < toolpathsInScene.length -1) {
-                  toolp += `<button class="btn btn-xs btn-success" onclick="moveOp(`+i+`, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
+                  toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="btn btn-xs btn-success" onclick="moveOp(`+i+`, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
                 } else {
-                  toolp += `<button class="btn btn-xs btn-success disabled" onclick="moveOp(`+i+`, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
+                  toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="btn btn-xs btn-success disabled" onclick="moveOp(`+i+`, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
                 }
 
-                toolp += `<button class="btn btn-xs btn-danger" onclick="toolpathsInScene.splice('`+i+`', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
-                <button class="btn btn-xs btn-primary" onclick="setupJob(`+i+`);"><i class="fa fa-fw fa-sliders" aria-hidden="true"></i></button>
+                toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="btn btn-xs btn-danger" onclick="toolpathsInScene.splice('`+i+`', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button data-tooltip="tooltip" data-placement="bottom" title="Edit toolpath" class="btn btn-xs btn-primary" onclick="setupJob(`+i+`);"><i class="fa fa-fw fa-sliders" aria-hidden="true"></i></button>
                 </div>
                 </td>
                 </tr>

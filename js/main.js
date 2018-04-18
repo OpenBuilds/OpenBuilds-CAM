@@ -26,7 +26,10 @@ $(document).ready(function() {
 
     // Tooltips
     // $(document).tooltip();
-    $('[data-toggle="tooltip"]').tooltip()
+    $('body').tooltip({
+        selector: '[data-tooltip="tooltip"]'
+    });
+    // $('[data-tooltip="tooltip"]').tooltip()
 
     // Top toolbar Menu
 

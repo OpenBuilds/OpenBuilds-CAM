@@ -360,15 +360,16 @@ function animate() {
     var toolpaths = new THREE.Group();
     toolpaths.name = "Toolpaths";
     for (i = 0; i < toolpathsInScene.length; i++) {
-      if(toolpathsInScene[i].userData.inflated) {
-        if (toolpathsInScene[i].userData.inflated.userData.pretty) {
-          toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
-          // toolpaths.add(toolpathsInScene[i].userData.inflated);
-        } else {
-          toolpaths.add(toolpathsInScene[i].userData.inflated);
-        }
-      };
-
+      if (toolpathsInScene[i].userData.visible) {
+        if(toolpathsInScene[i].userData.inflated) {
+          if (toolpathsInScene[i].userData.inflated.userData.pretty) {
+            toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
+            // toolpaths.add(toolpathsInScene[i].userData.inflated);
+          } else {
+            toolpaths.add(toolpathsInScene[i].userData.inflated);
+          }
+        };
+      }
     }
     scene.add(toolpaths)
     clearSceneFlag = false;

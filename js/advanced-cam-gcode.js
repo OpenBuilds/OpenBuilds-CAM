@@ -199,10 +199,10 @@ function prepgcodefile() {
     g += startgcode;
     g += "\n";
   }
-  var externalgcode = document.getElementById('gcodepreview').value;
-  if (externalgcode) {
-    g += externalgcode;
-  }
+  // var externalgcode = document.getElementById('gcodepreview').value;
+  // if (externalgcode) {
+  //   g += externalgcode;
+  // }
 
   for (j = 0; j < toolpathsInScene.length; j++) {
     printLog('Preparing Gcode File: ' + toolpathsInScene[j].name, msgcolor, "file");
