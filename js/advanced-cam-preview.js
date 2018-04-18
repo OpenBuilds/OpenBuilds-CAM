@@ -60,6 +60,12 @@ function toolpathPreview(i) {
 }
 
 function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, leadinval, tabdepth, union) {
+  var depth = zdepth - zstart;
+  // console.log(depth, operation, index, offset, StepOver, zstep, zdepth, zstart, leadinval, tabdepth, union)
+  if (zstep > depth) {
+    console.log("Could not generate "+operation+" toolpath for " + toolpathsInScene[index].name + ":  You cannot have Cut Depth: Per Pass, larger than Cut Depth: Final" )
+    printLog("Could not generate toolpath for " + toolpathsInScene[index].name + ":  You cannot have Cut Depth: Per Pass, larger than Cut Depth: Final" , errorcolor, "viewer")
+  }
   if (operation == "inflate") {
     var toolpath = inflatePath(toolpathsInScene[index], offset, zstep, zdepth, zstart, leadinval, tabdepth, union);
   }

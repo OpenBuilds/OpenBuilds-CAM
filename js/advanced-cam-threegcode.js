@@ -86,14 +86,19 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
             color: prettyGrpColor,
         });
       }
-      for (i = zstart; i < zdepth; i += zstep) {
-          inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, -i, true, "inflatedGroup", leadInPaths, tabdepth);
+      for (i = zstart+zstep; i < zdepth+1; i += zstep) {
+          if (i*zstep < zdepth) {
+            var zval = -i
+          } else {
+            var zval = -zdepth;
+          }
+          inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
           inflateGrp.name = 'inflateGrp'+i;
           inflateGrp.userData.material = inflateGrp.material;
           inflateGrpZ.add(inflateGrp);
           if(inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
             var prettyLayer = lineMesh.clone();
-            prettyLayer.position.z = -i;
+            prettyLayer.position.z = zval;
             prettyGrp.add(prettyLayer)
           };
       }
@@ -119,7 +124,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
               color: prettyGrpColor,
           });
         };
-        for (i = zstart; i < zdepth+1; i += zstep) {
+        for (i = zstart+zstep; i < zdepth+1; i += zstep) {
             if (i*zstep < zdepth) {
               var zval = -i
             } else {
@@ -236,16 +241,13 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
                 isShowOutline: true,
                 color: 0x006600,
             });
-            for (j = zstart; j < zdepth; j += zstep) {
+            for (j = zstart+zstep; j < zdepth+1; j += zstep) {
               if (j*zstep < zdepth) {
                 var zval = -j
               } else {
                 var zval = -zdepth;
               }
               // get the inflated/deflated path
-
-
-
               inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
               if (inflateGrp.children.length) {
                 inflateGrp.name = 'inflateGrp';

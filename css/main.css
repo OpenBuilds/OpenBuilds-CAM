@@ -3,6 +3,17 @@
     src: url(fonts/7segment.woff);
 }
 
+.page-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0px auto;
+}
+
 .input-addon {
   display: flex;
   outline: none;
@@ -149,7 +160,7 @@ button:focus {outline:0 !important;}
     height: 100%;
     padding: 0px;
 }
-#col1 {
+#col2 {
     /* border-right: dashed 1px #aaa; */
     float:right;
     width: 330px;
@@ -159,7 +170,7 @@ button:focus {outline:0 !important;}
     overflow-x: none;
     overflow-x: hidden;
 }
-#col2 {
+#col1 {
     float:left;
     width:calc(100% - 331px);
     height: calc(100% - 210px);

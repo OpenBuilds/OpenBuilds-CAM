@@ -13,6 +13,10 @@ function ConfirmDelete()
 function initLocalStorage() {
     var settingsOpen = document.getElementById('jsonFile');
     settingsOpen.addEventListener('change', restoreSettingsLocal, false);
+
+    $('#firmware').on('change', function() {
+      alert( this.value );
+    })
 }
 
 // FIXME
@@ -94,7 +98,6 @@ function backupSettingsLocal() {
 };
 
 function checkSettingsLocal() {
-  $("#settingsstatus").hide();
   var anyissues = false;
   printLog('<b>Checking for configuration :</b><p>', msgcolor, "settings");
   for (i = 0; i < localParams.length; i++) {
@@ -118,7 +121,6 @@ function checkSettingsLocal() {
   if (anyissues) {
     printLog('<b>MISSING CONFIG: You need to configure your setup. </b>. Click <kbd>Settings <i class="fa fa-cogs"></i></kbd> on the left, and work through all the options', errorcolor, "settings");
     $("#togglesettings").click();
-    $("#settingsstatus").show();
   }
 
 
