@@ -124,6 +124,11 @@
 										<button class="btn btn-sm btn-dark" onclick="resetView();" data-tooltip="tooltip" data-placement="bottom" title="View Extents"><i class="fa fa-eye" aria-hidden="true"></i></button>
 										<button class="btn btn-sm btn-dark" onclick="resetView(grid);" data-tooltip="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
 									</div>
+									<div class="btn-group" role="group" aria-label="Simulator">
+                    <button data-toggle="tooltip" data-placement="bottom" title="Run Simulator (Generate GCODE first!)" id="simstartbtn" class="btn btn-sm btn-sm btn-dark" title="Run realtime simulation" onclick="sim(0);"><i class="fa fa-fighter-jet fa-fw"></i>sim play</button>
+                    <button data-toggle="tooltip" data-placement="bottom" title="Stop Simulator" id="simstopbtn" style="display: none;" class="btn btn-sm btn-sm btn-dark" title="Stop realtime simulation" onclick="simstop();"><i class="fa fa-stop fa-fw"></i>sim stop</button>
+                    <button data-toggle="tooltip" data-placement="bottom" title="Set Simulation Speed" class="btn btn-sm btn-sm btn-dark" title="Set sim speed" onclick="simSpeed();"><i class="fa fa-tachometer fa-fw"></i><span id="simspeedval">1</span>x</button>
+                  </div>
 								</div>
 								<div id="renderArea">
 									<div id="rendermenu"></div>
@@ -520,6 +525,7 @@
 	<script type="text/javascript" src="js/advanced-cam-viewer-select.js"></script>
 	<script type="text/javascript" src="js/advanced-cam-workspace-export.js"></script>
 	<script type="text/javascript" src="js/advanced-cam-pretty-render.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-sim.js"></script>
 	<script type="text/javascript" src="js/advanced-cam-basic-shapes.js"></script>
 	<!-- ThreeJS -->
 	<script type="text/javascript" src="lib/threejs/three.min.js"></script>

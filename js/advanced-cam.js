@@ -33,6 +33,7 @@ function initTree() {
 }
 
 function addJob(id) {
+    disableSim();
     $("#savetpgcode").addClass("disabled");
     $("#exportGcodeMenu").addClass("disabled");
 

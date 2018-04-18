@@ -1,6 +1,6 @@
 // Global Vars
 var scene, camera, renderer;
-var geometry, material, mesh, helper, axes, axesgrp, light, bullseye, cursor, grid;
+var geometry, material, mesh, helper, axes, axesgrp, light, bullseye, cursor, grid, cone;
 var projector, mouseVector, containerWidth, containerHeight;
 var raycaster = new THREE.Raycaster();
 
@@ -198,26 +198,28 @@ function init3D() {
         color: 0xFF0000
     });
 
-    var cone = new THREE.Mesh(new THREE.CylinderGeometry(0, 5, 40, 15, 1, false), new THREE.MeshPhongMaterial( {
+    cone = new THREE.Mesh(new THREE.CylinderGeometry(0, 5, 40, 15, 1, false), new THREE.MeshPhongMaterial( {
         color: 0x0000ff,
         specular: 0x0000ff,
         shininess: 100
     } ) );
     cone.overdraw = true;
     cone.rotation.x = -90 * Math.PI / 180;
-    cone.position.z = 20;
+    cone.position.x = 20;
+    cone.position.y = 0;
+    cone.position.z = 0;
     cone.material.opacity = 0.6;
     cone.material.transparent = true;
     cone.castShadow = false;
     cone.visible=false;
-
-    bullseye.add(cone);
-
-    bullseye.name = "Bullseye";
-
-    workspace.add(bullseye);
-    bullseye.position.x = -(sizexmax / 2);
-    bullseye.position.y = -(sizeymax / 2);
+    workspace.add(cone)
+    // bullseye.add(cone);
+    //
+    // bullseye.name = "Bullseye";
+    //
+    // workspace.add(bullseye);
+    // bullseye.position.x = -(sizexmax / 2);
+    // bullseye.position.y = -(sizeymax / 2);
 
     raycaster.linePrecision = 15
 
