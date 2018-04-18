@@ -338,6 +338,7 @@ function init3D() {
 
 function animate() {
   animateTree();
+  simAnimate();
 
   // half-hide toolpaths in delete/move mode
   if (mouseState == "select") {

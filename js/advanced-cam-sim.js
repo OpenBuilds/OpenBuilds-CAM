@@ -8,8 +8,36 @@ function disableSim() {
     $("#simstartbtn").addClass("disabled");
 }
 
+function simAnimate() {
+  if (cone.position) {
+    var conepos = toScreenPosition(cone, camera)
+    $("#conetext").css('left', conepos.x + "px").css('top', conepos.y + "px");
+  }
+}
+
+function toScreenPosition(obj, camera)
+{
+    var vector = new THREE.Vector3();
+
+    var widthHalf = 0.5*renderer.context.canvas.width;
+    var heightHalf = 0.5*renderer.context.canvas.height;
+
+    obj.updateMatrixWorld();
+    vector.setFromMatrixPosition(obj.matrixWorld);
+    vector.project(camera);
+
+    vector.x = ( vector.x * widthHalf ) + widthHalf;
+    vector.y = - ( vector.y * heightHalf ) + heightHalf;
+
+    return {
+        x: vector.x,
+        y: vector.y
+    };
+
+};
+
+
 function simstop() {
-  makeGcode();
   simstopped = true;
   $('#simstartbtn').show();
   $('#simstopbtn').hide();
@@ -35,6 +63,7 @@ function simSpeed() {
 }
 
 function sim(startindex) {
+    makeGcode();
     cone.visible=true
     $("#conetext").show();
     cone.material = new THREE.MeshPhongMaterial( {
