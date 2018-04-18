@@ -119,7 +119,7 @@ function checkSettingsLocal() {
 
 
   if (anyissues) {
-    printLog('<b>MISSING CONFIG: You need to configure your setup. </b>. Click <kbd>Settings <i class="fa fa-cogs"></i></kbd> on the left, and work through all the options', errorcolor, "settings");
+    printLog(`<b>MISSING CONFIG: You need to configure your setup. </b>. Click Edit, <a href='#' onclick='$("#settingsmodal").modal("show");'><kbd>Settings <i class="fa fa-cogs"></i></kbd></a> on the top menu bar, and work through all the options`, errorcolor, "settings");
     $("#togglesettings").click();
   }
 
