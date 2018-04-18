@@ -9,6 +9,7 @@ function disableSim() {
 }
 
 function simstop() {
+  makeGcode();
   simstopped = true;
   $('#simstartbtn').show();
   $('#simstopbtn').hide();

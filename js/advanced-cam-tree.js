@@ -468,5 +468,4 @@ function fillTree() {
     $('#toolpathstable').append(tableend)
 
     eventsTree();
-    disableSim();
 }

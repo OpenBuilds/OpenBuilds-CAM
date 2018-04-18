@@ -1204,7 +1204,6 @@ createObjectFromGCode = function (gcode, indxMax) {
 
            var template = `<i class="fa fa-star-o fa-fw"></i>preview`
            $('#previewbtntext').html(template)
-           enableSim();
        }
 
 function convertLineGeometryToBufferGeometry(lineGeometry, color) {
