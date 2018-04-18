@@ -215,9 +215,9 @@ button:focus {outline:0 !important;}
 }
 
 #buttonbar {
-  position: absolute;
+  /* position: absolute;
   top: 6px;
-  left: -20px;
+  left: -20px; */
   margin-left: 0px;
   margin-right: 0px;
   text-align: center;
