@@ -5,30 +5,30 @@ function drawRuler() {
   // x axis
   for (i=0; i<=sizexmax; i++) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( i, -sizeymax/2-1, 0) );
-    geometry.vertices.push(new THREE.Vector3( i, -sizeymax/2-4, 0) );
+    geometry.vertices.push(new THREE.Vector3( i, -1, 0) );
+    geometry.vertices.push(new THREE.Vector3( i, -4, 0) );
     var line = new THREE.Line( geometry, material );
-    line.translateX(-sizexmax / 2)
+    // line.translateX(-sizexmax / 2)
     // line.translateY(-sizeymax / 2)
     workspace.add(line);
   }
 
   for (i=0; i<=sizexmax; i+=5) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( i, -sizeymax/2-1, 0) );
-    geometry.vertices.push(new THREE.Vector3( i, -sizeymax/2-6, 0) );
+    geometry.vertices.push(new THREE.Vector3( i, -1, 0) );
+    geometry.vertices.push(new THREE.Vector3( i, -6, 0) );
     var line = new THREE.Line( geometry, material );
-    line.translateX(-sizexmax / 2)
+    // line.translateX(-sizexmax / 2)
     // line.translateY(-sizeymax / 2)
     workspace.add(line);
   }
 
   for (i=0; i<=sizexmax; i+=10) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( i, -sizeymax/2-1, 0) );
-    geometry.vertices.push(new THREE.Vector3( i, -sizeymax/2-7, 0) );
+    geometry.vertices.push(new THREE.Vector3( i, -1, 0) );
+    geometry.vertices.push(new THREE.Vector3( i, -7, 0) );
     var line = new THREE.Line( geometry, material );
-    line.translateX(-sizexmax / 2)
+    // line.translateX(-sizexmax / 2)
     // line.translateY(-sizeymax / 2)
     workspace.add(line);
   }
@@ -36,31 +36,31 @@ function drawRuler() {
   // y axis
   for (i=0; i<=sizeymax; i+=5) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( -sizexmax/2-1, i, 0) );
-    geometry.vertices.push(new THREE.Vector3( -sizexmax/2-6, i, 0) );
+    geometry.vertices.push(new THREE.Vector3( -1, i, 0) );
+    geometry.vertices.push(new THREE.Vector3( -6, i, 0) );
     var line = new THREE.Line( geometry, material );
     // line.translateX(-sizeymax / 2)
-    line.translateY(-sizeymax / 2)
+    // line.translateY(-sizeymax / 2)
     workspace.add(line);
   }
 
   for (i=0; i<=sizeymax; i+=10) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( -sizexmax/2-1, i, 0) );
-    geometry.vertices.push(new THREE.Vector3( -sizexmax/2-7, i, 0) );
+    geometry.vertices.push(new THREE.Vector3( -1, i, 0) );
+    geometry.vertices.push(new THREE.Vector3( -7, i, 0) );
     var line = new THREE.Line( geometry, material );
     // line.translateX(-sizeymax / 2)
-    line.translateY(-sizeymax / 2)
+    // line.translateY(-sizeymax / 2)
     workspace.add(line);
   }
 
   for (i=0; i<=sizeymax; i++) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( -sizexmax/2-1, i, 0) );
-    geometry.vertices.push(new THREE.Vector3( -sizexmax/2-4, i, 0) );
+    geometry.vertices.push(new THREE.Vector3( -1, i, 0) );
+    geometry.vertices.push(new THREE.Vector3( -4, i, 0) );
     var line = new THREE.Line( geometry, material );
     // line.translateX(-sizeymax / 2)
-    line.translateY(-sizeymax / 2)
+    // line.translateY(-sizeymax / 2)
     workspace.add(line);
   }
 

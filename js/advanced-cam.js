@@ -60,10 +60,8 @@ function addJob(id) {
       obj.traverse( function ( child ) {
         if (child.userData.selected) {
           var copy = child.clone()
-          // console.log(copy)
+          console.log(copy, child)
           copy.position.copy( obj.position );
-          // copy.position.x = obj.position.x
-          // copy.position.y = obj.position.y
           toolpath.add(copy);
         }
       });

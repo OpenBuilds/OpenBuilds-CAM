@@ -145,13 +145,13 @@ function putFileObjectAtZero(object) {
 
   var bbox2 = new THREE.Box3().setFromObject(object);
   // console.log('bbox for putFileObjectAtZero: Min X: ', (bbox2.min.x + (sizexmax / 2)), '  Max X:', (bbox2.max.x + (sizexmax / 2)), 'Min Y: ', (bbox2.min.y + (sizeymax / 2)), '  Max Y:', (bbox2.max.y + (sizeymax / 2)));
-  Xtofix = -(bbox2.min.x + (sizexmax / 2));
+  Xtofix = -(bbox2.min.x + (sizexmax));
   imagePosition = $('#imagePosition').val()
   // console.log('ImagePosition', imagePosition)
   if (imagePosition == "Top Left") {
-      Ytofix = (sizeymax / 2) - bbox2.max.y;
+      Ytofix = - bbox2.max.y;
   } else {
-      Ytofix = -(bbox2.min.y + (sizeymax / 2));
+      Ytofix = - bbox2.min.y;
   }
   // console.log('X Offset', Xtofix)
   // console.log('Y Offset', Ytofix)

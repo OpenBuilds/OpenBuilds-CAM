@@ -99,3 +99,12 @@ function deleteSelectedObjects() {
   }
   fillTree();
 }
+
+function updateCloneMoves() {
+  for (i = 0; i < toolpathsInScene.length; i++) {
+    var object = toolpathsInScene[i]
+    object.traverse( function ( child ) {
+      
+    });
+  }
+}

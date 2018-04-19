@@ -33,10 +33,10 @@ containerHeight = window.innerHeight;
 function setBullseyePosition(x, y, z) {
     //console.log('Set Position: ', x, y, z)
     if (x) {
-        bullseye.position.x = (parseInt(x, 10) - (sizexmax / 2));
+        bullseye.position.x = parseInt(x, 10);
     };
     if (y) {
-        bullseye.position.y = (parseInt(y, 10) - (sizeymax / 2));
+        bullseye.position.y = parseInt(y, 10);
     };
     if (z) {
         bullseye.position.z = (parseInt(z, 10) + 0.1);
@@ -175,19 +175,12 @@ function init3D() {
     var material = new THREE.LineBasicMaterial( { color: 0x666666 } );
     material.opacity = 0.15;
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( sizexmax/2, -sizeymax/2, 0) );
-    geometry.vertices.push(new THREE.Vector3( sizexmax/2, sizeymax/2, 0) );
-    geometry.vertices.push(new THREE.Vector3( -sizexmax/2, sizeymax/2, 0) );
+    geometry.vertices.push(new THREE.Vector3( sizexmax, 0, 0) );
+    geometry.vertices.push(new THREE.Vector3( sizexmax, sizeymax, 0) );
+    geometry.vertices.push(new THREE.Vector3( 0, sizeymax, 0) );
     var line = new THREE.Line( geometry, material );
     workspace.add(line);
-    var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( sizexmax/2+1, -sizeymax/2-1, 0) );
-    geometry.vertices.push(new THREE.Vector3( sizexmax/2+1, sizeymax/2+1, 0) );
-    geometry.vertices.push(new THREE.Vector3( -sizexmax/2-1, sizeymax/2+1, 0) );
-    geometry.vertices.push(new THREE.Vector3( -sizexmax/2-1, -sizeymax/2-1, 0) );
-    geometry.vertices.push(new THREE.Vector3( sizexmax/2+1, -sizeymax/2-1, 0) );
-    var line = new THREE.Line( geometry, material );
-    workspace.add(line);
+    
 
     if (bullseye) {
         scene.remove(bullseye);
@@ -283,9 +276,6 @@ function init3D() {
     axesgrp.add(line1);
     axesgrp.add(line2);
 
-    axesgrp.translateX(sizexmax / 2 * -1);
-    axesgrp.translateY(sizeymax / 2 * -1);
-    //console.log('[VIEWER] - added Axesgrp');
     workspace.add(axesgrp);
 
     // Picking stuff

@@ -76,7 +76,7 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
     var toolpath = dragknifePath(toolpathsInScene[index], offset, zstep, zdepth );
   }
   toolpath.userData.type = "toolpath";
-  toolpath.translateX(-sizexmax/2)
-  toolpath.translateY(-sizeymax/2)
+  // toolpath.translateX(-sizexmax/2)
+  // toolpath.translateY(-sizeymax/2)
   return toolpath
 }

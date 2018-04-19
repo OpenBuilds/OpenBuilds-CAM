@@ -37,15 +37,17 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
             for (i = 0; i < child.geometry.vertices.length; i++) {
                 var localPt = child.geometry.vertices[i];
                 var worldPt = child.localToWorld(localPt.clone());
-                var xpos = worldPt.x + (sizexmax /2);
-                var ypos = worldPt.y + (sizeymax /2);
+                var xpos = worldPt.x;// + (sizexmax /2);
+                var ypos = worldPt.y;// + (sizeymax /2);
 
                 var xpos_offset = (parseFloat(child.position.x.toFixed(3)));
                 var ypos_offset = (parseFloat(child.position.y.toFixed(3)));
 
                 if (child.geometry.type == "CircleGeometry") {
-                 xpos = (xpos + xpos_offset);
-                 ypos = (ypos + ypos_offset);
+                  // internal cam: doesnt work with offsets
+                  // offsets might be legacy from old DXF parsers, so for now, commenting out
+                 // xpos = (xpos + xpos_offset);
+                 // ypos = (ypos + ypos_offset);
                 }
 
                 clipperArr.push({
@@ -96,7 +98,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
           inflateGrp.name = 'inflateGrp'+i;
           inflateGrp.userData.material = inflateGrp.material;
           inflateGrpZ.add(inflateGrp);
-          if(inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
+          if(inflateVal > 0.04 || inflateVal < -0.04) { //Dont show for very small offsets, not worth the processing time
             var prettyLayer = lineMesh.clone();
             prettyLayer.position.z = zval;
             prettyGrp.add(prettyLayer)
@@ -113,7 +115,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
         if (leadinval > 0 ) {
           var leadInPaths = getInflatePath(pathobj, inflateVal*2);
         }
-        if(inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
+        if(inflateVal > 0.04 || inflateVal < -0.04) { //Dont show for very small offsets, not worth the processing time
         // generate once use again for each z
           var lineMesh = this.getMeshLineFromClipperPath({
               width: inflateVal*2,
@@ -134,7 +136,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
             inflateGrp.name = 'inflateGrp'+j+'_'+i;
             inflateGrp.userData.material = inflateGrp.material;
             inflateGrpZ.add(inflateGrp);
-            if(inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
+            if(inflateVal > 0.04 || inflateVal < -0.04) { //Dont show for very small offsets, not worth the processing time
               var prettyLayer = lineMesh.clone();
               prettyLayer.position.z = zval;
               prettyGrp.add(prettyLayer)
@@ -142,9 +144,9 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
         }
       }
     }
-    if(inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
-      prettyGrp.translateX(-sizexmax/2)
-      prettyGrp.translateY(-sizeymax/2)
+    if(inflateVal > 0.04 || inflateVal < -0.04) { //Dont show for very small offsets, not worth the processing time
+      // prettyGrp.translateX(-sizexmax/2)
+      // prettyGrp.translateY(-sizeymax/2)
       inflateGrpZ.userData.pretty = prettyGrp
     };
     // inflateGrpZ.position
@@ -181,8 +183,8 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
                 for (i = 0; i < child.geometry.vertices.length; i++) {
                     var localPt = child.geometry.vertices[i];
                     var worldPt = child.localToWorld(localPt.clone());
-                    var xpos = worldPt.x + (sizexmax /2);
-                    var ypos = worldPt.y + (sizeymax /2);
+                    var xpos = worldPt.x;// + (sizexmax /2);
+                    var ypos = worldPt.y;// + (sizeymax /2);
 
                     var xpos_offset = (parseFloat(child.position.x.toFixed(3)));
                     var ypos_offset = (parseFloat(child.position.y.toFixed(3)));
@@ -263,73 +265,73 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
                 // break;
               }
             }
-          }
-          prettyGrp.translateX(-sizexmax/2)
-          prettyGrp.translateY(-sizeymax/2)
+          } // numloops
+          // prettyGrp.translateX(-sizexmax/2)
+          // prettyGrp.translateY(-sizeymax/2)
           pocketGrp.userData.pretty = prettyGrp;
           return pocketGrp;
       } else {
         console.log("Not Union")
-        var newClipperPaths = clipperPaths;
-        // calc Stepover
-        var box = new THREE.Box3().setFromObject(infobject);
-        var xsize = (box.max.x - box.min.x)
-        var ysize = (box.max.y - box.min.y)
-        var maxsize = Math.max(xsize, ysize); // max width/height
-        var cutwidth = ((inflateVal*2) * (stepOver / 100)) //mm per cut
-        var numOfLoops = parseInt((maxsize/2) / cutwidth);
-
-        for (k=0; k<newClipperPaths.length; k++) {
-          var pathobj = [];
-          pathobj.push(newClipperPaths[k])
-          // create layer
-          for (i = numOfLoops+1; i >= 0; i--) {  // Rather 100 than a while loop, just in case
-            // console.log("Path: ", i, " / cutwidth*i = ", cutwidth * i, " / inflateVal*2:  ", inflateVal*2)
-            if ((cutwidth * i) < (inflateVal*2)) {
-              inflateValUsed = inflateVal;
-            } else {
-              inflateValUsed = cutwidth * i;
-            }
-            // get the inflated/deflated path
-            var inflatedPaths = getInflatePath(pathobj, -inflateValUsed);
-            var lineMesh = this.getMeshLineFromClipperPath({
-                width: inflateVal*2,
-                clipperPath: inflatedPaths,
-                isSolid: true,
-                opacity: 0.2,
-                isShowOutline: true,
-                color: 0x006600,
-            });
-
-            // console.log("NumLoops: ", numOfLoops, " / at ", cutwidth, "mm. with a tooldia of ", inflateVal)
-            for (j = zstart; j < zdepth; j += zstep) {
-              if (j*zstep < zdepth) {
-                var zval = -j
-              } else {
-                var zval = -zdepth;
-              }
-
-              // console.log(inflatedPaths)
-              inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
-              if (inflateGrp.children.length) {
-                inflateGrp.name = 'inflateGrp';
-                // inflateGrp.position = infobject.position;
-                // pocketGrp.userData.color = pocketGrp.material.color.getHex();
-                var prettyLayer = lineMesh.clone();
-                prettyLayer.position.z = zval;
-                prettyGrp.add(prettyLayer)
-                pocketGrp.add(inflateGrp);
-              } else {
-                // console.log('Pocket failed at ' + i + ' iterations');
-                // break;
-              }
-            }
-          }
-        }
-        prettyGrp.translateX(-sizexmax/2)
-        prettyGrp.translateY(-sizeymax/2)
-        pocketGrp.userData.pretty = prettyGrp;
-        return pocketGrp;
+        // var newClipperPaths = clipperPaths;
+        // // calc Stepover
+        // var box = new THREE.Box3().setFromObject(infobject);
+        // var xsize = (box.max.x - box.min.x)
+        // var ysize = (box.max.y - box.min.y)
+        // var maxsize = Math.max(xsize, ysize); // max width/height
+        // var cutwidth = ((inflateVal*2) * (stepOver / 100)) //mm per cut
+        // var numOfLoops = parseInt((maxsize/2) / cutwidth);
+        //
+        // for (k=0; k<newClipperPaths.length; k++) {
+        //   var pathobj = [];
+        //   pathobj.push(newClipperPaths[k])
+        //   // create layer
+        //   for (i = numOfLoops+1; i >= 0; i--) {  // Rather 100 than a while loop, just in case
+        //     // console.log("Path: ", i, " / cutwidth*i = ", cutwidth * i, " / inflateVal*2:  ", inflateVal*2)
+        //     if ((cutwidth * i) < (inflateVal*2)) {
+        //       inflateValUsed = inflateVal;
+        //     } else {
+        //       inflateValUsed = cutwidth * i;
+        //     }
+        //     // get the inflated/deflated path
+        //     var inflatedPaths = getInflatePath(pathobj, -inflateValUsed);
+        //     var lineMesh = this.getMeshLineFromClipperPath({
+        //         width: inflateVal*2,
+        //         clipperPath: inflatedPaths,
+        //         isSolid: true,
+        //         opacity: 0.2,
+        //         isShowOutline: true,
+        //         color: 0x006600,
+        //     });
+        //
+        //     // console.log("NumLoops: ", numOfLoops, " / at ", cutwidth, "mm. with a tooldia of ", inflateVal)
+        //     for (j = zstart; j < zdepth; j += zstep) {
+        //       if (j*zstep < zdepth) {
+        //         var zval = -j
+        //       } else {
+        //         var zval = -zdepth;
+        //       }
+        //
+        //       // console.log(inflatedPaths)
+        //       inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
+        //       if (inflateGrp.children.length) {
+        //         inflateGrp.name = 'inflateGrp';
+        //         // inflateGrp.position = infobject.position;
+        //         // pocketGrp.userData.color = pocketGrp.material.color.getHex();
+        //         var prettyLayer = lineMesh.clone();
+        //         prettyLayer.position.z = zval;
+        //         prettyGrp.add(prettyLayer)
+        //         pocketGrp.add(inflateGrp);
+        //       } else {
+        //         // console.log('Pocket failed at ' + i + ' iterations');
+        //         // break;
+        //       }
+        //     }
+        //   }
+        // }
+        // prettyGrp.translateX(-sizexmax/2)
+        // prettyGrp.translateY(-sizeymax/2)
+        // pocketGrp.userData.pretty = prettyGrp;
+        // return pocketGrp;
       } // end no union
     }
 };
@@ -361,8 +363,8 @@ dragknifePath = function(infobject, inflateVal, zstep, zdepth) {
                 for (i = 0; i < child.geometry.vertices.length; i++) {
                     var localPt = child.geometry.vertices[i];
                     var worldPt = child.localToWorld(localPt.clone());
-                    var xpos = worldPt.x + (sizexmax /2);
-                    var ypos = worldPt.y + (sizeymax /2);
+                    var xpos = worldPt.x;// + (sizexmax /2);
+                    var ypos = worldPt.y;// + (sizeymax /2);
 
                     var xpos_offset = child.position.x;
                     var ypos_offset = child.position.y;

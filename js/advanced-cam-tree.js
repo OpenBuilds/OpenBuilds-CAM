@@ -311,6 +311,7 @@ function fillTree() {
                 currentChild = currentChildren[j];
                 childData = currentChild.userData;
                 childData.link = "link"+i+"_"+j;
+                
                 childLayer = childData.layer;
 
                 $parentGroup = $childGroup;

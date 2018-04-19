@@ -88,8 +88,8 @@ function sim(startindex) {
           // editor.gotoLine(simIdx + 1)
           $('#gcodesent').html(simIdx + 1);
           $('#simgcode').html(object.userData.lines[simIdx].args.origtext);
-          var posx = object.userData.lines[simIdx].p2.x - (sizexmax/2);
-          var posy = object.userData.lines[simIdx].p2.y - (sizeymax/2);
+          var posx = object.userData.lines[simIdx].p2.x; //- (sizexmax/2);
+          var posy = object.userData.lines[simIdx].p2.y; //- (sizeymax/2);
           var posz = object.userData.lines[simIdx].p2.z + 20;
           var simTime = object.userData.lines[simIdx].p2.timeMins / timefactor;
           // if (simTime < 0.1) { simTime = 0.1};

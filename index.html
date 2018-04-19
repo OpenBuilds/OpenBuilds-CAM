@@ -117,9 +117,10 @@
 										<input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fa fa-eraser" aria-hidden="true"></i>
 										</label>
 									</div>
-									<!-- <div class="btn-group" data-toggle="buttons">
-										<button id="AddCircle" class="btn btn-sm btn-secondary" data-tooltip="tooltip" data-placement="bottom" title="Add Circle"><i class="fa fa-circle-o" aria-hidden="true"></i></button>
-										</div> -->
+									<div class="btn-group" data-toggle="buttons">
+										<button id="AddCircle" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Circle"><i class="fa fa-circle-o" aria-hidden="true"></i></button>
+										<button id="AddRect" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Rectangle"><i class="fa fa-square-o" aria-hidden="true"></i></button>
+									</div>
 									<div class="btn-group" data-toggle="buttons">
 										<button class="btn btn-sm btn-dark" onclick="resetView();" data-tooltip="tooltip" data-placement="bottom" title="View Extents"><i class="fa fa-eye" aria-hidden="true"></i></button>
 										<button class="btn btn-sm btn-dark" onclick="resetView(grid);" data-tooltip="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
@@ -474,12 +475,12 @@
 		</div>
 		<!-- #settingsmodal -->
 
-		<div id="addShape" class="modal fade" role="dialog">
+		<div id="addShapeCircle" class="modal fade" role="dialog">
 			<div class="modal-dialog" role="document">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 id="statusTitle" class="modal-title">Add shape</h5>
+						<h5 class="modal-title">Add shape: Circle</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 						</button>
@@ -495,7 +496,45 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-sm-10">
-									<button type="submit" class="btn btn-primary">Create</button>
+									<button type="button" class="btn btn-primary" id="CreateCircle">Create</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer" id="statusFooter"></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="addShapeRect" class="modal fade" role="dialog">
+			<div class="modal-dialog" role="document">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add shape: Rectangle</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group row">
+								<label for="rectX" class="col-sm-2 col-form-label">Width</label>
+								<div class="col-sm-5">
+									<input type="number" class="form-control" id="rectX" value="100">
+								</div>
+								<label for="rectX" class="col-sm-5 col-form-label">mm</label>
+							</div>
+							<div class="form-group row">
+								<label for="rectY" class="col-sm-2 col-form-label">Height</label>
+								<div class="col-sm-5">
+									<input type="number" class="form-control" id="rectY" value="50">
+								</div>
+								<label for="rectY" class="col-sm-5 col-form-label">mm</label>
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-10">
+									<button type="button" class="btn btn-primary" id="CreateRect">Create</button>
 								</div>
 							</div>
 						</form>
