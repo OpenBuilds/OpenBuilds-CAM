@@ -89,8 +89,8 @@ function init3D() {
     controls.mouseButtons = { ORBIT: THREE.MOUSE.MIDDLE, ZOOM: false, PAN: THREE.MOUSE.RIGHT };
 
     controls.enableRotate = true;
-
     controls.enableZoom = true; // optional
+    controls.maxDistance = 4000; // limit max zoom out
     controls.enableKeys = false; // Disable Keyboard on canvas
     //controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
     // /var STATE = { NONE : - 1, ROTATE : 0, DOLLY : 1, PAN : 2, TOUCH_ROTATE : 3, TOUCH_DOLLY : 4, TOUCH_PAN : 5 };
@@ -180,7 +180,7 @@ function init3D() {
     geometry.vertices.push(new THREE.Vector3( 0, sizeymax, 0) );
     var line = new THREE.Line( geometry, material );
     workspace.add(line);
-    
+
 
     if (bullseye) {
         scene.remove(bullseye);
@@ -315,7 +315,7 @@ function init3D() {
   var vertexShader = document.getElementById( 'vertexShader' ).textContent;
   var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
 
-	var skyGeo = new THREE.SphereGeometry( 2000, 32, 15 );
+	var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
 	var skyMat = new THREE.ShaderMaterial( { vertexShader: vertexShader, fragmentShader: fragmentShader, uniforms: uniforms, side: THREE.BackSide } );
 
 	sky = new THREE.Mesh( skyGeo, skyMat );
