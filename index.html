@@ -133,7 +133,9 @@
 								</div>
 								<div id="renderArea">
 									<div id="rendermenu"></div>
-									<div id="helpoverlay"></div>
+									<div id="helpoverlay">
+										<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
+									</div>
 									<div id="selection" style="visibility: hidden;"></div>
 									<div id="conetext" class="form-group " style="position:absolute;top:45px;left:10px; padding-left: 5px; padding-right: 5px; display:none;">
 	                  <span class="badge badge-success"><span id="simgcode"></span></span><br>
@@ -172,22 +174,22 @@
 									   </form>
 									</div>
 									</div> -->
-								<div class="card">
+								<!-- <div class="card">
 									<div class="card-body">
 										<div id="console"></div>
 									</div>
-								</div>
+								</div> -->
 							</div><!-- #viewer_container -->
 						</div>
 					</div>
 					<!-- #col2 (main content)-->
 					<div id="col2">
-						<div id="tree-cam-menu-panel" class="mobtab" style="height: 99%;">
+						<div id="tree-cam-menu-panel" class="mobtab" style="height: 100%;">
 							<span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 200; color: #fff;">
 							<i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
 							<i class="fa fa-object-group fa-stack-1x"></i>
 							</span>
-							<div class="card" id="renderToolpath" style="height: 48%;  margin-bottom: 12px;">
+							<div class="card" id="renderToolpath" style="height: calc(50% - 4px);  margin-bottom: 12px;">
 								<div class="card-header" id="toolpathtreeheader">
 									<table style="width: 100%">
 										<tr class="jobsetupfile">
@@ -201,9 +203,9 @@
 										</tr>
 									</table>
 								</div>
-								<div class="card-body" id="toolpathtree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
+								<div class="card-body" id="toolpathtree" style="height: calc(50% - 0px); overflow-y:scroll;"></div>
 							</div>
-							<div class="card" style="height: 48%;">
+							<div class="card" style="height: 49%;">
 								<div class="card-header" id="filetreeheader">
 									<table style="width: 100%">
 										<tr class="jobsetupfile">
@@ -468,7 +470,7 @@
 					</div>
 					<div class="modal-footer">
 						<button id="savesettings" type="button" class="btn btn-success">Save</button>
-						<button type="button" class="btn btn-default">Cancel</button>
+						<button type="button" class="btn btn-default" onclick="$('#settingsmodal').modal('hide');">Cancel</button>
 					</div>
 				</div>
 			</div>
@@ -552,6 +554,12 @@
 	<script type="text/javascript" src="lib/nprogress/nprogress.js"></script>
 	<script type="text/javascript" src="lib/jquery/jquery-ui.js"></script>
 	<script type="text/javascript" src="lib/jquery/jquery.ui.touch-punch.min.js"></script>
+
+	<!-- Growl Style notifications -->
+  <link type="text/css" rel="stylesheet" media="all" href="lib/hullabaloo/css/alert.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="lib/hullabaloo/css/style.css" />
+	<script type="text/javascript" src="lib/hullabaloo/js/hullabaloo.js"></script>
+
 	<!-- Helpers -->
 	<script type="text/javascript" src="js/helpers.js"></script>
 	<script type="text/javascript" src="js/fileprep.js"></script>

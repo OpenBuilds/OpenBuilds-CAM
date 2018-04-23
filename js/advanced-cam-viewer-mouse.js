@@ -13,6 +13,11 @@ $(document).ready(function() {
           dragcontrols.dispose();
         }
         $('#renderArea').css('cursor','');
+        if (controls.enableRotate) {
+          helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
+        } else {
+          helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
+        }
       }
 
       // move mode
@@ -22,6 +27,9 @@ $(document).ready(function() {
         $('#renderArea').css('cursor','');
         var documents2 = scene.getObjectByName("Documents");
         dragcontrols = new THREE.DragControls(objectsInScene, camera, renderer.domElement);
+        // helpoverlay.style.visibility = "visible";
+    		helpoverlay.innerHTML = "<kbd>Left Mouse Drag</kbd> = Select Document to move / <kbd>Ctrl+Left Mouse Drag</kbd> = Select entity to move / <kbd>Del</kbd> = Delete Selected"
+
       }
 
       // delete mode
@@ -35,6 +43,7 @@ $(document).ready(function() {
           color: '#000',
           hotspot: 'bottom left'
         });
+        helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = delete Entity / <kbd>Ctrl + Left Mouse Click</kbd> = Delete entire Document / <kbd>Del</kbd> = Delete Selected"
       }
       // end if
     }); // end radio.onChange
@@ -104,7 +113,7 @@ function updateCloneMoves() {
   for (i = 0; i < toolpathsInScene.length; i++) {
     var object = toolpathsInScene[i]
     object.traverse( function ( child ) {
-      
+
     });
   }
 }

@@ -56,12 +56,7 @@ function delta(num1, num2){
 
 function mouseDown (event) {
   if (mouseState == "select") {
-    helpoverlay.style.visibility = "visible";
-    if (controls.enableRotate) {
-      helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
-    } else {
-      helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
-    }
+    // helpoverlay.style.visibility = "visible";
     if (event.which == 1) { // only on left mousedown
       var pos = {};
       mousedown = true;
@@ -139,8 +134,7 @@ function mouseDown (event) {
       } // end raycast single click select
     }
   } else if (mouseState == "delete") {
-    helpoverlay.style.visibility = "visible";
-    helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = delete Entity / <kbd>Ctrl + Left Mouse Click</kbd> = Delete entire Document / <kbd>Del</kbd> = Delete Selected"
+    // helpoverlay.style.visibility = "visible";
     if (event.which == 1) { // only on left mousedown
       // raycast single click selection
       sceneWidth = document.getElementById("renderArea").offsetWidth;
@@ -194,7 +188,7 @@ function mouseUp (event) {
   mouseup = true;
   mousedown = false;
   selection.style.visibility = "hidden";
-  helpoverlay.style.visibility = "hidden";
+  // helpoverlay.style.visibility = "hidden";
   mousedowncoords = {};
   for (i=0; i<objectsInScene.length; i++) {
     var obj = objectsInScene[i]

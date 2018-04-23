@@ -7,10 +7,44 @@ var errorcolor = '#cc0000';
 var warncolor = '#ff6600';
 
 var debug = false;
-var activeObject, fileName;
+var activeObject, fileName, notify;
 
 // Place all document.ready tasks into functions and ONLY run the functions from doument.ready
 $(document).ready(function() {
+
+  // Growl style notifications
+  notify = new hullabaloo({
+      // where to append the notifications
+      ele: $("#renderArea"),
+      // offset
+      offset: {
+        from: "top",
+        amount: 200
+      },
+      // or 'center', 'left'
+      align: "right",
+      // width
+      width: 250,
+      // for auto dismiss
+      delay: 5000,
+      allow_dismiss: true,
+      // space between notification boxes
+      stackup_spacing: 10,
+      // notification message here
+      // text: "<a href="https://www.jqueryscript.net/tags.php?/Notification/">Notification</a> Message Here",
+      // // Font Awesome icon
+      // icon: "times-circle",
+      // // styles
+      // status: "danger",
+      // // additional CSS classes
+      // alertClass: "",
+      // // callback functions
+      fnStart: false,
+      fnEnd: false,
+      fnEndHide: false,
+
+  });
+  notify.send("Ready!", "success");
 
     // Intialise
     loadSettingsLocal();
@@ -79,6 +113,7 @@ $(document).ready(function() {
     });
 
     $('#cammodal').modal('show');
+
 
 }); // End of document.ready
 
@@ -306,26 +341,6 @@ function printLog(text, color, logclass) {
 	if (text.isString) {
       text = text.replace(/\n/g, "<br />");
 	}
-    if ($('#console p').length > 300) {
-        // remove oldest if already at 300 lines
-        $('#console p').first().remove();
-    }
-    var template = '<p class="pf" style="color: ' + color + ';">';
-    if (logclass) {
-        if (logclass == "settings") {
-            template += '<i class="fa fa-cogs fa-fw" aria-hidden="true"></i>: ';
-        }
-        if (logclass == "file") {
-            template += '<i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>: ';
-        }
-        if (logclass == "viewer") {
-            template += '<i class="fa fa-search fa-fw" aria-hidden="true"></i>: ';
-        }
-        if (logclass == "git") {
-            template += '<i class="fa fa-github fa-fw" aria-hidden="true"></i>: ';
-        }
-    }
-    template += text;
-    $('#console').append(template);
-    $('#console').scrollTop($("#console")[0].scrollHeight - $("#console").height());
+  // notify.send(text, "success");
+
 }

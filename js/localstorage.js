@@ -25,17 +25,17 @@ function initLocalStorage() {
 
 localParams = [
   // [paramName, required]
-  ['rapidspeed', true],
+  // ['rapidspeed', true],
   ['sizexmax', true],
   ['sizeymax', true],
   ['startgcode', false],
   ['laseron', false],
   ['laseroff', false],
-  ['lasermultiply', true],
-  ['homingseq', true],
+  // ['lasermultiply', true],
+  // ['homingseq', true],
   ['endgcode', false],
-  ['lasertestpower', false],
-  ['lasertestduration', false],
+  // ['lasertestpower', false],
+  // ['lasertestduration', false],
   ['imagePosition', true],
   ['defaultDPI', true],
   ['illustratorDPI', false],
@@ -46,7 +46,7 @@ localParams = [
   ['scommandnewline', true],
   ['scommand', true],
   ['scommandscale', true],
-  ['ihsgcode', true]
+  ['ihsgcode', false]
 ];
 
 
@@ -71,6 +71,8 @@ function saveSettingsLocal() {
       saveSetting(paramName, val);
   }
   printLog('<b>Saved Settings: <br>NB:</b> Please refresh page for settings to take effect', errorcolor, "settings");
+  notify.send("<b>Saved Settings: <br>NB:</b> Please refresh page for settings to take effect", "success");
+  $("#settingsmodal").modal("hide");
   console.groupEnd();
 };
 
@@ -120,7 +122,8 @@ function checkSettingsLocal() {
 
   if (anyissues) {
     printLog(`<b>MISSING CONFIG: You need to configure your setup. </b>. Click Edit, <a href='#' onclick='$("#settingsmodal").modal("show");'><kbd>Settings <i class="fa fa-cogs"></i></kbd></a> on the top menu bar, and work through all the options`, errorcolor, "settings");
-    $("#togglesettings").click();
+    notify.send("Application not configured, launching Settings dialog", "danger");
+    $("#settingsmodal").modal("show");
   }
 
 
