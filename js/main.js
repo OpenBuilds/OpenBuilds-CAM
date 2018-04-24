@@ -60,13 +60,6 @@ $(document).ready(function() {
   // Viewer
   var viewer = document.getElementById('renderArea');
 
-
-  // Progressbar
-  // NProgress.configure({ parent: '#gcode-menu-panel' });
-  NProgress.configure({
-    showSpinner: false
-  });
-
   checkSettingsLocal();
   setTimeout(function() {
     $('#viewReset').click();
