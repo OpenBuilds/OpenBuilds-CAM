@@ -186,7 +186,6 @@ function changePositionToGeoTranslate() {
   for (i = 0; i < objectsInScene.length; i++) {
     var object = objectsInScene[i]
     for (j = 0; j < object.children.length; j++) {
-      console.log(object.children[i].position.x, object.children[i].position.y);
       object.children[j].geometry.translate(object.children[j].position.x, object.children[j].position.y, 0)
       object.children[j].geometry.translate(object.position.x, object.position.y, 0)
       object.children[j].position.x = 0;

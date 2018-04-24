@@ -219,15 +219,19 @@ button:focus {outline:0 !important;}
   /* position: absolute;
   top: 6px;
   left: -20px; */
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-top: 2px;
+  margin-left: 10px;
+  margin-right: 10px;
   text-align: center;
-  background: rgba(255, 255, 255, 0);
+  background: rgba(240, 240, 240, 0.85);
+  border: 1px solid rgba(55, 55, 55, 0.2);
   border-radius: 4px;
-  width: 100%;
+  width: calc(100% - 20px);
   z-index: 1;
   text-shadow: rgba(0,0,0,.2) 0 0 1px;
   -webkit-font-smoothing: antialiased;
+  padding: 1px;
+
 }
 
 #helpoverlay {
