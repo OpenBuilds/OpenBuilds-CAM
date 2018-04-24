@@ -298,7 +298,52 @@ function mouseMove (event) {
       // console.log(delta(event.clientX, mousedowncoords.x))
       // console.log(delta(event.clientX, mousedowncoords.x))
     };
-  };
+  // end ifMouseDown
+} else { // just hovering - lets color
+    sceneWidth = document.getElementById("renderArea").offsetWidth;
+    sceneHeight = document.getElementById("renderArea").offsetHeight;
+    offset = $('#renderArea').offset();
+    var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+    if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
+      mouseVector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
+      mouseVector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1
+      raycaster.setFromCamera(mouseVector, camera);
+      // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
+      // upwards of 10k objects and slows the filter down immensely
+      var documents = scene.getObjectByName("Documents");
+      if (documents) {
+        var intersects = raycaster.intersectObjects(documents.children, true)
+        if (intersects.length > 0) {
+          for (i=0; i<objectsInScene.length; i++) {
+            var obj = objectsInScene[i];
+            obj.traverse( function ( child ) {
+              if (child.type == "Line") {
+                child.userData.hover = false;
+              };
+            });
+          }
+          var intersection = intersects[0];
+          obj = intersection.object;
+          $('#renderArea').css('cursor','pointer');
+          obj.traverse( function ( child ) {
+              if (child.type == "Line") {
+                  child.userData.hover = true;
+              }
+          });
+        } else {
+          $('#renderArea').css('cursor','');
+          for (i=0; i<objectsInScene.length; i++) {
+            var obj = objectsInScene[i];
+            obj.traverse( function ( child ) {
+              if (child.type == "Line") {
+                child.userData.hover = false;
+              };
+            });
+          }
+        }
+      } // end raycast single click select
+    }
+  }
 };
 
 function XinSelectRange(x) {

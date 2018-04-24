@@ -139,6 +139,7 @@ function initDragDrop() {
 // load file
 function loadFile(f) {
     // Filereader
+    storeUndo(true);
     if (f) {
         var r = new FileReader();
         if (f.name.match(/.dxf$/i)) {

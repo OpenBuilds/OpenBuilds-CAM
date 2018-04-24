@@ -100,7 +100,7 @@ $(document).keydown(function(e){
          redo()
       }
 });
-document.onkeydown = KeyPress;
+
 
 function exportWorkspace() {
   var obspace = {

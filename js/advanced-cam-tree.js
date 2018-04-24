@@ -7,7 +7,11 @@ function animateTree() {
     var obj = objectsInScene[i]
     obj.traverse( function ( child ) {
         if (child.type == "Line" && child.userData.selected) {
-            child.material.color.setRGB(1, 0.1, 0.1);
+            if (child.userData.hover) {
+              child.material.color.setRGB(1, 0.1, 0.4);
+            } else {
+              child.material.color.setRGB(1, 0.1, 0.1);
+            }
             var $link = $('#'+child.userData.link);
             var $parent = $link.parent();
             var $input = $parent.children('input');
@@ -15,13 +19,18 @@ function animateTree() {
             $input.prop('checked', true);
             selectCount ++
         } else if (child.type == "Line" && !child.userData.selected) {
-            child.material.color.setRGB(0.1, 0.1, 0.1);
+            if (child.userData.hover) {
+              child.material.color.setRGB(0.1, 0.4, 1);
+            } else {
+              child.material.color.setRGB(0.1, 0.1, 0.1);
+            }
             var $link = $('#'+child.userData.link);
             var $parent = $link.parent();
             var $input = $parent.children('input');
             $link.parent().find('label').css('color', '#222');
             $input.prop('checked', false);
         }
+
     });
   }
   if (selectCount > 0) {

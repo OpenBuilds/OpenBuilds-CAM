@@ -63,7 +63,8 @@ function init3D() {
         printLog('<h5><i class="fa fa-search fa-fw" aria-hidden="true"></i>WebGL Support found!</h5><b>success:</b><br> this application will work optimally on this device!<hr><p>', successcolor);
         renderer = new THREE.WebGLRenderer({
             autoClearColor: true,
-            antialias: false
+            antialias: false,
+            preserveDrawingBuffer: true
         });
 
     } else if (canvas) {
