@@ -63,6 +63,7 @@ function toggleToolpathVisibility(i, bool) {
 
 // move toolpath order up/down
 var moveOp = function(index, delta) {
+  storeUndo()
   var array = toolpathsInScene;
   // var index = array.indexOf(element);
   var newIndex = index + delta;
@@ -131,6 +132,7 @@ function eventsTree() {
 
   // remove a row
   $('.jobsetupgroup .remove').on('click', function() {
+    storeUndo()
     console.log("Clicked on Remove Row")
     var $parent = $(this).parent();
     console.log($parent)
@@ -237,7 +239,7 @@ function fillTree() {
                   </td>
                   <td id="buttons`+i+`">
                     <button class="btn btn-xs btn-primary" onclick="$('#move`+i+`').toggle(); $(this).toggleClass('active');"><i class="fa fa-arrows" aria-hidden="true"></i></button>
-                    <button class="btn btn-xs btn-danger remove" onclick="objectsInScene.splice('`+i+`', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <button class="btn btn-xs btn-danger remove" onclick="storeUndo(); objectsInScene.splice('`+i+`', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
                   </td>
                 </tr>
                 <tr class="jobsetupfile" id="move`+i+`" style="display: none;">
@@ -311,7 +313,7 @@ function fillTree() {
                 currentChild = currentChildren[j];
                 childData = currentChild.userData;
                 childData.link = "link"+i+"_"+j;
-                
+
                 childLayer = childData.layer;
 
                 $parentGroup = $childGroup;

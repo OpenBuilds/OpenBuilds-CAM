@@ -341,6 +341,7 @@ function printLog(text, color, logclass) {
 	if (text.isString) {
       text = text.replace(/\n/g, "<br />");
 	}
+  console.log(text, color, logclass)
   // notify.send(text, "success");
 
 }
