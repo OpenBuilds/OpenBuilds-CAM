@@ -1,25 +1,29 @@
 var mousedown = false,
-    mouseup = true,
-    mousedowncoords = {},
-    offset = {};
+  mouseup = true,
+  mousedowncoords = {},
+  offset = {};
 var worldstartcoords, worldendcoords;
-var selectobj;
+var selectobj, arrow;
 
 function init() {
-  selection = document.getElementById( "selection" );
-  helpoverlay = document.getElementById( "helpoverlay" );
+  selection = document.getElementById("selection");
+  helpoverlay = document.getElementById("helpoverlay");
   listeners();
 }
 
-function listeners () {
+function listeners() {
   $('#renderArea').mousedown(mouseDown);
   $('#renderArea').mouseup(mouseUp);
   $('#renderArea').mousemove(mouseMove);
 
+  // renderer.domElement.mousedown(mouseDown);
+  // renderer.domElement.mouseup(mouseUp);
+  // renderer.domElement.mousemove(mouseMove);
+
   $('#selectAll').on('click', function() {
-    for (i=0; i<objectsInScene.length; i++) {
+    for (i = 0; i < objectsInScene.length; i++) {
       var obj = objectsInScene[i]
-      obj.traverse( function ( child ) {
+      obj.traverse(function(child) {
         if (child.type == "Line") {
           child.userData.selected = true
         }
@@ -28,9 +32,9 @@ function listeners () {
   });
 
   $('#selectNone').on('click', function() {
-    for (i=0; i<objectsInScene.length; i++) {
+    for (i = 0; i < objectsInScene.length; i++) {
       var obj = objectsInScene[i]
-      obj.traverse( function ( child ) {
+      obj.traverse(function(child) {
         if (child.type == "Line") {
           child.userData.selected = false
         }
@@ -39,9 +43,9 @@ function listeners () {
   });
 
   $('#selectInv').on('click', function() {
-    for (i=0; i<objectsInScene.length; i++) {
+    for (i = 0; i < objectsInScene.length; i++) {
       var obj = objectsInScene[i]
-      obj.traverse( function ( child ) {
+      obj.traverse(function(child) {
         if (child.type == "Line") {
           child.userData.selected = !child.userData.selected
         }
@@ -50,16 +54,16 @@ function listeners () {
   });
 }
 
-function delta(num1, num2){
-  return (num1 > num2)? num1-num2 : num2-num1
+function delta(num1, num2) {
+  return (num1 > num2) ? num1 - num2 : num2 - num1
 }
 
-function mouseDown (event) {
+function mouseDown(event) {
   if (mouseState == "select") {
     // helpoverlay.style.visibility = "visible";
     if (event.which == 1) { // only on left mousedown
       var pos = {};
-      mousedown = true;
+      // mousedown = true;
       mousedowncoords = {};
       mousedowncoords.x = event.clientX;
       mousedowncoords.y = event.clientY;
@@ -67,9 +71,9 @@ function mouseDown (event) {
       worldstartcoords = mouseToWorldCoord(event);
 
       // create copy of all children's selected status so we can later check to ctrl/sel/unselect
-      for (i=0; i<objectsInScene.length; i++) {
+      for (i = 0; i < objectsInScene.length; i++) {
         var obj = objectsInScene[i]
-        obj.traverse( function ( child ) {
+        obj.traverse(function(child) {
           if (child.type == "Line") {
             child.userData.lastSelected = child.userData.selected
             child.geometry.computeBoundingSphere()
@@ -78,15 +82,14 @@ function mouseDown (event) {
       }
 
       // raycast single click selection
-
-
-      sceneWidth = document.getElementById("renderArea").offsetWidth;
-      sceneHeight = document.getElementById("renderArea").offsetHeight;
-      offset = $('#renderArea').offset();
+      // sceneWidth = document.getElementById("renderArea").offsetWidth;
+      // sceneHeight = document.getElementById("renderArea").offsetHeight;
+      // offset = $('#renderArea').offset();
       var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
       if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
-        mouseVector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
-        mouseVector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1
+        mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;
+        mouseVector.y = -(event.offsetY / renderer.domElement.height) * 2 + 1;
+        camera.updateProjectionMatrix();
         raycaster.setFromCamera(mouseVector, camera);
         // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
         // upwards of 10k objects and slows the filter down immensely
@@ -95,19 +98,19 @@ function mouseDown (event) {
           var intersects = raycaster.intersectObjects(documents.children, true)
           if (intersects.length > 0) {
             var intersection = intersects[0],
-            obj = intersection.object;
+              obj = intersection.object;
             if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
               // printLog('Clicked on : ' + obj.name, successcolor, "viewer")
               if (!event.ctrlKey) {
-                for (i=0; i<objectsInScene.length; i++) {
+                for (i = 0; i < objectsInScene.length; i++) {
                   var object = objectsInScene[i]
-                  object.traverse( function ( child ) {
+                  object.traverse(function(child) {
                     if (child.type == "Line" && child.userData.selected) {
-                        child.userData.selected = false;
+                      child.userData.selected = false;
                     }
                   });
                 }
-              }// end clear all
+              } // end clear all
 
               // Select (or deselect if already selected and control is down)
               if (!obj.userData.selected) {
@@ -120,11 +123,11 @@ function mouseDown (event) {
             // Deselecting only if not ctrl.
             // console.log(e.ctrlKey)
             if (!event.ctrlKey) {
-              for (i=0; i<objectsInScene.length; i++) {
+              for (i = 0; i < objectsInScene.length; i++) {
                 var obj = objectsInScene[i]
-                obj.traverse( function ( child ) {
+                obj.traverse(function(child) {
                   if (child.type == "Line" && child.userData.selected) {
-                      child.userData.selected = false;
+                    child.userData.selected = false;
                   }
                 });
               }
@@ -132,18 +135,19 @@ function mouseDown (event) {
           }
         }
       } // end raycast single click select
-    }
+    } // end left mousebutton on "select"
   } else if (mouseState == "delete") {
     // helpoverlay.style.visibility = "visible";
     if (event.which == 1) { // only on left mousedown
       // raycast single click selection
-      sceneWidth = document.getElementById("renderArea").offsetWidth;
-      sceneHeight = document.getElementById("renderArea").offsetHeight;
-      offset = $('#renderArea').offset();
+      // sceneWidth = document.getElementById("renderArea").offsetWidth;
+      // sceneHeight = document.getElementById("renderArea").offsetHeight;
+      // offset = $('#renderArea').offset();
       var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
       if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
-        mouseVector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
-        mouseVector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1
+        mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;
+        mouseVector.y = -(event.offsetY / renderer.domElement.height) * 2 + 1;
+        camera.updateProjectionMatrix();
         raycaster.setFromCamera(mouseVector, camera);
         // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
         // upwards of 10k objects and slows the filter down immensely
@@ -152,20 +156,20 @@ function mouseDown (event) {
           var intersects = raycaster.intersectObjects(documents.children, true)
           if (intersects.length > 0) {
             var intersection = intersects[0],
-            obj = intersection.object;
+              obj = intersection.object;
             if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
               storeUndo(true);
               printLog('Clicked on : ' + obj.name, successcolor, "viewer")
               console.log(obj.userData.link)
               if (event.ctrlKey) {
-                idx = $("#"+obj.userData.link).parent().find('input').attr('id').split('.');
+                idx = $("#" + obj.userData.link).parent().find('input').attr('id').split('.');
                 i = parseInt(idx[1]);
                 j = parseInt(idx[2]);
                 console.log(i, j);
                 objectsInScene.splice('`+i+`', 1)
                 fillTree();
               } else {
-                idx = $("#"+obj.userData.link).parent().find('input').attr('id').split('.');
+                idx = $("#" + obj.userData.link).parent().find('input').attr('id').split('.');
                 i = parseInt(idx[1]);
                 j = parseInt(idx[2]);
                 console.log(i, j);
@@ -179,21 +183,20 @@ function mouseDown (event) {
         }
       } // end raycast single click select
     }
+  } else if (mouseState == "move") {
+    // what to do if left+click in movemode
+    // currently uses customised DragControls, but want to make own in future
   }
 }
 
-function mouseUp (event) {
-  // event.preventDefault();
-  // event.stopPropagation();
-  // reset the marquee selection
+function mouseUp(event) {
   mouseup = true;
   mousedown = false;
   selection.style.visibility = "hidden";
-  // helpoverlay.style.visibility = "hidden";
   mousedowncoords = {};
-  for (i=0; i<objectsInScene.length; i++) {
+  for (i = 0; i < objectsInScene.length; i++) {
     var obj = objectsInScene[i]
-    obj.traverse( function ( child ) {
+    obj.traverse(function(child) {
       if (child.type == "Line") {
         delete child.userData.lastSelected;
       }
@@ -201,122 +204,133 @@ function mouseUp (event) {
   }
 }
 
-function mouseMove (event) {
-  // event.preventDefault();
-  // event.stopPropagation();
+function mouseMove(event) {
   // make sure we are in a select mode.
-  if(mousedown){
-    // lets wait for mouse to move at least a few pixels, just to eliminate false "selections" if user is simply clicking on an object (hysteresys)
-    if (delta(event.clientX, mousedowncoords.x) > 10 && delta(event.clientX, mousedowncoords.x) > 10 || delta(event.clientX, mousedowncoords.x) < -10 && delta(event.clientX, mousedowncoords.x) < -10) {
-      offset = $('#renderArea').offset();
-      var md = {};
-      md.x = mousedowncoords.x;
-      md.y = mousedowncoords.y;
-      var ev = {};
-      ev.x = event.clientX;
-      ev.y = event.clientY;
-      var pos = {};
-      pos.x = ev.x - md.x;
-      pos.y = ev.y - md.y;
+  // helpoverlay.style.visibility = "visible";
+  if (event.which == 1) { // only on left mousedown
+    if (mouseState == "select") {
+      // lets wait for mouse to move at least a few pixels, just to eliminate false "selections" if user is simply clicking on an object (hysteresys)
+      if (delta(event.clientX, mousedowncoords.x) > 10 && delta(event.clientX, mousedowncoords.x) > 10 || delta(event.clientX, mousedowncoords.x) < -10 && delta(event.clientX, mousedowncoords.x) < -10) {
+        offset = $('#renderArea').offset();
+        var md = {};
+        md.x = mousedowncoords.x;
+        md.y = mousedowncoords.y;
+        var ev = {};
+        ev.x = event.clientX;
+        ev.y = event.clientY;
+        var pos = {};
+        pos.x = ev.x - md.x;
+        pos.y = ev.y - md.y;
 
-      // console.log(pos)
-      // square variations
-      // (0,0) origin is the TOP LEFT pixel of the canvas.
-      //
-      //  1 | 2
-      // ---.---
-      //  4 | 3
-      // there are 4 ways a square can be gestured onto the screen.  the following detects these four variations
-      // and creates/updates the CSS to draw the square on the screen
-      if (pos.x < 0 && pos.y < 0) {
+        // console.log(pos)
+        // square variations
+        // (0,0) origin is the TOP LEFT pixel of the canvas.
+        //
+        //  1 | 2
+        // ---.---
+        //  4 | 3
+        // there are 4 ways a square can be gestured onto the screen.  the following detects these four variations
+        // and creates/updates the CSS to draw the square on the screen
+        if (pos.x < 0 && pos.y < 0) {
           // console.log("dir0", -pos.x, -pos.y); // bottom right to top left
           selection.style.left = ev.x - offset.left + "px";
           selection.style.top = ev.y - offset.top + "px";
           selection.style.width = -pos.x + "px";
-          selection.style.height = -pos.y  + "px";
+          selection.style.height = -pos.y + "px";
           selection.style.visibility = "visible";
-      } else if ( pos.x > 0 && pos.y < 0) {
+        } else if (pos.x > 0 && pos.y < 0) {
           // console.log("dir1"); // bottom left to to right
           selection.style.left = md.x - offset.left + "px";
           selection.style.top = ev.y - offset.top + "px";
           selection.style.width = pos.x + "px";
           selection.style.height = -pos.y + "px";
           selection.style.visibility = "visible";
-      } else if (pos.x > 0 && pos.y > 0) {
+        } else if (pos.x > 0 && pos.y > 0) {
           // console.log("dir2"); // top left to bottom right
           selection.style.left = md.x - offset.left + "px";
           selection.style.top = md.y - offset.top + "px";
           selection.style.width = pos.x + "px";
           selection.style.height = pos.y + "px";
           selection.style.visibility = "visible";
-      } else if (pos.x < 0 && pos.y >= 0) {
+        } else if (pos.x < 0 && pos.y >= 0) {
           // console.log("dir3");
           selection.style.left = ev.x - offset.left + "px";
           selection.style.top = md.y - offset.top + "px";
           selection.style.width = -pos.x + "px";
           selection.style.height = pos.y + "px";
           selection.style.visibility = "visible";
-      } else {
-        console.log("Failed to Marquee")
-      }
-      // convert to threejs position
-      worldendcoords = mouseToWorldCoord(event)
-      // clear selection in case marquee is shrinking
-      if (!event.ctrlKey) {
-        for (i=0; i<objectsInScene.length; i++) {
-          var obj = objectsInScene[i]
-          obj.traverse( function ( child ) {
-            if (child.type == "Line" && child.userData.selected) {
+        } else {
+          console.log("Failed to Marquee")
+        }
+        // convert to threejs position
+        worldendcoords = mouseToWorldCoord(event)
+        // clear selection in case marquee is shrinking
+        if (!event.ctrlKey) {
+          for (i = 0; i < objectsInScene.length; i++) {
+            var obj = objectsInScene[i]
+            obj.traverse(function(child) {
+              if (child.type == "Line" && child.userData.selected) {
                 child.userData.selected = false;
+              };
+            });
+          };
+        };
+        // Update all children (check intersect of centers with marquee)
+        scene.updateMatrixWorld();
+        for (i = 0; i < objectsInScene.length; i++) { // start marquee set
+          var obj = objectsInScene[i];
+          obj.traverse(function(child) {
+            if (child.type == "Line") {
+              child.geometry.computeBoundingSphere()
+              var center = {};
+              center.x = child.geometry.boundingSphere.center.x + (child.parent.position.x) + (child.position.x)
+              center.y = child.geometry.boundingSphere.center.y + (child.parent.position.y) + (child.position.y)
+              if (XinSelectRange(center.x) && YinSelectRange(center.y)) {
+                if (event.ctrlKey) {
+                  child.userData.selected = !child.userData.lastSelected;
+                } else {
+                  child.userData.selected = true;
+                };
+              };
             };
           });
-        };
+        }; // end marquee set
+      } else {
+        // console.log("delta issue")
+        // console.log(delta(event.clientX, mousedowncoords.x))
+        // console.log(delta(event.clientX, mousedowncoords.x))
       };
-      // Update all children (check intersect of centers with marquee)
-      scene.updateMatrixWorld();
-      for (i=0; i<objectsInScene.length; i++) {
-        var obj = objectsInScene[i];
-        obj.traverse( function ( child ) {
-            if (child.type == "Line") {
-                child.geometry.computeBoundingSphere()
-                var center = {};
-                center.x = child.geometry.boundingSphere.center.x + (child.parent.position.x) + (child.position.x)
-                center.y = child.geometry.boundingSphere.center.y + (child.parent.position.y ) + (child.position.y)
-                if (XinSelectRange(center.x) && YinSelectRange(center.y))  {
-                  if (event.ctrlKey) {
-                    child.userData.selected = !child.userData.lastSelected;
-                  } else {
-                    child.userData.selected = true;
-                  };
-
-                };
-            };
-        });
-      }; // end marquee set
-    } else {
-      // console.log("delta issue")
-      // console.log(delta(event.clientX, mousedowncoords.x))
-      // console.log(delta(event.clientX, mousedowncoords.x))
-    };
-  // end ifMouseDown
-} else { // just hovering - lets color
-    sceneWidth = document.getElementById("renderArea").offsetWidth;
-    sceneHeight = document.getElementById("renderArea").offsetHeight;
-    offset = $('#renderArea').offset();
+      // end if Select
+    } else if (mouseState == "move") {
+      // what to do if leftclick+drag in movemode
+      // currently uses customised DragControls, but want to make own in future
+    }
+  } else { // just hovering - lets color
+    // sceneWidth = document.getElementById("renderArea").offsetWidth;
+    // sceneHeight = document.getElementById("renderArea").offsetHeight;
+    // offset = $('#renderArea').offset();
     var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
     if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
-      mouseVector.x = ( ( event.clientX - offset.left ) / sceneWidth ) * 2 - 1;
-      mouseVector.y = - ( ( event.clientY - offset.top ) / sceneHeight ) * 2 + 1
+      mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;
+      mouseVector.y = -(event.offsetY / renderer.domElement.height) * 2 + 1;
+      camera.updateProjectionMatrix();
       raycaster.setFromCamera(mouseVector, camera);
       // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
       // upwards of 10k objects and slows the filter down immensely
+      // scene.remove(arrow);
+      // var dir = new THREE.Vector3(raycaster.ray.direction.x, raycaster.ray.direction.y, raycaster.ray.direction.z);
+      // //normalize the direction vector (convert to vector of length 1)
+      // dir.normalize();
+      // var origin = new THREE.Vector3(raycaster.ray.origin.x, raycaster.ray.origin.y, raycaster.ray.origin.z);
+      // arrow = new THREE.ArrowHelper(dir, origin, 1000, 0xff0000, 5, 5);
+      // scene.add(arrow);
       var documents = scene.getObjectByName("Documents");
       if (documents) {
         var intersects = raycaster.intersectObjects(documents.children, true)
         if (intersects.length > 0) {
-          for (i=0; i<objectsInScene.length; i++) {
+          for (i = 0; i < objectsInScene.length; i++) {
             var obj = objectsInScene[i];
-            obj.traverse( function ( child ) {
+            obj.traverse(function(child) {
               if (child.type == "Line") {
                 child.userData.hover = false;
               };
@@ -324,32 +338,32 @@ function mouseMove (event) {
           }
           var intersection = intersects[0];
           obj = intersection.object;
-          $('#renderArea').css('cursor','pointer');
-          obj.traverse( function ( child ) {
-              if (child.type == "Line") {
-                  child.userData.hover = true;
-              }
+          $('#renderArea').css('cursor', 'pointer');
+          obj.traverse(function(child) {
+            if (child.type == "Line") {
+              child.userData.hover = true;
+            }
           });
         } else {
-          $('#renderArea').css('cursor','');
-          for (i=0; i<objectsInScene.length; i++) {
+          $('#renderArea').css('cursor', '');
+          for (i = 0; i < objectsInScene.length; i++) {
             var obj = objectsInScene[i];
-            obj.traverse( function ( child ) {
+            obj.traverse(function(child) {
               if (child.type == "Line") {
                 child.userData.hover = false;
               };
             });
           }
         }
-      } // end raycast single click select
-    }
-  }
+      } // end raycast hover event
+    } // end !ismodalopen
+  } // end just hovering
 };
 
 function XinSelectRange(x) {
   var a = worldstartcoords.x
   var b = worldendcoords.x
-  if ((x-a)*(x-b)<0) {
+  if ((x - a) * (x - b) < 0) {
     return true;
   } else {
     return false;
@@ -359,7 +373,7 @@ function XinSelectRange(x) {
 function YinSelectRange(y) {
   var a = worldstartcoords.y
   var b = worldendcoords.y
-  if ((y-a)*(y-b)<0) {
+  if ((y - a) * (y - b) < 0) {
     return true;
   } else {
     return false;
@@ -371,16 +385,16 @@ function mouseToWorldCoord(e) {
   sceneWidth = document.getElementById("renderArea").offsetWidth;
   sceneHeight = document.getElementById("renderArea").offsetHeight;
   offset = $('#renderArea').offset();
-  vector.x = ( ( e.clientX - offset.left ) / sceneWidth ) * 2 - 1;
-  vector.y = - ( ( e.clientY - offset.top ) / sceneHeight ) * 2 + 1;
+  vector.x = ((e.clientX - offset.left) / sceneWidth) * 2 - 1;
+  vector.y = -((e.clientY - offset.top) / sceneHeight) * 2 + 1;
   vector.z = 0.5;
-  vector.unproject( camera );
-  var dir = vector.sub( camera.position ).normalize();
-  var distance = - camera.position.z / dir.z;
-  var coords = camera.position.clone().add( dir.multiplyScalar( distance ) );
+  vector.unproject(camera);
+  var dir = vector.sub(camera.position).normalize();
+  var distance = -camera.position.z / dir.z;
+  var coords = camera.position.clone().add(dir.multiplyScalar(distance));
   return coords;
 }
 
-$(document).ready(function () {
+$(document).ready(function() {
   init();
 });
