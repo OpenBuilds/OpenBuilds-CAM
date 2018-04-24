@@ -11,41 +11,6 @@ var activeObject, fileName, notify;
 
 // Place all document.ready tasks into functions and ONLY run the functions from doument.ready
 $(document).ready(function() {
-
-  // Growl style notifications
-  notify = new hullabaloo({
-      // where to append the notifications
-      ele: $("#renderArea"),
-      // offset
-      offset: {
-        from: "top",
-        amount: 200
-      },
-      // or 'center', 'left'
-      align: "right",
-      // width
-      width: 250,
-      // for auto dismiss
-      delay: 5000,
-      allow_dismiss: true,
-      // space between notification boxes
-      stackup_spacing: 10,
-      // notification message here
-      // text: "<a href="https://www.jqueryscript.net/tags.php?/Notification/">Notification</a> Message Here",
-      // // Font Awesome icon
-      // icon: "times-circle",
-      // // styles
-      // status: "danger",
-      // // additional CSS classes
-      // alertClass: "",
-      // // callback functions
-      fnStart: false,
-      fnEnd: false,
-      fnEndHide: false,
-
-  });
-  notify.send("Ready!", "success");
-
     // Intialise
     loadSettingsLocal();
     initLocalStorage();
@@ -342,6 +307,4 @@ function printLog(text, color, logclass) {
       text = text.replace(/\n/g, "<br />");
 	}
   console.log(text, color, logclass)
-  // notify.send(text, "success");
-
 }

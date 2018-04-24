@@ -71,7 +71,6 @@ function saveSettingsLocal() {
       saveSetting(paramName, val);
   }
   printLog('<b>Saved Settings: <br>NB:</b> Please refresh page for settings to take effect', errorcolor, "settings");
-  notify.send("<b>Saved Settings: <br>NB:</b> Please refresh page for settings to take effect", "success");
   $("#settingsmodal").modal("hide");
   console.groupEnd();
 };
@@ -122,7 +121,6 @@ function checkSettingsLocal() {
 
   if (anyissues) {
     printLog(`<b>MISSING CONFIG: You need to configure your setup. </b>. Click Edit, <a href='#' onclick='$("#settingsmodal").modal("show");'><kbd>Settings <i class="fa fa-cogs"></i></kbd></a> on the top menu bar, and work through all the options`, errorcolor, "settings");
-    notify.send("Application not configured, launching Settings dialog", "danger");
     $("#settingsmodal").modal("show");
   }
 
