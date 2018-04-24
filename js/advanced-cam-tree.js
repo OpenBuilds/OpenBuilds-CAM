@@ -63,7 +63,7 @@ function toggleToolpathVisibility(i, bool) {
 
 // move toolpath order up/down
 var moveOp = function(index, delta) {
-  storeUndo()
+  storeUndo(true)
   var array = toolpathsInScene;
   // var index = array.indexOf(element);
   var newIndex = index + delta;
@@ -132,7 +132,7 @@ function eventsTree() {
 
   // remove a row
   $('.jobsetupgroup .remove').on('click', function() {
-    storeUndo()
+    storeUndo(true)
     console.log("Clicked on Remove Row")
     var $parent = $(this).parent();
     console.log($parent)

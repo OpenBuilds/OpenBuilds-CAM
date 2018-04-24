@@ -29,7 +29,10 @@ var date = new Date();
 var undoStore = [];
 var redoStore = [];
 
-function storeUndo() {
+function storeUndo(clearArray) {
+  if(clearArray) {
+    redoStore.length = 0;
+  }
   var obspace = {
     objects: {},
     toolpaths: {}

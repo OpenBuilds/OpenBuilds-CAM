@@ -33,7 +33,7 @@ function initTree() {
 }
 
 function addJob(id) {
-    storeUndo();
+    storeUndo(true);
     $("#savetpgcode").addClass("disabled");
     $("#exportGcodeMenu").addClass("disabled");
 

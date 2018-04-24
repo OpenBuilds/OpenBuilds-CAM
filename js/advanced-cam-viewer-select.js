@@ -154,7 +154,7 @@ function mouseDown (event) {
             var intersection = intersects[0],
             obj = intersection.object;
             if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
-              storeUndo();
+              storeUndo(true);
               printLog('Clicked on : ' + obj.name, successcolor, "viewer")
               console.log(obj.userData.link)
               if (event.ctrlKey) {

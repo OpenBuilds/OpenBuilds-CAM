@@ -50,6 +50,7 @@ $(document).ready(function() {
 
     $('html').keydown(function(e){
     if(e.keyCode == 46) {
+        storeUndo(true);
         // alert('Delete key released');
         deleteSelectedObjects();
     }
