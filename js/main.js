@@ -76,7 +76,7 @@ $(document).ready(function() {
   $.get("https://api.github.com/repos/openbuilds/cam/commits?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
     // console.log(data)
     Object.keys(data).forEach(function(key) {
-      var date = data[key].commit.author.date.split(/[TZ]+/)
+      var date = new Date(data[key].commit.author.date)
       var author = data[key].commit.author.name
       var avatar = data[key].author.avatar_url
       var authorurl = data[key].author.html_url
@@ -88,8 +88,8 @@ $(document).ready(function() {
       <div class="d-flex flex-nowrap">
         <div class="p-2"><img src="` + avatar + `" height="32px" width="32px"/></div>
         <div class="p-2">
-        <small>` + date[0] + ` at ` + date[1] + `</small>:
-          <a href="` + authorurl + `" target="_new">` + author + `</a> added <a href="` + url + `" target="_new"><h6>` + message + `</h6></a>
+        <small>` + formatDate(date) + `</small>:
+          <a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a> added <br><a href="` + url + `" target="_new"><h6 class="text-dark"><i class="fa fa-github fa-fw" aria-hidden="true"></i>` + message + `</h6></a>
         </div>
       </div>
       </li>`
