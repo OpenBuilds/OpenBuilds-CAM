@@ -273,16 +273,16 @@
 						<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body"  style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
 						<ul class="nav nav-tabs">
 							<li class="nav-item">
 								<a class="nav-link active" data-toggle="tab" href="#menu1">
-								G-CODE
+								MACHINE
 								</a>
 							</li>
 							<li class="nav-item ">
 								<a class="nav-link" data-toggle="tab" href="#menu2">
-								SIZE
+								DPI
 								</a>
 							</li>
 							<li class="nav-item">
@@ -292,28 +292,23 @@
 							</li>
 						</ul>
 						<br />
-						<div class="tab-content" style="max-height: calc(100vh - 500px);overflow-y: auto; overflow-x: hidden;">
+						<div class="tab-content">
 							<div id="menu1" class="tab-pane fade show active">
-								<h4>Gcode Generator Settings</h4>
-								<form class="form-horizontal">
-									<label for="startgcode" class="control-label">Start G-Code</label>
-									<textarea id="startgcode" class="form-control form-control-sm" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
-									<label for="endgcode" class="control-label">End G-Code</label>
-									<textarea id="endgcode" class="form-control form-control-sm" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
-									<label for="ihsgcode" class="control-label">Initial Height Sensing G-Code</label>
-									<textarea id="ihsgcode" class="form-control form-control-sm" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
-								</form>
-								<h4>Firmware Settings</h4>
-								<div class="form-group row">
-									<label for="firmware" class="col-sm-7 col-form-label">Firmware template</label>
-									<div class="col-sm-5">
-										<select id="firmware" class="form-control form-control-sm">
-											<option value="smoothie">Smoothieware</option>
-											<option value="grbl9">Grbl 0.8, 0.9</option>
-											<option value="grbl11">Grbl 1.0, 1.1+</option>
-										</select>
-									</div>
+								<p>
+									Configure your machine specifics:
+								</p>
+								<h5>Firmware Settings</h5>
+								<div class="dropdown">
+								  <button class="btn btn-light dropdown-toggle" type="button" id="elecType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    <img src="images/brd/grbl.png"/>Select Controller
+								  </button>
+								  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								    <a class="dropdown-item" href="#" onclick="selectBoard('xpro');"><img src="images/brd/xpro.png"/>  Spark Concepts xPro</a>
+								    <a class="dropdown-item" href="#" onclick="selectBoard('smoothie');"><img src="images/brd/smoothie.png"/>  Smoothieboard</a>
+										<a class="dropdown-item" href="#" onclick="selectBoard('grbl');"><img src="images/brd/grbl.png"/>  Generic GRBL</a>
+								  </div>
 								</div>
+								<input type="hidden" class="form-control form-control-sm" id="firmwaretype" value="" >
 								<div>
 									<input type='checkbox' data-toggle='collapse' data-target='#collapsefirmware'> Advanced Firmware Settings
 									</input>
@@ -351,14 +346,8 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							<!-- #menu1 -->
-							<div id="menu2" class="tab-pane fade">
 								<p>
-									Configure your machine specifics: <br />
-									<i>(NB: Page needs a refresh for these settings to take effect!)</i>
-								</p>
-								<h4>Workarea</h4>
+								<h5>Workarea</h5>
 								<div class="form-group row">
 									<label for="sizexmax" class="col-sm-7 col-form-label">X-Axis Length</label>
 									<div class="col-sm-5">
@@ -381,7 +370,20 @@
 										</div>
 									</div>
 								</div>
-								<h4>Import Settings</h4>
+								<h5>Gcode Generator Settings</h5>
+								<form class="form-horizontal">
+									<label for="startgcode" class="control-label">Start G-Code</label>
+									<textarea id="startgcode" class="form-control form-control-sm" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
+									<label for="endgcode" class="control-label">End G-Code</label>
+									<textarea id="endgcode" class="form-control form-control-sm" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
+									<label for="ihsgcode" class="control-label">Initial Height Sensing G-Code</label>
+									<textarea id="ihsgcode" class="form-control form-control-sm" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
+								</form>
+
+							</div>
+							<!-- #menu1 -->
+							<div id="menu2" class="tab-pane fade">
+								<h5>Import Settings</h5>
 								<div class="form-group row">
 									<label for="defaultDPI" class="col-sm-7 col-form-label">Generic SVG</label>
 									<div class="col-sm-5">
@@ -427,7 +429,7 @@
 									</div>
 								</div>
 								<span class="help-block">This is the default DPI at which opened SVG/Bitmap files will be imported.</span>
-								<h4>Origin</h4>
+								<h5>Origin</h5>
 								<div class="form-group row">
 									<label for="imagePosition" class="col-sm-7 col-form-label">Bitmap</label>
 									<div class="col-sm-5">
@@ -561,6 +563,7 @@
 	<!-- Helpers -->
 	<script type="text/javascript" src="js/helpers.js"></script>
 	<script type="text/javascript" src="js/fileprep.js"></script>
+
 	<!-- CAM populated from threejs objects -->
 	<script type="text/javascript" src="lib/clipperjs/clipper_unminified.js"></script>
 	<script type="text/javascript" src="js/advanced-cam-threegcode.js"></script>
@@ -586,16 +589,21 @@
 	<script type="text/javascript" src="lib/threejs/TweenMax.min.js"></script>
 	<script type="text/javascript" src="js/viewer.js"></script>
 	<script type="text/javascript" src="js/viewer-ruler.js"></script>
-	<!-- Socket.io -->
-	<!-- <script type="text/javascript" src="/socket.io/socket.io.js"></script> -->
+
 	<!-- DXF Library -->
 	<script type="text/javascript" src="lib/dxf/dxf-parser.js"></script>
 	<script type="text/javascript" src="lib/dxf/three-dxf.js"></script>
 	<script type="text/javascript" src="js/dxf-render.js"></script>
+
 	<!-- SVG Lasersaur Library -->
 	<script type="text/javascript" src="lib/svgreader/SVGReader.js"></script>
 	<script type="text/javascript" src="lib/svgreader/svg2three.js"></script>
 	<script type="text/javascript" src="lib/svgreader/vec2.js"></script>
+
+	<!--Settings Widgets -->
+	<script type="text/javascript" src="js\application-settings-controller.js"></script>
+
+
 	<!-- Saved/load settings -->
 	<script type="text/javascript" src="js/localstorage.js"></script>
 	<!-- Gcode Viewer -->

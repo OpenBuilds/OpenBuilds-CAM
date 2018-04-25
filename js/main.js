@@ -20,15 +20,11 @@ $(document).ready(function() {
   errorHandlerJS();
   initTree();
   initAdvancedCAM();
+  initMouseSelect();
+  initMouseMode();
   initDragDrop();
   initExportworkspace();
 
-  // Tooltips
-  // $('body').tooltip({
-  //     selector: '[data-tooltip="tooltip"]'
-  // });
-
-  // Top toolbar Menu
 
   //File -> Open
   var fileOpen = document.getElementById('file');
@@ -47,20 +43,9 @@ $(document).ready(function() {
     saveFile();
   });
 
-  // View -> reset
-  // $('#viewReset').on('click', function() {
-  //     resetView();
-  // });
-
-
-  $('#savesettings').on('click', function() {
-    saveSettingsLocal();
-  });
-
   // Viewer
   var viewer = document.getElementById('renderArea');
 
-  checkSettingsLocal();
   setTimeout(function() {
     $('#viewReset').click();
   }, 100);
@@ -70,7 +55,13 @@ $(document).ready(function() {
     this.value = this.value.toLocaleUpperCase();
   });
 
-  $('#cammodal').modal('show');
+  // Changelog
+  $.get("https://raw.githubusercontent.com/openbuilds/cam/master/changelog.txt", function(data) {
+    var lines = data.split('\n');
+    for (var i = 0; i < lines.length; i++) {
+      console.log(line[i])
+    }
+  });
 
 
 }); // End of document.ready

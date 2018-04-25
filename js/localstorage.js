@@ -13,9 +13,11 @@ function initLocalStorage() {
   var settingsOpen = document.getElementById('jsonFile');
   settingsOpen.addEventListener('change', restoreSettingsLocal, false);
 
-  $('#firmware').on('change', function() {
-    alert(this.value);
-  })
+  $('#savesettings').on('click', function() {
+    saveSettingsLocal();
+  });
+
+  checkSettingsLocal();
 }
 
 // FIXME
@@ -45,7 +47,8 @@ localParams = [
   ['scommandnewline', true],
   ['scommand', true],
   ['scommandscale', true],
-  ['ihsgcode', false]
+  ['ihsgcode', false],
+  ['firmwaretype', true]
 ];
 
 
@@ -64,8 +67,18 @@ function saveSettingsLocal() {
   for (i = 0; i < localParams.length; i++) {
     var localParam = localParams[i];
     var paramName = localParam[0];
-    var val = $('#' + paramName).val(); // Read the value from form
-    console.log('Saving: ' + paramName + ' : ' + val);
+    if (paramName == 'sizexmax' || paramName == 'sizeymax') {
+      var newval = $('#' + paramName).val()
+      var oldval = loadSetting(paramName);
+      if (oldval != newval) {
+        redrawGrid()
+      }
+    }
+    if (paramName == 'scommandnewline') {
+      var val = $('#' + paramName).is(":checked");
+    } else {
+      var val = $('#' + paramName).val(); // Read the value from form
+    }
     printLog('Saving: ' + paramName + ' : ' + val, successcolor);
     saveSetting(paramName, val);
   }
@@ -83,7 +96,15 @@ function loadSettingsLocal() {
 
     if (val) {
       // console.log('Loading: ' + paramName + ' : ' + val);
-      $('#' + paramName).val(val); // Set the value to Form from Storage
+      if (paramName == 'firmwaretype') {
+        setButton(val)
+      }
+      if (paramName == 'scommandnewline') {
+        $('#' + paramName).prop('checked', parseBoolean(val));
+        console.log('#' + paramName + " is set to " + val)
+      } else {
+        $('#' + paramName).val(val); // Set the value to Form from Storage
+      }
     } else {
       // console.log('Not in local storage: ' +  paramName);
     }
@@ -151,4 +172,20 @@ function loadSettings(e) {
     }
   }
   loadSettingsLocal();
+};
+
+window.parseBoolean = function(string) {
+  var bool;
+  bool = (function() {
+    switch (false) {
+      case string.toLowerCase() !== 'true':
+        return true;
+      case string.toLowerCase() !== 'false':
+        return false;
+    }
+  })();
+  if (typeof bool === "boolean") {
+    return bool;
+  }
+  return void 0;
 };

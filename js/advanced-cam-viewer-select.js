@@ -5,7 +5,8 @@ var mousedown = false,
 var worldstartcoords, worldendcoords;
 var selectobj, arrow;
 
-function init() {
+
+function initMouseSelect() {
   selection = document.getElementById("selection");
   helpoverlay = document.getElementById("helpoverlay");
   listeners();
@@ -394,7 +395,3 @@ function mouseToWorldCoord(e) {
   var coords = camera.position.clone().add(dir.multiplyScalar(distance));
   return coords;
 }
-
-$(document).ready(function() {
-  init();
-});

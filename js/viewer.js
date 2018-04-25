@@ -1,11 +1,11 @@
 // Global Vars
 var scene, camera, renderer;
-var geometry, material, mesh, helper, axes, axesgrp, light, bullseye, cursor, grid, cone;
 var projector, mouseVector, containerWidth, containerHeight;
 var raycaster = new THREE.Raycaster();
+var gridsystem = new THREE.Group();
 
 var container, stats;
-var camera, controls, control, scene, renderer;
+var camera, controls, control, scene, renderer, gridsystem, helper;
 var clock = new THREE.Clock();
 
 var marker;
@@ -29,91 +29,19 @@ containerWidth = window.innerWidth;
 containerHeight = window.innerHeight;
 
 
+function drawWorkspace() {
 
-function setBullseyePosition(x, y, z) {
-  //console.log('Set Position: ', x, y, z)
-  if (x) {
-    bullseye.position.x = parseInt(x, 10);
-  };
-  if (y) {
-    bullseye.position.y = parseInt(y, 10);
-  };
-  if (z) {
-    bullseye.position.z = (parseInt(z, 10) + 0.1);
-  };
-}
-
-function init3D() {
-  // ThreeJS Render/Control/Camera
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-  camera.position.z = 295;
-
-
-  var canvas = !!window.CanvasRenderingContext2D;
-  var webgl = (function() {
-    try {
-      return !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl');
-    } catch (e) {
-      return false;
-    }
-  })();
-
-  if (webgl) {
-    printLog('<h5><i class="fa fa-search fa-fw" aria-hidden="true"></i>WebGL Support found!</h5><b>success:</b><br> this application will work optimally on this device!<hr><p>', successcolor);
-    renderer = new THREE.WebGLRenderer({
-      autoClearColor: true,
-      antialias: false,
-      preserveDrawingBuffer: true
-    });
-
-  } else if (canvas) {
-    printLog('<h5><i class="fa fa-search fa-fw" aria-hidden="true"></i>No WebGL Support found!</h5><b>CRITICAL ERROR:</b><br> this appplication may not work optimally on this device! <br>Try another device with WebGL support</p><br><u>Try the following:</u><br><ul><li>In the Chrome address bar, type: <b>chrome://flags</b> [Enter]</li><li>Enable the <b>Override software Rendering</b></li><li>Restart Chrome and try again</li></ul>Sorry! :(<hr><p>', errorcolor);
-    renderer = new THREE.CanvasRenderer();
-  };
-
-  $('#viewermodule').hide();
-  $('#renderArea').append(renderer.domElement);
-  renderer.setClearColor(0xffffff, 1); // Background color of viewer = transparent
-  // renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
-  renderer.clear();
-
-  sceneWidth = document.getElementById("renderArea").offsetWidth,
-    sceneHeight = document.getElementById("renderArea").offsetHeight;
-  camera.aspect = sceneWidth / sceneHeight;
-  renderer.setSize(sceneWidth, sceneHeight)
-  camera.updateProjectionMatrix();
-
-
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, 0, 0); // view direction perpendicular to XY-plane
-  controls.mouseButtons = {
-    ORBIT: THREE.MOUSE.MIDDLE,
-    ZOOM: false,
-    PAN: THREE.MOUSE.RIGHT
-  };
-
-  controls.enableRotate = true;
-  controls.enableZoom = true; // optional
-  controls.maxDistance = 4000; // limit max zoom out
-  controls.enableKeys = false; // Disable Keyboard on canvas
-  //controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
-  // /var STATE = { NONE : - 1, ROTATE : 0, DOLLY : 1, PAN : 2, TOUCH_ROTATE : 3, TOUCH_DOLLY : 4, TOUCH_PAN : 5 };
-
-  control = new THREE.TransformControls(camera, renderer.domElement);
-
-  workspace.add(control);
-  control.setMode("translate");
+  var sceneLights = new THREE.Group();
 
   var light = new THREE.DirectionalLight(0xffffff, 0.8);
   light.position.set(0, 2, 25).normalize();
   light.name = "Light1;"
-  workspace.add(light);
+  sceneLights.add(light);
 
   var light2 = new THREE.DirectionalLight(0xffffff);
   light2.name = "Light2"
   light2.position.set(-500, -500, 1).normalize();
-  workspace.add(light2);
+  sceneLights.add(light2);
 
   dirLight = new THREE.DirectionalLight(0xffffff, 1);
   dirLight.color.setHSL(0.1, 1, 0.95);
@@ -129,184 +57,23 @@ function init3D() {
   dirLight.shadow.camera.bottom = -d;
   dirLight.shadow.camera.far = 3500;
   dirLight.shadow.bias = -0.0001;
-  workspace.add(dirLight);
-
-  // if (helper) {
-  //     workspace.remove(helper);
-  // }
-
-  sizexmax = $('#sizexmax').val();
-  sizeymax = $('#sizeymax').val();
-
-  if (!sizexmax) {
-    sizexmax = 200;
-  };
-
-  if (!sizeymax) {
-    sizeymax = 200;
-  };
-
-  // helper = new THREE.GridHelper(sizexmax, sizeymax, 1, 0xdddddd);
-  // helper.position.y = 0;
-  // helper.position.x = 0;
-  // helper.position.z = 0;
-  // helper.material.opacity = 0.15;
-  // helper.material.transparent = true;
-  // helper.receiveShadow = false;
-  // this.grid = helper;
-  // helper.name = "GridHelper1mm"
-  // workspace.add(helper);
-  grid = new THREE.Group();
-  helper = new THREE.GridHelper(sizexmax, sizeymax, 10, 0x888888);
-  helper.position.y = 0;
-  helper.position.x = 0;
-  helper.position.z = 0;
-  helper.material.opacity = 0.15;
-  helper.material.transparent = true;
-  helper.receiveShadow = false;
-  helper.name = "GridHelper10mm"
-  grid.add(helper);
-  helper = new THREE.GridHelper(sizexmax, sizeymax, 100, 0x666666);
-  helper.position.y = 0;
-  helper.position.x = 0;
-  helper.position.z = 0;
-  helper.material.opacity = 0.15;
-  helper.material.transparent = true;
-  helper.receiveShadow = false;
-  helper.name = "GridHelper50mm"
-  grid.add(helper);
-  workspace.add(grid);
-
-  var material = new THREE.LineBasicMaterial({
-    color: 0x666666
-  });
-  material.opacity = 0.15;
-  var geometry = new THREE.Geometry();
-  geometry.vertices.push(new THREE.Vector3(sizexmax, 0, 0));
-  geometry.vertices.push(new THREE.Vector3(sizexmax, sizeymax, 0));
-  geometry.vertices.push(new THREE.Vector3(0, sizeymax, 0));
-  var line = new THREE.Line(geometry, material);
-  workspace.add(line);
-
-
-  if (bullseye) {
-    scene.remove(bullseye);
-  }
-  bullseye = new THREE.Object3D();
-
-  var material = new THREE.LineBasicMaterial({
-    color: 0xFF0000
-  });
-
-  cone = new THREE.Mesh(new THREE.CylinderGeometry(0, 5, 40, 15, 1, false), new THREE.MeshPhongMaterial({
-    color: 0x0000ff,
-    specular: 0x0000ff,
-    shininess: 100
-  }));
-  cone.overdraw = true;
-  cone.rotation.x = -90 * Math.PI / 180;
-  cone.position.x = 20;
-  cone.position.y = 0;
-  cone.position.z = 0;
-  cone.material.opacity = 0.6;
-  cone.material.transparent = true;
-  cone.castShadow = false;
-  cone.visible = false;
-  workspace.add(cone)
-  // bullseye.add(cone);
-  //
-  // bullseye.name = "Bullseye";
-  //
-  // workspace.add(bullseye);
-  // bullseye.position.x = -(sizexmax / 2);
-  // bullseye.position.y = -(sizeymax / 2);
-
-  raycaster.linePrecision = 1
-
-
-  if (axesgrp) {
-    scene.remove(axesgrp);
-  }
-  axesgrp = new THREE.Object3D();
-  axesgrp.name = "Grid System"
-
-  // add axes labels
-  var xlbl = this.makeSprite(this.scene, "webgl", {
-    x: parseInt(sizexmax) + 5,
-    y: 0,
-    z: 0,
-    text: "X",
-    color: "#ff0000"
-  });
-  var ylbl = this.makeSprite(this.scene, "webgl", {
-    x: 0,
-    y: parseInt(sizeymax) + 5,
-    z: 0,
-    text: "Y",
-    color: "#006600"
-  });
-  var zlbl = this.makeSprite(this.scene, "webgl", {
-    x: 0,
-    y: 0,
-    z: 125,
-    text: "Z",
-    color: "#0000ff"
-  });
-
-
-  axesgrp.add(xlbl);
-  axesgrp.add(ylbl);
-  //axesgrp.add(zlbl); Laser don't have Z - but CNCs do
-
-  var materialX = new THREE.LineBasicMaterial({
-    color: 0xcc0000
-  });
-
-  var materialY = new THREE.LineBasicMaterial({
-    color: 0x00cc00
-  });
-
-  var geometryX = new THREE.Geometry();
-  geometryX.vertices.push(
-    new THREE.Vector3(-0.1, 0, 0),
-    new THREE.Vector3(-0.1, (sizeymax), 0)
-  );
-
-  var geometryY = new THREE.Geometry();
-  geometryY.vertices.push(
-    new THREE.Vector3(0, -0.1, 0),
-    new THREE.Vector3((sizexmax), -0.1, 0)
-  );
-
-  var line1 = new THREE.Line(geometryX, materialY);
-  var line2 = new THREE.Line(geometryY, materialX);
-  axesgrp.add(line1);
-  axesgrp.add(line2);
-
-  workspace.add(axesgrp);
-
-  // Picking stuff
-  projector = new THREE.Projector();
-  mouseVector = new THREE.Vector3();
-
-  scene.add(workspace)
-
-  drawRuler();
-
-  material = new THREE.MeshPhongMaterial({
-    color: 0xffcccc,
-    specular: 0xffffff,
-    shininess: 8
-  });
-
-  scene.fog = new THREE.Fog(0xffffff, 1, 5000);
+  dirLight.name = "dirLight;"
+  sceneLights.add(dirLight);
 
   hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
   hemiLight.color.setHSL(0.6, 1, 0.6);
   hemiLight.groundColor.setHSL(0.095, 1, 0.75);
   hemiLight.position.set(0, 50, 0);
   hemiLight.visible = true;
-  workspace.add(hemiLight);
+  hemiLight.name = "hemiLight"
+  sceneLights.add(hemiLight);
+  // if (helper) {
+  //     workspace.remove(helper);
+  // }
+  sceneLights.name = "Scene Lights"
+  workspace.add(sceneLights);
+
+  scene.fog = new THREE.Fog(0xffffff, 1, 5000);
 
   // SKYDOME
   var uniforms = {
@@ -339,9 +106,202 @@ function init3D() {
   });
 
   sky = new THREE.Mesh(skyGeo, skyMat);
+  sky.name = "Skydome"
   // sky.rotation.x = -Math.PI/4;
   // sky.rotation.y = -Math.PI/4;
   workspace.add(sky);
+
+  cone = new THREE.Mesh(new THREE.CylinderGeometry(0, 5, 40, 15, 1, false), new THREE.MeshPhongMaterial({
+    color: 0x0000ff,
+    specular: 0x0000ff,
+    shininess: 100
+  }));
+  cone.overdraw = true;
+  cone.rotation.x = -90 * Math.PI / 180;
+  cone.position.x = 20;
+  cone.position.y = 0;
+  cone.position.z = 0;
+  cone.material.opacity = 0.6;
+  cone.material.transparent = true;
+  cone.castShadow = false;
+  cone.visible = false;
+  cone.name = "Simulation Marker"
+  workspace.add(cone)
+  workspace.add(gridsystem)
+  redrawGrid();
+  scene.add(workspace)
+}
+
+function redrawGrid() {
+  gridsystem.children.length = 0
+
+  sizexmax = $('#sizexmax').val();
+  sizeymax = $('#sizeymax').val();
+
+  if (!sizexmax) {
+    sizexmax = 200;
+  };
+
+  if (!sizeymax) {
+    sizeymax = 200;
+  };
+
+  var grid = new THREE.Group();
+
+  var axesgrp = new THREE.Object3D();
+  axesgrp.name = "Axes Markers"
+
+  // add axes labels
+  var xlbl = this.makeSprite(this.scene, "webgl", {
+    x: parseInt(sizexmax) + 5,
+    y: 0,
+    z: 0,
+    text: "X",
+    color: "#ff0000"
+  });
+  var ylbl = this.makeSprite(this.scene, "webgl", {
+    x: 0,
+    y: parseInt(sizeymax) + 5,
+    z: 0,
+    text: "Y",
+    color: "#006600"
+  });
+  var zlbl = this.makeSprite(this.scene, "webgl", {
+    x: 0,
+    y: 0,
+    z: 125,
+    text: "Z",
+    color: "#0000ff"
+  });
+
+  axesgrp.add(xlbl);
+  axesgrp.add(ylbl);
+  //axesgrp.add(zlbl); Laser don't have Z - but CNCs do
+
+  var materialX = new THREE.LineBasicMaterial({
+    color: 0xcc0000
+  });
+
+  var materialY = new THREE.LineBasicMaterial({
+    color: 0x00cc00
+  });
+
+  var geometryX = new THREE.Geometry();
+  geometryX.vertices.push(
+    new THREE.Vector3(-0.1, 0, 0),
+    new THREE.Vector3(-0.1, (sizeymax), 0)
+  );
+
+  var geometryY = new THREE.Geometry();
+  geometryY.vertices.push(
+    new THREE.Vector3(0, -0.1, 0),
+    new THREE.Vector3((sizexmax), -0.1, 0)
+  );
+
+  var line1 = new THREE.Line(geometryX, materialY);
+  var line2 = new THREE.Line(geometryY, materialX);
+  axesgrp.add(line1);
+  axesgrp.add(line2);
+
+  grid.add(axesgrp);
+
+  helper = new THREE.GridHelper(sizexmax, sizeymax, 10, 0x888888);
+  helper.position.y = 0;
+  helper.position.x = 0;
+  helper.position.z = 0;
+  helper.material.opacity = 0.15;
+  helper.material.transparent = true;
+  helper.receiveShadow = false;
+  helper.name = "GridHelper10mm"
+  grid.add(helper);
+  helper = new THREE.GridHelper(sizexmax, sizeymax, 100, 0x666666);
+  helper.position.y = 0;
+  helper.position.x = 0;
+  helper.position.z = 0;
+  helper.material.opacity = 0.15;
+  helper.material.transparent = true;
+  helper.receiveShadow = false;
+  helper.name = "GridHelper50mm"
+  grid.add(helper);
+  grid.name = "Grid"
+  gridsystem.add(grid);
+  gridsystem.add(drawRuler());
+}
+
+function setBullseyePosition(x, y, z) {
+  //console.log('Set Position: ', x, y, z)
+  if (x) {
+    bullseye.position.x = parseInt(x, 10);
+  };
+  if (y) {
+    bullseye.position.y = parseInt(y, 10);
+  };
+  if (z) {
+    bullseye.position.z = (parseInt(z, 10) + 0.1);
+  };
+}
+
+function init3D() {
+
+  // ThreeJS Render/Control/Camera
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+  camera.position.z = 295;
+
+  var canvas = !!window.CanvasRenderingContext2D;
+  var webgl = (function() {
+    try {
+      return !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl');
+    } catch (e) {
+      return false;
+    }
+  })();
+
+  if (webgl) {
+    printLog('<h5><i class="fa fa-search fa-fw" aria-hidden="true"></i>WebGL Support found!</h5><b>success:</b><br> this application will work optimally on this device!<hr><p>', successcolor);
+    renderer = new THREE.WebGLRenderer({
+      autoClearColor: true,
+      antialias: false,
+      preserveDrawingBuffer: true
+    });
+
+  } else if (canvas) {
+    printLog('<h5><i class="fa fa-search fa-fw" aria-hidden="true"></i>No WebGL Support found!</h5><b>CRITICAL ERROR:</b><br> this appplication may not work optimally on this device! <br>Try another device with WebGL support</p><br><u>Try the following:</u><br><ul><li>In the Chrome address bar, type: <b>chrome://flags</b> [Enter]</li><li>Enable the <b>Override software Rendering</b></li><li>Restart Chrome and try again</li></ul>Sorry! :(<hr><p>', errorcolor);
+    renderer = new THREE.CanvasRenderer();
+  };
+
+  $('#renderArea').append(renderer.domElement);
+  renderer.setClearColor(0xffffff, 1); // Background color of viewer = transparent
+  // renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
+  renderer.clear();
+
+  sceneWidth = document.getElementById("renderArea").offsetWidth,
+    sceneHeight = document.getElementById("renderArea").offsetHeight;
+  camera.aspect = sceneWidth / sceneHeight;
+  renderer.setSize(sceneWidth, sceneHeight)
+  camera.updateProjectionMatrix();
+
+
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, 0, 0); // view direction perpendicular to XY-plane
+  controls.mouseButtons = {
+    ORBIT: THREE.MOUSE.MIDDLE,
+    ZOOM: false,
+    PAN: THREE.MOUSE.RIGHT
+  };
+
+  controls.enableRotate = true;
+  controls.enableZoom = true; // optional
+  controls.maxDistance = 4000; // limit max zoom out
+  controls.enableKeys = false; // Disable Keyboard on canvas
+
+
+  drawWorkspace();
+
+  // Picking stuff
+  projector = new THREE.Projector();
+  mouseVector = new THREE.Vector3();
+  raycaster.linePrecision = 1
 
 
 }
