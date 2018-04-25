@@ -1,1 +1,2 @@
-2018/04/25: First Release
+2018/04/25: Changes to Settings Dialog, Grid System, and added Changelog popup
+2018/04/24: First Release

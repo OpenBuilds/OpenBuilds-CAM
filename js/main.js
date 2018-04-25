@@ -59,7 +59,7 @@ $(document).ready(function() {
   $.get("https://raw.githubusercontent.com/openbuilds/cam/master/changelog.txt", function(data) {
     var lines = data.split('\n');
     for (var i = 0; i < lines.length; i++) {
-      console.log(line[i])
+      console.log(lines[i])
     }
   });
 
