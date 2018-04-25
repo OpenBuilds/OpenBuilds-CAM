@@ -56,11 +56,19 @@ $(document).ready(function() {
   });
 
   // Changelog
+  $("#changelog").empty()
+  var template2 = `<ul class="list-group">`
   $.get("https://raw.githubusercontent.com/openbuilds/cam/master/changelog.txt", function(data) {
     var lines = data.split('\n');
     for (var i = 0; i < lines.length; i++) {
       console.log(lines[i])
+      if (lines[i].length) {
+        template2 += `<li class="list-group-item">` + lines[i] + `</li>`
+      }
     }
+    template2 += `<ul>`
+    $("#changelog").append(template2)
+    $('#splashModal').modal('show');
   });
 
 
