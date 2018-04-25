@@ -56,21 +56,44 @@ $(document).ready(function() {
   });
 
   // Changelog
+  // $("#changelog").empty()
+  // var template2 = `<ul class="list-group">`
+  // $.get("https://raw.githubusercontent.com/openbuilds/cam/master/changelog.txt", function(data) {
+  //   var lines = data.split('\n');
+  //   for (var i = 0; i < lines.length; i++) {
+  //     console.log(lines[i])
+  //     if (lines[i].length) {
+  //       template2 += `<li class="list-group-item">` + lines[i] + `</li>`
+  //     }
+  //   }
+  //   template2 += `<ul>`
+  //   $("#changelog").append(template2)
+  //   $('#splashModal').modal('show');
+  // });
+
   $("#changelog").empty()
   var template2 = `<ul class="list-group">`
-  $.get("https://raw.githubusercontent.com/openbuilds/cam/master/changelog.txt", function(data) {
-    var lines = data.split('\n');
-    for (var i = 0; i < lines.length; i++) {
-      console.log(lines[i])
-      if (lines[i].length) {
-        template2 += `<li class="list-group-item">` + lines[i] + `</li>`
-      }
-    }
+  $.get("https://api.github.com/repos/openbuilds/cam/commits?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
+    console.log(data)
+    Object.keys(data).forEach(function(key) {
+      var date = data[key].commit.author.date
+      var author = data[key].commit.author.name
+      var avatar = data[key].author.avatar_url
+      var authorurl = data[key].author.html_url
+      var committer = data[key].commit.committer.name
+      var url = data[key].html_url
+      var message = data[key].commit.message
+      console.log(data[key].commit.message)
+      template2 += `<li class="list-group-item">
+      ` + message + `
+      </li>`
+    });
+    // for (var key in data) {
+    // }
     template2 += `<ul>`
     $("#changelog").append(template2)
     $('#splashModal').modal('show');
   });
-
 
 }); // End of document.ready
 
