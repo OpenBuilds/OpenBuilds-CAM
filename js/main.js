@@ -56,21 +56,6 @@ $(document).ready(function() {
   });
 
   // Changelog
-  // $("#changelog").empty()
-  // var template2 = `<ul class="list-group">`
-  // $.get("https://raw.githubusercontent.com/openbuilds/cam/master/changelog.txt", function(data) {
-  //   var lines = data.split('\n');
-  //   for (var i = 0; i < lines.length; i++) {
-  //     console.log(lines[i])
-  //     if (lines[i].length) {
-  //       template2 += `<li class="list-group-item">` + lines[i] + `</li>`
-  //     }
-  //   }
-  //   template2 += `<ul>`
-  //   $("#changelog").append(template2)
-  //   $('#splashModal').modal('show');
-  // });
-
   $("#changelog").empty()
   var template2 = `<ul class="list-group">`
   $.get("https://api.github.com/repos/openbuilds/cam/commits?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
@@ -84,9 +69,9 @@ $(document).ready(function() {
       var url = data[key].html_url
       var message = data[key].commit.message
 
-      template2 += `<li class="list-group-item">
+      template2 += `<li class="list-group-item list-group-item-light p-0 ">
       <div class="d-flex flex-nowrap">
-        <div class="p-2"><img src="` + avatar + `" height="32px" width="32px"/></div>
+        <div class="p-2"><img class="border border-light rounded" src="` + avatar + `" height="32px" width="32px"/></div>
         <div class="p-2">
         <small>` + formatDate(date) + `</small>:
           <a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a> added <br><a href="` + url + `" target="_new"><h6 class="text-dark"><i class="fa fa-github fa-fw" aria-hidden="true"></i>` + message + `</h6></a>

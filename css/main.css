@@ -220,13 +220,13 @@ button:focus {outline:0 !important;}
   top: 6px;
   left: -20px; */
   margin-top: 2px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 2px;
+  margin-right: 2px;
   text-align: center;
   background: rgba(240, 240, 240, 0.85);
   border: 1px solid rgba(55, 55, 55, 0.2);
   border-radius: 4px;
-  width: calc(100% - 20px);
+  width: calc(100% - 4px);
   z-index: 1;
   text-shadow: rgba(0,0,0,.2) 0 0 1px;
   -webkit-font-smoothing: antialiased;
