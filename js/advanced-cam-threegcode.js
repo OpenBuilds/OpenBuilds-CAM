@@ -243,7 +243,8 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
             color: 0x006600,
           });
           // Duplicate each loop, down into Z.  We go full depth before next loop.
-          for (j = zstart + zstep; j < zdepth + 1; j += zstep) {
+          for (j = zdepth + 1; j > zstart + zstep; j -= zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down. 
+            console.log(j)
             if (j * zstep < zdepth) {
               var zval = -j
             } else {

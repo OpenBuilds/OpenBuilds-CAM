@@ -71,7 +71,7 @@ function setOpacity(array, opacity) {
           pretty.traverse(function(child) {
             if (child.material && child.type == "Mesh") {
               // child.material.opacity = opacity / depth;
-              child.material.opacity = opacity;
+              child.material.opacity = opacity / depth;
             } else if (child.material && child.type == "Line") {
               // child.material.opacity = (opacity / depth )+0.25;
               child.material.opacity = opacity + 0.25;
