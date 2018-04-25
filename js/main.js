@@ -74,22 +74,32 @@ $(document).ready(function() {
   $("#changelog").empty()
   var template2 = `<ul class="list-group">`
   $.get("https://api.github.com/repos/openbuilds/cam/commits?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
-    console.log(data)
+    // console.log(data)
     Object.keys(data).forEach(function(key) {
-      var date = data[key].commit.author.date
+      var date = data[key].commit.author.date.split(/[TZ]+/)
       var author = data[key].commit.author.name
       var avatar = data[key].author.avatar_url
       var authorurl = data[key].author.html_url
       var committer = data[key].commit.committer.name
       var url = data[key].html_url
       var message = data[key].commit.message
-      console.log(data[key].commit.message)
+
       template2 += `<li class="list-group-item">
-      ` + message + `
+      <div class="d-flex flex-nowrap">
+        <div class="p-2"><img src="` + avatar + `" height="32px" width="32px"/></div>
+        <div class="p-2">
+        <small>` + date[0] + ` at ` + date[1] + `</small>:
+          <a href="` + authorurl + `" target="_new">` + author + `</a> added <a href="` + url + `" target="_new"><h6>` + message + `</h6></a>
+        </div>
+      </div>
+
       </li>`
     });
     // for (var key in data) {
     // }
+    template2 += `<li class="list-group-item">
+    <a href="https://github.com/OpenBuilds/cam/commits/master" target="_new"><h6>Click here to view older updates</h6></a>
+    </li>`
     template2 += `<ul>`
     $("#changelog").append(template2)
     $('#splashModal').modal('show');
