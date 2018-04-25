@@ -63,7 +63,7 @@ function addJob(id) {
     obj.traverse(function(child) {
       if (child.userData.selected) {
         var copy = child.clone()
-        console.log(copy, child)
+        // console.log(copy, child)
         copy.position.copy(obj.position);
         toolpath.add(copy);
       }

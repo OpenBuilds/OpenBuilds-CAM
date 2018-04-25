@@ -1,6 +1,14 @@
 function toolpathPreview(i) {
   $("#savetpgcode").addClass("disabled");
   $("#exportGcodeMenu").addClass("disabled");
+  $("#previewToolpathBtn").html("<i class='fa fa-spinner fa-spin '></i> Calculating, please wait");
+  $("#previewToolpathBtn").prop('disabled', true);
+  setTimeout(function() {
+    toolpathPreviewExec(i);
+  }, 200);
+}
+
+function toolpathPreviewExec(i) {
   var operation = toolpathsInScene[i].userData.camOperation
   var ToolDia = toolpathsInScene[i].userData.camToolDia
   var ZClearance = toolpathsInScene[i].userData.camZClearance
@@ -54,6 +62,7 @@ function toolpathPreview(i) {
   } else if (operation == "Drag Knife: Cutout") {
     toolpathsInScene[i].userData.inflated = getToolpath("dragknife", i, DragOffset, 0, 1, 1, 0, false, false, union);
   }
+  $('#statusmodal').modal('hide');
   fillTree()
   clearSceneFlag = true;
 

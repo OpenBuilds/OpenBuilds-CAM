@@ -1,5 +1,4 @@
-function ConfirmDelete()
-{
+function ConfirmDelete() {
   var x = confirm("Are you sure you want to restore to factory defaults?");
   if (x) {
     window.localStorage.clear()
@@ -11,12 +10,12 @@ function ConfirmDelete()
 
 
 function initLocalStorage() {
-    var settingsOpen = document.getElementById('jsonFile');
-    settingsOpen.addEventListener('change', restoreSettingsLocal, false);
+  var settingsOpen = document.getElementById('jsonFile');
+  settingsOpen.addEventListener('change', restoreSettingsLocal, false);
 
-    $('#firmware').on('change', function() {
-      alert( this.value );
-    })
+  $('#firmware').on('change', function() {
+    alert(this.value);
+  })
 }
 
 // FIXME
@@ -63,12 +62,12 @@ function loadSetting(setting) {
 function saveSettingsLocal() {
   console.group("Saving settings to LocalStorage");
   for (i = 0; i < localParams.length; i++) {
-      var localParam = localParams[i];
-      var paramName = localParam[0];
-      var val = $('#' + paramName).val(); // Read the value from form
-      console.log('Saving: ' + paramName + ' : ' + val);
-      printLog('Saving: ' + paramName + ' : ' + val, successcolor);
-      saveSetting(paramName, val);
+    var localParam = localParams[i];
+    var paramName = localParam[0];
+    var val = $('#' + paramName).val(); // Read the value from form
+    console.log('Saving: ' + paramName + ' : ' + val);
+    printLog('Saving: ' + paramName + ' : ' + val, successcolor);
+    saveSetting(paramName, val);
   }
   printLog('<b>Saved Settings: <br>NB:</b> Please refresh page for settings to take effect', errorcolor, "settings");
   $("#settingsmodal").modal("hide");
@@ -76,25 +75,27 @@ function saveSettingsLocal() {
 };
 
 function loadSettingsLocal() {
-  console.group("Loading settings from LocalStorage")
+  console.log("Loading settings from LocalStorage")
   for (i = 0; i < localParams.length; i++) {
     var localParam = localParams[i];
     var paramName = localParam[0];
     var val = loadSetting(paramName);
 
     if (val) {
-      console.log('Loading: ' + paramName + ' : ' + val);
-      $('#' + paramName).val(val);// Set the value to Form from Storage
+      // console.log('Loading: ' + paramName + ' : ' + val);
+      $('#' + paramName).val(val); // Set the value to Form from Storage
     } else {
-      console.log('Not in local storage: ' +  paramName);
+      // console.log('Not in local storage: ' +  paramName);
     }
   }
-  console.groupEnd();
+  // console.groupEnd();
 };
 
 function backupSettingsLocal() {
   var json = JSON.stringify(localStorage)
-  var blob = new Blob([json], {type: "application/json"});
+  var blob = new Blob([json], {
+    type: "application/json"
+  });
   invokeSaveAsDialog(blob, 'settings-backup.json');
 };
 
@@ -139,11 +140,11 @@ function restoreSettingsLocal(evt) {
 };
 
 function loadSettings(e) {
-  lines = e.target ? e.target.result : e ;
+  lines = e.target ? e.target.result : e;
   var o = JSON.parse(lines);
   for (var property in o) {
     if (o.hasOwnProperty(property)) {
-     saveSetting(property, o[property]);
+      saveSetting(property, o[property]);
     } else {
       // I'm not sure this can happen... I want to log this if it does!
       console.log("Found a property " + property + " which does not belong to itself.");
