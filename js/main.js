@@ -92,7 +92,6 @@ $(document).ready(function() {
           <a href="` + authorurl + `" target="_new">` + author + `</a> added <a href="` + url + `" target="_new"><h6>` + message + `</h6></a>
         </div>
       </div>
-
       </li>`
     });
     // for (var key in data) {
