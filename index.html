@@ -55,6 +55,10 @@
 												Edit
 												</a>
 												<div class="dropdown-menu" aria-labelledby="viewDropDown">
+													<a class="dropdown-item" href="#" id="selectAll"><i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>Select All</a>
+													<a class="dropdown-item" href="#" id="selectNone"><i class="fa fa-fw fa-square-o" aria-hidden="true"></i>Select None</a>
+													<a class="dropdown-item" href="#" id="selectInv"><i class="fa fa-fw fa-check" aria-hidden="true"></i>Invert Selection</a>
+													<div class="dropdown-divider"></div>
 													<a class="dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick='undo();'>
 														<i class="fa fa-fw fa-undo" aria-hidden="true"></i>Undo
 													</a>
@@ -67,17 +71,7 @@
 													</a>
 												</div>
 											</li>
-											<li class="nav-item dropdown">
-												<a class="nav-link dropdown-toggle" href="#" id="selectDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												Select
-												</a>
-												<div class="dropdown-menu" aria-labelledby="selectDropDown">
-													<a class="dropdown-item" href="#" id="selectAll"><i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>Select All</a>
-													<a class="dropdown-item" href="#" id="selectNone"><i class="fa fa-fw fa-square-o" aria-hidden="true"></i>Select None</a>
-													<!-- <div class="dropdown-divider"></div> -->
-													<a class="dropdown-item" href="#" id="selectInv"><i class="fa fa-fw fa-check" aria-hidden="true"></i>Invert Selection</a>
-												</div>
-											</li>
+
 											<li class="nav-item dropdown">
 												<a class="nav-link dropdown-toggle" href="#" id="viewDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												View
@@ -638,4 +632,15 @@
 		}
 
 	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-38524928-4"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-38524928-4');
+	</script>
+
 </html>
