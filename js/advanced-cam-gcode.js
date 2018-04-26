@@ -78,127 +78,146 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
   var sScale = $("#scommandscale").val()
   var IHScommand = document.getElementById('ihsgcode').value; // or "G0 " + clearanceHeight + "\nG32.2 Z-30 F100\nG10 P2 L1 Z0" // Plasma IHS
 
-  toolpathGrp.traverse(function(child) {
-    // console.log(child);
-    if (child.type == "Line") {
-      var xpos_offset = child.position.x;
-      var ypos_offset = child.position.y;
-      // let's create gcode for all points in line
-      for (i = 0; i < child.geometry.vertices.length; i++) {
-        // Convert to World Coordinates
-        var localPt = child.geometry.vertices[i];
-        var worldPt = toolpathGrp.localToWorld(localPt.clone());
-        var xpos = worldPt.x
-        var ypos = worldPt.y
-        if (child.geometry.type == "CircleGeometry") {
-          xpos = (xpos + xpos_offset);
-          ypos = (ypos + ypos_offset);
-        }
-        var zpos = worldPt.z;
-        if (zoffset) {
-          zpos = zpos - zoffset;
-        }
+  if (!toolpathGrp) {
+    bootoast.toast({
+      message: `<h6><i class="fa fa-times-circle" aria-hidden="true"></i> Toolpath Error:</h6><br>
+      <i>An error occured: </i> 
+      One or more of your toolpaths is not configured.  You need to configure the toolpaths, before generating GCODE
+      `,
+      type: 'danger',
+      position: 'top-center',
+      // icon: 'fa-times-circle',
+      timeout: 10,
+      animationDuration: 300,
+      dismissible: true
+    });
+    $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
+    $("#generatetpgcode").prop('disabled', false);
+  } else {
+    toolpathGrp.traverse(function(child) {
+      // console.log(child);
+      if (child.type == "Line") {
+        var xpos_offset = child.position.x;
+        var ypos_offset = child.position.y;
+        // let's create gcode for all points in line
+        for (i = 0; i < child.geometry.vertices.length; i++) {
+          // Convert to World Coordinates
+          var localPt = child.geometry.vertices[i];
+          var worldPt = toolpathGrp.localToWorld(localPt.clone());
+          var xpos = worldPt.x
+          var ypos = worldPt.y
+          if (child.geometry.type == "CircleGeometry") {
+            xpos = (xpos + xpos_offset);
+            ypos = (ypos + ypos_offset);
+          }
+          var zpos = worldPt.z;
+          if (zoffset) {
+            zpos = zpos - zoffset;
+          }
 
-        // First Move To
-        if (i == 0) {
-          // first point in line where we start lasering/milling
+          // First Move To
+          if (i == 0) {
+            // first point in line where we start lasering/milling
 
-          // calc g0 rate
-          var seekrate;
-          if (isSeekrateSpecifiedAlready) {
-            seekrate = "";
-          } else {
-            // console.log('Rapid Speed: ', rapidSpeed);
-            if (rapidSpeed) {
-              seekrate = " F" + rapidSpeed;
-              isSeekrateSpecifiedAlready = true;
-            } else {
+            // calc g0 rate
+            var seekrate;
+            if (isSeekrateSpecifiedAlready) {
               seekrate = "";
-            }
-          }
-
-          if (lastxyz.x == xpos.toFixed(4) && lastxyz.x == xpos.toFixed(4)) {
-            // console.log("No need to plunge, can stay at z " + lastxyz.z)
-          } else {
-            // move to clearance height, at first points XY pos
-            if (!isAtClearanceHeight) {
-              g += "\n" + g0 + " Z" + clearanceHeight + "\n"; // Position Before Plunge!
-            }
-            g += g0 + seekrate;
-            g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + "\n"; // Move to XY position
-
-            // then plunge
-            g += "\n" + g0 + " Z1\n"; // G0 to Z0 then Plunge!
-          }
-
-
-          g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
-
-          isAtClearanceHeight = false;
-
-        } else {
-          // we are in a non-first line so this is normal moving
-          // if the tool is not on, we need to turn it on
-          if (!isToolOn) {
-            if (PlasmaIHS == "Yes") {
-              console.log("PlasmaIHS")
-              g += IHScommand + "\n";
-            }
-            if (toolon) {
-              g += toolon
-              g += '\n'
             } else {
-              // Nothing - most of the firmwares use G0 = move, G1 = cut and doesnt need a toolon/tooloff command
-            };
-            isToolOn = true;
-          }
-
-          // do g1 @ feedrate move
-          var feedrate;
-          if (isFeedrateSpecifiedAlready) {} else {
-            // console.log('Cut Speed: ', cutSpeed);
-            if (cutSpeed) {
-              feedrate = " F" + cutSpeed;
-              isFeedrateSpecifiedAlready = true;
-            } else {
-              feedrate = "";
+              // console.log('Rapid Speed: ', rapidSpeed);
+              if (rapidSpeed) {
+                seekrate = " F" + rapidSpeed;
+                isSeekrateSpecifiedAlready = true;
+              } else {
+                seekrate = "";
+              }
             }
-          }
 
-          if (sOnSeperateLine) {
-            g += s + laserPwr + "\n";
-            g += g1 + feedrate;
-            g += " X" + xpos.toFixed(4);
-            g += " Y" + ypos.toFixed(4);
-            g += " Z" + zpos.toFixed(4) + "\n";
+            if (lastxyz.x == xpos.toFixed(4) && lastxyz.x == xpos.toFixed(4)) {
+              // console.log("No need to plunge, can stay at z " + lastxyz.z)
+            } else {
+              // move to clearance height, at first points XY pos
+              if (!isAtClearanceHeight) {
+                g += "\n" + g0 + " Z" + clearanceHeight + "\n"; // Position Before Plunge!
+              }
+              g += g0 + seekrate;
+              g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + "\n"; // Move to XY position
+
+              // then plunge
+              g += "\n" + g0 + " Z1\n"; // G0 to Z0 then Plunge!
+            }
+
+
+            g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
+
+            isAtClearanceHeight = false;
+
           } else {
-            g += g1 + feedrate;
-            g += " X" + xpos.toFixed(4);
-            g += " Y" + ypos.toFixed(4);
-            g += " Z" + zpos.toFixed(4);
-            g += " " + s + laserPwr + "\n";
+            // we are in a non-first line so this is normal moving
+            // if the tool is not on, we need to turn it on
+            if (!isToolOn) {
+              if (PlasmaIHS == "Yes") {
+                console.log("PlasmaIHS")
+                g += IHScommand + "\n";
+              }
+              if (toolon) {
+                g += toolon
+                g += '\n'
+              } else {
+                // Nothing - most of the firmwares use G0 = move, G1 = cut and doesnt need a toolon/tooloff command
+              };
+              isToolOn = true;
+            }
+
+            // do g1 @ feedrate move
+            var feedrate;
+            if (isFeedrateSpecifiedAlready) {} else {
+              // console.log('Cut Speed: ', cutSpeed);
+              if (cutSpeed) {
+                feedrate = " F" + cutSpeed;
+                isFeedrateSpecifiedAlready = true;
+              } else {
+                feedrate = "";
+              }
+            }
+
+            if (sOnSeperateLine) {
+              g += s + laserPwr + "\n";
+              g += g1 + feedrate;
+              g += " X" + xpos.toFixed(4);
+              g += " Y" + ypos.toFixed(4);
+              g += " Z" + zpos.toFixed(4) + "\n";
+            } else {
+              g += g1 + feedrate;
+              g += " X" + xpos.toFixed(4);
+              g += " Y" + ypos.toFixed(4);
+              g += " Z" + zpos.toFixed(4);
+              g += " " + s + laserPwr + "\n";
+            }
+            // end move
           }
-          // end move
+          lastxyz = {
+            x: xpos.toFixed(4),
+            y: ypos.toFixed(4),
+            z: zpos.toFixed(4)
+          }
+        } //end child
+
+        // make feedrate not have to be specified again on next line if there is one already
+        isFeedrateSpecifiedAlready = false;
+        isToolOn = false;
+
+        // tool off
+        if (tooloff) {
+          g += tooloff
+          g += '\n'
         }
-        lastxyz = {
-          x: xpos.toFixed(4),
-          y: ypos.toFixed(4),
-          z: zpos.toFixed(4)
-        }
-      } //end child
 
-      // make feedrate not have to be specified again on next line if there is one already
-      isFeedrateSpecifiedAlready = false;
-      isToolOn = false;
+      } // end inflatepate/pocket/entity
+    });
+  }
 
-      // tool off
-      if (tooloff) {
-        g += tooloff
-        g += '\n'
-      }
 
-    } // end inflatepate/pocket/entity
-  });
   console.log("Generated gcode. length:", g.length);
   return g;
 };
