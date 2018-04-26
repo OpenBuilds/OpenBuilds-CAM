@@ -1,4 +1,4 @@
-var timefactor = 1,
+var timefactor = 1000,
   simstopped = true;
 
 function enableSim() {
@@ -14,35 +14,16 @@ function simAnimate() {
     // 160widthx200height offset?
     if (cone.position) {
       var conepos = toScreenPosition(cone, camera)
-      sceneWidth = document.getElementById("renderArea").offsetWidth;
-      sceneHeight = document.getElementById("renderArea").offsetHeight;
-      if (conepos.x + 160 > sceneWidth) {
-        conepos.x = sceneWidth - 210
-      }
-      if (conepos.y + 200 > sceneHeight) {
-        conepos.y = sceneHeight - 210
-      }
-      if (conepos.x < 0) {
-        conepos.x = 0
-      }
-      if (conepos.y < 0) {
-        conepos.y = 0
-      }
-      $("#conetext").css('left', conepos.x + 10 + "px").css('top', conepos.y + 10 + "px");
+      $("#conetext").css('left', conepos.x - 60 + "px").css('top', conepos.y - 110 + "px");
     }
   }
 }
 
 function toScreenPosition(obj, camera) {
-  var vector = new THREE.Vector3();
-
+  var vector = new THREE.Vector3(obj.position.x, obj.position.y + 10, obj.position.z + 30);
   var widthHalf = 0.5 * renderer.context.canvas.width;
   var heightHalf = 0.5 * renderer.context.canvas.height;
-
-  obj.updateMatrixWorld();
-  vector.setFromMatrixPosition(obj.matrixWorld);
   vector.project(camera);
-
   vector.x = (vector.x * widthHalf) + widthHalf;
   vector.y = -(vector.y * heightHalf) + heightHalf;
 
@@ -131,36 +112,31 @@ function sim(startindex) {
       } else {
         var text = object.userData.lines[simIdx].args.cmd
       }
+      if (object.userData.lines[simIdx].p2.feedrate == null) {
+        var feedrate = 0
+      } else {
+        var feedrate = object.userData.lines[simIdx].p2.feedrate
+      }
 
       $("#conetext").html(
-        `<table class="table table-bordered table-striped table-sm">
-          <tbody>
-              <tr class="">
-                  <td class=""><h6>Command</h6></td>
-                  <td><div class="float-right">` + text + `</td></div>
-              </tr>
-              <tr class="">
-                  <td class=""><h6>X</h6></td>
-                  <td><div class="float-right">` + posx.toFixed(2) + `mm</div>
-                  </td>
-              </tr>
-              <tr class="">
-                  <td class=""><h6>Y</h6></td>
-                  <td><div class="float-right">` + posy.toFixed(2) + `mm</div>
-                  </td>
-              </tr>
-              <tr class="">
-                  <td class=""><h6>Z</h6></td>
-                  <td><div class="float-right">` + posz.toFixed(2) + `mm</div>
-                  </td>
-              </tr>
-              <tr class="">
-                  <td class=""><h6>Feedrate</h6></td>
-                  <td><div class="float-right">` + object.userData.lines[simIdx].args.feedrate + `mm/min</div>
-                  </td>
-              </tr>
-          </tbody>
-      </table>`);
+        ` <table style="border: 1px solid #888">
+            <tr class="stripe" style="border-bottom: 1px solid #888">
+              <td><b>CMD</b></td><td align="right"><b>` + text + `</b></td>
+            </tr>
+            <tr class="stripe" style="border-bottom: 1px solid #888">
+              <td><b>X:</b></td><td align="right"><b>` + posx.toFixed(2) + `mm</b></td>
+            </tr>
+            <tr class="stripe" style="border-bottom: 1px solid #888">
+              <td><b>Y:</b></td><td align="right"><b>` + posy.toFixed(2) + `mm</b></td>
+            </tr>
+            <tr class="stripe" style="border-bottom: 1px solid #888">
+              <td><b>Z:</b></td><td align="right"><b>` + posz.toFixed(2) + `mm</b></td>
+            </tr>
+            <tr class="stripe" style="border-bottom: 1px solid #888">
+              <td><b>F:</b></td><td align="right"><b>` + object.userData.lines[simIdx].p2.feedrate + `mm/min</b></td>
+            </tr>
+          </table>
+        `);
 
 
       // if (simTime < 0.1) { simTime = 0.1};

@@ -153,6 +153,9 @@ function loadWorkspace(f) {
   setTimeout(function() {
     fillTree();
   }, 250);
+  setTimeout(function() {
+    makeGcode();
+  }, 500);
 
 }
 

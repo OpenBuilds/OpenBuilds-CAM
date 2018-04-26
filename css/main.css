@@ -3,6 +3,10 @@
     src: url(fonts/7segment.woff);
 }
 
+.stripe:nth-child(even) {
+    background-color: #f2f2f2
+}
+
 .page-container {
   position: relative;
   top: 0;
