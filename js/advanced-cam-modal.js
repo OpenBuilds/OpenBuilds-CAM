@@ -1,42 +1,42 @@
 function typeofOperation(newval, objectseq) {
   if (newval == "... Select Operation ...") {
-    noMode();
+    noMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "Laser: Vector (no path offset)") {
-    laserMode();
+    laserMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "Laser: Vector (path inside)") {
-    laserInsideMode();
+    laserInsideMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "Laser: Vector (path outside)") {
-    laserOutsideMode();
+    laserOutsideMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "CNC: Vector (path outside)") {
-    cncOutsideMode();
+    cncOutsideMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "CNC: Vector (path inside)") {
-    cncInsideMode();
+    cncInsideMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "CNC: Pocket") {
     cncPocketMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "CNC: V-Engrave") {
-    cncVEngMode();
+    cncVEngMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "Plasma: Vector (path outside)") {
-    plasmaMode();
+    plasmaMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "Plasma: Vector (path inside)") {
-    plasmaMode();
+    plasmaMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "Plasma: Mark") {
-    plasmaMode();
+    plasmaMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "Plasma: Vector (no path offset)") {
-    plasmaMode();
+    plasmaMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "Drag Knife: Cutout") {
-    dragKnifeMode();
+    dragKnifeMode(objectseq);
     updateCamUserData(objectseq);
   }
 
@@ -383,7 +383,7 @@ function setupJob(i) {
                 </div>
               </td>
             </tr>
-            <tr class="inputplasma inputcnc inputpocket inputdragknife inputlaser">
+            <tr class="inputplasma inputcnc inputpocket inputdragknife inputlaser inputlasernooffset">
               <td>Geometry: Merge</td>
               <td>
                 <div class="input-addon">
@@ -455,7 +455,7 @@ function setupJob(i) {
 
 }
 
-function noMode() {
+function noMode(i) {
   $('.inputcnc').hide();
   $('.inputpocket').hide();
   $('.inputlaser').hide();
@@ -463,7 +463,16 @@ function noMode() {
   $('.inputplasma').hide();
 }
 
-function laserMode() {
+function laserMode(i) {
+  $('.inputcnc').hide();
+  $('.inputpocket').hide();
+  $('.inputdragknife').hide();
+  $('.inputplasma').hide();
+  $('.inputlaser').show();
+  $(".inputlasernooffset").hide();
+};
+
+function laserInsideMode(i) {
   $('.inputcnc').hide();
   $('.inputpocket').hide();
   $('.inputdragknife').hide();
@@ -471,7 +480,7 @@ function laserMode() {
   $('.inputlaser').show();
 };
 
-function laserInsideMode() {
+function laserOutsideMode(i) {
   $('.inputcnc').hide();
   $('.inputpocket').hide();
   $('.inputdragknife').hide();
@@ -479,15 +488,7 @@ function laserInsideMode() {
   $('.inputlaser').show();
 };
 
-function laserOutsideMode() {
-  $('.inputcnc').hide();
-  $('.inputpocket').hide();
-  $('.inputdragknife').hide();
-  $('.inputplasma').hide();
-  $('.inputlaser').show();
-};
-
-function cncInsideMode() {
+function cncInsideMode(i) {
   $('.inputlaser').hide();
   $('.inputpocket').hide();
   $('.inputdragknife').hide();
@@ -495,7 +496,7 @@ function cncInsideMode() {
   $('.inputcnc').show();
 };
 
-function cncOutsideMode() {
+function cncOutsideMode(i) {
   $('.inputlaser').hide();
   $('.inputpocket').hide();
   $('.inputdragknife').hide();
@@ -515,7 +516,7 @@ function cncPocketMode(i) {
   $('#tunion' + i).val("Yes").prop('selected', true);
 };
 
-function plasmaMode() {
+function plasmaMode(i) {
   $('.inputcnc').hide();
   $('.inputpocket').hide();
   $('.inputlaser').hide();
@@ -524,7 +525,7 @@ function plasmaMode() {
 };
 
 
-function dragKnifeMode() {
+function dragKnifeMode(i) {
   $('.inputcnc').hide();
   $('.inputpocket').hide();
   $('.inputlaser').hide();
