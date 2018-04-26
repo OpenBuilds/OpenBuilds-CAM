@@ -98,7 +98,7 @@ function sim(startindex) {
       type: 'danger',
       position: 'top-center',
       // icon: 'fa-times-circle',
-      timeout: 1,
+      timeout: 10,
       animationDuration: 300,
       dismissible: true
     });

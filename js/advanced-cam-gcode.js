@@ -1,3 +1,12 @@
+function trashGcode() {
+  if (scene.getObjectByName('gcodeobject')) {
+    // console.log("Existing GCODE object: Cleaning up first")
+    scene.remove(scene.getObjectByName('gcodeobject'))
+    object = false;
+  }
+}
+
+
 function makeGcode() {
   $('#gcodejobs').empty();
 

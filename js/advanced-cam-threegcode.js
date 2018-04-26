@@ -74,7 +74,6 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
     var newClipperPaths = simplifyPolygons(clipperPaths);
     if (newClipperPaths.length < 1) {
       console.error("Clipper Simplification Failed!:");
-      printLog('Clipper Simplification Failed!', errorcolor, "viewer");
     } else {
       // var newClipperPaths = clipperPaths;
     }
@@ -218,9 +217,7 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
       var newClipperPaths = simplifyPolygons(clipperPaths);
 
       if (newClipperPaths.length < 1) {
-        //
         console.error("Clipper Simplification Failed!:");
-        printLog('Clipper Simplification Failed!', errorcolor, "viewer");
       }
 
       // calc Stepover
@@ -341,11 +338,8 @@ dragknifePath = function(infobject, inflateVal, zstep, zdepth) {
   var newClipperPaths = simplifyPolygons(clipperPaths);
 
   if (newClipperPaths.length < 1) {
-    // console.error("Clipper Simplification Failed!:");
-    printLog('There seems to be a problem with either this file, or the settings you entered: Clipper.js Simplification Failed!', errorcolor, "viewer")
+    console.error("Clipper Simplification Failed!:");
   }
-
-
 
   for (j = 0; j < zdepth; j += zstep) {
     if (j * zstep < zdepth) {

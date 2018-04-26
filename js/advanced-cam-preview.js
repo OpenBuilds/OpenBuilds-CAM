@@ -36,7 +36,7 @@ function toolpathPreviewExec(i) {
 
 
   if (operation == "... Select Operation ...") {
-
+    // do nothing
   } else if (operation == "Laser: Vector (no path offset)") {
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, StepOver, 1, 1, 0, false, false, union);
   } else if (operation == "Laser: Vector (path inside)") {
@@ -84,5 +84,31 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
     var toolpath = dragknifePath(toolpathsInScene[index], offset, zstep, zdepth);
   }
   toolpath.userData.type = "toolpath";
+  console.log(toolpath.children)
+  var errorcount = 0;
+  for (i = 0; i < toolpath.children.length; i++) {
+    var checkpath = toolpath.children[i]
+    if (checkpath.children.length < 1) {
+      errorcount++
+    }
+  }
+  if (errorcount > 0) {
+    toolpathErrorToast();
+  }
   return toolpath
+}
+
+function toolpathErrorToast() {
+  bootoast.toast({
+    message: `<h6><i class="fa fa-times-circle" aria-hidden="true"></i> Toolpath Error:</h6><br>
+    <i>An error occured: </i><br>
+    We encountered an error while processing the toolpath: Either the file you are using has some issues, or the Toolpath settings you provided is wrong / won't work with the particular file / operation.
+    `,
+    type: 'danger',
+    position: 'top-center',
+    // icon: 'fa-times-circle',
+    timeout: 10,
+    animationDuration: 300,
+    dismissible: true
+  });
 }

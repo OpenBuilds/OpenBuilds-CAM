@@ -94,12 +94,24 @@ $(document).ready(function() {
 
 // Error handling
 errorHandlerJS = function() {
-  window.onerror = function(message, url, line) {
-    message = message.replace(/^Uncaught /i, "");
+  // window.onerror = function(errmessage, url, line) {
+  window.onerror = function(errmessage, url, line, colno, error) {
+    // console.log(error)
+    errmessage = errmessage.replace(/^Uncaught /i, "");
     //alert(message+"\n\n("+url+" line "+line+")");
-    console.log(message + "\n\n(" + url + " line " + line + ")");
-    if (message.indexOf('updateMatrixWorld') == -1) { // Ignoring threejs/google api messages, add more || as discovered
-      printLog(message + "\n(" + url + " on line " + line + ")", errorcolor);
+    console.log(errmessage + "\n\n(" + url + " line " + line + ")");
+    if (errmessage.indexOf('updateMatrixWorld') == -1) { // Ignoring threejs/google api messages, add more || as discovered
+      bootoast.toast({
+        message: `<h6><i class="fa fa-times-circle" aria-hidden="true"></i> Application Error:</h6><br>
+        <i>An unknown error occured: </i><br><b>` + errmessage + `</b>`,
+        type: 'danger',
+        position: 'top-center',
+        // icon: 'fa-times-circle',
+        timeout: 10,
+        animationDuration: 300,
+        dismissible: true
+      });
+      // printLog(errmessage + "\n(" + url + " on line " + line + ")", errorcolor);
     }
   };
 };
