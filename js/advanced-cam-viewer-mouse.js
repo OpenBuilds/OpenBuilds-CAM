@@ -8,6 +8,9 @@ function initMouseMode() {
 
     // select mode
     if (this.value == "select") {
+      $("#mouseSelectBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
+      $("#mouseMoveBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
+      $("#mouseDelBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       // setOpacity(toolpathsInScene, 0.6);
       if (dragcontrols) {
         dragcontrols.dispose();
@@ -22,6 +25,9 @@ function initMouseMode() {
 
     // move mode
     if (this.value == "move") {
+      $("#mouseMoveBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
+      $("#mouseSelectBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
+      $("#mouseDelBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       deselectAllObjects()
       // setOpacity(toolpathsInScene, 0.1);
       $('#renderArea').css('cursor', '');
@@ -34,6 +40,9 @@ function initMouseMode() {
 
     // delete mode
     if (this.value == "delete") {
+      $("#mouseDelBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
+      $("#mouseMoveBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
+      $("#mouseSelectBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       deselectAllObjects()
       $('#renderArea').css('cursor', '');
       if (dragcontrols) {

@@ -1,9 +1,11 @@
 function trashGcode() {
+  simstop()
   if (scene.getObjectByName('gcodeobject')) {
     // console.log("Existing GCODE object: Cleaning up first")
     scene.remove(scene.getObjectByName('gcodeobject'))
     object = false;
   }
+  disableSim()
 }
 
 
@@ -50,6 +52,7 @@ function makeGcode() {
 
     $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
     $("#generatetpgcode").prop('disabled', false);
+    enableSim();
   }, 200);
 
 
@@ -81,7 +84,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
   if (!toolpathGrp) {
     bootoast.toast({
       message: `<h6><i class="fa fa-times-circle" aria-hidden="true"></i> Toolpath Error:</h6><br>
-      <i>An error occured: </i> 
+      <i>An error occured: </i>
       One or more of your toolpaths is not configured.  You need to configure the toolpaths, before generating GCODE
       `,
       type: 'danger',

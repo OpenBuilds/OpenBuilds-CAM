@@ -2,11 +2,11 @@ var timefactor = 1,
   simstopped = true;
 
 function enableSim() {
-  $("#simstartbtn").removeClass("disabled");
+  $("#simstartbtn").prop('disabled', false);
 }
 
 function disableSim() {
-  $("#simstartbtn").addClass("disabled");
+  $("#simstartbtn").prop('disabled', true);
 }
 
 function simAnimate() {
