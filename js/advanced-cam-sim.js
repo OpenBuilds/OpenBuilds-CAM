@@ -64,7 +64,9 @@ function simSpeed() {
 }
 
 function sim(startindex) {
-  makeGcode();
+  if (!scene.getObjectByName('gcodeobject')) {
+    makeGcode();
+  }
   cone.visible = true
   $("#conetext").show();
   cone.material = new THREE.MeshPhongMaterial({

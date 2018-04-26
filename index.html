@@ -15,6 +15,7 @@
 		<link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
 		<link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
 		<link type="text/css" rel="stylesheet" media="all" href="css/font-awesome.css" />
+		<link rel="manifest" href="/manifest.json">
 	</head>
 	<body>
 		<div class="page-container sidebar-collapsed">
@@ -22,12 +23,12 @@
 				<div id="container1">
 					<!-- #col1 (sidebar) -->
 					<div id="col1">
-						<div class="card" style="height: 100%;">
-							<div class="card-header" id="toolpathtreeheader" style="padding: 0px;">
-								<nav class="navbar navbar-expand-sm navbar-light bg-light py-0">
+						<div class="card" style="height: calc(100% - 1.5px);">
+							<div class="card-header" style="padding: 0px;">
+								<nav class="navbar navbar-expand-md navbar-light bg-light">
 									<a class="navbar-brand" href="https://openbuilds.com/" target="_blank"><img src="images/logo.png"/></a>
 									<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-									<span class="navbar-toggler-icon"></span>
+										<span class="navbar-toggler-icon"></span>
 									</button>
 									<div class="collapse navbar-collapse" id="navbarSupportedContent">
 										<ul class="navbar-nav mr-auto">
@@ -115,7 +116,7 @@
 									</div> -->
 									<div class="btn-group" data-toggle="buttons">
 										<button class="btn btn-sm btn-dark" onclick="resetView();" data-tooltip="tooltip" data-placement="bottom" title="View Extents"><i class="fa fa-eye" aria-hidden="true"></i></button>
-										<button class="btn btn-sm btn-dark" onclick="resetView(grid);" data-tooltip="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
+										<button class="btn btn-sm btn-dark" onclick="resetView(scene.getObjectByName('Grid'));" data-tooltip="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
 									</div>
 									<div class="btn-group" role="group" aria-label="Simulator">
                     <button data-toggle="tooltip" data-placement="bottom" title="Run Simulator (Generate GCODE first!)" id="simstartbtn" class="btn btn-sm btn-sm btn-dark" title="Run realtime simulation" onclick="sim(0);"><i class="fa fa-fighter-jet fa-fw"></i>sim play</button>
@@ -142,44 +143,6 @@
 	                </div>
 								</div>
 							</div>
-							<!-- <div id="viewer_container">
-								<div class="card" style="height: 48%; margin-bottom: 12px;">
-									<div class="card-header">
-									   <table style="width: 100%">
-									      <tr class="jobsetupfile">
-									         <td>
-									            <label>G-CODE</label>
-									         </td>
-									         <td>
-									            <button class="btn btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Export GCODE to a file" onclick="saveFile()">
-									            <i class="fa fa-save fa-fw"></i> Export to File
-									            </button>
-									         </td>
-									      </tr>
-									   </table>
-									</div>
-									<div class="card-body" style="height:calc(100% - 56px); overflow-y:scroll;">
-									   <form class="form-horizontal">
-									      <label for="startgcodefinal" class="control-label">Start GCODE</label>
-									      <textarea id="startgcodefinal" spellcheck="false" style="width: 100%; height: 80px;" disabled></textarea>
-									   </form>
-									   <form id="gcodefile" class="form-horizontal" style="display: none;">
-									      <label for="gcodepreview" class="control-label">GCODE opened from File</label>
-									      <textarea id="gcodepreview" spellcheck="false" style="width: 100%; height: 80px;" disabled></textarea>
-									   </form>
-									   <div id="gcodejobs"></div>
-									   <form class="form-horizontal">
-									      <label for="endgcodefinal" class="control-label">End GCODE</label>
-									      <textarea id="endgcodefinal" spellcheck="false" style="width: 100%; height: 80px;" disabled></textarea>
-									   </form>
-									</div>
-								</div>
-								<div class="card">
-									<div class="card-body">
-										<div id="console"></div>
-									</div>
-								</div>
-							</div>viewer_container -->
 						</div>
 						<div id="helpoverlay">
 							<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
@@ -208,7 +171,7 @@
 								</div>
 								<div class="card-body" id="toolpathtree" style="height: calc(50% - 0px); overflow-y:scroll;"></div>
 							</div>
-							<div class="card" style="height: 49%;">
+							<div class="card" id="renderDocuments" style="height: 49%;">
 								<div class="card-header" id="filetreeheader">
 									<table style="width: 100%">
 										<tr class="jobsetupfile">

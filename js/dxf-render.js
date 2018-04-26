@@ -3,7 +3,7 @@ var fileParentGroup;
 
 function drawDXF(file, fileName) {
 
-  console.group("DXF File:")
+  // console.group("DXF File:")
   yflip = false;
   Array.prototype.unique = function() {
     var n = {},
@@ -51,5 +51,5 @@ function drawDXF(file, fileName) {
   viewExtents(fileParentGroup);
   svgxpos = 0;
   svgypos = 0;
-  console.groupEnd();
+  // console.groupEnd();
 };

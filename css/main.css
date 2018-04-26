@@ -234,6 +234,14 @@ button:focus {outline:0 !important;}
 
 }
 
+/* Lets hide the document panel on small screens */
+/* #renderToolpath {
+  height: calc(50% - 4px);  margin-bottom: 12px;
+}
+#renderToolpath {
+  height: calc(50% - 0px); overflow-y:scroll;
+} */
+
 #helpoverlay {
   font-size: 12px;
   margin-left: 20px;
@@ -264,7 +272,7 @@ button:focus {outline:0 !important;}
   position: relative;
   display:inline-block;
   width: 100% !important;
-  height: calc(100% - 22px); !important;
+  height: calc(100% - 33px); !important;
 }
 
 .btn-file {

@@ -1,5 +1,7 @@
 {
- "name": "App",
+ "name": "OpenBuilds CAM",
+ "display":      "standalone",
+ "orientation":  "landscape",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",

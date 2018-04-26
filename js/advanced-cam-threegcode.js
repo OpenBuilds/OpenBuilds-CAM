@@ -9,6 +9,11 @@
 var inflateGrp, fileParentGroup, svgPath, y, shape, lines, line;
 var options = {};
 
+var insideCutsColor = 0x660000;
+var outsideCutsColor = 0x000066;
+var pocketColor = 0x006600;
+var toolpathColor = 0x666600;
+
 inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, tabdepth, union) {
   // console.log(infobject)
   var zstep = parseFloat(zstep, 2);
@@ -16,7 +21,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
   var zstart = parseFloat(zstart, 2);
   var inflateGrpZ = new THREE.Group();
   var prettyGrp = new THREE.Group();
-  var prettyGrpColor = (inflateVal < 0) ? 0x660000 : 0x000066;
+  var prettyGrpColor = (inflateVal < 0) ? insideCutsColor : outsideCutsColor;
   if (typeof(inflateGrp) != 'undefined') {
     scene.remove(inflateGrp);
     inflateGrp = null;
@@ -94,11 +99,11 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
       } else {
         var zval = -zdepth;
       }
-      inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
+      inflateGrp = drawClipperPaths(inflatedPaths, toolpathColor, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
       inflateGrp.name = 'inflateGrp' + i;
       inflateGrp.userData.material = inflateGrp.material;
       inflateGrpZ.add(inflateGrp);
-      if (inflateVal > 0.04 || inflateVal < -0.04) { //Dont show for very small offsets, not worth the processing time
+      if (inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
         var prettyLayer = lineMesh.clone();
         prettyLayer.position.z = zval;
         prettyGrp.add(prettyLayer)
@@ -115,7 +120,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
       if (leadinval > 0) {
         var leadInPaths = getInflatePath(pathobj, inflateVal * 2);
       }
-      if (inflateVal > 0.04 || inflateVal < -0.04) { //Dont show for very small offsets, not worth the processing time
+      if (inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
         // generate once use again for each z
         var lineMesh = this.getMeshLineFromClipperPath({
           width: inflateVal * 2,
@@ -132,11 +137,11 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
         } else {
           var zval = -zdepth;
         }
-        inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
+        inflateGrp = drawClipperPaths(inflatedPaths, toolpathColor, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
         inflateGrp.name = 'inflateGrp' + j + '_' + i;
         inflateGrp.userData.material = inflateGrp.material;
         inflateGrpZ.add(inflateGrp);
-        if (inflateVal > 0.04 || inflateVal < -0.04) { //Dont show for very small offsets, not worth the processing time
+        if (inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
           var prettyLayer = lineMesh.clone();
           prettyLayer.position.z = zval;
           prettyGrp.add(prettyLayer)
@@ -155,7 +160,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
 
 
 pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, union) {
-  console.log(union)
+  // console.log(union)
   var zstep = parseFloat(zstep, 2);
   var zdepth = parseFloat(zdepth, 2);
   var zstart = parseFloat(zstart, 2);
@@ -166,7 +171,7 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
     inflateGrp = null;
   }
   if (inflateVal != 0) {
-    console.log("user wants to inflate. val:", inflateVal);
+    // console.log("user wants to inflate. val:", inflateVal);
     infobject.updateMatrix();
     var grp = infobject;
     var clipperPaths = [];
@@ -202,13 +207,13 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
       } else if (child.type == "Points") {
         child.visible = false;
       } else {
-        console.log("type of ", child.type, " being skipped");
+        // console.log("type of ", child.type, " being skipped");
       }
     });
     // console.log("clipperPaths:", clipperPaths);
 
     if (union == "Yes") {
-      console.log("Union")
+      // console.log("Union")
       // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
       var newClipperPaths = simplifyPolygons(clipperPaths);
 
@@ -223,7 +228,7 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
 
       // get the inflated/deflated path then inside each loop, Duplicate each loop, down into Z.  We go full depth before next loop.
       for (i = 0; i < 1000; i++) { // Rather 1000 than a while loop, just in case, break when it no longer has data to work with
-        console.log((cutwidth * i), (inflateVal * 2))
+        // console.log((cutwidth * i), (inflateVal * 2))
         if ((cutwidth * i) < (inflateVal * 2)) {
           inflateValUsed = inflateVal;
         } else {
@@ -234,41 +239,47 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
         }
         var inflatedPaths = getInflatePath(newClipperPaths, -inflateValUsed);
         if (inflatedPaths.length > 0) {
-          var lineMesh = this.getMeshLineFromClipperPath({
-            width: inflateVal * 2,
-            clipperPath: inflatedPaths,
-            isSolid: true,
-            opacity: 0.2,
-            isShowOutline: true,
-            color: 0x006600,
-          });
+          if (inflateVal > 1 || inflateVal < -1) {
+            var lineMesh = this.getMeshLineFromClipperPath({
+              width: inflateVal * 2,
+              clipperPath: inflatedPaths,
+              isSolid: true,
+              opacity: 0.2,
+              isShowOutline: true,
+              color: pocketColor,
+            });
+          }
           // Duplicate each loop, down into Z.  We go full depth before next loop.
-          for (j = zdepth + 1; j > zstart + zstep; j -= zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down. 
-            console.log(j)
+          for (j = zdepth + 1; j > zstart + zstep; j -= zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
+            // console.log(j)
             if (j * zstep < zdepth) {
               var zval = -j
             } else {
               var zval = -zdepth;
             }
             // get the inflated/deflated path
-            var inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
+            var inflateGrp = drawClipperPaths(inflatedPaths, toolpathColor, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
             inflateGrp.name = 'inflateGrp';
             inflateGrp.position = infobject.position;
-            var prettyLayer = lineMesh.clone();
-            prettyLayer.position.z = zval;
-            prettyGrp.add(prettyLayer)
+            if (inflateVal > 1 || inflateVal < -1) {
+              var prettyLayer = lineMesh.clone();
+              prettyLayer.position.z = zval;
+              prettyGrp.add(prettyLayer)
+            };
             pocketGrp.add(inflateGrp);
           }
         } else {
-          console.log('Pocket already done after ' + i + ' iterations');
+          // console.log('Pocket already done after ' + i + ' iterations');
           break;
         }
       }
-      pocketGrp.userData.pretty = prettyGrp;
+      if (inflateVal > 1 || inflateVal < -1) {
+        pocketGrp.userData.pretty = prettyGrp;
+      }
       pocketGrp.children = pocketGrp.children.reverse(); // Inside Out! Breakthrough!
       return pocketGrp;
     } else {
-      console.log("Not Union")
+      console.log("Not Union: Running Pockets on non-unions not supported yet: Highly unlikely that an object inside an object needs to be pocket to same depth ever")
     } // end no union
   }
 };
@@ -283,7 +294,7 @@ dragknifePath = function(infobject, inflateVal, zstep, zdepth) {
   }
 
   // if (inflateVal != 0) {
-  console.log("user wants to create Drag Knife Path. val:", inflateVal);
+  // console.log("user wants to create Drag Knife Path. val:", inflateVal);
   infobject.updateMatrix();
   var grp = infobject;
   var clipperPaths = [];
@@ -320,18 +331,18 @@ dragknifePath = function(infobject, inflateVal, zstep, zdepth) {
     } else if (child.type == "Points") {
       child.visible = false;
     } else {
-      console.log("type of ", child.type, " being skipped");
+      // console.log("type of ", child.type, " being skipped");
     }
   });
 
-  console.log("clipperPaths:", clipperPaths);
+  // console.log("clipperPaths:", clipperPaths);
 
   // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
   var newClipperPaths = simplifyPolygons(clipperPaths);
 
   if (newClipperPaths.length < 1) {
-    console.error("Clipper Simplification Failed!:");
-    printLog('Clipper Simplification Failed!', errorcolor, "viewer")
+    // console.error("Clipper Simplification Failed!:");
+    printLog('There seems to be a problem with either this file, or the settings you entered: Clipper.js Simplification Failed!', errorcolor, "viewer")
   }
 
 
@@ -347,7 +358,7 @@ dragknifePath = function(infobject, inflateVal, zstep, zdepth) {
       // return addCornerActions(poly, Math.pow(2, 20) * 5, 20 / 180 * Math.PI);
       return addCornerActions(poly, inflateVal, 20 / 180 * Math.PI);
     });
-    inflateGrp = drawClipperPaths(polygons, 0xff00ff, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
+    inflateGrp = drawClipperPaths(polygons, toolpathColor, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
     if (inflateGrp.children.length) {
       inflateGrp.name = 'dragknifeGrp';
       inflateGrp.position = infobject.position;

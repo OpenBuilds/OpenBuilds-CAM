@@ -326,5 +326,5 @@ function printLog(text, color, logclass) {
   if (text.isString) {
     text = text.replace(/\n/g, "<br />");
   }
-  console.log(text, color, logclass)
+  console.log(text)
 }

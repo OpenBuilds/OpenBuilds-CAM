@@ -127,6 +127,7 @@ function drawWorkspace() {
   cone.visible = false;
   cone.name = "Simulation Marker"
   workspace.add(cone)
+  gridsystem.name = "Grid System"
   workspace.add(gridsystem)
   redrawGrid();
   scene.add(workspace)

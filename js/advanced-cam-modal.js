@@ -240,7 +240,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc  inputpocket inputplasma inputdragknife">
+      <tr class="inputcnc  inputpocket inputplasma inputdragknife inputlaser">
         <td>Z Safe Height</td>
         <td>
           <div class="input-addon">

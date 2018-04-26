@@ -109,7 +109,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           }
 
           if (lastxyz.x == xpos.toFixed(4) && lastxyz.x == xpos.toFixed(4)) {
-            console.log("No need to plunge, can stay at z " + lastxyz.z)
+            // console.log("No need to plunge, can stay at z " + lastxyz.z)
           } else {
             // move to clearance height, at first points XY pos
             if (!isAtClearanceHeight) {
@@ -147,7 +147,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           // do g1 @ feedrate move
           var feedrate;
           if (isFeedrateSpecifiedAlready) {} else {
-            console.log('Cut Speed: ', cutSpeed);
+            // console.log('Cut Speed: ', cutSpeed);
             if (cutSpeed) {
               feedrate = " F" + cutSpeed;
               isFeedrateSpecifiedAlready = true;
@@ -196,7 +196,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
 
 function prepgcodefile() {
 
-  console.group("Consolidating GCODE file");
+  // console.group("Consolidating GCODE file");
   var startgcode = document.getElementById('startgcode').value;
   var endgcode = document.getElementById('endgcode').value;
 
@@ -209,8 +209,8 @@ function prepgcodefile() {
 
   // Toolpaths
   for (j = 0; j < toolpathsInScene.length; j++) {
-    printLog('Preparing Gcode File: ' + toolpathsInScene[j].name, msgcolor, "file");
-    console.log('Preparing Gcode File: ' + toolpathsInScene[j].name);
+    // printLog('Preparing Gcode File: ' + toolpathsInScene[j].name, msgcolor, "file");
+    // console.log('Preparing Gcode File: ' + toolpathsInScene[j].name);
     // document.getElementById('gcodepreview').value = "";
     if (typeof(toolpathsInScene[j].userData.gcode) != "undefined") {
       g += toolpathsInScene[j].userData.gcode;
@@ -224,6 +224,6 @@ function prepgcodefile() {
   if (endgcode) {
     g += endgcode;
   }
-  console.groupEnd();
+  // console.groupEnd();
   return g;
 }
