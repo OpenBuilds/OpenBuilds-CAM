@@ -56,38 +56,39 @@ $(document).ready(function() {
   });
 
   // Changelog
-  $("#changelog").empty()
-  var template2 = `<ul class="list-group">`
-  $.get("https://api.github.com/repos/openbuilds/cam/commits?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
-    // console.log(data)
-    Object.keys(data).forEach(function(key) {
-      var date = new Date(data[key].commit.author.date)
-      var author = data[key].commit.author.name
-      var avatar = data[key].author.avatar_url
-      var authorurl = data[key].author.html_url
-      var committer = data[key].commit.committer.name
-      var url = data[key].html_url
-      var message = data[key].commit.message
+  // $("#changelog").empty()
+  // var template2 = `<ul class="list-group">`
+  // $.get("https://api.github.com/repos/openbuilds/cam/commits?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
+  //   // console.log(data)
+  //   Object.keys(data).forEach(function(key) {
+  //     var date = new Date(data[key].commit.author.date)
+  //     var author = data[key].commit.author.name
+  //     var avatar = data[key].author.avatar_url
+  //     var authorurl = data[key].author.html_url
+  //     var committer = data[key].commit.committer.name
+  //     var url = data[key].html_url
+  //     var message = data[key].commit.message
+  //
+  //     template2 += `<li class="list-group-item list-group-item-light p-0 ">
+  //     <div class="d-flex flex-nowrap">
+  //       <div class="p-2"><img class="border border-light rounded" src="` + avatar + `" height="32px" width="32px"/></div>
+  //       <div class="p-2">
+  //       <small>` + formatDate(date) + `</small>:
+  //         <a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a> added <br><a href="` + url + `" target="_new"><h6 class="text-dark"><i class="fa fa-github fa-fw" aria-hidden="true"></i>` + message + `</h6></a>
+  //       </div>
+  //     </div>
+  //     </li>`
+  //   });
+  //   // for (var key in data) {
+  //   // }
+  //   template2 += `<li class="list-group-item">
+  //   <a href="https://github.com/OpenBuilds/cam/commits/master" target="_new"><h6>Click here to view older updates</h6></a>
+  //   </li>`
+  //   template2 += `<ul>`
+  //   $("#changelog").append(template2)
+  //   $('#splashModal').modal('show');
+  // });
 
-      template2 += `<li class="list-group-item list-group-item-light p-0 ">
-      <div class="d-flex flex-nowrap">
-        <div class="p-2"><img class="border border-light rounded" src="` + avatar + `" height="32px" width="32px"/></div>
-        <div class="p-2">
-        <small>` + formatDate(date) + `</small>:
-          <a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a> added <br><a href="` + url + `" target="_new"><h6 class="text-dark"><i class="fa fa-github fa-fw" aria-hidden="true"></i>` + message + `</h6></a>
-        </div>
-      </div>
-      </li>`
-    });
-    // for (var key in data) {
-    // }
-    template2 += `<li class="list-group-item">
-    <a href="https://github.com/OpenBuilds/cam/commits/master" target="_new"><h6>Click here to view older updates</h6></a>
-    </li>`
-    template2 += `<ul>`
-    $("#changelog").append(template2)
-    $('#splashModal').modal('show');
-  });
 
 }); // End of document.ready
 

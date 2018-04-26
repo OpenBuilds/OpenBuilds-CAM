@@ -1,0 +1,11 @@
+{
+    "url": "https://github.com/odahcam/bootoast",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/odahcam/bootoast/"
+    },
+    "bugs": "https://github.com/odahcam/bootoast/issues/new",
+    "name": "bootoast",
+    "version": "1.0.1",
+    "author": "machado@odahcam.com"
+}

@@ -338,7 +338,9 @@ function animate() {
       if (toolpathsInScene[i].userData.visible) {
         if (toolpathsInScene[i].userData.inflated) {
           if (toolpathsInScene[i].userData.inflated.userData.pretty) {
-            toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
+            if (simstopped == true) {
+              toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
+            }
             // toolpaths.add(toolpathsInScene[i].userData.inflated);
           } else {
             toolpaths.add(toolpathsInScene[i].userData.inflated);
@@ -347,6 +349,9 @@ function animate() {
       }
     }
     scene.add(toolpaths)
+    if (object) {
+      scene.add(object)
+    }
     clearSceneFlag = false;
   } // end clearSceneFlag
 
