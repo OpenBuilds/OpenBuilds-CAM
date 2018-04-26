@@ -335,17 +335,20 @@ function animate() {
     var toolpaths = new THREE.Group();
     toolpaths.name = "Toolpaths";
     for (i = 0; i < toolpathsInScene.length; i++) {
-      if (toolpathsInScene[i].userData.visible) {
-        if (toolpathsInScene[i].userData.inflated) {
-          if (toolpathsInScene[i].userData.inflated.userData.pretty) {
-            if (simstopped == true) {
-              toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
+      if (simstopped == true) {
+        if (toolpathsInScene[i].userData.visible) {
+          if (toolpathsInScene[i].userData.inflated) {
+            if (toolpathsInScene[i].userData.inflated.userData.pretty) {
+              if (toolpathsInScene[i].userData.inflated.userData.pretty.children.length > 0) {
+                toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
+              } else {
+                toolpaths.add(toolpathsInScene[i].userData.inflated);
+              }
+            } else {
+              toolpaths.add(toolpathsInScene[i].userData.inflated);
             }
-            // toolpaths.add(toolpathsInScene[i].userData.inflated);
-          } else {
-            toolpaths.add(toolpathsInScene[i].userData.inflated);
-          }
-        };
+          };
+        }
       }
     }
     scene.add(toolpaths)
