@@ -164,7 +164,8 @@ function sim(startindex) {
 
 
       // if (simTime < 0.1) { simTime = 0.1};
-      TweenMax.to(cone.position, simTime, {
+      var simTimeInSec = simTime * 60;
+      TweenMax.to(cone.position, simTimeInSec, {
         x: posx,
         y: posy,
         z: posz + 20,
