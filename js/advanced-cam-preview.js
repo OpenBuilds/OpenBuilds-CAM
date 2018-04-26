@@ -84,7 +84,8 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
     var toolpath = dragknifePath(toolpathsInScene[index], offset, zstep, zdepth);
   }
   toolpath.userData.type = "toolpath";
-  console.log(toolpath.children)
+
+  // lets check if we has success, if not, raise an error message
   var errorcount = 0;
   for (i = 0; i < toolpath.children.length; i++) {
     var checkpath = toolpath.children[i]
@@ -95,6 +96,11 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
   if (errorcount > 0) {
     toolpathErrorToast();
   }
+  if (toolpath.children.length < 1) {
+    toolpathErrorToast();
+  }
+
+  // then return
   return toolpath
 }
 
