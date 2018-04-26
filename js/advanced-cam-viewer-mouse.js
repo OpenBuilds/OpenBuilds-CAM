@@ -15,7 +15,7 @@ function initMouseMode() {
       if (dragcontrols) {
         dragcontrols.dispose();
       }
-      $('#renderArea').css('cursor', '');
+      // $('#renderArea').css('cursor', '');
       if (controls.enableRotate) {
         helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
       } else {
@@ -30,7 +30,7 @@ function initMouseMode() {
       $("#mouseDelBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       deselectAllObjects()
       // setOpacity(toolpathsInScene, 0.1);
-      $('#renderArea').css('cursor', '');
+      // $('#renderArea').css('cursor', '');
       var documents2 = scene.getObjectByName("Documents");
       dragcontrols = new THREE.DragControls(objectsInScene, camera, renderer.domElement);
       // helpoverlay.style.visibility = "visible";
@@ -48,10 +48,10 @@ function initMouseMode() {
       if (dragcontrols) {
         dragcontrols.dispose();
       }
-      $('#renderArea').awesomeCursor('eraser', {
-        color: '#000',
-        hotspot: 'bottom left'
-      });
+      // $('#renderArea').awesomeCursor('eraser', {
+      //   color: '#000',
+      //   hotspot: 'bottom left'
+      // });
       helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = delete Entity / <kbd>Ctrl + Left Mouse Click</kbd> = Delete entire Document / <kbd>Del</kbd> = Delete Selected"
     }
     // end if

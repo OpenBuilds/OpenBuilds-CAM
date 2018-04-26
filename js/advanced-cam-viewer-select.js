@@ -339,7 +339,19 @@ function mouseMove(event) {
           }
           var intersection = intersects[0];
           obj = intersection.object;
-          $('#renderArea').css('cursor', 'pointer');
+          if (mouseState == "delete") {
+            $('#renderArea').awesomeCursor('eraser', {
+              color: '#000',
+              hotspot: 'bottom left'
+            });
+          } else if (mouseState == "select") {
+            $('#renderArea').css('cursor', 'pointer');
+          } else if (mouseState == "move") {
+            $('#renderArea').css('cursor', '');
+            // $('#renderArea').awesomeCursor('hand-paper-o', {
+            //   color: '#000'
+            // });
+          }
           obj.traverse(function(child) {
             if (child.type == "Line") {
               child.userData.hover = true;

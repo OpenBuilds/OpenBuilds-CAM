@@ -14,6 +14,8 @@ var outsideCutsColor = 0x000066;
 var pocketColor = 0x006600;
 var toolpathColor = 0x666600;
 
+var minimumToolDiaForPreview = 0.4;
+
 inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, tabdepth, union) {
   // console.log(infobject)
   var zstep = parseFloat(zstep, 2);
@@ -81,7 +83,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
     if (leadinval > 0) { // plasma lead-in
       var leadInPaths = getInflatePath(newClipperPaths, inflateVal * 2);
     }
-    if (inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
+    if (inflateVal > minimumToolDiaForPreview || inflateVal < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
       // generate once use again for each z
       var lineMesh = this.getMeshLineFromClipperPath({
         width: inflateVal * 2,
@@ -102,7 +104,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
       inflateGrp.name = 'inflateGrp' + i;
       inflateGrp.userData.material = inflateGrp.material;
       inflateGrpZ.add(inflateGrp);
-      if (inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
+      if (inflateVal > minimumToolDiaForPreview || inflateVal < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
         var prettyLayer = lineMesh.clone();
         prettyLayer.position.z = zval;
         prettyGrp.add(prettyLayer)
@@ -119,7 +121,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
       if (leadinval > 0) {
         var leadInPaths = getInflatePath(pathobj, inflateVal * 2);
       }
-      if (inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
+      if (inflateVal > minimumToolDiaForPreview || inflateVal < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
         // generate once use again for each z
         var lineMesh = this.getMeshLineFromClipperPath({
           width: inflateVal * 2,
@@ -140,7 +142,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
         inflateGrp.name = 'inflateGrp' + j + '_' + i;
         inflateGrp.userData.material = inflateGrp.material;
         inflateGrpZ.add(inflateGrp);
-        if (inflateVal > 1 || inflateVal < -1) { //Dont show for very small offsets, not worth the processing time
+        if (inflateVal > minimumToolDiaForPreview || inflateVal < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
           var prettyLayer = lineMesh.clone();
           prettyLayer.position.z = zval;
           prettyGrp.add(prettyLayer)
