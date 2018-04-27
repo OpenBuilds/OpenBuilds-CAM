@@ -1,6 +1,6 @@
 var timefactor = 1,
   simstopped = true,
-  fancysim = false;
+  fancysim = true;
 
 var simgcodeobj;
 
@@ -86,16 +86,16 @@ function simSpeed() {
 }
 
 function sim(startindex) {
+  lastLine = {
+    x: 0,
+    y: 0,
+    z: 0,
+    e: 0,
+    f: 0,
+    feedrate: null,
+    extruding: false
+  };
   if (fancysim) {
-    lastLine = {
-      x: 0,
-      y: 0,
-      z: 0,
-      e: 0,
-      f: 0,
-      feedrate: null,
-      extruding: false
-    };
     simgcodeobj = new THREE.Object3D();
     // take gcode, and it to that object
     // createObjectFromGCode(gcode, object)
