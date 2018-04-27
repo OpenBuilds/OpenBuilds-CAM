@@ -17,6 +17,23 @@ function simAnimate() {
     // 160widthx200height offset?
     if (cone.position) {
       var conepos = toScreenPosition(cone, camera)
+      var offset = $("#renderArea").offset()
+      var farside = $("#renderArea").offset().left + $("#renderArea").outerWidth()
+      var bottomside = $("#renderArea").offset().top + $("#renderArea").outerHeight()
+      // console.log(conepos)
+      if (conepos.y < offset.top) {
+        conepos.y = offset.top + 20;
+      }
+      if (conepos.y > bottomside - 120) {
+        conepos.y = bottomside - 120;
+      }
+      if (conepos.x < 70) {
+        conepos.x = 70;
+      }
+
+      if (conepos.x > farside - 90) {
+        conepos.x = farside - 90;
+      }
       $("#conetext").css('left', conepos.x - 60 + "px").css('top', conepos.y - 110 + "px");
     }
   }
