@@ -1,5 +1,8 @@
-var timefactor = 1000,
-  simstopped = true;
+var timefactor = 1,
+  simstopped = true,
+  fancysim = false;
+
+var simgcodeobj;
 
 function enableSim() {
   $("#simstartbtn").prop('disabled', false);
@@ -36,6 +39,10 @@ function toScreenPosition(obj, camera) {
 
 
 function simstop() {
+  if (fancysim) {
+    simgcodeobj = new THREE.Object3D();
+    clearSceneFlag = true;
+  }
   simstopped = true;
   $('#simstartbtn').show();
   $('#simstopbtn').hide();
@@ -62,6 +69,21 @@ function simSpeed() {
 }
 
 function sim(startindex) {
+  if (fancysim) {
+    lastLine = {
+      x: 0,
+      y: 0,
+      z: 0,
+      e: 0,
+      f: 0,
+      feedrate: null,
+      extruding: false
+    };
+    simgcodeobj = new THREE.Object3D();
+    // take gcode, and it to that object
+    // createObjectFromGCode(gcode, object)
+    scene.add(simgcodeobj);
+  };
   clearSceneFlag = true;
   $("#conetext").show();
   cone.visible = true
@@ -119,6 +141,9 @@ function sim(startindex) {
       } else {
         var text = object.userData.lines[simIdx].args.cmd
         var simTime = object.userData.lines[simIdx].p2.timeMins / timefactor;
+        if (fancysim) {
+          createObjectFromGCode(object.userData.lines[simIdx].args.origtext + '\n', simgcodeobj, )
+        }
       }
       if (object.userData.lines[simIdx].p2.feedrate == null) {
         var feedrate = 0.00

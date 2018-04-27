@@ -8,6 +8,15 @@
 
 var object;
 var smaxvalue = 0;
+var lastLine = {
+  x: 0,
+  y: 0,
+  z: 0,
+  e: 0,
+  f: 0,
+  feedrate: null,
+  extruding: false
+};
 
 // function findtemps(gcode) {
 //   var foundETemp = false;
@@ -76,7 +85,16 @@ function openGCodeFromText() {
   smaxvalue = findmaxs(gcode);
   // clearViewer();
   // var gcode = editor.getValue();
-  createObjectFromGCode(gcode);
+  if (scene.getObjectByName('gcodeobject')) {
+    // console.log("Existing GCODE object: Cleaning up first")
+    scene.remove(scene.getObjectByName('gcodeobject'))
+    object = false;
+  }
+  //create an object
+  object = new THREE.Object3D();
+  // take gcode, and it to that object
+  createObjectFromGCode(gcode, object)
+  scene.add(object);
 }
 
 GCodeParser = function(handlers, modecmdhandlers) {
@@ -244,7 +262,8 @@ GCodeParser = function(handlers, modecmdhandlers) {
   colorG1 = 0xcc0000,
 
   colorG2 = 0x17a2b8,
-  createObjectFromGCode = function(gcode, indxMax) {
+  createObjectFromGCode = function(gcode, gcobject, indxMax) {
+    // console.log(gcode)
 
     setUnits = function(units) {
       if (units == "mm")
@@ -277,15 +296,6 @@ GCodeParser = function(handlers, modecmdhandlers) {
     };
     this.setUnits("mm");
 
-    var lastLine = {
-      x: 0,
-      y: 0,
-      z: 0,
-      e: 0,
-      f: 0,
-      feedrate: null,
-      extruding: false
-    };
 
     // we have been using an approach where we just append
     // each gcode move to one monolithic geometry. we
@@ -1109,19 +1119,20 @@ GCodeParser = function(handlers, modecmdhandlers) {
         },
       });
     // console.log("GCODE LENGTH " + gcode.length)
+
     parser.parse(gcode);
 
     // console.log("inside createGcodeFromObject. this:", this);
 
     // console.log("Layer Count ", layers.length);
 
-    if (scene.getObjectByName('gcodeobject')) {
-      // console.log("Existing GCODE object: Cleaning up first")
-      scene.remove(scene.getObjectByName('gcodeobject'))
-      object = false;
-    }
-
-    object = new THREE.Object3D();
+    // if (scene.getObjectByName('gcodeobject')) {
+    //   // console.log("Existing GCODE object: Cleaning up first")
+    //   scene.remove(scene.getObjectByName('gcodeobject'))
+    //   object = false;
+    // }
+    //
+    // object = new THREE.Object3D();
     // console.log("Created new gcodeobject")
 
     // old approach of monolithic line segment
@@ -1138,7 +1149,7 @@ GCodeParser = function(handlers, modecmdhandlers) {
         var bufferGeo = this.convertLineGeometryToBufferGeometry(type.geometry, type.color);
         var layerline = new THREE.LineSegments(bufferGeo, type.material)
         layerline.name = "layer-" + type.type
-        object.add(layerline);
+        gcobject.add(layerline);
       }
     }
     //XY PLANE
@@ -1150,7 +1161,7 @@ GCodeParser = function(handlers, modecmdhandlers) {
       // convert g2/g3's to buffer geo as well
       //console.log("extra object:", obj);
       var bufferGeo = this.convertLineGeometryToBufferGeometry(obj.geometry, obj.material.color);
-      object.add(new THREE.Line(bufferGeo, obj.material));
+      gcobject.add(new THREE.Line(bufferGeo, obj.material));
     }, this);
     //XZ PLANE
     this.extraObjects["G18"].forEach(function(obj) {
@@ -1158,7 +1169,7 @@ GCodeParser = function(handlers, modecmdhandlers) {
       var bufferGeo = this.convertLineGeometryToBufferGeometry(obj.geometry, obj.material.color);
       var tmp = new THREE.Line(bufferGeo, obj.material)
       tmp.rotateOnAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-      object.add(tmp);
+      gcobject.add(tmp);
     }, this);
     //YZ PLANE
     this.extraObjects["G19"].forEach(function(obj) {
@@ -1167,7 +1178,7 @@ GCodeParser = function(handlers, modecmdhandlers) {
       var tmp = new THREE.Line(bufferGeo, obj.material)
       tmp.rotateOnAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2);
       tmp.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-      object.add(tmp);
+      gcobject.add(tmp);
     }, this);
 
     // use new approach of building 3d object where each
@@ -1194,12 +1205,12 @@ GCodeParser = function(handlers, modecmdhandlers) {
 
     // store meta data in userData of object3d for later use like in animation
     // of toolhead
-    object.userData.bbbox2 = bbbox2;
-    object.userData.lines = lines;
-    object.userData.layers = layers;
-    object.userData.center2 = center2;
-    object.userData.extraObjects = this.extraObjects;
-    object.userData.threeObjs = new3dObj;
+    gcobject.userData.bbbox2 = bbbox2;
+    gcobject.userData.lines = lines;
+    gcobject.userData.layers = layers;
+    gcobject.userData.center2 = center2;
+    gcobject.userData.extraObjects = this.extraObjects;
+    gcobject.userData.threeObjs = new3dObj;
 
     // console.log("userData for this object3d:", object.userData);
     /*
@@ -1214,13 +1225,12 @@ GCodeParser = function(handlers, modecmdhandlers) {
     // console.log("final object:", object);
     // object.translateX(sizexmax /2 * -1);
     // object.translateY(sizeymax /2 * -1);
-    object.name = "gcodeobject"
-    scene.add(object);
+    gcobject.name = "gcodeobject"
+    // scene.add(object);
     // viewObject();
 
-    var template = `<i class="fa fa-star-o fa-fw"></i>preview`
-    $('#previewbtntext').html(template)
-  }
+    return gcobject;
+  } // end of createObjectFromGCode()
 
 function convertLineGeometryToBufferGeometry(lineGeometry, color) {
   var positions = new Float32Array(lineGeometry.vertices.length * 3);
