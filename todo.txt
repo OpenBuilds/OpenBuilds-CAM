@@ -1,2 +1,3 @@
 Disable toolpaths from gcode generator
-Sim: New table no likey
+sim dro constrain to renderarea
+Null length gcode moves pause the sim for a couple

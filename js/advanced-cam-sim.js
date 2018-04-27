@@ -65,6 +65,12 @@ function sim(startindex) {
   clearSceneFlag = true;
   $("#conetext").show();
   cone.visible = true
+  var posx = object.userData.lines[0].p2.x; //- (sizexmax/2);
+  var posy = object.userData.lines[0].p2.y; //- (sizeymax/2);
+  var posz = object.userData.lines[0].p2.z + 20;
+  cone.position.x = posx;
+  cone.position.y = posy;
+  cone.position.z = posz;
   cone.material = new THREE.MeshPhongMaterial({
     color: 0x28a745,
     specular: 0x0000ff,
@@ -102,18 +108,20 @@ function sim(startindex) {
       var posx = object.userData.lines[simIdx].p2.x; //- (sizexmax/2);
       var posy = object.userData.lines[simIdx].p2.y; //- (sizeymax/2);
       var posz = object.userData.lines[simIdx].p2.z;
-      var simTime = object.userData.lines[simIdx].p2.timeMins / timefactor;
+
       if (object.userData.lines[simIdx].args.isFake) {
         if (object.userData.lines[simIdx].args.text.length < 1) {
           var text = "empty line"
         } else {
           var text = object.userData.lines[simIdx].args.text
         }
+        var simTime = 0.01 / timefactor;
       } else {
         var text = object.userData.lines[simIdx].args.cmd
+        var simTime = object.userData.lines[simIdx].p2.timeMins / timefactor;
       }
       if (object.userData.lines[simIdx].p2.feedrate == null) {
-        var feedrate = 0
+        var feedrate = 0.00
       } else {
         var feedrate = object.userData.lines[simIdx].p2.feedrate
       }
@@ -133,7 +141,7 @@ function sim(startindex) {
               <td><b>Z:</b></td><td align="right"><b>` + posz.toFixed(2) + `mm</b></td>
             </tr>
             <tr class="stripe" style="border-bottom: 1px solid #888">
-              <td><b>F:</b></td><td align="right"><b>` + object.userData.lines[simIdx].p2.feedrate + `mm/min</b></td>
+              <td><b>F:</b></td><td align="right"><b>` + feedrate + `mm/min</b></td>
             </tr>
           </table>
         `);
@@ -141,24 +149,39 @@ function sim(startindex) {
 
       // if (simTime < 0.1) { simTime = 0.1};
       var simTimeInSec = simTime * 60;
-      TweenMax.to(cone.position, simTimeInSec, {
-        x: posx,
-        y: posy,
-        z: posz + 20,
-        onComplete: function() {
-          if (simstopped == true) {
-            //return
-            simstop();
-          } else {
-            simIdx++;
-            if (simIdx < object.userData.lines.length) {
-              runSim();
-            } else {
+      if (!object.userData.lines[simIdx].args.isFake) {
+        TweenMax.to(cone.position, simTimeInSec, {
+          x: posx,
+          y: posy,
+          z: posz + 20,
+          onComplete: function() {
+            if (simstopped == true) {
+              //return
               simstop();
+            } else {
+              simIdx++;
+              if (simIdx < object.userData.lines.length) {
+                runSim();
+              } else {
+                simstop();
+              }
             }
           }
+        })
+      } else {
+        if (simstopped == true) {
+          //return
+          simstop();
+        } else {
+          simIdx++;
+          if (simIdx < object.userData.lines.length) {
+            runSim();
+          } else {
+            simstop();
+          }
         }
-      })
+      }
+
     };
     runSim(); //kick it off
   }
