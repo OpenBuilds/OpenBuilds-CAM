@@ -93,6 +93,8 @@ $(document).ready(function() {
     });
   }
 
+  loadLastClosedOnPageload();
+
 
 
 

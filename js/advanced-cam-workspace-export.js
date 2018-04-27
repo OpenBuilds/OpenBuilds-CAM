@@ -11,6 +11,34 @@ Date.prototype.yyyymmdd = function() {
 var date = new Date();
 // date.yyyymmdd();
 
+window.onbeforeunload = saveOnClose;
+
+function saveOnClose() {
+  var obspace = {
+    objects: {},
+    toolpaths: {}
+  };
+  changePositionToGeoTranslate();
+  for (i = 0; i < objectsInScene.length; i++) {
+    obspace.objects[i] = objectsInScene[i].toJSON();
+  }
+  for (j = 0; j < toolpathsInScene.length; j++) {
+    obspace.toolpaths[j] = toolpathsInScene[j].toJSON();
+  }
+  var obspacejson = JSON.stringify(obspace, inflatedReplacer)
+  if (undoStore.length > 10) {
+    undoStore.length = 10;
+  }
+  var data = JSON.stringify(obspace, inflatedReplacer)
+  localStorage.setItem("lastWorkspace", data)
+}
+
+function loadLastClosedOnPageload() {
+  var lastWorkspace = localStorage.getItem('lastWorkspace');
+  if (lastWorkspace) {
+    parseLoadWorkspace(lastWorkspace)
+  }
+}
 
 // Undo/Redo Variables
 var undoStore = [];
