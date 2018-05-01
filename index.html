@@ -9,6 +9,12 @@
 		<meta name="keywords" content=""/>
 		<meta name="author" content="" />
 		<meta name="version" content="" />
+		<!-- Mobile Redirect if screen is too small. -->
+		<script type="text/javascript">
+			if (screen.width <= 720) {
+				window.location = "mobile.html";
+	  	}
+		</script>
 		<link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootstrap.min.css" />
 		<link type="text/css" rel="stylesheet" media="all" href="css/bootstrap4-fixes.css" />
 		<link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
@@ -652,6 +658,5 @@
 
 	  gtag('config', 'UA-46207169-2');
 	</script>
-
 
 </html>
