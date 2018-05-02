@@ -90,6 +90,18 @@
 													<a class="dropdown-item" href="#" id="selectInv" onclick="controls.enableRotate = true; resetView(); printLog('Enabled Orbit', successcolor, 'viewer');"><i class="fa fa-fw fa-cube" aria-hidden="true"></i>3D Mode</a>
 												</div>
 											</li>
+
+											<li class="nav-item dropdown">
+												<a class="nav-link dropdown-toggle" href="#" id="aboutDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Help
+												</a>
+												<div class="dropdown-menu" aria-labelledby="aboutDropDown">
+													<a class="dropdown-item" href="#" onclick="$('#aboutModal').modal('show')"><i class="fa fa-fw fa-info" aria-hidden="true"></i>About</a>
+													<div class="dropdown-divider"></div>
+													<a class="dropdown-item disabled" href="#" ><i class="fa fa-fw fa-book" aria-hidden="true"></i>Documentation (Coming Soon)</a>
+												</div>
+											</li>
+
 										</ul>
 										<iframe src="https://ghbtns.com/github-btn.html?user=openbuilds&repo=cam&type=fork&count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
 									</div>
@@ -541,6 +553,43 @@
 						</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" onclick="localStorage.setItem('hideChangelog', true);">
 						Never show
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- #splashModal -->
+
+		<div id="aboutModal" class="modal fade" role="dialog">
+			<div class="modal-dialog" role="document">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">About / Credits</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+						OpenBuilds CAM was made possible through code and advice of the following developers
+                  <dl>
+										<dt><i class="fa fa-user" aria-hidden="true"></i> <a href="https://plus.google.com/+PetervanderWalt">Peter van der Walt</a> </dt>
+										<dt><i class="fa fa-user" aria-hidden="true"></i> <a href="https://plus.google.com/113562432484049167641">Jorge Robles</a> </dt>
+                    <dt><i class="fa fa-user" aria-hidden="true"></i> <a href="https://plus.google.com/101442607030198502072">Todd Fleming</a> </dt>
+										<dt><i class="fa fa-user" aria-hidden="true"></i> <a href="https://plus.google.com/+S%C3%A9bastienMischler-Skarab">Sebastien Mischler</a> </dt>
+										<dt><i class="fa fa-user" aria-hidden="true"></i> <a href="https://plus.google.com/113228987021937992317">John Lauer</a></dt>
+									</dl>
+									and technologies / projects
+									<dl>
+										<dt><i class="fa fa-code-fork" aria-hidden="true"></i> <a href="https://github.com/LaserWeb">LaserWeb Project</a> </dt>
+										<dt><i class="fa fa-code-fork" aria-hidden="true"></i> <a href="https://github.com/chilipeppr/">Chillipeppr Project</a> </dt>
+										<dt><i class="fa fa-code-fork" aria-hidden="true"></i> <a href="https://github.com/mrdoob/three.js/">Three.js</a> </dt>
+										<dt><i class="fa fa-code-fork" aria-hidden="true"></i> <a href="https://sourceforge.net/p/jsclipper/">Clipper.js</a> </dt>
+                  </dl>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
+						Close
 						</button>
 					</div>
 				</div>

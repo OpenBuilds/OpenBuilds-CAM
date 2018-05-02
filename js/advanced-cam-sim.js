@@ -1,6 +1,6 @@
 var timefactor = 1,
   simstopped = true,
-  fancysim = true;
+  fancysim = false;
 
 var simgcodeobj;
 
