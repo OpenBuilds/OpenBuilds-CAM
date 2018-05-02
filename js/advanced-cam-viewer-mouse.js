@@ -57,13 +57,6 @@ function initMouseMode() {
     // end if
   }); // end radio.onChange
 
-  $('html').keydown(function(e) {
-    if (e.keyCode == 46) {
-      storeUndo(true);
-      // alert('Delete key released');
-      deleteSelectedObjects();
-    }
-  });
 };
 
 function setOpacity(array, opacity) {

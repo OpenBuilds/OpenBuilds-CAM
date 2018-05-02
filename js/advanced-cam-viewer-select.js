@@ -5,6 +5,27 @@ var mousedown = false,
 var worldstartcoords, worldendcoords;
 var selectobj, arrow;
 
+function selectAll() {
+  for (i = 0; i < objectsInScene.length; i++) {
+    var obj = objectsInScene[i]
+    obj.traverse(function(child) {
+      if (child.type == "Line") {
+        child.userData.selected = true
+      }
+    });
+  }
+}
+
+function selectNone() {
+  for (i = 0; i < objectsInScene.length; i++) {
+    var obj = objectsInScene[i]
+    obj.traverse(function(child) {
+      if (child.type == "Line") {
+        child.userData.selected = false
+      }
+    });
+  }
+}
 
 function initMouseSelect() {
   selection = document.getElementById("selection");
@@ -22,25 +43,11 @@ function listeners() {
   // renderer.domElement.mousemove(mouseMove);
 
   $('#selectAll').on('click', function() {
-    for (i = 0; i < objectsInScene.length; i++) {
-      var obj = objectsInScene[i]
-      obj.traverse(function(child) {
-        if (child.type == "Line") {
-          child.userData.selected = true
-        }
-      });
-    }
+    selectAll()
   });
 
   $('#selectNone').on('click', function() {
-    for (i = 0; i < objectsInScene.length; i++) {
-      var obj = objectsInScene[i]
-      obj.traverse(function(child) {
-        if (child.type == "Line") {
-          child.userData.selected = false
-        }
-      });
-    }
+    selectNone()
   });
 
   $('#selectInv').on('click', function() {

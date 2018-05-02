@@ -62,19 +62,6 @@ function loadLastClosedOnPageload() {
 var undoStore = [];
 var redoStore = [];
 
-// Undo/Redo Events
-$(document).keydown(function(e) {
-  if (e.which === 90 && e.ctrlKey && e.shiftKey) {
-    console.log('control + shift + z');
-    redo();
-  } else if (e.which === 90 && e.ctrlKey) {
-    console.log('control + z');
-    undo()
-  } else if (e.which === 89) {
-    console.log('control + y');
-    redo()
-  }
-});
 var setUndoRedoBtn = setInterval(function() {
   if (undoStore.length > 0) {
     $("#undoBtn").prop('disabled', false);
