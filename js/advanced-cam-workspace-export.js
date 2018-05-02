@@ -8,6 +8,16 @@ Date.prototype.yyyymmdd = function() {
   ].join('-');
 };
 
+//https://stackoverflow.com/questions/5223/length-of-a-javascript-object
+Object.size = function(obj) {
+  var size = 0,
+    key;
+  for (key in obj) {
+    if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
+};
+
 var date = new Date();
 // date.yyyymmdd();
 
@@ -36,7 +46,15 @@ function saveOnClose() {
 function loadLastClosedOnPageload() {
   var lastWorkspace = localStorage.getItem('lastWorkspace');
   if (lastWorkspace) {
-    parseLoadWorkspace(lastWorkspace)
+    if (Object.size(JSON.parse(lastWorkspace).objects) > 0 || Object.size(JSON.parse(lastWorkspace).toolpaths) > 0) {
+      var x = confirm("Found a recoverable workspace.  Would you like to load it, or start with a clean workspace?");
+      if (x) {
+        parseLoadWorkspace(lastWorkspace)
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 }
 
