@@ -217,61 +217,71 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
       // console.log("Union")
       // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
       var newClipperPaths = simplifyPolygons(clipperPaths);
+      console.log(newClipperPaths)
+
 
       if (newClipperPaths.length < 1) {
         console.error("Clipper Simplification Failed!:");
       }
 
+
       // calc Stepover
       var cutwidth = ((inflateVal * 2) * (stepOver / 100)) //mm per cut
 
-      // get the inflated/deflated path then inside each loop, Duplicate each loop, down into Z.  We go full depth before next loop.
-      for (i = 0; i < 1000; i++) { // Rather 1000 than a while loop, just in case, break when it no longer has data to work with
-        // console.log((cutwidth * i), (inflateVal * 2))
-        if ((cutwidth * i) < (inflateVal * 2)) {
-          inflateValUsed = inflateVal;
-        } else {
-          inflateValUsed = cutwidth * i;
-        }
-        if (i == 0) {
-          inflateValUsed = inflateVal;
-        }
-        var inflatedPaths = getInflatePath(newClipperPaths, -inflateValUsed);
-        if (inflatedPaths.length > 0) {
-          if (inflateVal > 1 || inflateVal < -1) {
-            var lineMesh = this.getMeshLineFromClipperPath({
-              width: inflateVal * 2,
-              clipperPath: inflatedPaths,
-              isSolid: true,
-              opacity: 0.2,
-              isShowOutline: true,
-              color: pocketColor,
-            });
+      // todo for newClipperPaths.length (Split each clipperpath into own pocket)
+      for (k = 0; k < newClipperPaths.length; k++) {
+        var pathobj = [];
+        pathobj.push(newClipperPaths[k])
+        // console.log("processing " + newClipperPaths[k])
+        for (i = 0; i < 1000; i++) { // Rather 1000 than a while loop, just in case, break when it no longer has data to work with
+          // console.log((cutwidth * i), (inflateVal * 2))
+          if ((cutwidth * i) < (inflateVal * 2)) {
+            inflateValUsed = inflateVal;
+          } else {
+            inflateValUsed = cutwidth * i;
           }
-          // Duplicate each loop, down into Z.  We go full depth before next loop.
-          for (j = zdepth + 1; j > zstart + zstep; j -= zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
-            // console.log(j)
-            if (j * zstep < zdepth) {
-              var zval = -j
-            } else {
-              var zval = -zdepth;
-            }
-            // get the inflated/deflated path
-            var inflateGrp = drawClipperPaths(inflatedPaths, toolpathColor, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
-            inflateGrp.name = 'inflateGrp';
-            inflateGrp.position = infobject.position;
+          if (i == 0) {
+            inflateValUsed = inflateVal;
+          }
+          var inflatedPaths = getInflatePath(pathobj, -inflateValUsed);
+          if (inflatedPaths.length > 0) {
             if (inflateVal > 1 || inflateVal < -1) {
-              var prettyLayer = lineMesh.clone();
-              prettyLayer.position.z = zval;
-              prettyGrp.add(prettyLayer)
-            };
-            pocketGrp.add(inflateGrp);
+              var lineMesh = this.getMeshLineFromClipperPath({
+                width: inflateVal * 2,
+                clipperPath: inflatedPaths,
+                isSolid: true,
+                opacity: 0.2,
+                isShowOutline: true,
+                color: pocketColor,
+              });
+            }
+            // Duplicate each loop, down into Z.  We go full depth before next loop.
+            for (j = zdepth + 1; j > zstart + zstep; j -= zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
+              // console.log(j)
+              if (j * zstep < zdepth) {
+                var zval = -j
+              } else {
+                var zval = -zdepth;
+              }
+              // get the inflated/deflated path
+              var inflateGrp = drawClipperPaths(inflatedPaths, toolpathColor, 0.8, zval, true, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name, inflateVal)
+              inflateGrp.name = 'inflateGrp';
+              inflateGrp.position = infobject.position;
+              if (inflateVal > 1 || inflateVal < -1) {
+                var prettyLayer = lineMesh.clone();
+                prettyLayer.position.z = zval;
+                prettyGrp.add(prettyLayer)
+              };
+              pocketGrp.add(inflateGrp);
+            }
+          } else {
+            // console.log('Pocket already done after ' + i + ' iterations');
+            break;
           }
-        } else {
-          // console.log('Pocket already done after ' + i + ' iterations');
-          break;
         }
       }
+      // get the inflated/deflated path then inside each loop, Duplicate each loop, down into Z.  We go full depth before next loop.
+
       if (inflateVal > 1 || inflateVal < -1) {
         pocketGrp.userData.pretty = prettyGrp;
       }
