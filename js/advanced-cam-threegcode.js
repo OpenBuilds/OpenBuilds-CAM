@@ -94,12 +94,13 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
         color: prettyGrpColor,
       });
     }
-    for (i = zstart + zstep; i < zdepth + 1; i += zstep) {
+    for (i = zstart + zstep; i < zdepth + zstep; i += zstep) {
       if (i * zstep < zdepth) {
         var zval = -i
       } else {
         var zval = -zdepth;
       }
+      // console.log(zstart, zstep, zdepth, zval);
       inflateGrp = drawClipperPaths(inflatedPaths, toolpathColor, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
       inflateGrp.name = 'inflateGrp' + i;
       inflateGrp.userData.material = inflateGrp.material;
@@ -132,12 +133,13 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
           color: prettyGrpColor,
         });
       };
-      for (i = zstart + zstep; i < zdepth + 1; i += zstep) {
+      for (i = zstart + zstep; i < zdepth + zstep; i += zstep) {
         if (i * zstep < zdepth) {
           var zval = -i
         } else {
           var zval = -zdepth;
         }
+        // console.log(zstart, zstep, zdepth, zval);
         inflateGrp = drawClipperPaths(inflatedPaths, toolpathColor, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
         inflateGrp.name = 'inflateGrp' + j + '_' + i;
         inflateGrp.userData.material = inflateGrp.material;
@@ -256,7 +258,7 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
               });
             }
             // Duplicate each loop, down into Z.  We go full depth before next loop.
-            for (j = zdepth + 1; j > zstart + zstep; j -= zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
+            for (j = zdepth; j > zstart + zstep; j -= zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
               // console.log(j)
               if (j * zstep < zdepth) {
                 var zval = -j
