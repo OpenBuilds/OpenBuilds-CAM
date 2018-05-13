@@ -134,12 +134,12 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
         });
       };
       for (i = zstart + zstep; i < zdepth + zstep; i += zstep) {
-        if (i * zstep < zdepth) {
-          var zval = -i
+        if (i > zdepth) {
+          var zval = -zdepth
         } else {
-          var zval = -zdepth;
+          var zval = -i
         }
-        // console.log(zstart, zstep, zdepth, zval);
+        // console.log(i, zstart, zstep, zdepth, zval);
         inflateGrp = drawClipperPaths(inflatedPaths, toolpathColor, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
         inflateGrp.name = 'inflateGrp' + j + '_' + i;
         inflateGrp.userData.material = inflateGrp.material;

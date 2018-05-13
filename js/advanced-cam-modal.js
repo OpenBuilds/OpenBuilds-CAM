@@ -108,6 +108,14 @@ function initAdvancedCAM() {
       $('#svgtabdepth').text(newval);
       console.log("tabdepth")
       updateCamUserData(objectseq);
+    } else if (id.indexOf('tabWidth') == 0) {
+      $('#svgtawidth').text(newval);
+      console.log("tabWidth")
+      updateCamUserData(objectseq);
+    } else if (id.indexOf('tabSpace') == 0) {
+      $('#svgtabspace').text(newval);
+      console.log("tabSpace")
+      updateCamUserData(objectseq);
     } else if (id.indexOf('tOpName') == 0) {
       $('#svgOpName').text(newval);
       updateCamUserData(objectseq);
@@ -150,6 +158,8 @@ function updateCamUserData(i) {
   toolpathsInScene[i].userData.camUnion = $('#tunion' + i).val();
   toolpathsInScene[i].userData.camSpotSize = $('#tspotsize' + i).val();
   toolpathsInScene[i].userData.camTabDepth = $('#tabdepth' + i).val();
+  toolpathsInScene[i].userData.camTabWidth = $('#tabWidth' + i).val();
+  toolpathsInScene[i].userData.camTabSpace = $('#tabSpace' + i).val();
   toolpathsInScene[i].userData.advanced = $('#advanced' + i).is(":checked");; // Marlin, Stepcraft, Mach3, LinuxCNC
   toolpathsInScene[i].name = $('#tOpName' + i).val();
   $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
@@ -362,11 +372,31 @@ function setupJob(i) {
               </td>
             </tr>
             <tr class="inputcnc">
-              <td>Tabs: Depth</td>
+              <td>Tabs: Height</td>
               <td>
                 <div class="input-addon">
                   <span class="input-addon-label-left"><i class="fa fa-exchange fa-rotate-90" aria-hidden="true"></i></span>
                     <input type="number" class="cam-form-field" value="0" id="tabdepth` + i + `" objectseq="` + i + `" step="1">
+                  <span class="input-addon-label-right">mm</span>
+                </div>
+              </td>
+            </tr>
+            <tr class="inputcnc">
+              <td>Tabs: Width</td>
+              <td>
+                <div class="input-addon">
+                  <span class="input-addon-label-left"><i class="fa fa-arrows-v" aria-hidden="true"></i></span>
+                  <input type="number" class="cam-form-field" value="6" id="tabWidth` + i + `" objectseq="` + i + `" min="0" step="1">
+                  <span class="input-addon-label-right">mm</span>
+                </div>
+              </td>
+            </tr>
+            <tr class="inputcnc">
+              <td>Tabs: Spacing</td>
+              <td>
+                <div class="input-addon">
+                  <span class="input-addon-label-left"><i class="fa fa-arrows-v" aria-hidden="true"></i></span>
+                  <input type="number" class="cam-form-field" value="50" id="tabSpace` + i + `" objectseq="` + i + `" min="0" step="1">
                   <span class="input-addon-label-right">mm</span>
                 </div>
               </td>
@@ -420,6 +450,8 @@ function setupJob(i) {
     $('#tplasmakerf' + i).val(toolpathsInScene[i].userData.camPlasmaKerf);
     $('#tplasmazheight' + i).val(toolpathsInScene[i].userData.camPlasmaZHeight);
     $('#tabdepth' + i).val(toolpathsInScene[i].userData.camTabDepth);
+    $('#tabWidth' + i).val(toolpathsInScene[i].userData.camTabWidth);
+    $('#tabSpace' + i).val(toolpathsInScene[i].userData.camTabSpace);
     $('#tplasmaihs' + i).val(toolpathsInScene[i].userData.camPlasmaIHS).prop('selected', true);
     $('#tunion' + i).val(toolpathsInScene[i].userData.camUnion).prop('selected', true);
     $('#tOpName' + i).val(toolpathsInScene[i].name);
