@@ -93,8 +93,8 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
     var doTabs = true;
   }
   var tabsBelowZ = -(parseFloat(toolpathsInScene[index].userData.camZDepth) - parseFloat(toolpathsInScene[index].userData.camTabDepth));
-  if (tabsBelowZ > )
-    var distBetweenTabs = parseFloat(toolpathsInScene[index].userData.camTabSpace);
+  // if (tabsBelowZ > )
+  var distBetweenTabs = parseFloat(toolpathsInScene[index].userData.camTabSpace);
   var tabWidth = parseFloat(toolpathsInScene[index].userData.camTabWidth);
 
   // var doTabs = true;
