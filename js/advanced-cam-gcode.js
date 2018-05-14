@@ -127,7 +127,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
         var xpos_offset = child.position.x;
         var ypos_offset = child.position.y;
         var totalDist = 0;
-        var lastTabPos = 0;
+        var lastTabPos = -distBetweenTabs;
         // let's create gcode for all points in line
         for (i = 0; i < child.geometry.vertices.length; i++) {
           // Convert to World Coordinates
@@ -192,95 +192,92 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
 
             isAtClearanceHeight = false;
 
-          } else {
-            // we are in a non-first line so this is normal moving
+          }
+          // we are in a non-first line so this is normal moving
 
-            // if the tool is not on, we need to turn it on
-            if (!isToolOn) {
-              if (PlasmaIHS == "Yes") {
-                console.log("PlasmaIHS")
-                g += IHScommand + "\n";
-              }
-              if (toolon) {
-                g += toolon
-                g += '\n'
-              } else {
-                // Nothing - most of the firmwares use G0 = move, G1 = cut and doesnt need a toolon/tooloff command
-              };
-              isToolOn = true;
+          // if the tool is not on, we need to turn it on
+          if (!isToolOn) {
+            if (PlasmaIHS == "Yes") {
+              console.log("PlasmaIHS")
+              g += IHScommand + "\n";
             }
+            if (toolon) {
+              g += toolon
+              g += '\n'
+            } else {
+              // Nothing - most of the firmwares use G0 = move, G1 = cut and doesnt need a toolon/tooloff command
+            };
+            isToolOn = true;
+          }
 
-            // do g1 @ feedrate move
-            var feedrate;
-            if (isFeedrateSpecifiedAlready) {} else {
-              // console.log('Cut Speed: ', cutSpeed);
-              if (cutSpeed) {
-                feedrate = " F" + cutSpeed;
-                isFeedrateSpecifiedAlready = true;
-              } else {
-                feedrate = "";
-              }
+          // do g1 @ feedrate move
+          var feedrate;
+          if (isFeedrateSpecifiedAlready) {} else {
+            // console.log('Cut Speed: ', cutSpeed);
+            if (cutSpeed) {
+              feedrate = " F" + cutSpeed;
+              isFeedrateSpecifiedAlready = true;
+            } else {
+              feedrate = "";
             }
+          }
 
-            totalDist += distanceFormula(lastxyz.x, xpos, lastxyz.y, ypos)
+          totalDist += distanceFormula(lastxyz.x, xpos, lastxyz.y, ypos)
 
-            if (doTabs) {
-              // console.log(totalDist, (lastTabPos + distBetweenTabs), zpos, tabsBelowZ)
-              if (totalDist > (lastTabPos + distBetweenTabs) && zpos < tabsBelowZ) {
-                var d = distanceFormula(xpos, xposNext, ypos, yposNext)
-                // console.log(d, (toolDia + tabWidth));
-                if (d >= (toolDia + tabWidth)) {
-                  // console.log("Adding tab")
-                  // next point
-                  var deltaX = xposNext - xpos;
-                  var deltaY = yposNext - ypos;
+          if (doTabs) {
+            // console.log(totalDist, (lastTabPos + distBetweenTabs), zpos, tabsBelowZ)
+            if (totalDist > (lastTabPos + distBetweenTabs) && zpos < tabsBelowZ) {
+              var d = distanceFormula(xpos, xposNext, ypos, yposNext)
+              // console.log(d, (toolDia + tabWidth));
+              if (d >= (toolDia + tabWidth)) {
+                var numTabs = Math.round(d / (distBetweenTabs + tabWidth));
+                // if we have a line distance of 100
+                // and 3 tabs (width 10) in that line per numTabs
+                // then we want to evenly space them
+                // so we divide the line distance by numTabs
+                var spacePerTab = d / numTabs;
+                // which in this example would be 33.33~
+                // then in each space per tab we need to center the tab
+                // which means dividing the difference of the spacePerTab and tabWidth by 2
+                var tabPaddingPerSpace = (spacePerTab - (tabWidth + toolDia)) / 2;
 
-                  // get the line angle
-                  var ang = Math.atan2(deltaY, deltaX);
-                  // console.log('  ANGLE ' + (ang * 180 / Math.PI));
+                // console.log("Adding tab")
+                // next point
+                var deltaX = xposNext - xpos;
+                var deltaY = yposNext - ypos;
 
-                  // convert it to degrees for later math with addDegree
-                  ang = ang * 180 / Math.PI;
+                // get the line angle
+                var ang = Math.atan2(deltaY, deltaX);
+                // console.log('  ANGLE ' + (ang * 180 / Math.PI));
 
-                  lastTabPos = totalDist;
-                  // console.log("Z at " + zpos.toFixed(2) + " / Add TAB at X:" + xpos + " Y:" + ypos);
-                  g += '\n; START TABS\n';
-                  var npt = [xpos, ypos]
+                // convert it to degrees for later math with addDegree
+                ang = ang * 180 / Math.PI;
+
+                lastTabPos = totalDist;
+                // console.log("Z at " + zpos.toFixed(2) + " / Add TAB at X:" + xpos + " Y:" + ypos);
+                g += '\n; START TABS\n';
+                var npt = [xpos, ypos]
+                for (var r = 0; r < numTabs; r++) {
                   // then for each tab
                   // add another point at the current point +tabPaddingPerSpace
-                  npt = newPointFromDistanceAndAngle(npt, ang, toolDia / 2);
+                  npt = newPointFromDistanceAndAngle(npt, ang, tabPaddingPerSpace);
                   g += 'G1' + feedrate + ' X' + npt[0] + ' Y' + npt[1] + '\n';
                   // then we raise the z height by config.tabHeight
                   g += 'G0 Z' + tabsBelowZ + '\n';
                   // then add another point at the current point +tabWidth
-                  npt = newPointFromDistanceAndAngle(npt, ang, (toolDia + tabWidth));
+                  npt = newPointFromDistanceAndAngle(npt, ang, tabWidth + toolDia);
                   g += 'G0' + feedrate + ' X' + npt[0] + ' Y' + npt[1] + '\n';
                   // then lower the z height back to zPos at plunge speed
                   g += 'G0 F' + plungeSpeed + ' Z' + tabsBelowZ + '\n';
                   g += 'G1 F' + plungeSpeed + ' Z' + zpos + '\n';
                   // then add another point at the current point +tabPaddingPerSpace
                   // with the cut speed
-                  npt = newPointFromDistanceAndAngle(npt, ang, toolDia / 2);
+                  npt = newPointFromDistanceAndAngle(npt, ang, tabPaddingPerSpace);
                   g += 'G1' + feedrate + ' X' + npt[0] + ' Y' + npt[1] + '\n';
-                  g += '; END TABS\n\n';
-                } else { // Line isnt long enough
-                  // console.log("Line not long enough")
-                  if (sOnSeperateLine) {
-                    g += s + laserPwr + "\n";
-                    g += g1 + feedrate;
-                    g += " X" + xpos.toFixed(4);
-                    g += " Y" + ypos.toFixed(4);
-                    g += " Z" + zpos.toFixed(4) + "\n";
-                  } else {
-                    g += g1 + feedrate;
-                    g += " X" + xpos.toFixed(4);
-                    g += " Y" + ypos.toFixed(4);
-                    g += " Z" + zpos.toFixed(4);
-                    g += " " + s + laserPwr + "\n";
-                  }
                 }
-              } else { // not far enough away from last tab yet
-                // console.log("No Tab needed yet")
+                g += '; END TABS\n\n';
+              } else { // Line isnt long enough
+                // console.log("Line not long enough")
                 if (sOnSeperateLine) {
                   g += s + laserPwr + "\n";
                   g += g1 + feedrate;
@@ -295,7 +292,8 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
                   g += " " + s + laserPwr + "\n";
                 }
               }
-            } else {
+            } else { // not far enough away from last tab yet
+              // console.log("No Tab needed yet")
               if (sOnSeperateLine) {
                 g += s + laserPwr + "\n";
                 g += g1 + feedrate;
@@ -310,12 +308,23 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
                 g += " " + s + laserPwr + "\n";
               }
             }
-
-
-
-
-            // end move
+          } else {
+            if (sOnSeperateLine) {
+              g += s + laserPwr + "\n";
+              g += g1 + feedrate;
+              g += " X" + xpos.toFixed(4);
+              g += " Y" + ypos.toFixed(4);
+              g += " Z" + zpos.toFixed(4) + "\n";
+            } else {
+              g += g1 + feedrate;
+              g += " X" + xpos.toFixed(4);
+              g += " Y" + ypos.toFixed(4);
+              g += " Z" + zpos.toFixed(4);
+              g += " " + s + laserPwr + "\n";
+            }
           }
+          // end move
+
           lastxyz = {
             x: xpos.toFixed(4),
             y: ypos.toFixed(4),
@@ -337,13 +346,9 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
     });
   }
 
-  // pull up from the hole
   g += "\n" + g0 + " Z" + clearanceHeight + "\n"; // Position Before Plunge!
-
-}
-
-console.log("Generated gcode. length:", g.length);
-return g;
+  console.log("Generated gcode. length:", g.length);
+  return g;
 };
 
 function prepgcodefile() {
