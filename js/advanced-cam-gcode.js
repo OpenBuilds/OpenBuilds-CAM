@@ -249,19 +249,19 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
                   // then for each tab
                   // add another point at the current point +tabPaddingPerSpace
                   npt = newPointFromDistanceAndAngle(npt, ang, toolDia / 2);
-                  g += 'G1 F' + feedrate + ' X' + npt[0] + ' Y' + npt[1] + '\n';
+                  g += 'G1' + feedrate + ' X' + npt[0] + ' Y' + npt[1] + '\n';
                   // then we raise the z height by config.tabHeight
                   g += 'G0 Z' + tabsBelowZ + '\n';
                   // then add another point at the current point +tabWidth
                   npt = newPointFromDistanceAndAngle(npt, ang, (toolDia + tabWidth));
-                  g += 'G0 F' + feedrate + ' X' + npt[0] + ' Y' + npt[1] + '\n';
+                  g += 'G0' + feedrate + ' X' + npt[0] + ' Y' + npt[1] + '\n';
                   // then lower the z height back to zPos at plunge speed
                   g += 'G0 F' + plungeSpeed + ' Z' + tabsBelowZ + '\n';
                   g += 'G1 F' + plungeSpeed + ' Z' + zpos + '\n';
                   // then add another point at the current point +tabPaddingPerSpace
                   // with the cut speed
                   npt = newPointFromDistanceAndAngle(npt, ang, toolDia / 2);
-                  g += 'G1 F' + feedrate + ' X' + npt[0] + ' Y' + npt[1] + '\n';
+                  g += 'G1' + feedrate + ' X' + npt[0] + ' Y' + npt[1] + '\n';
                   g += '; END TABS\n\n';
                 } else { // Line isnt long enough
                   // console.log("Line not long enough")
@@ -337,9 +337,13 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
     });
   }
 
+  // pull up from the hole
+  g += "\n" + g0 + " Z" + clearanceHeight + "\n"; // Position Before Plunge!
 
-  console.log("Generated gcode. length:", g.length);
-  return g;
+}
+
+console.log("Generated gcode. length:", g.length);
+return g;
 };
 
 function prepgcodefile() {
