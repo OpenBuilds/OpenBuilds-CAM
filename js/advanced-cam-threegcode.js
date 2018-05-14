@@ -204,7 +204,7 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
   var zdepth = parseFloat(zdepth, 2);
   var zstart = parseFloat(zstart, 2);
   var pocketGrp = new THREE.Group();
-  // var prettyGrp = new THREE.Group();
+  var prettyGrp = new THREE.Group();
   if (typeof(inflateGrp) != 'undefined') {
     scene.remove(inflateGrp);
     inflateGrp = null;
@@ -328,7 +328,12 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
                   drawPretty: true,
                   prettyGrpColor: pocketColor
                 }
-                inflateGrp = drawClipperPathsWithTool(drawClipperPathsconfig).lines;
+
+
+
+
+                var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
+                inflateGrp = drawings.lines;
                 inflateGrp.name = 'inflateGrp';
                 inflateGrp.position = infobject.position;
                 // if (inflateVal > 1 || inflateVal < -1) {
@@ -337,6 +342,7 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
                 //   prettyGrp.add(prettyLayer)
                 // };
                 pocketGrp.add(inflateGrp);
+                prettyGrp.add(drawings.pretty)
               }
             } else {
               // console.log('Pocket already done after ' + i + ' iterations');
@@ -347,9 +353,9 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
       }
       // get the inflated/deflated path then inside each loop, Duplicate each loop, down into Z.  We go full depth before next loop.
 
-      // if (inflateVal > 1 || inflateVal < -1) {
-      //   pocketGrp.userData.pretty = prettyGrp;
-      // }
+      if (inflateVal > 1 || inflateVal < -1) {
+        pocketGrp.userData.pretty = prettyGrp;
+      }
       pocketGrp.children = pocketGrp.children.reverse(); // Inside Out! Breakthrough!
       return pocketGrp;
     } else {
@@ -932,8 +938,7 @@ drawClipperPathsWithTool = function(config) {
         isSolid: true,
         opacity: 0.2,
         isShowOutline: true,
-        color: config.prettyGrpColor,
-        capType: 'round'
+        color: config.prettyGrpColor
       });
       lineMesh.position.z = config.z;
       prettyGrp.add(lineMesh)
@@ -943,8 +948,7 @@ drawClipperPathsWithTool = function(config) {
         isSolid: true,
         opacity: 0.4,
         isShowOutline: true,
-        color: 0x00ff00,
-        capType: 'round'
+        color: 0x00ff00
       });
       lineMesh.position.z = config.z;
       prettyGrp.add(lineMesh)
@@ -958,8 +962,7 @@ drawClipperPathsWithTool = function(config) {
         isSolid: true,
         opacity: 0.2,
         isShowOutline: true,
-        color: config.prettyGrpColor,
-        capType: 'round'
+        color: config.prettyGrpColor
       });
       lineMesh.position.z = config.z;
       prettyGrp.add(lineMesh)

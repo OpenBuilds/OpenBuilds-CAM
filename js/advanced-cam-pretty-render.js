@@ -7,7 +7,6 @@ function getMeshLineFromClipperPath(opts) {
   var color = opts.color ? opts.color : 0x0000ff;
   var opacity = opts.opacity ? opts.opacity : 0.3;
   var isShowOutline = 'isShowOutline' in opts ? opts.isShowOutline : false;
-  var capType = opts.capType;
   var retGrp = new THREE.Group();
   // console.log("getMeshLineFromClipperPath", opts);
   var localInflateBy = width / 2;
@@ -33,9 +32,9 @@ function getMeshLineFromClipperPath(opts) {
       // console.log(path[pi])
       var pt = path[pi];
       var pt2 = (pi + 1 < path.length) ? path[pi + 1] : path[0];
-      console.log(pt, pt2)
+      // console.log(pt, pt2)
       if (pt2 != null) {
-        var clipperStroke = addStrokeCapsToLine(pt.X, pt.Y, pt2.X, pt2.Y, localInflateBy * 2, capType, color);
+        var clipperStroke = addStrokeCapsToLine(pt.X, pt.Y, pt2.X, pt2.Y, localInflateBy * 2, "round", color);
         // console.log(clipperStroke)
         if (clipperStroke.length > 1) console.warn("got more than 1 path on clipperStroke");
         if (clipperStroke.length < 1) console.warn("got less than 1 path on clipperStroke");
