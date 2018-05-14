@@ -75,7 +75,6 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
   });
   if (union == "Yes") {
     // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
-    // console.log(clipperPaths[0])
     var newClipperPaths = simplifyPolygons(clipperPaths);
     if (newClipperPaths.length < 1) {
       console.error("Clipper Simplification Failed!:");
@@ -84,19 +83,8 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
     }
     var inflatedPaths = getInflatePath(newClipperPaths, inflateVal);
     if (leadinval > 0) { // plasma lead-in
-      var leadInPaths = getInflatePath(newClipperPaths, inflateVal * 2);
+      var leadInPaths = getInflatePath(newClipperPaths, inflateVal * 3);
     }
-    // if (inflateVal > minimumToolDiaForPreview || inflateVal < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
-    //   // generate once use again for each z
-    //   var lineMesh = this.getMeshLineFromClipperPath({
-    //     width: inflateVal * 2,
-    //     clipperPath: inflatedPaths,
-    //     isSolid: true,
-    //     opacity: 0.2,
-    //     isShowOutline: true,
-    //     color: prettyGrpColor,
-    //   });
-    // }
     for (i = zstart + zstep; i < zdepth + zstep; i += zstep) {
       if (i * zstep < zdepth) {
         var zval = -i
@@ -121,15 +109,10 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
       }
       var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
       inflateGrp = drawings.lines;
-      // inflateGrp = drawClipperPaths(inflatedPaths, toolpathColor, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
       inflateGrp.name = 'inflateGrp' + i;
       inflateGrp.userData.material = inflateGrp.material;
       inflateGrpZ.add(inflateGrp);
-      // if (inflateVal > minimumToolDiaForPreview || inflateVal < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
-      //   var prettyLayer = lineMesh.clone();
-      //   prettyLayer.position.z = zval;
       prettyGrp.add(drawings.pretty)
-      // };
     }
   } else {
     var newClipperPaths = clipperPaths;
@@ -137,22 +120,10 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
       var pathobj = [];
       pathobj.push(newClipperPaths[j])
       var inflatedPaths = getInflatePath(pathobj, inflateVal);
-      // console.log(inflatedPaths);
       // plasma lead-in
       if (leadinval > 0) {
-        var leadInPaths = getInflatePath(pathobj, inflateVal * 2);
+        var leadInPaths = getInflatePath(pathobj, inflateVal * 3);
       }
-      // if (inflateVal > minimumToolDiaForPreview || inflateVal < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
-      //   // generate once use again for each z
-      //   var lineMesh = this.getMeshLineFromClipperPath({
-      //     width: inflateVal * 2,
-      //     clipperPath: inflatedPaths,
-      //     isSolid: true,
-      //     opacity: 0.2,
-      //     isShowOutline: true,
-      //     color: prettyGrpColor,
-      //   });
-      // };
       for (i = zstart + zstep; i < zdepth + zstep; i += zstep) {
         if (i > zdepth) {
           var zval = -zdepth
@@ -177,23 +148,16 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
         }
         var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
         inflateGrp = drawings.lines;
-        // inflateGrp = drawClipperPaths(inflatedPaths, toolpathColor, 0.8, zval, true, "inflatedGroup", leadInPaths, tabdepth);
         inflateGrp.name = 'inflateGrp' + i;
         inflateGrp.userData.material = inflateGrp.material;
         inflateGrpZ.add(inflateGrp);
-        // if (inflateVal > minimumToolDiaForPreview || inflateVal < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
-        //   var prettyLayer = lineMesh.clone();
-        //   prettyLayer.position.z = zval;
         prettyGrp.add(drawings.pretty)
       }
     }
   }
   if (inflateVal > 0.04 || inflateVal < -0.04) { //Dont show for very small offsets, not worth the processing time
-    // prettyGrp.translateX(-sizexmax/2)
-    // prettyGrp.translateY(-sizeymax/2)
     inflateGrpZ.userData.pretty = prettyGrp
   };
-  // inflateGrpZ.position
   return inflateGrpZ;
 };
 
@@ -328,19 +292,10 @@ pocketPath = function(infobject, inflateVal, stepOver, zstep, zdepth, zstart, un
                   drawPretty: true,
                   prettyGrpColor: pocketColor
                 }
-
-
-
-
                 var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
                 inflateGrp = drawings.lines;
                 inflateGrp.name = 'inflateGrp';
                 inflateGrp.position = infobject.position;
-                // if (inflateVal > 1 || inflateVal < -1) {
-                //   var prettyLayer = lineMesh.clone();
-                //   prettyLayer.position.z = zval;
-                //   prettyGrp.add(prettyLayer)
-                // };
                 pocketGrp.add(inflateGrp);
                 prettyGrp.add(drawings.pretty)
               }
@@ -718,14 +673,13 @@ drawClipperPaths = function(config) {
 
 drawClipperPathsWithTool = function(config) {
   var group = new THREE.Object3D();
-  // console.log(config)
+  console.log(config)
   if (config.leadInPaths) {
     if (config.leadInPaths.length != config.paths.length) {
       console.log("Skipping lead-in: Source vector file is broken, and we could not produce a reliable offset")
       printLog('Skipping lead-in: Source vector file is broken, and we could not produce a reliable offset', warncolor, "settings");
     }
   }
-  // console.log("Compare lead-in: " + paths.length + " / " + leadInPaths.length)
 
   var lineUnionMat = new THREE.LineBasicMaterial({
     color: config.color,
@@ -740,6 +694,10 @@ drawClipperPathsWithTool = function(config) {
     config.isClosed = true;
 
   if (config.name) group.name = config.name;
+
+  if (config.toolDia < 0) {
+    config.toolDia = config.toolDia * -1;
+  }
 
   var clipperPaths = [];
   var clipperTabsPaths = [];
@@ -769,7 +727,7 @@ drawClipperPathsWithTool = function(config) {
       totalDist += distanceFormula(lastvert.x, config.paths[i][j].X, lastvert.y, config.paths[i][j].Y)
       if (config.tabwidth) {
         if (totalDist > (lastTabPos + config.tabspace) && config.z < config.tabdepth) {
-          if (config.z < -config.tabdepth && j < config.paths[i].length - 1) {
+          if (j < config.paths[i].length - 1) {
             // console.log(i, j)
             var d = distanceFormula(config.paths[i][j].X, config.paths[i][j + 1].X, config.paths[i][j].Y, config.paths[i][j + 1].Y)
             if (d >= (config.toolDia + config.tabwidth)) {
@@ -798,6 +756,11 @@ drawClipperPathsWithTool = function(config) {
 
               lastTabPos = totalDist;
               var npt = [config.paths[i][j].X, config.paths[i][j].Y]
+              lineUnionGeo.vertices.push(new THREE.Vector3(npt[0], npt[1], config.z));
+              clipperArr.push({
+                X: npt[0],
+                Y: npt[1]
+              });
               for (var r = 0; r < numTabs; r++) {
                 var clipperTabsArr = [];
                 // then for each tab
@@ -859,35 +822,34 @@ drawClipperPathsWithTool = function(config) {
                 clipperTabsPaths.push(clipperTabsArr);
                 // g += 'G1' + feedrate + ' X' + npt[0] + ' Y' + npt[1] + '\n';
               }
-            } else {
+            } else { // line isnt long enough
               lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][j].X, config.paths[i][j].Y, config.z));
               clipperArr.push({
                 X: config.paths[i][j].X,
                 Y: config.paths[i][j].Y
               });
             }
-          } else {
-            lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][j].X, config.paths[i][j].Y, config.vz));
+          } else { // is last point
+            lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][j].X, config.paths[i][j].Y, config.z));
             clipperArr.push({
               X: config.paths[i][j].X,
               Y: config.paths[i][j].Y
             });
           }
-        } else {
+        } else { // havent moved far enough yet
           lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][j].X, config.paths[i][j].Y, config.z));
           clipperArr.push({
             X: config.paths[i][j].X,
             Y: config.paths[i][j].Y
           });
         }
-      } else {
+      } else { // no valid config.tabwidth found
         lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][j].X, config.paths[i][j].Y, config.z));
         clipperArr.push({
           X: config.paths[i][j].X,
           Y: config.paths[i][j].Y
         });
       }
-
       // lineUnionGeo.vertices.push(new THREE.Vector3(paths[i][j].X, paths[i][j].Y, z));
       lastvert = {
         x: config.paths[i][j].X,
@@ -919,12 +881,11 @@ drawClipperPathsWithTool = function(config) {
     }
     group.add(lineUnion);
     clipperPaths.push(clipperArr);
-    // console.log(clipperArr, clipperPaths)
     clipperTabsPaths.push(clipperTabsArr);
 
   } // end for loop i < paths.length
 
-  console.log(clipperPaths[0].length, clipperTabsPaths.length)
+  // console.log(clipperPaths[0].length, clipperTabsPaths.length)
 
   var prettyGrp = new THREE.Group();
   var prettyGrpColor = config.prettyGrpColor;

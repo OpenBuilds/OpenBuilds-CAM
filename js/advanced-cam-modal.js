@@ -106,15 +106,15 @@ function initAdvancedCAM() {
       updateCamUserData(objectseq);
     } else if (id.indexOf('tabdepth') == 0) {
       $('#svgtabdepth').text(newval);
-      console.log("tabdepth")
+      // console.log("tabdepth")
       updateCamUserData(objectseq);
     } else if (id.indexOf('tabWidth') == 0) {
       $('#svgtawidth').text(newval);
-      console.log("tabWidth")
+      // console.log("tabWidth")
       updateCamUserData(objectseq);
     } else if (id.indexOf('tabSpace') == 0) {
       $('#svgtabspace').text(newval);
-      console.log("tabSpace")
+      // console.log("tabSpace")
       updateCamUserData(objectseq);
     } else if (id.indexOf('tOpName') == 0) {
       $('#svgOpName').text(newval);
