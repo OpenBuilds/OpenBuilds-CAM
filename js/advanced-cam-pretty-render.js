@@ -7,7 +7,7 @@ function getMeshLineFromClipperPath(opts) {
   var color = opts.color ? opts.color : 0x0000ff;
   var opacity = opts.opacity ? opts.opacity : 0.3;
   var isShowOutline = 'isShowOutline' in opts ? opts.isShowOutline : false;
-
+  var capType = opts.capType;
   var retGrp = new THREE.Group();
   // console.log("getMeshLineFromClipperPath", opts);
   var localInflateBy = width / 2;
@@ -33,9 +33,9 @@ function getMeshLineFromClipperPath(opts) {
       // console.log(path[pi])
       var pt = path[pi];
       var pt2 = (pi + 1 < path.length) ? path[pi + 1] : path[0];
-      // console.log(pt, pt2)
+      console.log(pt, pt2)
       if (pt2 != null) {
-        var clipperStroke = addStrokeCapsToLine(pt.X, pt.Y, pt2.X, pt2.Y, localInflateBy * 2, "round", color);
+        var clipperStroke = addStrokeCapsToLine(pt.X, pt.Y, pt2.X, pt2.Y, localInflateBy * 2, capType, color);
         // console.log(clipperStroke)
         if (clipperStroke.length > 1) console.warn("got more than 1 path on clipperStroke");
         if (clipperStroke.length < 1) console.warn("got less than 1 path on clipperStroke");
@@ -48,7 +48,22 @@ function getMeshLineFromClipperPath(opts) {
 
     if (isShowOutline) {
       // console.log("isShowOutline")
-      var threeObj = drawClipperPaths(csUnion, color, opacity + 0.1, 0);
+      var drawClipperPathsconfig = {
+        paths: csUnion,
+        color: color,
+        opacity: opacity + 0.2,
+        z: 0,
+        isClosed: false,
+        name: false,
+        leadInPaths: false,
+        tabdepth: false,
+        tabspace: false,
+        tabwidth: false,
+        toolDia: false,
+        drawPretty: false
+      }
+      var threeObj = drawClipperPaths(drawClipperPathsconfig);
+      // var threeObj = drawClipperPaths(csUnion, color, opacity + 0.1, 0);
       retGrp.add(threeObj);
     }
 
@@ -91,7 +106,8 @@ function addStrokeCapsToLine(x1, y1, x2, y2, width, capType, color) {
     width = width * -1;
   }
 
-  var cap = capType != null ? capType : "round";
+  var cap = capType
+  // console.log(cap, capType)
 
   // we are given a line with two points. to stroke and cap it
   // we will draw the line in THREE.js and then shift x1/y1 to 0,0
