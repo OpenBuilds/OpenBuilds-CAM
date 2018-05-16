@@ -48,13 +48,18 @@
 													<input type="file" id="filemenu" class="custom-file-input" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple style="height: 26px;"/>
 													</label>
 													<div class="dropdown-divider"></div>
-													<a class="dropdown-item" href="#" onclick="exportWorkspace();"><i class="fa fa-fw fa-download" aria-hidden="true"></i></i>Export Job</a>
+													<h6 class="dropdown-header">Workspace</h6>
+													<a class="dropdown-item" href="#" onclick="exportWorkspace();">
+														<i class="fa fa-fw fa-download" aria-hidden="true"></i></i>Export Workspace
+													</a>
 													<label class="dropdown-item" style="margin: 0px;">
-													<i class="fa fa-upload fa-fw"></i>Import Job
-													<input type="file" id="workspaceImport" class="custom-file-input" accept=".json" multiple style="height: 26px;"/>
+														<i class="fa fa-upload fa-fw"></i>Import Workspace
+														<input type="file" id="workspaceImport" class="custom-file-input" accept=".json" multiple style="height: 26px;"/>
 													</label>
 													<div class="dropdown-divider"></div>
-													<a class="dropdown-item disabled" href="#" id="exportGcodeMenu" onclick="saveFile()"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i>Export G-Code</a>
+													<a class="dropdown-item disabled" href="#" id="exportGcodeMenu" onclick="saveFile()">
+														<i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i>Export G-Code
+													</a>
 												</div>
 											</li>
 											<li class="nav-item dropdown">
@@ -62,6 +67,7 @@
 												Edit
 												</a>
 												<div class="dropdown-menu" aria-labelledby="viewDropDown">
+													<h6 class="dropdown-header">Selection</h6>
 													<a class="dropdown-item" href="#" id="selectAll"><i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>Select All</a>
 													<a class="dropdown-item" href="#" id="selectNone"><i class="fa fa-fw fa-square-o" aria-hidden="true"></i>Select None</a>
 													<a class="dropdown-item" href="#" id="selectInv"><i class="fa fa-fw fa-check" aria-hidden="true"></i>Invert Selection</a>

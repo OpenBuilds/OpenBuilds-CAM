@@ -673,7 +673,7 @@ drawClipperPaths = function(config) {
 
 drawClipperPathsWithTool = function(config) {
   var group = new THREE.Object3D();
-  console.log(config)
+  // console.log(config)
   if (config.leadInPaths) {
     if (config.leadInPaths.length != config.paths.length) {
       console.log("Skipping lead-in: Source vector file is broken, and we could not produce a reliable offset")

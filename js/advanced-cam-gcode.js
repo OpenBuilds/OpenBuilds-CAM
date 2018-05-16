@@ -139,7 +139,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
               }
             }
 
-            if (lastxyz.x == xpos.toFixed(4) && lastxyz.x == xpos.toFixed(4)) {
+            if (lastxyz.x == xpos.toFixed(4) && lastxyz.y == ypos.toFixed(4)) {
               // console.log("No need to plunge, can stay at z " + lastxyz.z)
             } else {
               // move to clearance height, at first points XY pos
@@ -218,11 +218,14 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           g += tooloff
           g += '\n'
         }
-
       } // end inflatepate/pocket/entity
+      // move to clearance height, at first points XY pos
     });
   }
-
+  if (!isAtClearanceHeight) {
+    g += "; retracting back to z-safe";
+    g += "\n" + g0 + " Z" + clearanceHeight + "\n"; // Position Before Plunge!
+  }
 
   console.log("Generated gcode. length:", g.length);
   return g;
