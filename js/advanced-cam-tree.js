@@ -342,27 +342,7 @@ function fillTree() {
         if (!childLayer) {
           $childGroup.append(childTemplate);
         } else {
-          if (childLayer.parent) {
-            $parentGroup = $('#' + childLayer.parent.id);
-
-            if (!$parentGroup.length) {
-              // SVG Group
-              currentTable = `
-                            <li class="group">
-                              <div class="checkbox">
-                                <input type="checkbox" class="fr chkaddjob chkchildof` + i + `" />
-                                <i class="fa fa-fw fa-sm fa-object-group" aria-hidden="true"></i>&nbsp;
-                                <a class="entity toggle" href="#" onclick="return false;">` + childLayer.parent.label + `</a>
-                                <span class="counter label badge badge-info">0</span>
-                                <a class="fr remove btn btn-xs btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                <ul id="` + childLayer.parent.id + `"></ul>
-                              </div>
-                            </li>
-                            `;
-              $childGroup.append(currentTable);
-              $parentGroup = $('#' + childLayer.parent.id);
-            }
-          }
+          // console.log(childLayer)
           $currentTable = $('#' + childLayer.id);
           if (!$currentTable.length) {
             // Layer
@@ -370,7 +350,7 @@ function fillTree() {
                         <li class="group">
                           <div class="form-check">
                             <input type="checkbox" class="form-check-input chkaddjob chkchildof` + i + `">
-                            <label class="form-check-label" for=""><i class="fa fa-fw fa-sm fa-object-group" aria-hidden="true"></i>` + childLayer.label + `</label>
+                            <label class="form-check-label" for=""><i class="fa fa-fw fa-sm fa-object-group" aria-hidden="true"></i>` + childLayer + `</label>
                             <a class="remove btn btn-xs btn-light"><i class="fa fa-trash" aria-hidden="true"></i></a>
                           </div>
                           <ul id="` + childLayer.id + `"></ul>

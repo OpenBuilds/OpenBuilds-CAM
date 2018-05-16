@@ -73,7 +73,7 @@ function drawWorkspace() {
   sceneLights.name = "Scene Lights"
   workspace.add(sceneLights);
 
-  scene.fog = new THREE.Fog(0xffffff, 1, 5000);
+  scene.fog = new THREE.Fog(0xffffff, 1, 11000);
 
   // SKYDOME
   var uniforms = {
@@ -97,7 +97,7 @@ function drawWorkspace() {
   var vertexShader = document.getElementById('vertexShader').textContent;
   var fragmentShader = document.getElementById('fragmentShader').textContent;
 
-  var skyGeo = new THREE.SphereGeometry(4000, 32, 15);
+  var skyGeo = new THREE.SphereGeometry(10000, 32, 15);
   var skyMat = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -293,7 +293,7 @@ function init3D() {
 
   controls.enableRotate = true;
   controls.enableZoom = true; // optional
-  controls.maxDistance = 4000; // limit max zoom out
+  controls.maxDistance = 10000; // limit max zoom out
   controls.enableKeys = false; // Disable Keyboard on canvas
 
 

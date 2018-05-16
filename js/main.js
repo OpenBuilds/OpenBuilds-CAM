@@ -155,16 +155,18 @@ function loadFile(f) {
 
     } else if (f.name.match(/.svg$/i)) {
       // console.log(f.name + " is a SVG file");
-      r.readAsText(f);
-      r.onload = function(event) {
-        svg = r.result;
-        var svgpreview = document.getElementById('svgpreview');
-        svgpreview.innerHTML = r.result;
-        var svgfile = $('#svgpreview').html();
-        svg2three(svgfile, f.name);
-        printLog('SVG Opened', msgcolor, "file");
-        resetView();
-      };
+      loadSVGFile(f)
+      printLog('SVG Opened', msgcolor, "file");
+      resetView();
+      // r.readAsText(f);
+      // r.onload = function(event) {
+      //   svg = r.result;
+      //   // var svgpreview = document.getElementById('svgpreview');
+      //   // svgpreview.innerHTML = r.result;
+      //   // var svgfile = $('#svgpreview').html();
+      //   // svg2three(svgfile, f.name);
+      //
+      // };
 
 
     } else if (f.name.match(/.gcode$/i)) {
