@@ -242,57 +242,15 @@ function fillTree() {
                   <td colspan="2" class="filename">
                     <div class="form-check">
                       <input type="checkbox" class="form-check-input documentselect" objectseq="` + i + `" id="selectall` + i + `">
-                      <label class="form-check-label" for=""><i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i>` + objectsInScene[i].name + `</label>
+                      <label class="form-check-label" for=""><i class="far fa-file"></i> ` + objectsInScene[i].name + `</label>
                     </div>
                   </td>
                   <td id="buttons` + i + `">
-                    <button class="btn btn-xs btn-primary" onclick="$('#move` + i + `').toggle(); $(this).toggleClass('active');"><i class="fa fa-arrows" aria-hidden="true"></i></button>
                     <button class="btn btn-xs btn-danger remove" onclick="storeUndo(); objectsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
                   </td>
-                </tr>
-                <tr class="jobsetupfile" id="move` + i + `" style="display: none;">
-                  <td colspan="3">
-                    <label >Position Offset</label>
-                    <table>
-                      <tr>
-                        <td>
-                          <div class="input-group">
-                            <span class="input-group-addon input-group-addon-xs">X:</span>
-                            <input type="number" class="form-control input-xs" xoffset="` + xoffset + `" value="` + -(xoffset - xpos) + `"  id="xoffset` + i + `" objectseq="` + i + `" step="1"><br>
-                            <span class="input-group-addon input-group-addon-xs">mm</span>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="input-group">
-                            <span class="input-group-addon input-group-addon-xs">Y:</span>
-                            <input type="number" class="form-control input-xs" yoffset="` + yoffset + `" value="` + -(yoffset - ypos) + `"  id="yoffset` + i + `" objectseq="` + i + `" step="1">
-                            <span class="input-group-addon input-group-addon-xs">mm</span>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                `
+                </tr>`
       }
       $('#filetreetable').append(file);
-
-      if (svgscale) {
-        var svgfile = `
-                <tr class="jobsetupfile" id="scale` + i + `" style="display: none;">
-                <td colspan="3">
-                <label>SVG Resolution</label>
-                <div class="input-group">
-                <input type="number" class="form-control input-xs" value="` + (25.4 / svgscale).toFixed(1) + `" id="svgresol` + i + `" objectseq="` + i + `">
-                <span class="input-group-addon input-group-addon-xs">DPI</span>
-                </div>
-                </td>
-                </tr>`
-        $('#filetreetable').append(svgfile)
-
-        var scalebtn = `<button class="btn btn-xs btn-primary" onclick="$('#scale` + i + `').toggle(); $(this).toggleClass('active');"><i class="fa fa-expand" aria-hidden="true"></i></button>`
-        $('#buttons' + i).prepend(scalebtn)
-      }
 
       $('#filetreetable').append(`
             <tr>
@@ -431,7 +389,7 @@ function fillTree() {
         }
 
         toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="btn btn-xs btn-danger" onclick="toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
-                <button data-tooltip="tooltip" data-placement="bottom" title="Edit toolpath" class="btn btn-xs btn-primary" onclick="setupJob(` + i + `);"><i class="fa fa-fw fa-sliders" aria-hidden="true"></i></button>
+                <button data-tooltip="tooltip" data-placement="bottom" title="Edit toolpath" class="btn btn-xs btn-primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
                 </div>
                 </td>
                 </tr>

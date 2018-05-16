@@ -57,9 +57,9 @@ function drawFile(file, tag) {
   var version = parseFloat(lwsvgparser.editor.version)
   if (editor == "inkscape") {
     if (version > 0.91) {
-      resol = 96;
-    } else {
       resol = 90;
+    } else {
+      resol = 96;
     }
   } else if (editor == "illustrator") {
     resol = 72
