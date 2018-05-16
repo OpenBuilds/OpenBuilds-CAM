@@ -45,7 +45,7 @@
 												<div class="dropdown-menu" aria-labelledby="fileDropDown">
 													<label class="dropdown-item" style="margin: 0px;">
 													<i class="fa fa-folder-open fa-fw"></i>Open Document
-													<input type="file" id="filemenu" class="custom-file-input" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple style="height: 26px;"/>
+													<input type="file" id="filemenu" class="custom-file-input" accept=".svg,.dxf" multiple style="height: 26px;"/>
 													</label>
 													<div class="dropdown-divider"></div>
 													<h6 class="dropdown-header">Workspace</h6>
@@ -118,7 +118,7 @@
 								<div id="buttonbar">
 									<span id="openbutton" class="btn btn-sm btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Open a drawing">
 										<i class="fa fa-folder-open fa-fw"></i> Open
-										<input id="file" type="file" accept=".gcode,.g,.svg,.dxf,.tap,.gc,.nc" multiple />
+										<input id="file" type="file" accept=".svg,.dxf" multiple />
 									</span>
 									<div class="btn-group btn-group-toggle" data-toggle="buttons">
 										<label id="mouseSelectBtn" class="btn btn-sm btn-success active focus" data-tooltip="tooltip" data-placement="bottom" title="Select Mode">
@@ -271,13 +271,8 @@
 								MACHINE
 								</a>
 							</li>
-							<li class="nav-item ">
-								<a class="nav-link" data-toggle="tab" href="#menu2">
-								DPI
-								</a>
-							</li>
 							<li class="nav-item">
-								<a class="nav-link" data-toggle="tab" href="#menu3">
+								<a class="nav-link" data-toggle="tab" href="#menu2">
 								BACKUP
 								</a>
 							</li>
@@ -374,65 +369,6 @@
 							</div>
 							<!-- #menu1 -->
 							<div id="menu2" class="tab-pane fade">
-								<h5>Import Settings</h5>
-								<div class="form-group row">
-									<label for="defaultDPI" class="col-sm-7 col-form-label">Generic SVG</label>
-									<div class="col-sm-5">
-										<div class="input-group input-group-sm mb-3">
-											<input type="number" class="form-control " id="defaultDPI" value="96" >
-											<div class="input-group-append">
-												<span class="input-group-text">dpi</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="defaultDPI" class="col-sm-7 col-form-label">Inkscape</label>
-									<div class="col-sm-5">
-										<div class="input-group input-group-sm mb-3">
-											<input type="number" class="form-control " id="inkscapeDPI" value="96" >
-											<div class="input-group-append">
-												<span class="input-group-text">dpi</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="illustratorDPI" class="col-sm-7 col-form-label">Illustrator</label>
-									<div class="col-sm-5">
-										<div class="input-group input-group-sm mb-3">
-											<input type="number" class="form-control " id="illustratorDPI" value="92" >
-											<div class="input-group-append">
-												<span class="input-group-text">dpi</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="defaultBitmapDPI" class="col-sm-7 col-form-label">Bitmap</label>
-									<div class="col-sm-5">
-										<div class="input-group input-group-sm mb-3">
-											<input type="number" class="form-control " id="defaultBitmapDPI" value="600" >
-											<div class="input-group-append">
-												<span class="input-group-text">dpi</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<span class="help-block">This is the default DPI at which opened SVG/Bitmap files will be imported.</span>
-								<h5>Origin</h5>
-								<div class="form-group row">
-									<label for="imagePosition" class="col-sm-7 col-form-label">Bitmap</label>
-									<div class="col-sm-5">
-										<select id="imagePosition" class="form-control form-control-sm">
-											<option>Bottom Left</option>
-											<option>Top Left</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<!-- #menu2 -->
-							<div id="menu3" class="tab-pane fade">
 								<p>Download a backup profile or restore settings from a backup file:</p>
 								<form class="form-horizontal">
 									<div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
@@ -610,23 +546,6 @@
 
 	<!-- Helpers -->
 	<script type="text/javascript" src="js/helpers.js"></script>
-	<script type="text/javascript" src="js/fileprep.js"></script>
-
-	<!-- CAM populated from threejs objects -->
-	<script type="text/javascript" src="lib/clipperjs/clipper_unminified.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-threegcode.js"></script>
-	<script type="text/javascript" src="js/advanced-cam.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-tree.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-modal.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-preview.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-gcode.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-viewer-mouse.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-viewer-select.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-workspace-export.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-pretty-render.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-sim.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-keyboard-bindings.js"></script>
-
 
 	<!-- <script type="text/javascript" src="js/advanced-cam-basic-shapes.js"></script> -->
 	<!-- ThreeJS -->
@@ -640,6 +559,22 @@
 	<script type="text/javascript" src="lib/threejs/TweenMax.min.js"></script>
 	<script type="text/javascript" src="js/viewer.js"></script>
 	<script type="text/javascript" src="js/viewer-ruler.js"></script>
+
+	<!-- CAM populated from threejs objects -->
+	<script type="text/javascript" src="lib/clipperjs/clipper_unminified.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-threegcode.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-geometryutils.js"></script>
+	<script type="text/javascript" src="js/advanced-cam.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-tree.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-modal.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-preview.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-gcode.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-viewer-mouse.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-viewer-select.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-workspace-export.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-pretty-render.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-sim.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-keyboard-bindings.js"></script>
 
 	<!-- DXF Library -->
 	<script type="text/javascript" src="lib/dxf/dxf-parser.js"></script>

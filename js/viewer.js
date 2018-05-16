@@ -462,18 +462,6 @@ function viewExtents(objecttosee) {
   }
 };
 
-function colorobj(name) {
-  var object = scene.getObjectByName(name, true);
-  console.log(object)
-  // for (i=0; i<dxfObject.children.length; i++) {
-  //     dxfObject.children[i].material.color.setHex(0x000000);
-  //     dxfObject.children[i].material.opacity = 0.3;
-  // }
-  object.material.color.setHex(0xFF0000);
-  object.material.needsUpdate = true;
-}
-
-
 function makeSprite(scene, rendererType, vals) {
   var canvas = document.createElement('canvas'),
     context = canvas.getContext('2d'),
@@ -550,91 +538,21 @@ $(window).on('resize', function() {
 
 });
 
-// Set selection, add bounding box
-function attachBB(object, e) { // e = mouseclick event)
-  if (e) { // from a Mouseclick event on 3d Viewer
-    // console.log("Ctrl: " +  e.ctrlKey)
-    if (object.userData) {
-      if (!e.ctrlKey) { // if Ctrl is not down, clear other selections and only select the object clicked on
-        for (i = 0; i < objectsInScene.length; i++) {
-          var obj = objectsInScene[i]
-          obj.traverse(function(child) {
-            if (child.type == "Line" && child.userData.selected) {
-              // console.log("Setting false on " + i + " - " + child.name)
-              child.userData.selected = false;
-              // child.material.color.setRGB(0.1, 0.1, 0.1);
-            }
-          });
-        }
-      } // end clear all
-      if (!object.userData.selected) {
-        object.userData.selected = true;
-      } else {
-        object.userData.selected = false;
-        if (typeof(boundingBox) != 'undefined') {
-          scene.remove(boundingBox);
-        }
+function resetView(object) {
+  if (!object) {
+    if (objectsInScene.length > 0) {
+      var insceneGrp = new THREE.Group()
+      for (i = 0; i < objectsInScene.length; i++) {
+        var object = objectsInScene[i].clone();
+        insceneGrp.add(object)
       }
+      // scene.add(insceneGrp)
+      viewExtents(insceneGrp);
+      // scene.remove(insceneGrp)
+    } else {
+      viewExtents(helper);
     }
-  } else { // not from a mouseclick event on 3d viewer
-    if (object.userData) {
-      if (!object.userData.selected) {
-        object.userData.selected = true;
-      } else {
-        object.userData.selected = false;
-        if (typeof(boundingBox) != 'undefined') {
-          scene.remove(boundingBox);
-        }
-      }
-    }
-  }
-
-  if (typeof(boundingBox) != 'undefined') {
-    scene.remove(boundingBox);
-  }
-
-  if (object.userData.selected) {
-    var bbox2 = new THREE.Box3().setFromObject(object);
-    // console.log('bbox for Clicked Obj: '+ object +' Min X: ', (bbox2.min.x + (sizexmax / 2)), '  Max X:', (bbox2.max.x + (sizexmax / 2)), 'Min Y: ', (bbox2.min.y + (sizeymax / 2)), '  Max Y:', (bbox2.max.y + (sizeymax / 2)));
-    BBmaterial = new THREE.LineDashedMaterial({
-      color: 0xaaaaaa,
-      dashSize: 5,
-      gapSize: 4,
-      linewidth: 2
-    });
-    BBgeometry = new THREE.Geometry();
-    BBgeometry.vertices.push(
-      new THREE.Vector3((bbox2.min.x - 1), (bbox2.min.y - 1), 0),
-      new THREE.Vector3((bbox2.min.x - 1), (bbox2.max.y + 1), 0),
-      new THREE.Vector3((bbox2.max.x + 1), (bbox2.max.y + 1), 0),
-      new THREE.Vector3((bbox2.max.x + 1), (bbox2.min.y - 1), 0),
-      new THREE.Vector3((bbox2.min.x - 1), (bbox2.min.y - 1), 0)
-    );
-    BBgeometry.computeLineDistances(); //  NB If not computed, dashed lines show as solid
-    boundingBoxLines = new THREE.Line(BBgeometry, BBmaterial);
-    boundingBox = new THREE.Group();
-    boundingBox.add(boundingBoxLines)
-    var bwidth = parseFloat(bbox2.max.x - bbox2.min.x).toFixed(2);
-    var bheight = parseFloat(bbox2.max.y - bbox2.min.y).toFixed(2);
-    widthlabel = this.makeSprite(this.scene, "webgl", {
-      x: (bbox2.max.x + 30),
-      y: ((bbox2.max.y - ((bbox2.max.y - bbox2.min.y) / 2)) + 10),
-      z: 0,
-      text: "W: " + bwidth + "mm",
-      color: "#aaaaaa",
-      size: 6
-    });
-    boundingBox.add(widthlabel)
-    heightlabel = this.makeSprite(this.scene, "webgl", {
-      x: ((bbox2.max.x - ((bbox2.max.x - bbox2.min.x) / 2)) + 10),
-      y: (bbox2.max.y + 10),
-      z: 0,
-      text: "H: " + bheight + "mm",
-      color: "#aaaaaa",
-      size: 6
-    });
-    boundingBox.add(heightlabel)
-    boundingBox.name = "Bounding Box"
-    scene.add(boundingBox);
+  } else {
+    viewExtents(object);
   }
 }

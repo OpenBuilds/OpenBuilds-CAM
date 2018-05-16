@@ -1,5 +1,6 @@
 var mouseState = "select"
-var dragcontrols
+var dragcontrols;
+var currentlySelected = [];
 
 function initMouseMode() {
   $('input[type=radio][name=options]').change(function() {
@@ -28,14 +29,20 @@ function initMouseMode() {
       $("#mouseMoveBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
       $("#mouseSelectBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       $("#mouseDelBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      deselectAllObjects()
-      // setOpacity(toolpathsInScene, 0.1);
-      // $('#renderArea').css('cursor', '');
+      // deselectAllObjects()
+
+      for (i = 0; i < objectsInScene.length; i++) {
+        var obj = objectsInScene[i]
+        obj.traverse(function(child) {
+          if (child.userData.selected) {
+            currentlySelected.push(child)
+          }
+        });
+      }
+      console.log(currentlySelected)
       var documents2 = scene.getObjectByName("Documents");
       dragcontrols = new THREE.DragControls(objectsInScene, camera, renderer.domElement);
-      // helpoverlay.style.visibility = "visible";
       helpoverlay.innerHTML = "<kbd>Left Mouse Drag</kbd> = Select Document to move / <kbd>Ctrl+Left Mouse Drag</kbd> = Select entity to move / <kbd>Del</kbd> = Delete Selected"
-
     }
 
     // delete mode

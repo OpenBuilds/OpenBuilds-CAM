@@ -16,7 +16,6 @@ $(document).ready(function() {
   initLocalStorage();
   init3D();
   animate();
-  filePrepInit();
   errorHandlerJS();
   initTree();
   initAdvancedCAM();
@@ -169,69 +168,69 @@ function loadFile(f) {
       // };
 
 
-    } else if (f.name.match(/.gcode$/i)) {
-      r.readAsText(f);
-      r.onload = function(event) {
-        // cleanupThree();
-        $("#gcodefile").show();
-        document.getElementById('gcodepreview').value = this.result;
-        printLog('GCODE Opened', msgcolor, "file");
-        resetView();
-        setTimeout(function() {
-          openGCodeFromText();
-        }, 500);
-      };
-    } else if (f.name.match(/.nc$/i)) {
-      r.readAsText(f);
-      r.onload = function(event) {
-        // cleanupThree();
-        $("#gcodefile").show();
-        document.getElementById('gcodepreview').value = this.result;
-        printLog('GCODE Opened', msgcolor, "file");
-        resetView();
-        setTimeout(function() {
-          openGCodeFromText();
-        }, 500);
-      };
-    } else if (f.name.match(/.stl$/i)) {
-      //r.readAsText(f);
-      // Remove the UI elements from last run
-      console.group("STL File");
-      var stlloader = new MeshesJS.STLLoader();
-      r.onload = function(event) {
-        // cleanupThree();
-        // Parse ASCII STL
-        if (typeof r.result === 'string') {
-          stlloader.loadString(r.result);
-          return;
-        }
-        // buffer reader
-        var view = new DataView(this.result);
-        // get faces number
-        var faces;
-        try {
-          faces = view.getUint32(80, true);
-        } catch (error) {
-          self.onError(error);
-          return;
-        }
-        // is binary ?
-        var binary = view.byteLength == (80 + 4 + 50 * faces);
-        if (!binary) {
-          // get the file contents as string
-          // (faster than convert array buffer)
-          r.readAsText(f);
-          return;
-        }
-        // parse binary STL
-        stlloader.loadBinaryData(view, faces, 100, window, f);
-      };
-      // start reading file as array buffer
-      r.readAsArrayBuffer(f);
-      printLog('STL Opened', msgcolor, "file");
-      console.log("Opened STL, and asking user for Slice settings");
-      console.groupEnd();
-      $('#stlslice').modal('show');
+      // } else if (f.name.match(/.gcode$/i)) {
+      //   r.readAsText(f);
+      //   r.onload = function(event) {
+      //     // cleanupThree();
+      //     $("#gcodefile").show();
+      //     document.getElementById('gcodepreview').value = this.result;
+      //     printLog('GCODE Opened', msgcolor, "file");
+      //     resetView();
+      //     setTimeout(function() {
+      //       openGCodeFromText();
+      //     }, 500);
+      //   };
+      // } else if (f.name.match(/.nc$/i)) {
+      //   r.readAsText(f);
+      //   r.onload = function(event) {
+      //     // cleanupThree();
+      //     $("#gcodefile").show();
+      //     document.getElementById('gcodepreview').value = this.result;
+      //     printLog('GCODE Opened', msgcolor, "file");
+      //     resetView();
+      //     setTimeout(function() {
+      //       openGCodeFromText();
+      //     }, 500);
+      //   };
+      // } else if (f.name.match(/.stl$/i)) {
+      //   //r.readAsText(f);
+      //   // Remove the UI elements from last run
+      //   console.group("STL File");
+      //   var stlloader = new MeshesJS.STLLoader();
+      //   r.onload = function(event) {
+      //     // cleanupThree();
+      //     // Parse ASCII STL
+      //     if (typeof r.result === 'string') {
+      //       stlloader.loadString(r.result);
+      //       return;
+      //     }
+      //     // buffer reader
+      //     var view = new DataView(this.result);
+      //     // get faces number
+      //     var faces;
+      //     try {
+      //       faces = view.getUint32(80, true);
+      //     } catch (error) {
+      //       self.onError(error);
+      //       return;
+      //     }
+      //     // is binary ?
+      //     var binary = view.byteLength == (80 + 4 + 50 * faces);
+      //     if (!binary) {
+      //       // get the file contents as string
+      //       // (faster than convert array buffer)
+      //       r.readAsText(f);
+      //       return;
+      //     }
+      //     // parse binary STL
+      //     stlloader.loadBinaryData(view, faces, 100, window, f);
+      //   };
+      //   // start reading file as array buffer
+      //   r.readAsArrayBuffer(f);
+      //   printLog('STL Opened', msgcolor, "file");
+      //   console.log("Opened STL, and asking user for Slice settings");
+      //   console.groupEnd();
+      //   $('#stlslice').modal('show');
     } else {
       // Not usable
     }

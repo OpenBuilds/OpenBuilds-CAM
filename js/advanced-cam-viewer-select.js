@@ -198,6 +198,9 @@ function mouseDown(event) {
 }
 
 function mouseUp(event) {
+  if (mouseState == "move") {
+
+  }
   mouseup = true;
   mousedown = false;
   selection.style.visibility = "hidden";
@@ -312,11 +315,14 @@ function mouseMove(event) {
     } else if (mouseState == "move") {
       // what to do if leftclick+drag in movemode
       // currently uses customised DragControls, but want to make own in future
+      // if (event.which == 1) { // only on left mousedown
+      var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
+
+      }
+      // }
     }
   } else { // just hovering - lets color
-    // sceneWidth = document.getElementById("renderArea").offsetWidth;
-    // sceneHeight = document.getElementById("renderArea").offsetHeight;
-    // offset = $('#renderArea').offset();
     var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
     if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
       mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;

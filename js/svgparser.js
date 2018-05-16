@@ -23,7 +23,7 @@ function loadSVGFile(file) {
       });
     })
     .catch(function(error) {
-      console.error('error:', error);
+      // console.error('error:', error);
     });
 }
 
@@ -38,7 +38,7 @@ function loadSVGFile(file) {
 //   fillTree();
 // }
 
-function traverse(tag, callback) {
+function svgtraverse(tag, callback) {
 
   callback(tag);
 
@@ -46,17 +46,32 @@ function traverse(tag, callback) {
 
   for (var i = 0, l = children.length; i < l; i++) {
 
-    traverse(children[i], callback);
+    svgtraverse(children[i], callback);
 
   }
 
 };
 
 function drawFile(file, tag) {
+  var editor = lwsvgparser.editor.name
+  var version = parseFloat(lwsvgparser.editor.version)
+  if (editor == "inkscape") {
+    if (version > 0.91) {
+      resol = 96;
+    } else {
+      resol = 90;
+    }
+  } else if (editor == "illustrator") {
+    resol = 72
+  } else {
+    resol = 96;
+  }
+  console.log("File: " + file.name + " was creater in " + editor + " version " + version + ".  Setting import resolution to " + resol + "dpi")
+  scale = 1 / (resol / 25.4)
   var svgtagobject = new THREE.Object3D();
   svgtagobject.name = file.name
-  traverse(tag, function(child) {
-    console.log(child)
+  svgtraverse(tag, function(child) {
+    // console.log(child)
     if (child.paths.length && child.paths[0].length) {
 
       // child.getShapes().forEach(function(shape) {
@@ -67,7 +82,7 @@ function drawFile(file, tag) {
       // });
 
       child.getPaths().forEach(function(path) {
-        path = drawSVGLine(tag, path)
+        path = drawSVGLine(tag, path, scale)
         path.userData.layer = child.layer
         path.name = child.attrs.id
         // console.log(path)
@@ -82,14 +97,25 @@ function drawFile(file, tag) {
 }
 
 
-function drawSVGLine(tag, path) {
+function drawSVGLine(tag, path, scale) {
+
   var geometry = new THREE.Geometry();
   var material = this.createSVGLineMaterial(tag);
 
   path.points.forEach(function(point) {
     // obj.position.y += lwsvgparser.document.height;
     geometry.vertices.push(new THREE.Vector3(point.x, -point.y + lwsvgparser.document.height, 0));
+    // geometry.vertices.push(new THREE.Vector3(point.x, point.y, 0));
   });
+
+  var opt = {
+    scale: {
+      x: scale,
+      y: scale,
+      z: 1
+    }
+  }
+  alterGeometry(geometry, opt)
 
   return new THREE.Line(geometry, material);
 }
