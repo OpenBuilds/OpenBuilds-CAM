@@ -186,6 +186,9 @@ function fillTree() {
   $('#toolpathsmenu').empty();
   clearSceneFlag = true;
 
+  // sort Documents Geometry (Travelling Salesman)
+  sortDocumentsByGeometryStartpoint()
+
   if (objectsInScene.length > 0) {
 
     // clear any childless parents
@@ -308,7 +311,7 @@ function fillTree() {
                         <li class="group">
                           <div class="form-check">
                             <input type="checkbox" class="form-check-input chkaddjob chkchildof` + i + `">
-                            <label class="form-check-label" for=""><i class="fa fa-fw fa-sm fa-object-group" aria-hidden="true"></i>` + childLayer + `</label>
+                            <label class="form-check-label" for=""><i class="fa fa-fw fa-sm fa-object-group" aria-hidden="true"></i>` + childLayer.label + `</label>
                             <a class="remove btn btn-xs btn-light"><i class="fa fa-trash" aria-hidden="true"></i></a>
                           </div>
                           <ul id="` + childLayer.id + `"></ul>

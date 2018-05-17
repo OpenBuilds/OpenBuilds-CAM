@@ -93,6 +93,15 @@ function openGCodeFromText() {
   //create an object
   object = new THREE.Object3D();
   // take gcode, and it to that object
+  lastLine = {
+    x: 0,
+    y: 0,
+    z: 0,
+    e: 0,
+    f: 0,
+    feedrate: null,
+    extruding: false
+  };
   createObjectFromGCode(gcode, object)
   scene.add(object);
 }

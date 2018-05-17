@@ -81,6 +81,7 @@ function addJob(id) {
       setupJob(toolpathsInScene.length - 1);
     }, 800); // launch modal
   } else { // Existing toolpath
+    // toolpath.children = sortToolpathByGeometryStartpoint(toolpath.children);
     setTimeout(function() {
       fillTree();
       toolpathPreview(id);

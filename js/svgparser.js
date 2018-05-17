@@ -83,7 +83,10 @@ function drawFile(file, tag) {
 
       child.getPaths().forEach(function(path) {
         path = drawSVGLine(tag, path, scale)
-        path.userData.layer = child.layer
+        var layer = {
+          label: child.layer
+        }
+        path.userData.layer = layer
         path.name = child.attrs.id
         // console.log(path)
         // console.log(path)

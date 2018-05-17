@@ -30,3 +30,21 @@ function alterGeometry(geometry, opt) {
   return geometry;
 
 }
+
+// Travelling Salesman - basics
+// toolpathsInScene[0].children = sortArrayByGeometryCenter(toolpathsInScene[0].children);
+function sortDocumentsByGeometryStartpoint() {
+  for (i = 0; i < objectsInScene.length; i++) {
+    var array = objectsInScene[i].children
+    objectsInScene[i].children = array.sort(function(a, b) {
+      var aDist = parseFloat(distanceFormula(0, a.geometry.vertices[0].x, 0, a.geometry.vertices[0].y))
+      var bDist = parseFloat(distanceFormula(0, b.geometry.vertices[0].x, 0, b.geometry.vertices[0].y));
+      if (aDist < bDist) {
+        return -1;
+      }
+      if (aDist > bDist) {
+        return 1;
+      }
+    });
+  }
+}
