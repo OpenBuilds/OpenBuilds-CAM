@@ -8,7 +8,8 @@ function getMeshLineFromClipperPath(opts) {
   var opacity = opts.opacity ? opts.opacity : 0.3;
   var isShowOutline = 'isShowOutline' in opts ? opts.isShowOutline : false;
   var retGrp = new THREE.Group();
-  // console.log("getMeshLineFromClipperPath", opts);
+  var cap = opts.caps;
+  // console.log("getMeshLineFromClipperPath", opts.caps);
   var localInflateBy = width / 2;
 
   // loop thru all paths and draw a mesh stroke
@@ -34,15 +35,18 @@ function getMeshLineFromClipperPath(opts) {
       var pt2 = (pi + 1 < path.length) ? path[pi + 1] : path[0];
       // console.log(pt, pt2)
       if (pt2 != null) {
-        var clipperStroke = addStrokeCapsToLine(pt.X, pt.Y, pt2.X, pt2.Y, localInflateBy * 2, "round", color);
+        var clipperStroke = addStrokeCapsToLine(pt.X, pt.Y, pt2.X, pt2.Y, localInflateBy * 2, cap, color);
         // console.log(clipperStroke)
-        if (clipperStroke.length > 1) console.warn("got more than 1 path on clipperStroke");
-        if (clipperStroke.length < 1) console.warn("got less than 1 path on clipperStroke");
-        csThisPath.push(clipperStroke[0]);
+        // if (clipperStroke.length > 1) console.warn("got more than 1 path on clipperStroke");
+        // if (clipperStroke.length < 1) console.warn("got less than 1 path on clipperStroke");
+        csThisPath.push(clipperStroke[0] || [{
+          X: 0,
+          Y: 0
+        }]);
       }
     }
     // console.log(csThisPath);
-    var csUnion = getUnionOfClipperPaths(csThisPath);
+    var csUnion = getUnionOfClipperPaths(csThisPath, false, false);
     // var csUnion = csThisPath
 
     if (isShowOutline) {
@@ -99,8 +103,7 @@ function getMeshLineFromClipperPath(opts) {
 
 
 function addStrokeCapsToLine(x1, y1, x2, y2, width, capType, color) {
-
-  // console.log(x1, y1, x2, y2, width, capType)
+  // console.log("addStrokeCapsToLine", capType)
   if (width < 0) {
     width = width * -1;
   }
@@ -152,8 +155,9 @@ function addStrokeCapsToLine(x1, y1, x2, y2, width, capType, color) {
 
   // draw rectangle along line. apply width to y axis.
   var wireGrp = new THREE.Object3D();
+  var capGrp = new THREE.Object3D();
   wireGrp.name = "wireGrp"
-
+  capGrp.name = "capGrp"
   var rectGeo = new THREE.Geometry();
   rectGeo.vertices.push(new THREE.Vector3(v1.x, v1.y - width / 2, 0));
   rectGeo.vertices.push(new THREE.Vector3(v2.x, v1.y - width / 2, 0));
@@ -187,13 +191,34 @@ function addStrokeCapsToLine(x1, y1, x2, y2, width, capType, color) {
     var shiftY = 0;
     circle2.position.set(shiftX + v2.x, shiftY + v2.y, 0);
     wireGrp.add(circle2);
+  } else {
+    var radius = width / 2;
+    var segments = 16;
+    var circleGeo = new THREE.CircleGeometry(radius, segments);
+    // Remove center vertex
+    circleGeo.vertices.shift();
+    var circle = new THREE.Line(circleGeo, lineMat);
+    // clone the circle
+    var circle2 = circle.clone();
+
+    // shift left (rotate 0 is left/right)
+    var shiftX = 0; //radius * -1;
+    var shiftY = 0;
+    circle.position.set(shiftX + v1.x, shiftY + v1.y, 0);
+    capGrp.add(circle);
+
+    // shift right
+    var shiftX = 0; //radius * 1;
+    var shiftY = 0;
+    circle2.position.set(shiftX + v2.x, shiftY + v2.y, 0);
+    capGrp.add(circle2);
   }
   // now reverse rotate
   wireGrp.rotateZ(-theta);
-
+  capGrp.rotateZ(-theta)
   // unshift postion
   wireGrp.position.set(x1 * 1, y1 * 1, 0);
-
+  capGrp.position.set(x1 * 1, y1 * 1, 0);
   //this.sceneAdd(wireGrp);
 
   // now simplify via Clipper
@@ -202,7 +227,7 @@ function addStrokeCapsToLine(x1, y1, x2, y2, width, capType, color) {
   var lineCtr = 0;
   // console.log(wireGrp)
   wireGrp.children.forEach(function(line) {
-    //console.log("line in group:", line);
+    // console.log("line in group:", line);
     subj_paths.push([]);
     line.geometry.vertices.forEach(function(v) {
       //line.updateMatrixWorld();
@@ -219,9 +244,34 @@ function addStrokeCapsToLine(x1, y1, x2, y2, width, capType, color) {
     lineCtr++;
   }, this);
 
-  // console.log(subj_paths)
+  var clip_paths = [];
+  capGrp.updateMatrixWorld();
+  var lineCtr = 0;
+  capGrp.children.forEach(function(line) {
+    //console.log("line in group:", line);
+    clip_paths.push([]);
+    line.geometry.vertices.forEach(function(v) {
+      //line.updateMatrixWorld();
+      //console.log("pushing v onto clipper:", v);
+      var vector = v.clone();
+      var vec = line.localToWorld(vector);
+      var xval = round(vec.x, 1)
+      var yval = round(vec.y, 1)
+      clip_paths[lineCtr].push({
+        X: xval,
+        Y: yval
+      });
+    }, this);
+    lineCtr++;
+  }, this);
 
-  var sol_paths = getUnionOfClipperPaths(subj_paths);
+
+  // console.log(subj_paths.length, clip_paths.length, cap)
+  if (cap == "round") {
+    var sol_paths = getUnionOfClipperPaths(subj_paths, false, cap);
+  } else {
+    var sol_paths = getDiffOfClipperPaths(subj_paths, clip_paths, cap);
+  }
   //this.drawClipperPaths(sol_paths, this.colorSignal, 0.8);
   // this.sceneAdd(group);
 
@@ -229,7 +279,7 @@ function addStrokeCapsToLine(x1, y1, x2, y2, width, capType, color) {
 
 }
 
-function round(number, precision) {
+function round(number, precision, type) {
   var shift = function(number, precision, reverseShift) {
     if (reverseShift) {
       precision = -precision;
@@ -241,13 +291,17 @@ function round(number, precision) {
 }
 
 
-function getUnionOfClipperPaths(subj_paths) {
-  // console.log("getUnionOfClipperPaths", subj_paths);
+function getUnionOfClipperPaths(subj_paths, clip_paths, cap) {
+  // console.log(subj_paths, clip_paths, cap)
   var cpr = new ClipperLib.Clipper();
   var scale = 100000;
   subj_paths = ClipperLib.JS.Clean(subj_paths, cleandelta * scale);
+  clip_paths = ClipperLib.JS.Clean(clip_paths, cleandelta * scale);
   ClipperLib.JS.ScaleUpPaths(subj_paths, scale);
+  ClipperLib.JS.ScaleUpPaths(clip_paths, scale);
   cpr.AddPaths(subj_paths, ClipperLib.PolyType.ptSubject, true);
+  // if (subj_paths && clip_paths) {
+  cpr.AddPaths(clip_paths, ClipperLib.PolyType.ptClip, true);
   var subject_fillType = ClipperLib.PolyFillType.pftNonZero;
   var clip_fillType = ClipperLib.PolyFillType.pftNonZero;
   var solution_paths = new ClipperLib.Paths();
@@ -266,6 +320,33 @@ function getUnionOfClipperPaths(subj_paths) {
   return solution_paths;
 }
 
+
+function getDiffOfClipperPaths(subj_paths, clip_paths, cap) {
+  var cpr = new ClipperLib.Clipper();
+  var scale = 100000;
+  subj_paths = ClipperLib.JS.Clean(subj_paths, cleandelta * scale);
+  clip_paths = ClipperLib.JS.Clean(clip_paths, cleandelta * scale);
+  ClipperLib.JS.ScaleUpPaths(subj_paths, scale);
+  ClipperLib.JS.ScaleUpPaths(clip_paths, scale);
+  cpr.AddPaths(subj_paths, ClipperLib.PolyType.ptSubject, true);
+  cpr.AddPaths(clip_paths, ClipperLib.PolyType.ptClip, true);
+  var subject_fillType = ClipperLib.PolyFillType.pftNonZero;
+  var clip_fillType = ClipperLib.PolyFillType.pftNonZero;
+  var solution_paths = new ClipperLib.Paths();
+  cpr.Execute(ClipperLib.ClipType.ctDifference, solution_paths, subject_fillType, clip_fillType);
+  var cleandelta = 0.1; // 0.1 should be the appropriate delta in different cases
+  // console.log(JSON.stringify(solution_paths));
+  // console.log("solution:", solution_paths);
+  // scale back down
+  for (var i = 0; i < solution_paths.length; i++) {
+    for (var j = 0; j < solution_paths[i].length; j++) {
+      solution_paths[i][j].X = solution_paths[i][j].X / scale;
+      solution_paths[i][j].Y = solution_paths[i][j].Y / scale;
+    }
+  }
+  ClipperLib.JS.ScaleDownPaths(subj_paths, scale);
+  return solution_paths;
+}
 
 function createClipperPathsAsMesh(paths, color, opacity, holePath, depth) {
   if (color === undefined) color = this.colorDimension;

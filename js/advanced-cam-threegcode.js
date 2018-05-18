@@ -895,14 +895,16 @@ drawClipperPathsWithTool = function(config) {
 
   if (config.z < config.tabdepth) {
     if (config.toolDia > minimumToolDiaForPreview || config.toolDia < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
-      // generate once use again for each z
+      // generate once use again
+      // for each z
       var lineMesh = this.getMeshLineFromClipperPath({
         width: config.toolDia,
         clipperPath: clipperPaths,
         isSolid: true,
         opacity: 0.2,
         isShowOutline: true,
-        color: config.prettyGrpColor
+        color: config.prettyGrpColor,
+        caps: "round"
       });
       lineMesh.position.z = config.z;
       prettyGrp.add(lineMesh)
@@ -912,7 +914,8 @@ drawClipperPathsWithTool = function(config) {
         isSolid: true,
         opacity: 0.4,
         isShowOutline: true,
-        color: 0x00ff00
+        color: 0x00ff00,
+        caps: "negative"
       });
       lineMesh.position.z = config.z;
       prettyGrp.add(lineMesh)
@@ -926,7 +929,8 @@ drawClipperPathsWithTool = function(config) {
         isSolid: true,
         opacity: 0.2,
         isShowOutline: true,
-        color: config.prettyGrpColor
+        color: config.prettyGrpColor,
+        caps: "round"
       });
       lineMesh.position.z = config.z;
       prettyGrp.add(lineMesh)

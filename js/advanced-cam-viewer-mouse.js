@@ -80,10 +80,10 @@ function setOpacity(array, opacity) {
           pretty.traverse(function(child) {
             if (child.material && child.type == "Mesh") {
               // child.material.opacity = opacity / depth;
-              child.material.opacity = opacity / depth;
+              child.material.opacity = opacity / depth + 0.5;
             } else if (child.material && child.type == "Line") {
               // child.material.opacity = (opacity / depth )+0.25;
-              child.material.opacity = (opacity / depth) + 0.2;
+              child.material.opacity = (opacity / depth) + 0.5;
             }
           });
         }

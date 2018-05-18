@@ -127,7 +127,7 @@ function eventsTree() {
       return false;
     }
     $input.parent().parent().find('ul .chkaddjob').each(function(n, input) {
-      console.log('got here')
+      // console.log('got here')
       $input = $(input);
       $parent = $input.parent().parent();
       if ($input.hasClass('item')) {
@@ -142,9 +142,9 @@ function eventsTree() {
   // remove a row
   $('.jobsetupgroup .remove').on('click', function() {
     storeUndo(true)
-    console.log("Clicked on Remove Row")
+    // console.log("Clicked on Remove Row")
     var $parent = $(this).parent();
-    console.log($parent)
+    // console.log($parent)
     var idx, i, j;
     if ($parent.find('input').hasClass('item')) { // polyline
       console.log('has item');
@@ -153,10 +153,10 @@ function eventsTree() {
       j = parseInt(idx[2]);
       objectsInScene[i].remove(objectsInScene[i].children[j]);
     } else { // layer
-      console.log('no item');
+      // console.log('no item');
       var children = [];
       $parent.parent().find('ul .chkaddjob').each(function(n, input) {
-        console.log(input)
+        // console.log(input)
         idx = $(input).attr('id').split('.');
         i = parseInt(idx[1]);
         j = parseInt(idx[2]);
