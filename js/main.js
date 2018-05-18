@@ -338,7 +338,7 @@ function getChangelog() {
           <div class="p-2"><img class="border border-light rounded" src="` + avatar + `" height="32px" width="32px"/></div>
           <div class="p-2">
           <small>` + formatDate(date) + `</small>:
-            <a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a> added <br><a href="` + url + `" target="_new"><h6 class="text-dark"><i class="fa fa-github fa-fw" aria-hidden="true"></i>` + message + `</h6></a>
+            <a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a> added <br><a href="` + url + `" target="_new"><h6 class="text-dark"><i class="fab fa-github"></i> ` + message + `</h6></a>
           </div>
         </div>
         </li>`

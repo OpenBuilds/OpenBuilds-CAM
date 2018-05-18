@@ -6,6 +6,8 @@
 // todo union for pocketGrp, etc...
 // todo select and then Move
 
+//todo: tabs: constrain tabwidth > tooldia+saneminimum
+
 var inflateGrp, fileParentGroup, svgPath, y, shape, lines, line;
 var options = {};
 
@@ -82,6 +84,7 @@ inflatePath = function(infobject, inflateVal, zstep, zdepth, zstart, leadinval, 
       // var newClipperPaths = clipperPaths;
     }
     var inflatedPaths = getInflatePath(newClipperPaths, inflateVal);
+    console.log(inflatedPaths);
     if (leadinval > 0) { // plasma lead-in
       var leadInPaths = getInflatePath(newClipperPaths, inflateVal * 3);
     }
