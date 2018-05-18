@@ -64,7 +64,7 @@ function drawWorkspace() {
   hemiLight.color.setHSL(0.6, 1, 0.6);
   hemiLight.groundColor.setHSL(0.095, 1, 0.75);
   hemiLight.position.set(0, 50, 0);
-  hemiLight.visible = true;
+  hemiLight.visible = false;
   hemiLight.name = "hemiLight"
   sceneLights.add(hemiLight);
   // if (helper) {
@@ -73,7 +73,7 @@ function drawWorkspace() {
   sceneLights.name = "Scene Lights"
   workspace.add(sceneLights);
 
-  scene.fog = new THREE.Fog(0xffffff, 1, 11000);
+  scene.fog = new THREE.Fog(0xffffff, 1, 20000);
 
   // SKYDOME
   var uniforms = {
@@ -97,24 +97,28 @@ function drawWorkspace() {
   var vertexShader = document.getElementById('vertexShader').textContent;
   var fragmentShader = document.getElementById('fragmentShader').textContent;
 
-  var skyGeo = new THREE.SphereGeometry(10000, 32, 15);
+  var skyGeo = new THREE.SphereGeometry(9900, 64, 15);
   var skyMat = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
     uniforms: uniforms,
-    side: THREE.BackSide
+    side: THREE.DoubleSide
   });
+
+  // var skyMat = new THREE.MeshPhongMaterial({
+  //   color: 0x0000ff,
+  //   specular: 0x0000ff,
+  //   shininess: 00
+  // });
 
   sky = new THREE.Mesh(skyGeo, skyMat);
   sky.name = "Skydome"
-  // sky.rotation.x = -Math.PI/4;
-  // sky.rotation.y = -Math.PI/4;
   workspace.add(sky);
 
   cone = new THREE.Mesh(new THREE.CylinderGeometry(0, 5, 40, 15, 1, false), new THREE.MeshPhongMaterial({
     color: 0x0000ff,
     specular: 0x0000ff,
-    shininess: 100
+    shininess: 00
   }));
   cone.overdraw = true;
   cone.rotation.x = -90 * Math.PI / 180;
@@ -246,7 +250,7 @@ function init3D() {
 
   // ThreeJS Render/Control/Camera
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 20000);
   camera.position.z = 295;
 
   var canvas = !!window.CanvasRenderingContext2D;
@@ -293,7 +297,7 @@ function init3D() {
 
   controls.enableRotate = true;
   controls.enableZoom = true; // optional
-  controls.maxDistance = 10000; // limit max zoom out
+  controls.maxDistance = 8000; // limit max zoom out
   controls.enableKeys = false; // Disable Keyboard on canvas
 
 
