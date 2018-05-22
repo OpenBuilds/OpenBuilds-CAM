@@ -615,8 +615,20 @@ d-grid {border: none; padding: 20px;}
     text-align: right;
 }
 
+.jobsetupfile:hover {
+   background: #f7f7f7;
+}
+
 .jobsetupfile td:first-child {
     text-align: left;
+}
+
+.form-check:hover{
+     background: #f7f7f7;
+}
+
+.form-check-input {
+  cursor: pointer;
 }
 
 .jobsetupfile .filename {

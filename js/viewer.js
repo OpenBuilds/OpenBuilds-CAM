@@ -84,7 +84,7 @@ function drawWorkspace() {
       value: new THREE.Color(0xffffff)
     },
     offset: {
-      value: 63
+      value: -63
     },
     exponent: {
       value: 0.71
