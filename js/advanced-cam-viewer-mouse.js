@@ -7,11 +7,14 @@ function initMouseMode() {
     mouseState = this.value
     console.log(mouseState)
 
+    scalewindow.style.visibility = "hidden";
+
     // select mode
     if (this.value == "select") {
       $("#mouseSelectBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
       $("#mouseMoveBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       $("#mouseDelBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
+      $("#mouseScaleBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       // setOpacity(toolpathsInScene, 0.6);
       if (dragcontrols) {
         dragcontrols.dispose();
@@ -29,6 +32,7 @@ function initMouseMode() {
       $("#mouseMoveBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
       $("#mouseSelectBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       $("#mouseDelBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
+      $("#mouseScaleBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       deselectAllObjects()
 
       // for (i = 0; i < objectsInScene.length; i++) {
@@ -50,6 +54,7 @@ function initMouseMode() {
       $("#mouseDelBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
       $("#mouseMoveBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       $("#mouseSelectBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
+      $("#mouseScaleBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
       deselectAllObjects()
       $('#renderArea').css('cursor', '');
       if (dragcontrols) {
@@ -60,6 +65,19 @@ function initMouseMode() {
       //   hotspot: 'bottom left'
       // });
       helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = delete Entity / <kbd>Ctrl + Left Mouse Click</kbd> = Delete entire Document / <kbd>Del</kbd> = Delete Selected"
+    }
+
+    // scale mode
+    if (this.value == "scale") {
+      if (dragcontrols) {
+        dragcontrols.dispose();
+      }
+      $("#mouseDelBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
+      $("#mouseMoveBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
+      $("#mouseSelectBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
+      $("#mouseScaleBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
+      deselectAllObjects()
+      helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = Select Entity to scale"
     }
     // end if
   }); // end radio.onChange

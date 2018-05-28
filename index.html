@@ -130,6 +130,9 @@
 										<label id="mouseDelBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Delete Mode">
 										<input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fas fa-eraser"></i>
 										</label>
+										<label id="mouseScaleBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Scale Mode">
+										<input type="radio" value="scale" name="options"  autocomplete="off"> <i class="fas fa-ruler"></i>
+										</label>
 									</div>
 									<div class="btn-group" data-toggle="buttons" data-tooltip="tooltip" data-placement="bottom" title="Undo/Redo">
 										<button id="undoBtn" disabled class="btn btn-sm btn-dark" onclick="undo()"><i class="fas fa-undo"></i></button>
@@ -163,6 +166,9 @@
 								<div id="renderArea">
 									<div id="rendermenu"></div>
 									<div id="selection" style="visibility: hidden;"></div>
+									<div id="scalewindow" style="visibility: hidden;">
+										<h3>Scale it!</h3>
+									</div>
 									<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;">
 	                  <!-- <span id="simgcode"></span> -->
 	                </div>
@@ -577,6 +583,9 @@
 	<script type="text/javascript" src="js/advanced-cam-pretty-render.js"></script>
 	<script type="text/javascript" src="js/advanced-cam-sim.js"></script>
 	<script type="text/javascript" src="js/advanced-cam-keyboard-bindings.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-transforms.js"></script>
+
+
 
 	<!-- DXF Library -->
 	<script type="text/javascript" src="lib/dxf/dxf-parser.js"></script>

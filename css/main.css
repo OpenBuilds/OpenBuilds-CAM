@@ -193,6 +193,15 @@ button:focus {outline:0 !important;}
   z-index: 2;
 }
 
+#scalewindow {
+  position: absolute;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(55, 55, 55, 0.5);
+  border-radius: 4px;
+  z-index: 2;
+}
+
 #rendermenu {
   /* margin-left: 20px;
   margin-right: 20px; */

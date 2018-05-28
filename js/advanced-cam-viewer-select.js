@@ -29,6 +29,7 @@ function selectNone() {
 
 function initMouseSelect() {
   selection = document.getElementById("selection");
+  scalewindow = document.getElementById("scalewindow");
   helpoverlay = document.getElementById("helpoverlay");
   listeners();
 }
@@ -194,7 +195,44 @@ function mouseDown(event) {
   } else if (mouseState == "move") {
     // what to do if left+click in movemode
     // currently uses customised DragControls, but want to make own in future
-  }
+  } else if (mouseState == "scale") {
+    // Do scaling
+    if (event.which == 1) { // only on left mousedown
+      // raycast single click selection
+      // sceneWidth = document.getElementById("renderArea").offsetWidth;
+      // sceneHeight = document.getElementById("renderArea").offsetHeight;
+      // offset = $('#renderArea').offset();
+      var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
+        mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;
+        mouseVector.y = -(event.offsetY / renderer.domElement.height) * 2 + 1;
+        camera.updateProjectionMatrix();
+        raycaster.setFromCamera(mouseVector, camera);
+        // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
+        // upwards of 10k objects and slows the filter down immensely
+        var documents = scene.getObjectByName("Documents");
+        if (documents) {
+          var intersects = raycaster.intersectObjects(documents.children, true)
+          if (intersects.length > 0) {
+            var intersection = intersects[0],
+              obj = intersection.object.parent;
+            if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
+              storeUndo(true);
+              // console.log("Have to Scale ", obj.name, event)
+              scalewindow.style.visibility = "visible";
+              offset = $('#renderArea').offset();
+              // console.log(offset)
+              scalewindow.style.left = (event.clientX - offset.left) + "px";
+              scalewindow.style.top = (event.clientY - offset.top) + "px";
+              showScaleWindow(obj);
+            }
+          } else {
+            // if nothing intersected we clicked empty space
+          }
+        }
+      } // end scale single click select
+    }
+  } // end scale
 }
 
 function mouseUp(event) {
@@ -342,6 +380,7 @@ function mouseMove(event) {
       if (documents) {
         var intersects = raycaster.intersectObjects(documents.children, true)
         if (intersects.length > 0) {
+          // clear all hover colors
           for (i = 0; i < objectsInScene.length; i++) {
             var obj = objectsInScene[i];
             obj.traverse(function(child) {
@@ -365,12 +404,23 @@ function mouseMove(event) {
             //   color: '#000'
             // });
           }
-          obj.traverse(function(child) {
-            if (child.type == "Line") {
-              child.userData.hover = true;
-            }
-          });
-        } else {
+          // console.log(obj)
+          if (mouseState == "scale" || (mouseState == "move" && !event.ctrlKey) || (mouseState == "delete" && event.ctrlKey)) {
+            obj = obj.parent
+            obj.traverse(function(child) {
+              if (child.type == "Line") {
+                child.userData.hover = true;
+              }
+            });
+          } else {
+            obj.traverse(function(child) {
+              if (child.type == "Line") {
+                child.userData.hover = true;
+              }
+            });
+          }
+
+        } else { // hovering over nothing
           $('#renderArea').css('cursor', '');
           for (i = 0; i < objectsInScene.length; i++) {
             var obj = objectsInScene[i];
