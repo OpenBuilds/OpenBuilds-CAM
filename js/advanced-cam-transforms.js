@@ -20,7 +20,6 @@ function showScaleWindow(object) {
           <span class="input-addon-label-right">mm</span>
         </div>
       </td>
-      <td rowspan="2">Link Aspect</td>
     </tr>
     <tr>
       <td>Height: </td>
