@@ -226,29 +226,19 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
     g += "; retracting back to z-safe";
     g += "\n" + g0 + " Z" + clearanceHeight + "\n"; // Position Before Plunge!
   }
-
   console.log("Generated gcode. length:", g.length);
   return g;
 };
 
 function prepgcodefile() {
-
-  // console.group("Consolidating GCODE file");
   var startgcode = document.getElementById('startgcode').value;
   var endgcode = document.getElementById('endgcode').value;
-
-  // Start GCODE
   var g = ""
   if (startgcode) {
     g += startgcode;
     g += "\n";
   }
-
-  // Toolpaths
   for (j = 0; j < toolpathsInScene.length; j++) {
-    // printLog('Preparing Gcode File: ' + toolpathsInScene[j].name, msgcolor, "file");
-    // console.log('Preparing Gcode File: ' + toolpathsInScene[j].name);
-    // document.getElementById('gcodepreview').value = "";
     if (toolpathsInScene[j].userData.visible) {
       if (typeof(toolpathsInScene[j].userData.gcode) != "undefined") {
         g += toolpathsInScene[j].userData.gcode;
@@ -258,30 +248,8 @@ function prepgcodefile() {
     }
   }
   g += "\n";
-
-  // End GCODE
   if (endgcode) {
     g += endgcode;
   }
-  // console.groupEnd();
   return g;
 }
-// borrowed tab generator code from https://github.com/andrewhodel/millcrum/blob/master/inc/mc.js
-distanceFormula = function(x1, x2, y1, y2) {
-  // get the distance between p1 and p2
-  var a = (x2 - x1) * (x2 - x1);
-  var b = (y2 - y1) * (y2 - y1);
-  return Math.sqrt(a + b);
-};
-
-newPointFromDistanceAndAngle = function(pt, ang, distance) {
-  // use cos and sin to get a new point with an angle
-  // and distance from an existing point
-  // pt = [x,y]
-  // ang = in degrees
-  // distance = N
-  var r = [];
-  r.push(pt[0] + (distance * Math.cos(ang * Math.PI / 180)));
-  r.push(pt[1] + (distance * Math.sin(ang * Math.PI / 180)));
-  return r;
-};
