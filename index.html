@@ -45,7 +45,7 @@
 												<div class="dropdown-menu" aria-labelledby="fileDropDown">
 													<label class="dropdown-item" style="margin: 0px;">
 													<i class="fa fa-folder-open fa-fw"></i> Open Document
-													<input type="file" id="filemenu" class="custom-file-input" accept=".svg,.dxf" multiple style="height: 26px;"/>
+													<input type="file" id="filemenu" class="custom-file-input" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple style="height: 26px;"/>
 													</label>
 													<div class="dropdown-divider"></div>
 													<h6 class="dropdown-header"> Workspace</h6>
@@ -118,7 +118,7 @@
 								<div id="buttonbar">
 									<span id="openbutton" class="btn btn-sm btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Open a drawing">
 										<i class="fa fa-folder-open fa-fw"></i> Open
-										<input id="file" type="file" accept=".svg,.dxf" multiple />
+										<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple />
 									</span>
 									<div class="btn-group btn-group-toggle" data-toggle="buttons">
 										<label id="mouseSelectBtn" class="btn btn-sm btn-success active focus" data-tooltip="tooltip" data-placement="bottom" title="Select Mode">
@@ -588,9 +588,13 @@
 	<script type="text/javascript" src="js/svgparser.js"></script>
 
 	<!-- SVG Lasersaur Library -->
-	<script type="text/javascript" src="lib/svgreader/SVGReader.js"></script>
+	<!-- <script type="text/javascript" src="lib/svgreader/SVGReader.js"></script>
 	<script type="text/javascript" src="lib/svgreader/svg2three.js"></script>
-	<script type="text/javascript" src="lib/svgreader/vec2.js"></script>
+	<script type="text/javascript" src="lib/svgreader/vec2.js"></script> -->
+
+	<!-- Bitmap Tracing -->
+	<script type="text/javascript" src="lib/potrace/potrace.js"></script>
+	<script type="text/javascript" src="js/potrace.js"></script>
 
 	<!--Settings Widgets -->
 	<script type="text/javascript" src="js\application-settings-controller.js"></script>

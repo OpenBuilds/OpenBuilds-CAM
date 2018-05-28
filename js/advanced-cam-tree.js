@@ -228,16 +228,16 @@ function fillTree() {
 
       var svgscale = null;
 
-      if (currentObject.name.indexOf('.svg') != -1) {
-        if (currentObjectData.editor) {
-          var localKey = currentObjectData.editor.name + 'DPI';
-          var dpi = loadSetting(localKey) || loadSetting('defaultDPI') || 24;
-          svgscale = 25.4 / parseFloat(dpi);
-          scaleSVGObject(currentObject, svgscale);
-        } else {
-          svgscale = currentObject.scale.x
-        }
-      }
+      // if (currentObject.name && currentObject.name.indexOf('.svg') != -1) {
+      //   if (currentObjectData.editor) {
+      //     var localKey = currentObjectData.editor.name + 'DPI';
+      //     var dpi = loadSetting(localKey) || loadSetting('defaultDPI') || 24;
+      //     svgscale = 25.4 / parseFloat(dpi);
+      //     scaleSVGObject(currentObject, svgscale);
+      //   } else {
+      //     svgscale = currentObject.scale.x
+      //   }
+      // }
 
       if (objectsInScene[i].type != "Mesh") {
         var file = `

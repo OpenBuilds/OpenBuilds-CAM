@@ -151,23 +151,11 @@ function loadFile(f) {
         // putFileObjectAtZero();
         resetView();
       };
-
     } else if (f.name.match(/.svg$/i)) {
       // console.log(f.name + " is a SVG file");
       loadSVGFile(f)
       printLog('SVG Opened', msgcolor, "file");
       resetView();
-      // r.readAsText(f);
-      // r.onload = function(event) {
-      //   svg = r.result;
-      //   // var svgpreview = document.getElementById('svgpreview');
-      //   // svgpreview.innerHTML = r.result;
-      //   // var svgfile = $('#svgpreview').html();
-      //   // svg2three(svgfile, f.name);
-      //
-      // };
-
-
       // } else if (f.name.match(/.gcode$/i)) {
       //   r.readAsText(f);
       //   r.onload = function(event) {
@@ -231,6 +219,12 @@ function loadFile(f) {
       //   console.log("Opened STL, and asking user for Slice settings");
       //   console.groupEnd();
       //   $('#stlslice').modal('show');
+    } else if (f.name.match(/\.(gif|jpg|jpeg|tiff|png|bmp)$/i)) {
+      r.onload = function(e) {
+        traceFromImg(e, f);
+        // $('#imageThumb').attr('src', e.target.result);
+      }
+      r.readAsDataURL(f);
     } else {
       // Not usable
     }

@@ -17,9 +17,10 @@ function loadFiles(files) {
 // Load one file
 function loadSVGFile(file) {
   // Load SVG from file
+  console.log(file)
   return lwsvgparser.loadFromFile(file).then(function(element) {
       return lwsvgparser.parse().then(function(tags) {
-        drawFile(file, tags);
+        drawFile(file.name, tags);
       });
     })
     .catch(function(error) {
@@ -52,7 +53,9 @@ function svgtraverse(tag, callback) {
 
 };
 
-function drawFile(file, tag) {
+function drawFile(name, tag) {
+  // console.log(lwsvgparser)
+  // console.log(file)
   var editor = lwsvgparser.editor.name
   var version = parseFloat(lwsvgparser.editor.version)
   if (editor == "inkscape") {
@@ -66,10 +69,10 @@ function drawFile(file, tag) {
   } else {
     resol = 96;
   }
-  console.log("File: " + file.name + " was creater in " + editor + " version " + version + ".  Setting import resolution to " + resol + "dpi")
+  console.log("File: " + name + " was created in " + editor + " version " + version + ".  Setting import resolution to " + resol + "dpi")
   scale = 1 / (resol / 25.4)
   var svgtagobject = new THREE.Object3D();
-  svgtagobject.name = file.name
+  svgtagobject.name = name
   svgtraverse(tag, function(child) {
     // console.log(child)
     if (child.paths.length && child.paths[0].length) {
@@ -83,8 +86,9 @@ function drawFile(file, tag) {
 
       child.getPaths().forEach(function(path) {
         path = drawSVGLine(tag, path, scale)
+        // console.log(child)
         var layer = {
-          label: child.layer
+          label: child.layer || "unnamed layer"
         }
         path.userData.layer = layer
         path.name = child.attrs.id
