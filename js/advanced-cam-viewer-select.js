@@ -393,17 +393,13 @@ function mouseMove(event) {
           var intersection = intersects[0];
           obj = intersection.object;
           if (mouseState == "delete") {
-            $('#renderArea').awesomeCursor('eraser', {
-              color: '#000',
-              hotspot: 'bottom left'
-            });
+            $('#renderArea').css('cursor', 'pointer');
           } else if (mouseState == "select") {
             $('#renderArea').css('cursor', 'pointer');
           } else if (mouseState == "move") {
             $('#renderArea').css('cursor', '');
-            // $('#renderArea').awesomeCursor('hand-paper-o', {
-            //   color: '#000'
-            // });
+          } else if (mouseState = "scale") {
+            $('#renderArea').css('cursor', 'pointer');
           }
           // console.log(obj)
           if (mouseState == "scale" || (mouseState == "move" && !event.ctrlKey) || (mouseState == "delete" && event.ctrlKey)) {

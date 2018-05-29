@@ -207,12 +207,14 @@ button:focus {outline:0 !important;}
 }
 
 #scalewindow {
+  min-width: 350px;
   position: absolute;
   padding: 8px;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(55, 55, 55, 0.5);
   border-radius: 4px;
   z-index: 2;
+
 }
 
 #rendermenu {
