@@ -47,7 +47,7 @@ function toolpathPreviewExec(i) {
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union);
   } else if (operation == "Laser: Vector (path outside)") {
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, (SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union);
-  } else if (operation == "Laser: Vector Fill (Beta)") {
+  } else if (operation == "Laser: Vector (raster fill) (Beta)") {
     toolpathsInScene[i].userData.inflated = getToolpath("fill", i, (SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union);
   } else if (operation == "CNC: Vector (path inside)") {
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(ToolDia / 2), 0, ZStep, ZDepth, ZStart, false, tabdepth, tabspace, tabwidth, union);

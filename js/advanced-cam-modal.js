@@ -11,7 +11,7 @@ function typeofOperation(newval, objectseq) {
   } else if (newval == "Laser: Vector (path outside)") {
     laserOutsideMode(objectseq);
     updateCamUserData(objectseq);
-  } else if (newval == "Laser: Vector Fill (Beta)") {
+  } else if (newval == "Laser: Vector (raster fill) (Beta)") {
     laserOutsideMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "CNC: Vector (path outside)") {
@@ -222,7 +222,7 @@ function setupJob(i) {
               <option>Laser: Vector (no path offset)</option>
               <option>Laser: Vector (path inside)</option>
               <option>Laser: Vector (path outside)</option>
-              <option>Laser: Vector Fill (Beta)</option>
+              <option>Laser: Vector (raster fill) (Beta)</option>
               <!--option>CNC: V-Engrave</option-->
               <option>Plasma: Vector (path outside)</option>
               <option>Plasma: Vector (path inside)</option>
