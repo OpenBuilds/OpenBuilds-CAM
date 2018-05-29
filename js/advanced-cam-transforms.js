@@ -305,7 +305,6 @@ function rotateObj(dir) {
           ypos = (ypos + ypos_offset);
         }
         var zpos = worldPt.z;
-
         newVert.push(new THREE.Vector3(xpos, ypos, zpos));
       }
       console.log(child.geometry.vertices[10], newVert[10])

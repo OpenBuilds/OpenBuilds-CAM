@@ -476,13 +476,13 @@ function makeSprite(scene, rendererType, vals) {
   var txt = vals.text;
   if (vals.size) actualFontSize = vals.size;
 
-  context.font = "normal " + textHeight + "px Arial";
+  context.font = "normal " + textHeight + "px Impact";
   metrics = context.measureText(txt);
   var textWidth = metrics.width;
 
   canvas.width = textWidth;
   canvas.height = textHeight;
-  context.font = "normal " + textHeight + "px Arial";
+  context.font = "normal " + textHeight + "px Impact";
   context.textAlign = "center";
   context.textBaseline = "middle";
   //context.fillStyle = "#ff0000";
