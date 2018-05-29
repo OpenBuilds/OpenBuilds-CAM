@@ -47,6 +47,8 @@ function toolpathPreviewExec(i) {
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union);
   } else if (operation == "Laser: Vector (path outside)") {
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, (SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union);
+  } else if (operation == "Laser: Vector Fill (Beta)") {
+    toolpathsInScene[i].userData.inflated = getToolpath("fill", i, (SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union);
   } else if (operation == "CNC: Vector (path inside)") {
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(ToolDia / 2), 0, ZStep, ZDepth, ZStart, false, tabdepth, tabspace, tabwidth, union);
   } else if (operation == "CNC: Vector (path outside)") {
@@ -95,6 +97,9 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
   }
   if (operation == "pocket") {
     var toolpath = pocketPath(config, toolpathsInScene[index], offset, StepOver, zstep, zdepth, zstart, union);
+  }
+  if (operation == "fill") {
+    var toolpath = fillPath(config);
   }
   if (operation == "dragknife") {
     var toolpath = dragknifePath(config, toolpathsInScene[index], offset, zstep, zdepth);
