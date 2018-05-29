@@ -29,7 +29,7 @@
   border-bottom: 1px solid #ddd;
   border-left: 1px solid #ddd;
   border-right: 0px solid #ddd;
-  padding: 5px 10px;
+  padding: 5px 5px;
   margin: 2px 0;
   outline: none;
   /* field styles */
@@ -37,6 +37,19 @@
 
 .input-addon-label-right {
   width: 100px;
+  flex: 1;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-left: 0px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding: 5px 10px;
+  margin: 2px 0;
+  outline: none;
+  /* field styles */
+}
+
+.input-addon-label-right-sm {
+  width: 50px;
   flex: 1;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;

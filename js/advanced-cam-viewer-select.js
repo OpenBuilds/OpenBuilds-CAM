@@ -228,6 +228,7 @@ function mouseDown(event) {
             }
           } else {
             // if nothing intersected we clicked empty space
+            // scalewindow.style.visibility = "hidden";
           }
         }
       } // end scale single click select
