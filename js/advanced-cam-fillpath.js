@@ -1,9 +1,12 @@
+// All the credit for this functionality goes to @tbfleming: https://github.com/tbfleming
+
 var clipperToCppScale = 1 / 128; // Prevent overflow for coordinates up to ~1000 mm
 var inchToClipperScale = 1270000000;
 var mmToClipperScale = inchToClipperScale / 25.4; // 50000000;
 var clipperToCppScale = 1 / 128; // Prevent overflow for coordinates up to ~1000 mm
 var cleanPolyDist = 100;
 var arcTolerance = 10000;
+var fillColor = 0x006666;
 
 function fillPath(config) {
   var geometry = getClipperPaths(config.toolpath)
@@ -305,7 +308,7 @@ function mergePaths(bounds, paths, config) {
     tabwidth: false,
     toolDia: config.offset * 2,
     drawPretty: true,
-    prettyGrpColor: outsideCutsColor
+    prettyGrpColor: fillColor
   }
   var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
   return drawings;
