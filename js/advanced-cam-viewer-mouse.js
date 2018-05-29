@@ -60,10 +60,6 @@ function initMouseMode() {
       if (dragcontrols) {
         dragcontrols.dispose();
       }
-      // $('#renderArea').awesomeCursor('eraser', {
-      //   color: '#000',
-      //   hotspot: 'bottom left'
-      // });
       helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = delete Entity / <kbd>Ctrl + Left Mouse Click</kbd> = Delete entire Document / <kbd>Del</kbd> = Delete Selected"
     }
 

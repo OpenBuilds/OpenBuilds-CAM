@@ -132,7 +132,7 @@ function showScaleWindow(object) {
       </button>
     </div>
     <div id="rotatetab" class="tab-pane fade">
-      <i class="far fa-undo"></i> <b>Rotation</b>: <small>` + object.name + `</small>
+    <i class="fas fa-undo"></i> <b>Rotation</b>: <small>` + object.name + `</small>
       <table>
         <tr>
           <td>Angle: </td>
