@@ -8,9 +8,9 @@ function animateTree() {
     obj.traverse(function(child) {
       if (child.type == "Line" && child.userData.selected) {
         if (child.userData.hover) {
-          child.material.color.setRGB(1, 0.1, 0.4);
+          child.material.color.setRGB(0, 0.48, 1);
         } else {
-          child.material.color.setRGB(1, 0.1, 0.1);
+          child.material.color.setRGB(1, 0.2, 0.27);
         }
         var $link = $('#' + child.userData.link);
         var $parent = $link.parent();
@@ -20,9 +20,9 @@ function animateTree() {
         selectCount++
       } else if (child.type == "Line" && !child.userData.selected) {
         if (child.userData.hover) {
-          child.material.color.setRGB(0.1, 0.4, 1);
+          child.material.color.setRGB(0, 0.48, 1);
         } else {
-          child.material.color.setRGB(0.1, 0.1, 0.1);
+          child.material.color.setRGB(0, 0, 0);
         }
         var $link = $('#' + child.userData.link);
         var $parent = $link.parent();

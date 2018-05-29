@@ -44,16 +44,19 @@
 												</a>
 												<div class="dropdown-menu" aria-labelledby="fileDropDown">
 													<label class="dropdown-item" style="margin: 0px;">
-													<i class="fa fa-folder-open fa-fw"></i> Open Document
+													<i class="far fa-folder-open"></i> Open Document
 													<input type="file" id="filemenu" class="custom-file-input" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple style="height: 26px;"/>
 													</label>
 													<div class="dropdown-divider"></div>
 													<h6 class="dropdown-header"> Workspace</h6>
+													<a class="dropdown-item" href="#" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
+														<i class="far fa-file"></i> New Empty Workspace
+													</a>
 													<a class="dropdown-item" href="#" onclick="exportWorkspace();">
-														<i class="fa fa-fw fa-download" aria-hidden="true"></i></i> Export Workspace
+														<i class="fas fa-download"></i> Export Workspace
 													</a>
 													<label class="dropdown-item" style="margin: 0px;">
-														<i class="fa fa-upload fa-fw"></i> Import Workspace
+														<i class="fas fa-upload"></i> Import Workspace
 														<input type="file" id="workspaceImport" class="custom-file-input" accept=".json" multiple style="height: 26px;"/>
 													</label>
 													<div class="dropdown-divider"></div>
@@ -110,7 +113,7 @@
 											</li>
 
 										</ul>
-										<!-- <iframe src="https://ghbtns.com/github-btn.html?user=openbuilds&repo=cam&type=fork&count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe> -->
+										<iframe src="https://ghbtns.com/github-btn.html?user=openbuilds&repo=cam&type=fork&count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
 									</div>
 								</nav>
 							</div>
@@ -130,7 +133,7 @@
 										<label id="mouseDelBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Delete Mode">
 										<input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fas fa-eraser"></i>
 										</label>
-										<label id="mouseScaleBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Scale / Position Mode">
+										<label id="mouseScaleBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Scale / Position / Rotate Mode">
 										<input type="radio" value="scale" name="options"  autocomplete="off"> <i class="fas fa-ruler"></i>
 										</label>
 									</div>
@@ -143,7 +146,7 @@
 										<button id="AddRect" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Rectangle"><i class="fa fa-square-o" aria-hidden="true"></i></button>
 									</div> -->
 									<div class="btn-group" data-toggle="buttons">
-										<button class="btn btn-sm btn-dark" onclick="resetView();" data-tooltip="tooltip" data-placement="bottom" title="View Extents"><i class="fa fa-eye" aria-hidden="true"></i></button>
+										<button class="btn btn-sm btn-dark" onclick="resetView();" data-tooltip="tooltip" data-placement="bottom" title="View Documents"><i class="fa fa-eye" aria-hidden="true"></i></button>
 										<button class="btn btn-sm btn-dark" onclick="resetView(scene.getObjectByName('Grid'));" data-tooltip="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
 									</div>
 									<div class="btn-group" role="group" aria-label="Simulator">
@@ -191,7 +194,7 @@
 									<table style="width: 100%">
 										<tr class="jobsetupfile">
 											<td>
-												<label for="toolpathstable">Toolpaths</label>
+												<label for="toolpathstable"><h6>Toolpaths</h6></label>
 											</td>
 											<td>
 												<div class="btn-group" data-toggle="buttons" data-tooltip="tooltip" data-placement="bottom" title="Undo/Redo">
@@ -210,7 +213,7 @@
 									<table style="width: 100%">
 										<tr class="jobsetupfile">
 											<td>
-												<label for="filetreetable">Documents</label>
+												<label for="filetreetable"><h6>Documents</h6></label>
 											</td>
 											<td>
 											</td>
