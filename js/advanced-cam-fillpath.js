@@ -10,17 +10,18 @@ var fillColor = 0x006666;
 
 function fillPath(config) {
   var geometry = getClipperPaths(config.toolpath)
+  var geometryInside = getInflatePath(geometry, -config.offset);
   var scale = 100;
-  ClipperLib.JS.ScaleUpPaths(geometry, scale);
+  ClipperLib.JS.ScaleUpPaths(geometryInside, scale);
   var lineDistance = config.offset * 200;
   var angle = 0;
-  if (!geometry.length || !geometry[0].length) {
+  if (!geometryInside.length || !geometryInside[0].length) {
     // console.log("Invalid Geometry", geometry)
     return [];
   } else {
     // console.log("Valid Geometry", geometry)
   }
-  let bounds = clipperBounds(geometry);
+  let bounds = clipperBounds(geometryInside);
   let cx = (bounds.minX + bounds.maxX) / 2;
   let cy = (bounds.minY + bounds.maxY) / 2;
   let r = dist(cx, cy, bounds.minX, bounds.minY) + lineDistance;
@@ -47,7 +48,7 @@ function fillPath(config) {
   }
 
   var allPaths = [];
-  let separated = separateTabs(scan, geometry);
+  let separated = separateTabs(scan, geometryInside);
   // console.log("separated", separated)
   for (i = 1; i < separated.length; i += 2) {
     // console.log(i, separated[i])
@@ -66,6 +67,108 @@ function fillPath(config) {
   inflateGrpZ.userData.pretty = prettyGrp
   return inflateGrpZ
 };
+
+function mergePaths(bounds, paths, config) {
+  // console.log("inside mergePaths")
+  if (paths.length === 0) {
+    console.log("Paths 0 length")
+    return [];
+  }
+
+
+  let currentPath = paths[0];
+  if (pathIsClosed(currentPath))
+    currentPath.push(currentPath[0]);
+  let currentPoint = currentPath[currentPath.length - 1];
+  paths[0] = [];
+
+  let mergedPaths = [];
+  let numLeft = paths.length - 1;
+  while (numLeft > 0) {
+    let closestPathIndex = null;
+    let closestPointIndex = null;
+    let closestPointDist = null;
+    let closestReverse = false;
+    for (let pathIndex = 0; pathIndex < paths.length; ++pathIndex) {
+      let path = paths[pathIndex];
+
+      function check(pointIndex) {
+        let point = path[pointIndex];
+        let dist = (currentPoint.X - point.X) * (currentPoint.X - point.X) + (currentPoint.Y - point.Y) * (currentPoint.Y - point.Y);
+        if (closestPointDist === null || dist < closestPointDist) {
+          closestPathIndex = pathIndex;
+          closestPointIndex = pointIndex;
+          closestPointDist = dist;
+          closestReverse = false;
+          return true;
+        } else
+          return false;
+      }
+      if (pathIsClosed(path)) {
+        for (let pointIndex = 0; pointIndex < path.length; ++pointIndex)
+          check(pointIndex);
+      } else if (path.length) {
+        check(0);
+        if (check(path.length - 1))
+          closestReverse = true;
+      }
+    }
+
+    let path = paths[closestPathIndex];
+    paths[closestPathIndex] = [];
+    numLeft -= 1;
+    let needNew;
+    if (pathIsClosed(path)) {
+      needNew = crosses(bounds, currentPoint, path[closestPointIndex]);
+      path = path.slice(closestPointIndex, path.length).concat(path.slice(1, closestPointIndex));
+      path.push(path[0]);
+    } else {
+      needNew = true;
+      if (closestReverse) {
+        path = path.slice();
+        path.reverse();
+      }
+    }
+    if (needNew) {
+      mergedPaths.push(currentPath);
+      currentPath = path;
+      currentPoint = currentPath[currentPath.length - 1];
+    } else {
+      currentPath = currentPath.concat(path);
+      currentPoint = currentPath[currentPath.length - 1];
+    }
+  }
+  mergedPaths.push(currentPath);
+
+  let camPaths = [];
+  for (let i = 0; i < mergedPaths.length; ++i) {
+    let path = mergedPaths[i];
+    camPaths.push(path)
+  }
+
+  // return camPaths;
+
+  var scale = 100;
+  ClipperLib.JS.ScaleDownPaths(camPaths, scale);
+
+  var drawClipperPathsconfig = {
+    paths: camPaths,
+    color: toolpathColor,
+    opacity: 0.2,
+    z: 0,
+    isClosed: false,
+    name: 'inflateGrp',
+    leadInPaths: false,
+    tabdepth: false,
+    tabspace: false,
+    tabwidth: false,
+    toolDia: config.offset * 2,
+    drawPretty: true,
+    prettyGrpColor: fillColor
+  }
+  var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
+  return drawings;
+}
 
 function clipperBounds(paths) {
   let minX = Number.MAX_VALUE;
@@ -210,108 +313,6 @@ function cPathsToClipperPaths(memoryBlocks, cPathsRef, cNumPathsRef, cPathSizesR
   }
 
   return clipperPaths;
-}
-
-function mergePaths(bounds, paths, config) {
-  // console.log("inside mergePaths")
-  if (paths.length === 0) {
-    console.log("Paths 0 length")
-    return [];
-  }
-
-
-  let currentPath = paths[0];
-  if (pathIsClosed(currentPath))
-    currentPath.push(currentPath[0]);
-  let currentPoint = currentPath[currentPath.length - 1];
-  paths[0] = [];
-
-  let mergedPaths = [];
-  let numLeft = paths.length - 1;
-  while (numLeft > 0) {
-    let closestPathIndex = null;
-    let closestPointIndex = null;
-    let closestPointDist = null;
-    let closestReverse = false;
-    for (let pathIndex = 0; pathIndex < paths.length; ++pathIndex) {
-      let path = paths[pathIndex];
-
-      function check(pointIndex) {
-        let point = path[pointIndex];
-        let dist = (currentPoint.X - point.X) * (currentPoint.X - point.X) + (currentPoint.Y - point.Y) * (currentPoint.Y - point.Y);
-        if (closestPointDist === null || dist < closestPointDist) {
-          closestPathIndex = pathIndex;
-          closestPointIndex = pointIndex;
-          closestPointDist = dist;
-          closestReverse = false;
-          return true;
-        } else
-          return false;
-      }
-      if (pathIsClosed(path)) {
-        for (let pointIndex = 0; pointIndex < path.length; ++pointIndex)
-          check(pointIndex);
-      } else if (path.length) {
-        check(0);
-        if (check(path.length - 1))
-          closestReverse = true;
-      }
-    }
-
-    let path = paths[closestPathIndex];
-    paths[closestPathIndex] = [];
-    numLeft -= 1;
-    let needNew;
-    if (pathIsClosed(path)) {
-      needNew = crosses(bounds, currentPoint, path[closestPointIndex]);
-      path = path.slice(closestPointIndex, path.length).concat(path.slice(1, closestPointIndex));
-      path.push(path[0]);
-    } else {
-      needNew = true;
-      if (closestReverse) {
-        path = path.slice();
-        path.reverse();
-      }
-    }
-    if (needNew) {
-      mergedPaths.push(currentPath);
-      currentPath = path;
-      currentPoint = currentPath[currentPath.length - 1];
-    } else {
-      currentPath = currentPath.concat(path);
-      currentPoint = currentPath[currentPath.length - 1];
-    }
-  }
-  mergedPaths.push(currentPath);
-
-  let camPaths = [];
-  for (let i = 0; i < mergedPaths.length; ++i) {
-    let path = mergedPaths[i];
-    camPaths.push(path)
-  }
-
-  // return camPaths;
-
-  var scale = 100;
-  ClipperLib.JS.ScaleDownPaths(camPaths, scale);
-
-  var drawClipperPathsconfig = {
-    paths: camPaths,
-    color: toolpathColor,
-    opacity: 0.2,
-    z: 0,
-    isClosed: false,
-    name: 'inflateGrp',
-    leadInPaths: false,
-    tabdepth: false,
-    tabspace: false,
-    tabwidth: false,
-    toolDia: config.offset * 2,
-    drawPretty: true,
-    prettyGrpColor: fillColor
-  }
-  var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
-  return drawings;
 }
 
 function pathIsClosed(clipperPath) {
