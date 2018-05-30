@@ -41,7 +41,7 @@ function toolpathPreviewExec(i) {
 
   if (operation == "... Select Operation ...") {
     // do nothing
-  } else if (operation == "Laser: Vector (no path offset)") {
+  } else if (operation == "Laser: Vector (no path offset)") { //  operation,  index,  offset,           StepOver,   zstep,  zdepth,   zstart,   leadinval,      tabdepth,   tabspace,   tabwidth,   union
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, StepOver, 1, 1, 0, false, false, false, false, union);
   } else if (operation == "Laser: Vector (path inside)") {
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union);

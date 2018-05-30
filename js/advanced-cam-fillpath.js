@@ -155,7 +155,7 @@ function mergePaths(bounds, paths, config) {
     paths: camPaths,
     color: toolpathColor,
     opacity: 0.2,
-    z: 0,
+    z: -config.zdepth,
     isClosed: false,
     name: 'inflateGrp',
     leadInPaths: false,

@@ -150,7 +150,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
               g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + "\n"; // Move to XY position
 
               // then plunge
-              g += "\n" + g0 + " Z1\n"; // G0 to Z0 then Plunge!
+              g += "\n" + g0 + " Z0\n"; // G0 to Z0 then Plunge!
             }
 
 
