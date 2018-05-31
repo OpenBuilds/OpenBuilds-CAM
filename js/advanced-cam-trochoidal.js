@@ -2,6 +2,7 @@
 
 // sample move
 // var g = "G21\nG90\n";
+//   // trochoid_move(startpoint, endpoint, cutz, radius, increment
 // g += trochoid_move([0.00, 0.00], [100.00, 0.00], -1.0, 5.0, 2.0)
 // g += trochoid_move([100.00, 0.00], [100.00, 100.00], -1.0, 5.0, 2.0)
 // g += trochoid_move([100.00, 100.00], [0.00, 100.00], -1.0, 5.0, 2.0)
@@ -9,7 +10,7 @@
 // console.log(g)
 // end sample
 
-// duplicated functions, remove after int\egration
+// duplicated functions, remove after integration
 function distanceFormula(x1, x2, y1, y2) {
   // get the distance between p1 and p2
   var a = (x2 - x1) * (x2 - x1);
