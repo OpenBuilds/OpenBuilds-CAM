@@ -76,7 +76,7 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
       }
       for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
         if (i > config.zdepth) {
-          var zval = -zdepth
+          var zval = -config.zdepth
         } else {
           var zval = -i
         }

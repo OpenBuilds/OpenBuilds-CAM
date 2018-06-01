@@ -1,16 +1,6 @@
 // Porting GCMC to JS:https://gitlab.com/gcmc/gcmc/blob/master/example/trochoidal.gcmc
 
-// sample move
-// var g = "G21\nG90\n";
-//   // trochoid_move(startpoint, endpoint, cutz, radius, increment
-// g += trochoid_move([0.00, 0.00], [100.00, 0.00], -1.0, 5.0, 2.0)
-// g += trochoid_move([100.00, 0.00], [100.00, 100.00], -1.0, 5.0, 2.0)
-// g += trochoid_move([100.00, 100.00], [0.00, 100.00], -1.0, 5.0, 2.0)
-// g += trochoid_move([0.00, 100.00], [0.00, 0.00], -1.0, 5.0, 2.0)
-// console.log(g)
-// end sample
-
-// duplicated functions, remove after integration
+// duplicated functions, remove after int\egration
 function distanceFormula(x1, x2, y1, y2) {
   // get the distance between p1 and p2
   var a = (x2 - x1) * (x2 - x1);
@@ -20,7 +10,7 @@ function distanceFormula(x1, x2, y1, y2) {
 
 // vector functions
 var rotateVector = function(vec, ang) {
-  ang = -ang * (Math.PI / 180);
+  // ang = -ang * (Math.PI / 180);
   var cos = Math.cos(ang);
   var sin = Math.sin(ang);
   return new Array(Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000, Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000);
@@ -69,14 +59,24 @@ function trochoid_move(startpoint, endpoint, cutz, radius, increment) {
 
   // // Go to the trochoid entry-point and move to cutting deph
   var trochoidalpoint = trochoid_point(0.0, a, radius)
-  var rotated = rotateVector([trochoidalpoint[0], trochoidalpoint[1]], -toDegrees(rot))
+  var rotated = rotateVector([trochoidalpoint[0], trochoidalpoint[1]], rot)
   gcode += "G0 X" + (startpoint[0] + rotated[0]) + " Y" + (startpoint[1] + rotated[1]) + "\n"
 
   // // Calculate each next point of the trochoid until we traversed the whole path to the endpoint
   for (i = 0.0; i < toDegrees(n); i += ainc) {
     var trochoidalpoint = trochoid_point(toRadians(i), a, radius)
-    var rotated = rotateVector([trochoidalpoint[0], trochoidalpoint[1]], -toDegrees(rot))
+    var rotated = rotateVector([trochoidalpoint[0], trochoidalpoint[1]], rot)
     gcode += "G1 X" + (startpoint[0] + rotated[0]) + " Y" + (startpoint[1] + rotated[1]) + "\n"
   }
   return gcode;
 }
+
+// sample move
+var g = "G21\nG90\n";
+// trochoid_move(startpoint, endpoint, cutz, radius, increment
+g += trochoid_move([0.00, 0.00], [100.00, 0.00], -1.0, 5.0, 2.0)
+g += trochoid_move([100.00, 0.00], [100.00, 100.00], -1.0, 5.0, 2.0)
+g += trochoid_move([100.00, 100.00], [0.00, 100.00], -1.0, 5.0, 2.0)
+g += trochoid_move([0.00, 100.00], [0.00, 0.00], -1.0, 5.0, 2.0)
+console.log(g)
+// end sample
