@@ -69,7 +69,7 @@ function addText() {
       });
 
     printLog('SVG Opened', msgcolor, "file");
-  }, 800);
+  }, 2000);
 }
 
 function addCircle(radius) {
