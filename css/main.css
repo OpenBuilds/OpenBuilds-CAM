@@ -23,60 +23,101 @@
   outline: none;
 }
 
+.input-addon:hover .font-select > a {
+    border-color: #28a745;
+}
+
+.input-addon:hover .cam-form-field {
+    border-color: #28a745;
+}
+
+.input-addon:hover .cam-form-field-right {
+    border-color: #28a745;
+}
+
+.input-addon:hover .input-addon-label-left {
+    border-color: #28a745;
+}
+
+.input-addon:hover .input-addon-label-right {
+    border-color: #28a745;
+}
+
+.input-addon:focus-within .cam-form-field {
+    border-color: #28a745;
+}
+
+.input-addon:focus-within .cam-form-field-right {
+    border-color: #28a745;
+}
+
+.input-addon:focus-within .input-addon-label-left {
+    border-color: #28a745;
+}
+
+.input-addon:focus-within .input-addon-label-right {
+    border-color: #28a745;
+}
+
 .input-addon-label-left {
   flex: 1;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  border-right: 0px solid #ddd;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  border-right: 0px solid;
   padding: 5px 5px;
   margin: 2px 0;
   background-color:rgba(255, 255, 255, 1);
   outline: none;
-  /* field styles */
+  border-color: #ddd;
 }
 
 .input-addon-label-right {
   width: 100px;
   flex: 1;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  border-left: 0px solid #ddd;
-  border-right: 1px solid #ddd;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-left: 0px solid;
+  border-right: 1px solid;
   padding: 5px 10px;
   margin: 2px 0;
   background-color:rgba(255, 255, 255, 1);
   outline: none;
-  /* field styles */
+  border-color: #ddd;
 }
 
 .input-addon-label-right-sm {
   width: 50px;
   flex: 1;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  border-left: 0px solid #ddd;
-  border-right: 1px solid #ddd;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-left: 0px solid;
+  border-right: 1px solid;
   padding: 5px 10px;
   margin: 2px 0;
   background-color:rgba(255, 255, 255, 1);
   outline: none;
-  /* field styles */
+  border-color: #ddd;
 }
 
 .cam-form-field {
   background-color: #fff;
   color: #222;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  border-left: 0px solid #ddd;
-  border-right: 0px solid #ddd;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-left: 0px solid;
+  border-right: 0px solid;
   width: 80px;
   margin: 2px 0;
   padding: 5px 2px;
   text-align: right;
   background-color:rgba(255, 255, 255, 1);
   outline: none;
+  border-color: #ddd;
+}
+.cam-form-field-right {
+  border-right: 1px solid;
+  border-color: #ddd;
 }
 
 body {

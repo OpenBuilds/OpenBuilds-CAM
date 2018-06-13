@@ -199,7 +199,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left"><i class="far fa-edit"></i></span>
-            <input type="text" class="cam-form-field" value="` + toolpathsInScene[i].name + `" id="tOpName` + i + `"  objectseq="` + i + `" min="0" style="border-right: 1px solid #ddd; width: 180px; text-align: center;">
+            <input type="text" class="cam-form-field cam-form-field-right" value="` + toolpathsInScene[i].name + `" id="tOpName` + i + `"  objectseq="` + i + `" min="0" style="width: 180px; text-align: center;">
           </div>
         </td>
       </tr>
@@ -214,7 +214,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left"><i class="fa fa-wrench" aria-hidden="true"></i></span>
-            <select class="cam-form-field" id="toperation` + i + `" objectseq="` + i + `" style="border-right: 1px solid #ddd; width: 180px;">
+            <select class="cam-form-field cam-form-field-right" id="toperation` + i + `" objectseq="` + i + `" style="width: 180px;">
               <option>... Select Operation ...</option>
               <option>CNC: Vector (path inside)</option>
               <option>CNC: Vector (path outside)</option>
@@ -422,7 +422,7 @@ function setupJob(i) {
               <td>
                 <div class="input-addon">
                   <span class="input-addon-label-left"><i class="fas fa-compress"></i></span>
-                  <select class="cam-form-field" id="tunion` + i + `" objectseq="` + i + `" style="border-right: 1px solid #ddd; width: 180px;">
+                  <select class="cam-form-field cam-form-field-right" id="tunion` + i + `" objectseq="` + i + `" style="width: 180px;">
                     <option selected>No</option>
                     <option>Yes</option>
                   </select>

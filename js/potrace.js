@@ -15,7 +15,7 @@ function traceFromImg(e, f) {
             name: "PoTrace.js",
             version: "1.00"
           };
-          drawFile(f.name, tags);
+          drawFile(f.name, tags, false);
         });
       })
       .catch(function(error) {

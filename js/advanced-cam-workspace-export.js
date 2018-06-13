@@ -212,9 +212,7 @@ function parseLoadWorkspace(json) {
   for (i = 0; i < toolpathsInScene.length; i++) {
     toolpathPreview(i);
   }
-  // console.log(newWorkspace)
-  // printLog('Loaded imported workspace', msgcolor, "file");
-  // resetView();
+  return true;
 }
 
 // fix for .toJSON not supporting the export of .position data: https://github.com/mrdoob/three.js/issues/13903

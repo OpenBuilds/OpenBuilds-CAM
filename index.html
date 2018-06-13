@@ -24,7 +24,7 @@
 		<link rel="manifest" href="/manifest.json">
 	</head>
 	<body>
-		<div class="page-container sidebar-collapsed">
+		<div class="page-container sidebar-collapsed" id="wrap">
 			<div class="container-fluid" style="height: 100%; width: 100%; padding-left: 2px; padding-right: 2px;">
 				<div id="container1">
 					<!-- #col1 (sidebar) -->
@@ -141,10 +141,11 @@
 										<button id="undoBtn" disabled class="btn btn-sm btn-dark" onclick="undo()"><i class="fas fa-undo"></i></button>
 										<button id="redoBtn" disabled class="btn btn-sm btn-dark" onclick="redo()"><i class="fas fa-redo"></i></button>
 									</div>
-									<!-- <div class="btn-group" data-toggle="buttons">
-										<button id="AddCircle" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Circle"><i class="fa fa-circle-o" aria-hidden="true"></i></button>
-										<button id="AddRect" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Rectangle"><i class="fa fa-square-o" aria-hidden="true"></i></button>
-									</div> -->
+									<div class="btn-group" data-toggle="buttons">
+										<!-- <button id="AddCircle" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Circle"><i class="fa fa-circle-o" aria-hidden="true"></i></button> -->
+										<!-- <button id="AddRect" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Rectangle"><i class="fa fa-square-o" aria-hidden="true"></i></button> -->
+										<button id="AddText" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Text"><i class="fas fa-font"></i></button>
+									</div>
 									<div class="btn-group" data-toggle="buttons">
 										<button class="btn btn-sm btn-dark" onclick="resetView();" data-tooltip="tooltip" data-placement="bottom" title="View Documents"><i class="fa fa-eye" aria-hidden="true"></i></button>
 										<button class="btn btn-sm btn-dark" onclick="resetView(scene.getObjectByName('Grid'));" data-tooltip="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
@@ -486,6 +487,64 @@
 		</div> -->
 		<!-- #addShapeModal -->
 
+		<div id="addShapeText" class="modal fade" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add Text</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" style="margin-left: 10px; margin-right: 10px;">
+						<form>
+							<div class="form-group row">
+								Create a new set of text paths
+								<table>
+						      <tr>
+						        <th style="width: 150px;"></th><th style="width: 210px;"></th>
+						      </tr>
+						      <tr>
+						        <td>Font: </td>
+										<td>
+											<div class="input-addon">
+				                <span class="input-addon-label-left"><i class="fas fa-font"></i></span>
+												<input id="font" type="text" class="cam-form-field" />
+											</div>
+										</td>
+									</tr>
+									<tr>
+						        <td>Size: </td>
+										<td>
+											<div class="input-addon">
+												<span class="input-addon-label-left"><i class="fas fa-text-height"></i></span>
+												<select class="cam-form-field cam-form-field-right" id="fontsize">
+													<option value="20" selected>20</option>
+													<option value="30">30</option>
+													<option value="40">40</option>
+													<option value="50">50</option>
+													<option value="70">70</option>
+												</select>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</form>
+						<hr/>
+						<input style="width: 100%;" id="texttorender" value="Type Here"></input>
+					</div>
+					<div class="modal-footer">
+						<div class="form-group row">
+							<div class="col-sm-10">
+								<button type="button" class="btn btn-primary" id="CreateText">Create</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div id="splashModal" class="modal fade" role="dialog">
 			<div class="modal-dialog" role="document">
 				<!-- Modal content-->
@@ -557,7 +616,14 @@
 	<!-- Helpers -->
 	<script type="text/javascript" src="js/helpers.js"></script>
 
-	<!-- <script type="text/javascript" src="js/advanced-cam-basic-shapes.js"></script> -->
+	<!-- Google Fonts as CAM paths -->
+	<link rel="stylesheet" type="text/css" href="lib/jquery/fontselect/styles/fontselect-bootstrap4.css" />
+	<script type="text/javascript" src="lib/jquery/fontselect/jquery.fontselect.min.js"></script>
+	<script type="text/javascript" src="lib/opentypejs/opentype.min.js"></script>
+
+	<!-- SimpleCAD -->
+	<script type="text/javascript" src="js/advanced-cam-basic-shapes.js"></script>
+
 	<!-- ThreeJS -->
 	<script type="text/javascript" src="lib/threejs/three.min.js"></script>
 	<script type="text/javascript" src="lib/threejs/GridRect.js"></script>
@@ -618,6 +684,8 @@
 	<script type="text/javascript" src="js/gcodeviewer.js"></script>
 	<!-- User Interface -->
 	<script type="text/javascript" src="js/main.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/rsvp@4/dist/rsvp.min.js"></script>
 
   <script type="x-shader/x-vertex" id="vertexShader">
 		varying vec3 vWorldPosition;

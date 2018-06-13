@@ -20,7 +20,7 @@ function loadSVGFile(file) {
   console.log(file)
   return lwsvgparser.loadFromFile(file).then(function(element) {
       return lwsvgparser.parse().then(function(tags) {
-        drawFile(file.name, tags);
+        drawFile(file.name, tags, false);
       });
     })
     .catch(function(error) {
@@ -53,7 +53,7 @@ function svgtraverse(tag, callback) {
 
 };
 
-function drawFile(name, tag) {
+function drawFile(name, tag, flip) {
   // console.log(lwsvgparser)
   // console.log(file)
   var editor = lwsvgparser.editor.name
@@ -84,14 +84,16 @@ function drawFile(name, tag) {
       //   svgtagobject.add(shape);
       // });
 
+      var count = 0
       child.getPaths().forEach(function(path) {
-        path = drawSVGLine(tag, path, scale)
+        count++;
+        path = drawSVGLine(tag, path, scale, flip)
         // console.log(child)
         var layer = {
           label: child.layer || "unnamed layer"
         }
         path.userData.layer = layer
-        path.name = child.attrs.id
+        path.name = child.attrs.id || "path" + count
         // console.log(path)
         // console.log(path)
         svgtagobject.add(path);
@@ -104,14 +106,18 @@ function drawFile(name, tag) {
 }
 
 
-function drawSVGLine(tag, path, scale) {
+function drawSVGLine(tag, path, scale, flip) {
 
   var geometry = new THREE.Geometry();
   var material = this.createSVGLineMaterial(tag);
 
   path.points.forEach(function(point) {
     // obj.position.y += lwsvgparser.document.height;
-    geometry.vertices.push(new THREE.Vector3(point.x, -point.y + lwsvgparser.document.height, 0));
+    if (flip) {
+      geometry.vertices.push(new THREE.Vector3(point.x, point.y + lwsvgparser.document.height, 0));
+    } else {
+      geometry.vertices.push(new THREE.Vector3(point.x, -point.y + lwsvgparser.document.height, 0));
+    }
     // geometry.vertices.push(new THREE.Vector3(point.x, point.y, 0));
   });
 
