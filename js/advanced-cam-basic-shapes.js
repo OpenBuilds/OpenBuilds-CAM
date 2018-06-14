@@ -14,7 +14,12 @@ $("#AddText").on("click", function() {
   // dialog.dialog( "open" );
 });
 
-$('#font').fontselect().change(function() {
+$('#texttorender').css('font-family', "Bowlby One SC");
+
+$('#font').fontselect({
+  placeholder: 'Bowlby One SC',
+  lookahead: 3
+}).change(function() {
 
   // replace + signs with spaces for css
   var font = $(this).val().replace(/\+/g, ' ');
@@ -22,10 +27,10 @@ $('#font').fontselect().change(function() {
   font = font.split(':');
   // set family on paragraphs
   $('#texttorender').css('font-family', font[0]);
-  console.log('font-family', font[0])
+  // console.log('font-family', font[0])
   var fontsize = $('#fontsize').val();
   $('#texttorender').css('font-size', fontsize + "px");
-}).val("Aclonica");
+}).val("Bowlby+One+SC");
 
 $('#fontsize').change(function() {
   var fontsize = $('#fontsize').val();
@@ -44,13 +49,13 @@ function addText() {
   font = font.split(':');
   // set family on paragraphs
   var string = $("#texttorender").val()
-  console.log('font-family: ', font[0], " size: ", fontsize, " String: " + string)
+  // console.log('font-family: ', font[0], " size: ", fontsize, " String: " + string)
 
   var textasSVG = getText(font[0], "regular", string, fontsize)
   // var textasSVG = getText("Allan", "regular", "Go", 10)
   setTimeout(function() {
     var svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50 50\" width=\"150px\"> <path fill=\"#F7931E\" stroke=\"#000\" d=\"" + textasSVG._result + "\"/>  </svg>"
-    console.log(svg)
+    // console.log(svg)
     return lwsvgparser.loadFromString(svg).then(function(element) {
         return lwsvgparser.parse().then(function(tags) {
           lwsvgparser.editor = {
@@ -187,6 +192,7 @@ function getTextFromData(fontData, fontVariant, text, fontSize, x, y) {
 
 function getTextFromFile(file, text, fontSize, offsetX, offsetY) {
   return getFont(file).then(function(font) {
+    console.log(font)
     var path = font.getPath(text, 0, 0, fontSize);
     var res = '';
 

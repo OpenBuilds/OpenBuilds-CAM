@@ -97,6 +97,24 @@
   border-color: #ddd;
 }
 
+#texttorender {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 1px solid;
+  border-color: #ddd;
+}
+
+#texttorender:focus {
+  border-color: #28a745;
+}
+
+#texttorender:hover {
+  border-color: #28a745;
+}
+
+
 body {
     padding-top: 0px;
     height: 100%;

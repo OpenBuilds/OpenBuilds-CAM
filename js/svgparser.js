@@ -66,6 +66,8 @@ function drawFile(name, tag, flip) {
     }
   } else if (editor == "illustrator") {
     resol = 72
+  } else if (editor == "Opentype.js") {
+    resol = 57
   } else {
     resol = 96;
   }

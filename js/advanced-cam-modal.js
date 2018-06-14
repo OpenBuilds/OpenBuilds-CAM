@@ -199,7 +199,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="far fa-edit"></i></span>
-            <input type="text" class="cam-form-field cam-form-field-right active-border" value="` + toolpathsInScene[i].name + `" id="tOpName` + i + `"  objectseq="` + i + `" min="0" style="width: 180px; text-align: center;">
+            <input autofocus type="text" class="cam-form-field cam-form-field-right active-border" value="` + toolpathsInScene[i].name + `" id="tOpName` + i + `"  objectseq="` + i + `" min="0" style="width: 180px; text-align: center;">
           </div>
         </td>
       </tr>
@@ -437,6 +437,7 @@ function setupJob(i) {
   $('#statusBody2').html(template2);
   $('#statusFooter').html(`<button type="button" id="previewToolpathBtn" class="btn btn-success" onclick="toolpathPreview(` + i + `); fillTree();">Apply and Preview Toolpath </button>`);
   noMode(); // Default to NOOP
+  $("#tOpName" + i).focus()
 
   if (toolpathsInScene[i].userData.camOperation) {
     $('#toperation' + i).val(toolpathsInScene[i].userData.camOperation).prop('selected', true)
