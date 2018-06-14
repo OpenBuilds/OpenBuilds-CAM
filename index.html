@@ -508,8 +508,8 @@
 						        <td>Font: </td>
 										<td>
 											<div class="input-addon">
-				                <span class="input-addon-label-left"><i class="fas fa-font"></i></span>
-												<input id="font" type="text" class="cam-form-field" />
+				                <span class="input-addon-label-left  active-border"><i class="fas fa-font"></i></span>
+												<input id="font" type="text" class="cam-form-field  active-border" />
 											</div>
 										</td>
 									</tr>
@@ -517,8 +517,8 @@
 						        <td>Size: </td>
 										<td>
 											<div class="input-addon">
-												<span class="input-addon-label-left"><i class="fas fa-text-height"></i></span>
-												<select class="cam-form-field cam-form-field-right" id="fontsize">
+												<span class="input-addon-label-left active-border"><i class="fas fa-text-height"></i></span>
+												<select class="cam-form-field cam-form-field-right  active-border" id="fontsize">
 													<option value="20" selected>20</option>
 													<option value="30">30</option>
 													<option value="40">40</option>
@@ -532,7 +532,9 @@
 							</div>
 						</form>
 						<hr/>
-						<input style="width: 100%;" id="texttorender" value="Type Here"></input>
+						<div class="input-addon">
+							<input style="width: 100%;" id="texttorender" class="active-border" value="Type Here"></input>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<div class="form-group row">

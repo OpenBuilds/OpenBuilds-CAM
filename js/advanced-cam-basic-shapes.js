@@ -152,6 +152,12 @@ function addRect(width, height) {
 
 // from https://github.com/nraynaud/webgcode/blob/66e2662fcb72219024976610a6c66d307af84882/webapp/cnc/cam/text.js
 var getFont = function(url) {
+  if (url.match('^http://')) {
+    url = url.replace("http://", "//")
+  }
+  if (url.match('^https://')) {
+    url = url.replace("https://", "//")
+  }
   return new RSVP.Promise(function(resolve, reject) {
     opentype.load(url, function(err, font) {
       if (err)
