@@ -128,6 +128,82 @@ pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zde
       // calc Stepover
       var cutwidth = ((config.offset * 2) * (config.stepover / 100)) //mm per cut
       // todo for newClipperPaths.length (Split each clipperpath into own pocket)
+      // for (k = 1; k < newClipperPaths.length; k++) {
+      // var pathobj = [];
+      // pathobj.push(newClipperPaths[k])
+      // console.log("processing " + newClipperPaths[k])
+      for (i = 0; i < 1000; i++) { // Rather 1000 than a while loop, just in case, break when it no longer has data to work with
+        if (i == 0) {
+          inflateValUsed = config.offset; // at outer perimeter we offset just half tool else cut is bigger than sketch
+        }
+        if (inflateValUsed < config.offset) {
+          inflateValUsed = config.offset
+        } else {
+          inflateValUsed = cutwidth * i;
+        }
+        if (inflateValUsed < config.offset) {
+          console.log("Should skip " + i)
+        }
+        // console.log(i, inflateValUsed, config.offset)
+        if (inflateValUsed > 0) {
+          // console.log(i, inflateValUsed, inflateVal, cutwidth, (cutwidth * i), (inflateVal * 2))
+          var inflatedPaths = getInflatePath(newClipperPaths, -inflateValUsed);
+          if (inflatedPaths.length > 0) {
+            // Duplicate each loop, down into Z.  We go full depth before next loop.
+            for (j = config.zdepth; j > config.zstart; j -= config.zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
+              // console.log(j)
+              if (j * config.zstep < config.zdepth) {
+                var zval = -j
+              } else {
+                var zval = -config.zdepth;
+              }
+              // get the inflated/deflated path
+              var drawClipperPathsconfig = {
+                paths: inflatedPaths,
+                color: toolpathColor,
+                opacity: 0.8,
+                z: zval,
+                isClosed: true,
+                name: 'inflatedGroup',
+                leadInPaths: false,
+                tabdepth: false,
+                tabspace: false,
+                tabwidth: false,
+                toolDia: config.offset * 2,
+                drawPretty: true,
+                prettyGrpColor: pocketColor
+              }
+              var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
+              inflateGrp = drawings.lines;
+              inflateGrp.name = 'inflateGrp';
+              inflateGrp.position = config.toolpath.position;
+              pocketGrp.add(inflateGrp);
+              prettyGrp.add(drawings.pretty)
+            }
+          } else {
+            // console.log('Pocket already done after ' + i + ' iterations');
+            break;
+          }
+        }
+      }
+      // }
+      // get the inflated/deflated path then inside each loop, Duplicate each loop, down into Z.  We go full depth before next loop.
+      if (config.offset > 1 || config.offset < -1) {
+        pocketGrp.userData.pretty = prettyGrp;
+      }
+      pocketGrp.children = pocketGrp.children.reverse(); // Inside Out! Breakthrough!
+      return pocketGrp;
+    } else {
+      console.log("Union")
+      // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
+      var newClipperPaths = simplifyPolygons(clipperPaths);
+      // console.log(newClipperPaths)
+      if (newClipperPaths.length < 1) {
+        console.error("Clipper Simplification Failed!:");
+      }
+      // calc Stepover
+      var cutwidth = ((config.offset * 2) * (config.stepover / 100)) //mm per cut
+      // todo for newClipperPaths.length (Split each clipperpath into own pocket)
       for (k = 0; k < newClipperPaths.length; k++) {
         var pathobj = [];
         pathobj.push(newClipperPaths[k])
@@ -193,8 +269,6 @@ pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zde
       }
       pocketGrp.children = pocketGrp.children.reverse(); // Inside Out! Breakthrough!
       return pocketGrp;
-    } else {
-      console.log("Not Union: Running Pockets on non-unions not supported yet: Highly unlikely that an object inside an object needs to be pocket to same depth ever")
     } // end no union
   }
 };
