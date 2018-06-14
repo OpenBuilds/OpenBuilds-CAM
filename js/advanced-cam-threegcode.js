@@ -3,7 +3,6 @@
     Based on code from:  John Lauer, Todd Fleming, Nicholas Raynaud and others
 */
 
-// todo union for pocketGrp, etc...
 // todo select and then Move
 
 //todo: tabs: constrain tabwidth > tooldia+saneminimum
