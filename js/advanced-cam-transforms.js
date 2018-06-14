@@ -39,9 +39,9 @@ function showScaleWindow(object) {
           <td>Width: </td>
           <td>
             <div class="input-addon">
-              <span class="input-addon-label-left"><i class="fas fa-ruler-horizontal"></i></span>
-              <input type="text" class="cam-form-field" value="` + width + `" id="scaleWidth"  objectseq="` + i + `" style="text-align: right;">
-              <span class="input-addon-label-right">mm</span>
+              <span class="input-addon-label-left active-border"><i class="fas fa-ruler-horizontal"></i></span>
+              <input type="text" class="cam-form-field active-border" value="` + width + `" id="scaleWidth"  objectseq="` + i + `" style="text-align: right;">
+              <span class="input-addon-label-right active-border">mm</span>
             </div>
           </td>
         </tr>
@@ -49,9 +49,9 @@ function showScaleWindow(object) {
           <td>Height: </td>
           <td>
             <div class="input-addon">
-              <span class="input-addon-label-left"><i class="fas fa-ruler-vertical"></i></span>
-              <input type="text" class="cam-form-field" value="` + height + `" id="scaleHeight"  objectseq="` + i + `" style="text-align: right;">
-              <span class="input-addon-label-right">mm</span>
+              <span class="input-addon-label-left active-border"><i class="fas fa-ruler-vertical"></i></span>
+              <input type="text" class="cam-form-field active-border" value="` + height + `" id="scaleHeight"  objectseq="` + i + `" style="text-align: right;">
+              <span class="input-addon-label-right active-border">mm</span>
             </div>
           </td>
         </tr>
@@ -89,17 +89,17 @@ function showScaleWindow(object) {
           <td>
             <div class="input-addon">
               <span class="input-addon-label-left"><i class="fas fa-ruler-horizontal"></i></span>
-              <input type="text" class="cam-form-field" value="` + left + `" id="left"  objectseq="` + i + `" style="text-align: right;">
+              <input type="text" class="cam-form-field active-border" value="` + left + `" id="left"  objectseq="` + i + `" style="text-align: right;">
             </div>
           </td>
           <td>
             <div class="input-addon">
-              <input type="text" class="cam-form-field" value="` + xcenter + `" id="xcenter"  objectseq="` + i + `" style="text-align: right;">
+              <input type="text" class="cam-form-field active-border" value="` + xcenter + `" id="xcenter"  objectseq="` + i + `" style="text-align: right;">
             </div>
           </td>
           <td>
             <div class="input-addon">
-              <input type="text" class="cam-form-field" value="` + right + `" id="right"  objectseq="` + i + `" style="text-align: right;">
+              <input type="text" class="cam-form-field active-border" value="` + right + `" id="right"  objectseq="` + i + `" style="text-align: right;">
               <span class="input-addon-label-right-sm">mm</span>
             </div>
           </td>
@@ -108,17 +108,17 @@ function showScaleWindow(object) {
           <td>
             <div class="input-addon">
               <span class="input-addon-label-left"><i class="fas fa-ruler-vertical"></i></span>
-              <input type="text" class="cam-form-field" value="` + bottom + `" id="bottom"  objectseq="` + i + `" style="text-align: right;">
+              <input type="text" class="cam-form-field active-border" value="` + bottom + `" id="bottom"  objectseq="` + i + `" style="text-align: right;">
             </div>
           </td>
           <td>
             <div class="input-addon">
-              <input type="text" class="cam-form-field" value="` + ycenter + `" id="ycenter"  objectseq="` + i + `" style="text-align: right;">
+              <input type="text" class="cam-form-field active-border" value="` + ycenter + `" id="ycenter"  objectseq="` + i + `" style="text-align: right;">
             </div>
           </td>
           <td>
             <div class="input-addon">
-              <input type="text" class="cam-form-field" value="` + top + `" id="top"  objectseq="` + i + `" style="text-align: right;">
+              <input type="text" class="cam-form-field active-border" value="` + top + `" id="top"  objectseq="` + i + `" style="text-align: right;">
             <span class="input-addon-label-right-sm">mm</span>
             </div>
           </td>
@@ -138,9 +138,9 @@ function showScaleWindow(object) {
           <td>Angle: </td>
           <td>
             <div class="input-addon">
-              <span class="input-addon-label-left"></span>
-              <input type="text" class="cam-form-field" value="45" id="rotationangle"  objectseq="` + i + `" style="text-align: right;">
-              <span class="input-addon-label-right">&deg;</span>
+              <span class="input-addon-label-left active-border"></span>
+              <input type="text" class="cam-form-field active-border" value="45" id="rotationangle"  objectseq="` + i + `" style="text-align: right;">
+              <span class="input-addon-label-right active-border">&deg;</span>
             </div>
           </td>
         </tr>

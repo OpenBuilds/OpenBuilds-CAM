@@ -118,7 +118,7 @@ pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zde
     var clipperPaths = getClipperPaths(config.toolpath)
     // console.log("clipperPaths:", clipperPaths);
     if (config.union == "Yes") {
-      // console.log("Union")
+      console.log("Union")
       // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
       var newClipperPaths = simplifyPolygons(clipperPaths);
       // console.log(newClipperPaths)
@@ -144,7 +144,7 @@ pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zde
           if (inflateValUsed < config.offset) {
             console.log("Should skip " + i)
           }
-          console.log(i, inflateValUsed, config.offset)
+          // console.log(i, inflateValUsed, config.offset)
           if (inflateValUsed > 0) {
             // console.log(i, inflateValUsed, inflateVal, cutwidth, (cutwidth * i), (inflateVal * 2))
             var inflatedPaths = getInflatePath(pathobj, -inflateValUsed);
@@ -339,7 +339,7 @@ polarPoint = function(r, theta) {
 };
 
 simplifyPolygons = function(paths) {
-  // console.log('Simplifying: ', paths);
+  console.log('Simplifying: ', paths);
   var scale = 10000;
   ClipperLib.JS.ScaleUpPaths(paths, scale);
   var newClipperPaths = ClipperLib.Clipper.SimplifyPolygons(paths, ClipperLib.PolyFillType.pftEvenOdd);

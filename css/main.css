@@ -27,35 +27,12 @@
     border-color: #28a745;
 }
 
-.input-addon:hover .cam-form-field {
+.input-addon:hover .active-border {
     border-color: #28a745;
 }
 
-.input-addon:hover .cam-form-field-right {
-    border-color: #28a745;
-}
 
-.input-addon:hover .input-addon-label-left {
-    border-color: #28a745;
-}
-
-.input-addon:hover .input-addon-label-right {
-    border-color: #28a745;
-}
-
-.input-addon:focus-within .cam-form-field {
-    border-color: #28a745;
-}
-
-.input-addon:focus-within .cam-form-field-right {
-    border-color: #28a745;
-}
-
-.input-addon:focus-within .input-addon-label-left {
-    border-color: #28a745;
-}
-
-.input-addon:focus-within .input-addon-label-right {
+.input-addon:focus-within .active-border {
     border-color: #28a745;
 }
 

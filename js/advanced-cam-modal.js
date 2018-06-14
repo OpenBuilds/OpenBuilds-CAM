@@ -198,8 +198,8 @@ function setupJob(i) {
         <td>Name:</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><i class="far fa-edit"></i></span>
-            <input type="text" class="cam-form-field cam-form-field-right" value="` + toolpathsInScene[i].name + `" id="tOpName` + i + `"  objectseq="` + i + `" min="0" style="width: 180px; text-align: center;">
+            <span class="input-addon-label-left active-border"><i class="far fa-edit"></i></span>
+            <input type="text" class="cam-form-field cam-form-field-right active-border" value="` + toolpathsInScene[i].name + `" id="tOpName` + i + `"  objectseq="` + i + `" min="0" style="width: 180px; text-align: center;">
           </div>
         </td>
       </tr>
@@ -213,8 +213,8 @@ function setupJob(i) {
         <td>Type of cut: </td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><i class="fa fa-wrench" aria-hidden="true"></i></span>
-            <select class="cam-form-field cam-form-field-right" id="toperation` + i + `" objectseq="` + i + `" style="width: 180px;">
+            <span class="input-addon-label-left active-border"><i class="fa fa-wrench" aria-hidden="true"></i></span>
+            <select class="cam-form-field cam-form-field-right active-border" id="toperation` + i + `" objectseq="` + i + `" style="width: 180px;">
               <option>... Select Operation ...</option>
               <option>CNC: Vector (path inside)</option>
               <option>CNC: Vector (path outside)</option>
@@ -238,9 +238,9 @@ function setupJob(i) {
         <td>Endmill Diameter</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><img src="images/endmilldia.svg" width="16px" height="16px"></img></span>
-            <input type="number" class="cam-form-field" value="6.35" id="ttooldia` + i + `"  objectseq="` + i + `" min="0">
-            <span class="input-addon-label-right">mm</span>
+            <span class="input-addon-label-left active-border"><img src="images/endmilldia.svg" width="16px" height="16px"></img></span>
+            <input type="number" class="cam-form-field active-border" value="6.35" id="ttooldia` + i + `"  objectseq="` + i + `" min="0">
+            <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
       </tr>
@@ -248,9 +248,9 @@ function setupJob(i) {
         <td>Stepover</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><img src="images/endmilldia.svg" width="16px" height="16px"></img></span>
-            <input type="number" class="cam-form-field" value="40" id="tstepover` + i + `"  objectseq="` + i + `" min="0">
-            <span class="input-addon-label-right">%</span>
+            <span class="input-addon-label-left active-border"><img src="images/endmilldia.svg" width="16px" height="16px"></img></span>
+            <input type="number" class="cam-form-field active-border" value="40" id="tstepover` + i + `"  objectseq="` + i + `" min="0">
+            <span class="input-addon-label-right active-border">%</span>
           </div>
         </td>
       </tr>
@@ -258,9 +258,9 @@ function setupJob(i) {
         <td>Z Safe Height</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><i class="fas fa-arrows-alt-v"></i></span>
-            <input type="number" class="cam-form-field" value="10" id="tclearanceHeight` + i + `"  objectseq="` + i + `" min="1">
-            <span class="input-addon-label-right">mm</span>
+            <span class="input-addon-label-left active-border"><i class="fas fa-arrows-alt-v"></i></span>
+            <input type="number" class="cam-form-field active-border" value="10" id="tclearanceHeight` + i + `"  objectseq="` + i + `" min="1">
+            <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
       </tr>
@@ -268,9 +268,9 @@ function setupJob(i) {
         <td>Drag Knife: Center Offset</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><img src="images/dragoffset.svg" width="16px" height="16px"></img></span>
-            <input type="number" class="cam-form-field" value="0.1" id="tdragoffset` + i + `"  objectseq="` + i + `" step="0.1" min="0">
-            <span class="input-addon-label-right">mm</span>
+            <span class="input-addon-label-left active-border"><img src="images/dragoffset.svg" width="16px" height="16px"></img></span>
+            <input type="number" class="cam-form-field active-border" value="0.1" id="tdragoffset` + i + `"  objectseq="` + i + `" step="0.1" min="0">
+            <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
       </tr>
@@ -278,9 +278,9 @@ function setupJob(i) {
         <td>Laser: Power</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><i class="fas fa-tachometer-alt"></i></span>
-            <input type="number" class="cam-form-field" value="100" id="tpwr` + i + `" objectseq="` + i + `" min="1" max="100">
-            <span class="input-addon-label-right">%</span>
+            <span class="input-addon-label-left active-border"><i class="fas fa-tachometer-alt"></i></span>
+            <input type="number" class="cam-form-field active-border" value="100" id="tpwr` + i + `" objectseq="` + i + `" min="1" max="100">
+            <span class="input-addon-label-right active-border">%</span>
           </div>
         </td>
       </tr>
@@ -288,9 +288,9 @@ function setupJob(i) {
         <td>Laser: Kerf</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><img src="images/kerf.svg" width="16px" height="16px"></img></span>
-            <input type="number" class="cam-form-field" value="0.1" id="tspotsize` + i + `" objectseq="` + i + `" min="0.1" max="5" step="0.1">
-            <span class="input-addon-label-right">mm</span>
+            <span class="input-addon-label-left active-border"><img src="images/kerf.svg" width="16px" height="16px"></img></span>
+            <input type="number" class="cam-form-field active-border" value="0.1" id="tspotsize` + i + `" objectseq="` + i + `" min="0.1" max="5" step="0.1">
+            <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
       </tr>
@@ -298,9 +298,9 @@ function setupJob(i) {
         <td>Cut Depth: per Pass</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><i class="fas fa-sort-amount-down"></i></span>
-            <input type="number" class="cam-form-field" id="tzstep` + i + `" value="1" objectseq="` + i + `" min="0" step="1">
-            <span class="input-addon-label-right">mm</span>
+            <span class="input-addon-label-left active-border"><i class="fas fa-sort-amount-down"></i></span>
+            <input type="number" class="cam-form-field active-border" id="tzstep` + i + `" value="1" objectseq="` + i + `" min="0" step="1">
+            <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
       </tr>
@@ -308,9 +308,9 @@ function setupJob(i) {
         <td>Cut Depth: Final</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><i class="fas fa-level-down-alt"></i></span>
-            <input type="number" class="cam-form-field" id="tzdepth` + i + `" value="6" objectseq="` + i + `" min="0" step="1">
-            <span class="input-addon-label-right">mm</span>
+            <span class="input-addon-label-left active-border"><i class="fas fa-level-down-alt"></i></span>
+            <input type="number" class="cam-form-field active-border" id="tzdepth` + i + `" value="6" objectseq="` + i + `" min="0" step="1">
+            <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
       </tr>
@@ -318,9 +318,9 @@ function setupJob(i) {
         <td>Feedrate: Cut</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><i class="fas fa-exchange-alt"></i></span>
-            <input type="number" class="cam-form-field" value="1000" id="tspeed` + i + `" objectseq="` + i + `" min="0" step="1" >
-            <span class="input-addon-label-right">mm/min</span>
+            <span class="input-addon-label-left active-border"><i class="fas fa-exchange-alt"></i></span>
+            <input type="number" class="cam-form-field active-border" value="1000" id="tspeed` + i + `" objectseq="` + i + `" min="0" step="1" >
+            <span class="input-addon-label-right active-border">mm/min</span>
           </div>
         </td>
       </tr>
@@ -328,9 +328,9 @@ function setupJob(i) {
         <td>Feedrate: Plunge</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><i class="fas fa-exchange-alt" data-fa-transform="rotate-90" ></i></span>
-            <input type="number" class="cam-form-field" value="300" id="tplungespeed` + i + `" objectseq="` + i + `" min="0" step="1">
-            <span class="input-addon-label-right">mm/min</span>
+            <span class="input-addon-label-left active-border"><i class="fas fa-exchange-alt" data-fa-transform="rotate-90" ></i></span>
+            <input type="number" class="cam-form-field active-border" value="300" id="tplungespeed` + i + `" objectseq="` + i + `" min="0" step="1">
+            <span class="input-addon-label-right active-border">mm/min</span>
           </div>
         </td>
       </tr>
@@ -338,9 +338,9 @@ function setupJob(i) {
         <td>Plasma: Kerf</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><img src="images/kerf.svg" width="16px" height="16px"></img></span>
-            <input type="number" class="cam-form-field" value="1.2" id="tplasmakerf` + i + `" objectseq="` + i + `" min="0" step="1">
-            <span class="input-addon-label-right">mm</span>
+            <span class="input-addon-label-left active-border"><img src="images/kerf.svg" width="16px" height="16px"></img></span>
+            <input type="number" class="cam-form-field active-border" value="1.2" id="tplasmakerf` + i + `" objectseq="` + i + `" min="0" step="1">
+            <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
       </tr>
@@ -348,9 +348,9 @@ function setupJob(i) {
         <td>Plasma: Cut Height</td>
         <td>
           <div class="input-addon">
-            <span class="input-addon-label-left"><i class="fas fa-arrows-alt-v"></i></span>
-            <input type="number" class="cam-form-field" value="1.5" id="tplasmazheight` + i + `" objectseq="` + i + `" min="0" step="1">
-            <span class="input-addon-label-right">mm</span>
+            <span class="input-addon-label-left active-border"><i class="fas fa-arrows-alt-v"></i></span>
+            <input type="number" class="cam-form-field active-border" value="1.5" id="tplasmazheight` + i + `" objectseq="` + i + `" min="0" step="1">
+            <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
       </tr>
@@ -369,9 +369,9 @@ function setupJob(i) {
               <td>Cut Depth: Start</td>
               <td>
                 <div class="input-addon">
-                  <span class="input-addon-label-left"><i class="fas fa-indent" data-fa-transform="rotate-90" ></i></span>
-                  <input type="number" class="cam-form-field" value="0" id="tstartHeight` + i + `"  objectseq="` + i + `" min="1">
-                  <span class="input-addon-label-right">mm</span>
+                  <span class="input-addon-label-left active-border"><i class="fas fa-indent" data-fa-transform="rotate-90" ></i></span>
+                  <input type="number" class="cam-form-field active-border" value="0" id="tstartHeight` + i + `"  objectseq="` + i + `" min="1">
+                  <span class="input-addon-label-right active-border">mm</span>
                 </div>
               </td>
             </tr>
@@ -379,9 +379,9 @@ function setupJob(i) {
               <td>Tabs: Height</td>
               <td>
                 <div class="input-addon">
-                  <span class="input-addon-label-left"><i class="fas fa-text-height"></i></span>
-                    <input type="number" class="cam-form-field" value="0" id="tabdepth` + i + `" objectseq="` + i + `" step="1">
-                  <span class="input-addon-label-right">mm</span>
+                  <span class="input-addon-label-left active-border"><i class="fas fa-text-height"></i></span>
+                    <input type="number" class="cam-form-field active-border" value="0" id="tabdepth` + i + `" objectseq="` + i + `" step="1">
+                  <span class="input-addon-label-right active-border">mm</span>
                 </div>
               </td>
             </tr>
@@ -389,9 +389,9 @@ function setupJob(i) {
               <td>Tabs: Width</td>
               <td>
                 <div class="input-addon">
-                  <span class="input-addon-label-left"><i class="fas fa-text-width"></i></span>
-                  <input type="number" class="cam-form-field" value="6" id="tabWidth` + i + `" objectseq="` + i + `" min="0" step="1">
-                  <span class="input-addon-label-right">mm</span>
+                  <span class="input-addon-label-left active-border"><i class="fas fa-text-width"></i></span>
+                  <input type="number" class="cam-form-field active-border" value="6" id="tabWidth` + i + `" objectseq="` + i + `" min="0" step="1">
+                  <span class="input-addon-label-right active-border">mm</span>
                 </div>
               </td>
             </tr>
@@ -399,9 +399,9 @@ function setupJob(i) {
               <td>Tabs: Spacing</td>
               <td>
                 <div class="input-addon">
-                  <span class="input-addon-label-left"><i class="fas fa-ruler-horizontal"></i></span>
-                  <input type="number" class="cam-form-field" value="50" id="tabSpace` + i + `" objectseq="` + i + `" min="0" step="1">
-                  <span class="input-addon-label-right">mm</span>
+                  <span class="input-addon-label-left active-border"><i class="fas fa-ruler-horizontal"></i></span>
+                  <input type="number" class="cam-form-field active-border" value="50" id="tabSpace` + i + `" objectseq="` + i + `" min="0" step="1">
+                  <span class="input-addon-label-right active-border">mm</span>
                 </div>
               </td>
             </tr>
@@ -409,8 +409,8 @@ function setupJob(i) {
               <td>Plasma: Use IHS</td>
               <td>
                 <div class="input-addon">
-                  <span class="input-addon-label-left"><i class="far fa-arrow-alt-circle-down"></i></span>
-                  <select class="cam-form-field" id="tplasmaihs` + i + `" objectseq="` + i + `" style="border-right: 1px solid #ddd; width: 180px;">
+                  <span class="input-addon-label-left active-border"><i class="far fa-arrow-alt-circle-down"></i></span>
+                  <select class="cam-form-field cam-form-field-right active-border" id="tplasmaihs` + i + `" objectseq="` + i + `" style="width: 180px;">
                     <option selected>No</option>
                     <option>Yes</option>
                   </select>
@@ -421,8 +421,8 @@ function setupJob(i) {
               <td>Geometry: Merge</td>
               <td>
                 <div class="input-addon">
-                  <span class="input-addon-label-left"><i class="fas fa-compress"></i></span>
-                  <select class="cam-form-field cam-form-field-right" id="tunion` + i + `" objectseq="` + i + `" style="width: 180px;">
+                  <span class="input-addon-label-left active-border"><i class="fas fa-compress"></i></span>
+                  <select class="cam-form-field cam-form-field-right active-border" id="tunion` + i + `" objectseq="` + i + `" style="width: 180px;">
                     <option selected>No</option>
                     <option>Yes</option>
                   </select>
