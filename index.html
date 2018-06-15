@@ -25,6 +25,7 @@
 		<!-- <link type="text/css" rel="stylesheet" media="all" href="css/font-awesome.css" /> -->
 		<link rel="manifest" href="/manifest.json">
 	</head>
+
 	<body>
 		<div class="page-container sidebar-collapsed" id="wrap">
 			<div class="container-fluid" style="height: 100%; width: 100%; padding-left: 2px; padding-right: 2px;">
@@ -91,6 +92,21 @@
 											</li>
 
 											<li class="nav-item dropdown">
+												<a class="nav-link dropdown-toggle" href="#" id="insertDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Insert
+												</a>
+												<div class="dropdown-menu" aria-labelledby="insertDropDown">
+													<h6 class="dropdown-header"> Insert</h6>
+													<a class="dropdown-item" href="#" onclick="$('#partslibModal').modal('show')"><i class="far fa-star"></i> from Parts Library </a>
+													<div class="dropdown-divider"></div>
+													<h6 class="dropdown-header"> Create</h6>
+													<a class="dropdown-item" href="#" onclick="$('#addShapeText').modal('show');"><i class="fas fa-font"></i> Text</a>
+													<a class="dropdown-item" href="#" onclick="$('#addShapeCircle').modal('show');"><i class="far fa-circle"></i> Circle</a>
+													<a class="dropdown-item" href="#" onclick="$('#addShapeRect').modal('show');"><i class="far fa-square"></i> Rectangle </a>
+												</div>
+											</li>
+
+											<li class="nav-item dropdown">
 												<a class="nav-link dropdown-toggle" href="#" id="viewDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												View
 												</a>
@@ -121,10 +137,18 @@
 							</div>
 							<div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 15px; ">
 								<div id="buttonbar">
-									<span id="openbutton" class="btn btn-sm btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Open a drawing">
-										<i class="fa fa-folder-open fa-fw"></i> Open
-										<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple />
-									</span>
+									<div class="btn-group" role="group">
+										<span id="openbutton" class="btn btn-sm btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Open a drawing">
+											<i class="fa fa-folder-open fa-fw"></i> Open
+											<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple />
+										</span>
+										<button data-tooltip="tooltip" data-placement="bottom" title="Insert document"  type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<span class="sr-only">Toggle Dropdown</span>
+										</button>
+										<div class="dropdown-menu dropdown-menu-left">
+											<a class="dropdown-item" href="#" onclick="$('#partslibModal').modal('show')"><i class="far fa-star"></i> from Parts Library </a>
+										</div>
+									</div>
 									<div class="btn-group btn-group-toggle" data-toggle="buttons">
 										<label id="mouseSelectBtn" class="btn btn-sm btn-success active focus" data-tooltip="tooltip" data-placement="bottom" title="Select Mode">
 										<input type="radio" value="select" name="options" autocomplete="off" checked> <i class="fas fa-mouse-pointer"></i>
@@ -144,11 +168,6 @@
 										<button id="redoBtn" disabled class="btn btn-sm btn-dark" onclick="redo()"><i class="fas fa-redo"></i></button>
 									</div>
 									<div class="btn-group" data-toggle="buttons">
-										<!-- <button id="AddCircle" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Circle"><i class="fa fa-circle-o" aria-hidden="true"></i></button> -->
-										<!-- <button id="AddRect" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Rectangle"><i class="fa fa-square-o" aria-hidden="true"></i></button> -->
-										<button id="AddText" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Add Text"><i class="fas fa-font"></i></button>
-									</div>
-									<div class="btn-group" data-toggle="buttons">
 										<button class="btn btn-sm btn-dark" onclick="resetView();" data-tooltip="tooltip" data-placement="bottom" title="View Documents"><i class="fa fa-eye" aria-hidden="true"></i></button>
 										<button class="btn btn-sm btn-dark" onclick="resetView(scene.getObjectByName('Grid'));" data-tooltip="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
 									</div>
@@ -162,7 +181,7 @@
 											<i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-danger" id="selectCount">4</span>
 										</button>
 										<button data-tooltip="tooltip" data-placement="bottom" title="Add selected entities to an existing toolpath"  type="button" class="btn btn-sm btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="tpaddpath-dropdown">
-										<span class="sr-only">Toggle Dropdown</span>
+											<span class="sr-only">Toggle Dropdown</span>
 										</button>
 										<div class="dropdown-menu dropdown-menu-right" id="toolpathsmenu">
 											<!-- toolpaths here -->
@@ -265,289 +284,29 @@
 		</div>
 		<!-- #statusmodal -->
 
-    <!-- Settings Modal -->
-		<div id="settingsmodal" class="modal fade" role="dialog">
-			<div class="modal-dialog" role="document">
+
+		<div id="partslibModal" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 id="statusTitle" class="modal-title">Application Settings</h5>
+						<h5 class="modal-title">Parts Library</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body"  style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-						<ul class="nav nav-tabs">
-							<li class="nav-item">
-								<a class="nav-link active" data-toggle="tab" href="#menu1">
-								MACHINE
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" data-toggle="tab" href="#menu2">
-								BACKUP
-								</a>
-							</li>
-						</ul>
-						<br />
-						<div class="tab-content">
-							<div id="menu1" class="tab-pane fade show active">
-								<p>
-									Configure your machine specifics:
-								</p>
-								<h5>Firmware Settings</h5>
-								<div class="dropdown">
-								  <button class="btn btn-light dropdown-toggle" type="button" id="elecType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								    <img src="images/brd/grbl.png"/>Select Controller
-								  </button>
-								  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								    <a class="dropdown-item" href="#" onclick="selectBoard('xpro');"><img src="images/brd/xpro.png"/>  Spark Concepts xPro</a>
-								    <a class="dropdown-item" href="#" onclick="selectBoard('smoothie');"><img src="images/brd/smoothie.png"/>  Smoothieboard</a>
-										<a class="dropdown-item" href="#" onclick="selectBoard('grbl');"><img src="images/brd/grbl.png"/>  Generic GRBL</a>
-								  </div>
-								</div>
-								<input type="hidden" class="form-control form-control-sm" id="firmwaretype" value="" >
-								<div>
-									<input type='checkbox' data-toggle='collapse' data-target='#collapsefirmware'> Advanced Firmware Settings
-									</input>
-								</div>
-								<div id='collapsefirmware' class='collapse'>
-									Configure G-CODE Dialect (Specific to your machine/firmware)
-									<div class="form-group row">
-										<label for="scommand" class="col-sm-7 col-form-label">Spindle / Laser Command</label>
-										<div class="col-sm-5">
-											<input type="text" class="form-control form-control-sm" id="scommand" value="S" >
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="scommandscale" class="col-sm-7 col-form-label">Power/Speed Scale</label>
-										<div class="col-sm-5">
-											<input type="number" class="form-control form-control-sm" id="scommandscale" value="1" >
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="scommandnewline" class="col-sm-7 col-form-label">Power/Speed on new-line</label>
-										<div class="col-sm-5">
-											<input type="checkbox" id="scommandnewline" value="option1">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="g0command" class="col-sm-7 col-form-label">Rapid Move Command</label>
-										<div class="col-sm-5">
-											<input type="text" class="form-control form-control-sm" id="g0command" value="G0" >
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="g1command" class="col-sm-7 col-form-label">Linear Move Command</label>
-										<div class="col-sm-5">
-											<input type="text" class="form-control form-control-sm" id="g1command" value="G1" >
-										</div>
-									</div>
-								</div>
-								<p>
-								<h5>Workarea</h5>
-								<div class="form-group row">
-									<label for="sizexmax" class="col-sm-7 col-form-label">X-Axis Length</label>
-									<div class="col-sm-5">
-										<div class="input-group input-group-sm mb-3">
-											<input type="number" class="form-control " id="sizexmax" value="200" >
-											<div class="input-group-append">
-												<span class="input-group-text">mm</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="sizeymax" class="col-sm-7 col-form-label">Y-Axis Length</label>
-									<div class="col-sm-5">
-										<div class="input-group input-group-sm mb-3">
-											<input type="number" class="form-control " id="sizeymax" value="200" >
-											<div class="input-group-append">
-												<span class="input-group-text">mm</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<h5>Gcode Generator Settings</h5>
-								<form class="form-horizontal">
-									<label for="startgcode" class="control-label">Start G-Code</label>
-									<textarea id="startgcode" class="form-control form-control-sm" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
-									<label for="endgcode" class="control-label">End G-Code</label>
-									<textarea id="endgcode" class="form-control form-control-sm" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
-									<label for="ihsgcode" class="control-label">Initial Height Sensing G-Code</label>
-									<textarea id="ihsgcode" class="form-control form-control-sm" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
-								</form>
-
-							</div>
-							<!-- #menu1 -->
-							<div id="menu2" class="tab-pane fade">
-								<p>Download a backup profile or restore settings from a backup file:</p>
-								<form class="form-horizontal">
-									<div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
-										<div class="btn-group" role="group">
-											<button id="backup" class="btn btn-lg btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Take a backup" onclick="backupSettingsLocal()">
-											<i class="fa fa-download fa-fw"></i> Backup Settings
-											</button>
-										</div>
-									</div>
-									</br>
-									<div class="btn-group input-group  btn-group-justified" role="group" aria-label="Restore">
-										<div class="btn-group" role="group">
-											<span id="restore" href="#" class="btn btn-lg btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Open a backup settings file">
-											<i class="fa fa-upload  fa-fw"></i> Restore from file <input id="jsonFile" type="file" accept=".json" />
-											</span>
-										</div>
-									</div>
-									</br>
-									<div class="btn-group input-group  btn-group-justified" role="group" aria-label="Backup">
-										<div class="btn-group" role="group">
-											<button class="btn btn-lg btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Reset all settings to default" onclick="ConfirmDelete()">
-											<i class="fa fa-exclamation-triangle fa-fw"></i> Factory Reset
-											</button>
-										</div>
-									</div>
-								</form>
-							</div>
-							<!-- #menu3 -->
-						</div>
-						<!-- .tab-content -->
+					<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+						<div id="partslibrary"></div>
 					</div>
 					<div class="modal-footer">
-						<button id="savesettings" type="button" class="btn btn-success">Save</button>
-						<button type="button" class="btn btn-default" onclick="$('#settingsmodal').modal('hide');">Cancel</button>
+						<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
+						Close
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- #settingsmodal -->
 
-		<!-- <div id="addShapeCircle" class="modal fade" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Add shape: Circle</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<form>
-							<div class="form-group row">
-								<label for="circleRadius" class="col-sm-2 col-form-label">Radius</label>
-								<div class="col-sm-5">
-									<input type="number" class="form-control" id="circleRadius" value="10">
-								</div>
-								<label for="circleRadius" class="col-sm-5 col-form-label">mm</label>
-							</div>
-							<div class="form-group row">
-								<div class="col-sm-10">
-									<button type="button" class="btn btn-primary" id="CreateCircle">Create</button>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="modal-footer" id="statusFooter"></div>
-				</div>
-			</div>
-		</div>
-
-		<div id="addShapeRect" class="modal fade" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Add shape: Rectangle</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<form>
-							<div class="form-group row">
-								<label for="rectX" class="col-sm-2 col-form-label">Width</label>
-								<div class="col-sm-5">
-									<input type="number" class="form-control" id="rectX" value="100">
-								</div>
-								<label for="rectX" class="col-sm-5 col-form-label">mm</label>
-							</div>
-							<div class="form-group row">
-								<label for="rectY" class="col-sm-2 col-form-label">Height</label>
-								<div class="col-sm-5">
-									<input type="number" class="form-control" id="rectY" value="50">
-								</div>
-								<label for="rectY" class="col-sm-5 col-form-label">mm</label>
-							</div>
-							<div class="form-group row">
-								<div class="col-sm-10">
-									<button type="button" class="btn btn-primary" id="CreateRect">Create</button>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="modal-footer" id="statusFooter"></div>
-				</div>
-			</div>
-		</div> -->
-		<!-- #addShapeModal -->
-
-		<div id="addShapeText" class="modal fade" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Add Text</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" style="margin-left: 10px; margin-right: 10px;">
-						<form>
-							<div class="form-group row">
-								Create a new set of text paths
-								<table>
-						      <tr>
-						        <th style="width: 150px;"></th><th style="width: 210px;"></th>
-						      </tr>
-						      <tr>
-						        <td>Font: </td>
-										<td>
-											<div class="input-addon">
-				                <span class="input-addon-label-left  active-border"><i class="fas fa-font"></i></span>
-												<input id="font" type="text" class="cam-form-field  active-border" />
-											</div>
-										</td>
-									</tr>
-									<tr>
-						        <td>Size: </td>
-										<td>
-											<div class="input-addon">
-												<span class="input-addon-label-left active-border"><i class="fas fa-text-height"></i></span>
-												<select class="cam-form-field cam-form-field-right  active-border" id="fontsize">
-													<option value="20" selected>20</option>
-													<option value="30">30</option>
-													<option value="40">40</option>
-													<option value="50">50</option>
-													<option value="70">70</option>
-												</select>
-											</div>
-										</td>
-									</tr>
-								</table>
-							</div>
-						</form>
-						<hr/>
-						<div class="input-addon">
-							<input style="width: 100%;" id="texttorender" class="active-border" value="Type Here"></input>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<div class="form-group row">
-							<div class="col-sm-10">
-								<button type="button" class="btn btn-primary" id="CreateText">Create</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<div id="splashModal" class="modal fade" role="dialog">
 			<div class="modal-dialog" role="document">
@@ -625,7 +384,9 @@
 	<script type="text/javascript" src="lib/opentypejs/opentype.min.js"></script>
 
 	<!-- SimpleCAD -->
-	<script type="text/javascript" src="js/advanced-cam-basic-shapes.js"></script>
+	<script type="text/javascript" src="js/basic-cad-shapes.js"></script>
+	<script type="text/javascript" src="js/basic-cad-text.js"></script>
+	<script type="text/javascript" src="js/basic-cad-partslib.js"></script>
 
 	<!-- ThreeJS -->
 	<script type="text/javascript" src="lib/threejs/three.min.js"></script>

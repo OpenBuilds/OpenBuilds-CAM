@@ -1,0 +1,16 @@
+{
+  "name": "dxfrender",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "directory-tree": "^2.1.0",
+    "dxf": "^3.1.4"    
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

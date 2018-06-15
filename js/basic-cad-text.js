@@ -1,47 +1,3 @@
-$("#CreateCircle").on("click", function() {
-  event.preventDefault();
-  var radius = $("#circleRadius").val();
-  addCircle(radius);
-});
-
-$("#AddCircle").on("click", function() {
-  $("#addShapeCircle").modal("show");
-  // dialog.dialog( "open" );
-});
-
-$("#AddText").on("click", function() {
-  $("#addShapeText").modal("show");
-  // dialog.dialog( "open" );
-});
-
-$('#texttorender').css('font-family', "Bowlby One SC");
-
-$('#font').fontselect({
-  placeholder: 'Bowlby One SC',
-  lookahead: 3
-}).change(function() {
-
-  // replace + signs with spaces for css
-  var font = $(this).val().replace(/\+/g, ' ');
-  // split font into family and weight
-  font = font.split(':');
-  // set family on paragraphs
-  $('#texttorender').css('font-family', font[0]);
-  // console.log('font-family', font[0])
-  var fontsize = $('#fontsize').val();
-  $('#texttorender').css('font-size', fontsize + "px");
-}).val("Bowlby+One+SC");
-
-$('#fontsize').change(function() {
-  var fontsize = $('#fontsize').val();
-  $('#texttorender').css('font-size', fontsize + "px");
-});
-
-$("#CreateText").on("click", function() {
-  event.preventDefault();
-  addText();
-});
-
 function addText() {
   var fontsize = $('#fontsize').val();
   var font = $("#font").val().replace(/\+/g, ' ');
@@ -77,76 +33,6 @@ function addText() {
   }, 2000);
 }
 
-function addCircle(radius) {
-  var existingInternalCad = scene.getObjectByName("Internal CAD", true);
-  if (!existingInternalCad) {
-    var fileObject = new THREE.Group();
-  } else {
-    fileObject = existingInternalCad;
-  }
-  var geometry = new THREE.CircleGeometry(radius, 32);
-  geometry.vertices.shift();
-  geometry.vertices.push(geometry.vertices[0]);
-  var material = new THREE.MeshBasicMaterial({
-    color: 0xffff00
-  });
-  var circle = new THREE.Line(geometry, material);
-  circle.name = "circle"
-  circle.translateX(radius);
-  circle.translateY(radius);
-  fileObject.add(circle);
-  fileObject.name = "Internal CAD"
-  if (!existingInternalCad) {
-    objectsInScene.push(fileObject)
-  }
-  $("#addShapeCircle").modal("hide");
-  setTimeout(function() {
-    fillTree();
-  }, 250);
-}
-
-$("#CreateRect").on("click", function() {
-  event.preventDefault();
-  var width = $("#rectX").val();
-  var height = $("#rectY").val();
-  addRect(width, height);
-});
-
-$("#AddRect").on("click", function() {
-  $("#addShapeRect").modal("show");
-  // dialog.dialog( "open" );
-});
-
-function addRect(width, height) {
-  var existingInternalCad = scene.getObjectByName("Internal CAD", true);
-  if (!existingInternalCad) {
-    var fileObject = new THREE.Group();
-  } else {
-    fileObject = existingInternalCad;
-  }
-  var rectgeom = new THREE.Geometry();
-  rectgeom.vertices.push(new THREE.Vector3(0, 0, 0));
-  rectgeom.vertices.push(new THREE.Vector3(0, height, 0));
-  rectgeom.vertices.push(new THREE.Vector3(width, height, 0));
-  rectgeom.vertices.push(new THREE.Vector3(width, 0, 0));
-  rectgeom.vertices.push(new THREE.Vector3(0, 0, 0));
-  // rectgeom.faces.push(new THREE.Face3(0, 1, 2));
-  // rectgeom.faces.push(new THREE.Face3(0, 3, 2));
-  var material = new THREE.MeshBasicMaterial({
-    color: 0xffff00
-  });
-  var rectangle = new THREE.Line(rectgeom, material);
-  rectangle.name = "rectangle"
-  fileObject.add(rectangle);
-  fileObject.name = "Internal CAD"
-  if (!existingInternalCad) {
-    objectsInScene.push(fileObject)
-  }
-  $("#addShapeRect").modal("hide");
-  setTimeout(function() {
-    fillTree();
-  }, 250);
-}
 
 // FONTS
 
@@ -231,3 +117,97 @@ function getText(fontFamily, fontVariant, text, fontSize) {
     return getTextFromData(searchFontInList(fontList, fontFamily), fontVariant, text, fontSize);
   })
 }
+
+$(document).ready(function() {
+  var modal = `
+<div id="addShapeText" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Text</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="margin-left: 10px; margin-right: 10px;">
+        <form>
+          <div class="form-group row">
+            Create a new set of text paths
+            <table>
+              <tr>
+                <th style="width: 150px;"></th><th style="width: 210px;"></th>
+              </tr>
+              <tr>
+                <td>Font: </td>
+                <td>
+                  <div class="input-addon">
+                    <span class="input-addon-label-left  active-border"><i class="fas fa-font"></i></span>
+                    <input id="font" type="text" class="cam-form-field  active-border" />
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Size: </td>
+                <td>
+                  <div class="input-addon">
+                    <span class="input-addon-label-left active-border"><i class="fas fa-text-height"></i></span>
+                    <select class="cam-form-field cam-form-field-right  active-border" id="fontsize">
+                      <option value="20" selected>20</option>
+                      <option value="30">30</option>
+                      <option value="40">40</option>
+                      <option value="50">50</option>
+                      <option value="70">70</option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </form>
+        <hr/>
+        <div class="input-addon">
+          <input style="width: 100%;" id="texttorender" class="active-border" value="Type Here"></input>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="button" class="btn btn-primary" id="CreateText">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`
+  $("body").append(modal);
+
+  $('#texttorender').css('font-family', "Bowlby One SC");
+
+  $('#font').fontselect({
+    placeholder: 'Bowlby One SC',
+    lookahead: 3
+  }).change(function() {
+
+    // replace + signs with spaces for css
+    var font = $(this).val().replace(/\+/g, ' ');
+    // split font into family and weight
+    font = font.split(':');
+    // set family on paragraphs
+    $('#texttorender').css('font-family', font[0]);
+    // console.log('font-family', font[0])
+    var fontsize = $('#fontsize').val();
+    $('#texttorender').css('font-size', fontsize + "px");
+  }).val("Bowlby+One+SC");
+
+  $('#fontsize').change(function() {
+    var fontsize = $('#fontsize').val();
+    $('#texttorender').css('font-size', fontsize + "px");
+  });
+
+  $("#CreateText").on("click", function() {
+    event.preventDefault();
+    addText();
+  });
+
+});
