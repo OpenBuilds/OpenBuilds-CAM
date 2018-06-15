@@ -22,7 +22,7 @@ var tree = dirTree('./dxf', {
   ConvertDXFtoSVG(item.path, item.path + ".svg")
 });
 console.log("---------------")
-var tree = dirTree('./dxf', {
+var tree = dirTree('./DXF', {
   extensions: /\.dxf/
 });
 var treeData = JSON.stringify(tree, null, 2)

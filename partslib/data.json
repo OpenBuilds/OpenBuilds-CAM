@@ -1,41 +1,41 @@
 {
-  "path": "./dxf",
-  "name": "dxf",
+  "path": "./DXF",
+  "name": "DXF",
   "children": [
     {
-      "path": "dxf\\ENGINEERING",
+      "path": "DXF\\ENGINEERING",
       "name": "ENGINEERING",
       "children": [
         {
-          "path": "dxf\\ENGINEERING\\Fan Grill  80mm - Concentric.dxf",
+          "path": "DXF\\ENGINEERING\\Fan Grill  80mm - Concentric.dxf",
           "name": "Fan Grill  80mm - Concentric.dxf",
           "size": 120153,
           "extension": ".dxf",
           "type": "file"
         },
         {
-          "path": "dxf\\ENGINEERING\\IEC C14 Socket - Cutout.dxf",
+          "path": "DXF\\ENGINEERING\\IEC C14 Socket - Cutout.dxf",
           "name": "IEC C14 Socket - Cutout.dxf",
           "size": 6845,
           "extension": ".dxf",
           "type": "file"
         },
         {
-          "path": "dxf\\ENGINEERING\\Motor NEMA17 - Mount.dxf",
+          "path": "DXF\\ENGINEERING\\Motor NEMA17 - Mount.dxf",
           "name": "Motor NEMA17 - Mount.dxf",
           "size": 12295,
           "extension": ".dxf",
           "type": "file"
         },
         {
-          "path": "dxf\\ENGINEERING\\Motor NEMA23 - Mount.dxf",
+          "path": "DXF\\ENGINEERING\\Motor NEMA23 - Mount.dxf",
           "name": "Motor NEMA23 - Mount.dxf",
           "size": 13020,
           "extension": ".dxf",
           "type": "file"
         },
         {
-          "path": "dxf\\ENGINEERING\\Motor NEMA23 - Sliding Mount.dxf",
+          "path": "DXF\\ENGINEERING\\Motor NEMA23 - Sliding Mount.dxf",
           "name": "Motor NEMA23 - Sliding Mount.dxf",
           "size": 13785,
           "extension": ".dxf",
@@ -46,7 +46,7 @@
       "type": "directory"
     },
     {
-      "path": "dxf\\MISC",
+      "path": "DXF\\MISC",
       "name": "MISC",
       "children": [],
       "size": 0,
