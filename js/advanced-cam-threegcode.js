@@ -18,6 +18,7 @@ var toolpathColor = 0x666600;
 var minimumToolDiaForPreview = 0.04;
 
 inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zstart, leadinval, tabdepth, union) {
+  console.log(config)
   var inflateGrpZ = new THREE.Group();
   var prettyGrp = new THREE.Group();
   var clipperPaths = getClipperPaths(config.toolpath)
@@ -30,17 +31,18 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
       // var newClipperPaths = clipperPaths;
     }
     var inflatedPaths = getInflatePath(newClipperPaths, config.offset);
-    console.log(inflatedPaths);
+    // console.log(inflatedPaths);
     if (config.leadinval > 0) { // plasma lead-in
       var leadInPaths = getInflatePath(newClipperPaths, config.offset * 3);
     }
     for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
-      if (i * config.zstep < config.zdepth) {
-        var zval = -i
-      } else {
+      if (i > config.zdepth) {
         var zval = -config.zdepth;
+      } else {
+        var zval = -i
       }
-      // console.log(config.zstart, config.zstep, config.zdepth, zval);
+      console.log(i * config.zstep > config.zdepth, i * config.zstep, i, zval)
+      // console.log(i, config.zstart, config.zstep, config.zdepth, zval);
       var drawClipperPathsconfig = {
         paths: inflatedPaths,
         color: toolpathColor,
@@ -75,11 +77,11 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
       }
       for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
         if (i > config.zdepth) {
-          var zval = -config.zdepth
+          var zval = -config.zdepth;
         } else {
           var zval = -i
         }
-        // console.log(i, zstart, zstep, zdepth, zval);
+        // console.log(i, config.zstart, config.zstep, config.zdepth, zval);
         var drawClipperPathsconfig = {
           paths: inflatedPaths,
           color: toolpathColor,
@@ -151,10 +153,11 @@ pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zde
             // Duplicate each loop, down into Z.  We go full depth before next loop.
             for (j = config.zdepth; j > config.zstart; j -= config.zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
               // console.log(j)
-              if (j * config.zstep < config.zdepth) {
-                var zval = -j
-              } else {
+
+              if (j > config.zdepth) {
                 var zval = -config.zdepth;
+              } else {
+                var zval = -j
               }
               // get the inflated/deflated path
               var drawClipperPathsconfig = {
