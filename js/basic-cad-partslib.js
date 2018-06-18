@@ -7,7 +7,7 @@ function bytesToSize(bytes) {
 
 function usePartsLib(file, path) {
   console.log(file, path)
-  $.get("./partslib/dxf/" + path + "/" + file, function(data) {
+  $.get("./partslib/DXF/" + path + "/" + file, function(data) {
     // console.log(data)
     drawDXF(data, file);
     printLog('DXF Opened', msgcolor, "file");
