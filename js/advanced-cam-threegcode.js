@@ -6,6 +6,8 @@
 // todo select and then Move
 
 //todo: tabs: constrain tabwidth > tooldia+saneminimum
+// constrain tab tooldia  > 0  (0= will loop forever)
+// todo mill no offset op
 
 var inflateGrp, fileParentGroup, svgPath, y, shape, lines, line;
 var options = {};

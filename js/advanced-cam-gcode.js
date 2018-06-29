@@ -33,6 +33,7 @@ function makeGcode() {
 
 
         toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS);
+        $("#omdsend").removeClass("disabled");
         $("#savetpgcode").removeClass("disabled");
         $("#exportGcodeMenu").removeClass("disabled");
 

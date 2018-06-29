@@ -1,4 +1,5 @@
 function toolpathPreview(i) {
+  $("#omdsend").addClass("disabled");
   $("#savetpgcode").addClass("disabled");
   $("#exportGcodeMenu").addClass("disabled");
   $("#previewToolpathBtn").html("<i class='fa fa-spinner fa-spin '></i> Calculating, please wait");

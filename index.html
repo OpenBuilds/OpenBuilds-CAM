@@ -1,504 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>OpenBuilds CAM Gcode Creator</title>
-		<meta name="description" content=""/>
-		<meta name="keywords" content=""/>
-		<meta name="author" content="" />
-		<meta name="version" content="" />
-		<!-- Mobile Redirect if screen is too small. -->
-		<script type="text/javascript">
-			if (screen.width <= 720) {
-				window.location = "mobile.html";
-	  	}
-		</script>
-		<link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootstrap.min.css" />
-		<link type="text/css" rel="stylesheet" media="all" href="css/bootstrap4-fixes.css" />
-		<link rel="stylesheet" type="text/css" href="lib/jquery/fontselect/styles/fontselect-bootstrap4.css" />
-		<link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
-		<link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
-		<link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
-		<link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
-		<!-- <link type="text/css" rel="stylesheet" media="all" href="css/font-awesome.css" /> -->
-		<link rel="manifest" href="/manifest.json">
-	</head>
 
-	<body>
-		<div class="page-container sidebar-collapsed" id="wrap">
-			<div class="container-fluid" style="height: 100%; width: 100%; padding-left: 2px; padding-right: 2px;">
-				<div id="container1">
-					<!-- #col1 (sidebar) -->
-					<div id="col1">
-						<div class="card" style="height: calc(100% - 1.5px);">
-							<div class="card-header" style="padding: 0px;">
-								<nav class="navbar navbar-expand-md navbar-light bg-light">
-									<a class="navbar-brand" href="https://openbuilds.com/" target="_blank"><img src="images/logo.png"/></a>
-									<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>OpenBuilds CAM Gcode Creator</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<meta name="version" content="" />
+	<!-- Mobile Redirect if screen is too small. -->
+	<script type="text/javascript">
+		if (screen.width <= 720) {
+			window.location = "mobile.html";
+		}
+	</script>
+	<link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/bootstrap4-fixes.css" />
+	<link rel="stylesheet" type="text/css" href="lib/jquery/fontselect/styles/fontselect-bootstrap4.css" />
+	<link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
+	<!-- <link type="text/css" rel="stylesheet" media="all" href="css/font-awesome.css" /> -->
+	<link rel="manifest" href="/manifest.json">
+</head>
+
+<body>
+	<div class="page-container sidebar-collapsed" id="wrap">
+		<div class="container-fluid" style="height: 100%; width: 100%; padding-left: 2px; padding-right: 2px;">
+			<div id="container1">
+				<!-- #col1 (sidebar) -->
+				<div id="col1">
+					<div class="card" style="height: calc(100% - 1.5px);">
+						<div class="card-header" style="padding: 0px;">
+							<nav class="navbar navbar-expand-md navbar-light bg-light">
+								<a class="navbar-brand" href="https://openbuilds.com/" target="_blank"><img src="images/logo.png"/></a>
+								<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 										<span class="navbar-toggler-icon"></span>
 									</button>
-									<div class="collapse navbar-collapse" id="navbarSupportedContent">
-										<ul class="navbar-nav mr-auto">
-											<li class="nav-item dropdown">
-												<a class="nav-link dropdown-toggle" href="#" id="fileDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<div class="collapse navbar-collapse" id="navbarSupportedContent">
+									<ul class="navbar-nav mr-auto">
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="fileDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												File
 												</a>
-												<div class="dropdown-menu" aria-labelledby="fileDropDown">
-													<label class="dropdown-item" style="margin: 0px;">
+											<div class="dropdown-menu" aria-labelledby="fileDropDown">
+												<label class="dropdown-item" style="margin: 0px;">
 													<i class="far fa-folder-open"></i> Open Document
 													<input type="file" id="filemenu" class="custom-file-input" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple style="height: 26px;"/>
 													</label>
-													<div class="dropdown-divider"></div>
-													<h6 class="dropdown-header"> Workspace</h6>
-													<a class="dropdown-item" href="#" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
+												<div class="dropdown-divider"></div>
+												<h6 class="dropdown-header"> Workspace</h6>
+												<a class="dropdown-item" href="#" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
 														<i class="far fa-file"></i> New Empty Workspace
 													</a>
-													<a class="dropdown-item" href="#" onclick="exportWorkspace();">
+												<a class="dropdown-item" href="#" onclick="exportWorkspace();">
 														<i class="fas fa-download"></i> Export Workspace
 													</a>
-													<label class="dropdown-item" style="margin: 0px;">
+												<label class="dropdown-item" style="margin: 0px;">
 														<i class="fas fa-upload"></i> Import Workspace
 														<input type="file" id="workspaceImport" class="custom-file-input" accept=".json" multiple style="height: 26px;"/>
 													</label>
-													<div class="dropdown-divider"></div>
-													<a class="dropdown-item disabled" href="#" id="exportGcodeMenu" onclick="saveFile()">
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item disabled" href="#" id="exportGcodeMenu" onclick="saveFile()">
 														<i class="far fa-save"></i> Export G-Code
 													</a>
-												</div>
-											</li>
-											<li class="nav-item dropdown">
-												<a class="nav-link dropdown-toggle" href="#" id="editDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											</div>
+										</li>
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="editDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												Edit
 												</a>
-												<div class="dropdown-menu" aria-labelledby="viewDropDown">
-													<h6 class="dropdown-header"> Selection</h6>
-													<a class="dropdown-item" href="#" id="selectAll"><i class="far fa-check-square"></i> Select All</a>
-													<a class="dropdown-item" href="#" id="selectNone"><i class="far fa-square"></i> Select None</a>
-													<a class="dropdown-item" href="#" id="selectInv"><i class="fas fa-check"></i> Invert Selection</a>
-													<div class="dropdown-divider"></div>
-													<a class="dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick='undo();'>
+											<div class="dropdown-menu" aria-labelledby="viewDropDown">
+												<h6 class="dropdown-header"> Selection</h6>
+												<a class="dropdown-item" href="#" id="selectAll"><i class="far fa-check-square"></i> Select All</a>
+												<a class="dropdown-item" href="#" id="selectNone"><i class="far fa-square"></i> Select None</a>
+												<a class="dropdown-item" href="#" id="selectInv"><i class="fas fa-check"></i> Invert Selection</a>
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick='undo();'>
 														<i class="fas fa-undo"></i> Undo
 													</a>
-													<a class="dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick='redo();'>
+												<a class="dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick='redo();'>
 														<i class="fas fa-redo"></i> Redo
 													</a>
-													<div class="dropdown-divider"></div>
-													<a class="dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick='$("#settingsmodal").modal("show");'>
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick='$("#settingsmodal").modal("show");'>
 														<i class="fa fa-fw fa-cogs" aria-hidden="true"></i> Settings
 													</a>
-												</div>
-											</li>
+											</div>
+										</li>
 
-											<li class="nav-item dropdown">
-												<a class="nav-link dropdown-toggle" href="#" id="insertDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="insertDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												Insert
 												</a>
-												<div class="dropdown-menu" aria-labelledby="insertDropDown">
-													<h6 class="dropdown-header"> Insert</h6>
-													<a class="dropdown-item" href="#" onclick="$('#partslibModal').modal('show')"><i class="far fa-star"></i> from Parts Library </a>
-													<div class="dropdown-divider"></div>
-													<h6 class="dropdown-header"> Create</h6>
-													<a class="dropdown-item" href="#" onclick="$('#addShapeText').modal('show');"><i class="fas fa-font"></i> Text</a>
-													<a class="dropdown-item" href="#" onclick="$('#addShapeCircle').modal('show');"><i class="far fa-circle"></i> Circle</a>
-													<a class="dropdown-item" href="#" onclick="$('#addShapeRect').modal('show');"><i class="far fa-square"></i> Rectangle </a>
-												</div>
-											</li>
+											<div class="dropdown-menu" aria-labelledby="insertDropDown">
+												<h6 class="dropdown-header"> Insert</h6>
+												<a class="dropdown-item" href="#" onclick="$('#partslibModal').modal('show')"><i class="far fa-star"></i> from Parts Library </a>
+												<div class="dropdown-divider"></div>
+												<h6 class="dropdown-header"> Create</h6>
+												<a class="dropdown-item" href="#" onclick="$('#addShapeText').modal('show');"><i class="fas fa-font"></i> Text</a>
+												<a class="dropdown-item" href="#" onclick="$('#addShapeCircle').modal('show');"><i class="far fa-circle"></i> Circle</a>
+												<a class="dropdown-item" href="#" onclick="$('#addShapeRect').modal('show');"><i class="far fa-square"></i> Rectangle </a>
+											</div>
+										</li>
 
-											<li class="nav-item dropdown">
-												<a class="nav-link dropdown-toggle" href="#" id="viewDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="viewDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												View
 												</a>
-												<div class="dropdown-menu" aria-labelledby="viewDropDown">
-													<a class="dropdown-item" href="#" id="viewReset" onclick="resetView();"><i class="fa fa-fw fa-eye" aria-hidden="true"></i>Reset View</a>
-													<div class="dropdown-divider"></div>
-													<a class="dropdown-item" href="#" id="selectNone" onclick="controls.enableRotate = false; resetView(); printLog('Disabled Orbit', warncolor, 'viewer');"><i class="fa fa-fw fa-th" aria-hidden="true"></i>2D Mode</a>
-													<a class="dropdown-item" href="#" id="selectInv" onclick="controls.enableRotate = true; resetView(); printLog('Enabled Orbit', successcolor, 'viewer');"><i class="fa fa-fw fa-cube" aria-hidden="true"></i>3D Mode</a>
-												</div>
-											</li>
+											<div class="dropdown-menu" aria-labelledby="viewDropDown">
+												<a class="dropdown-item" href="#" id="viewReset" onclick="resetView();"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> Reset View</a>
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item" href="#" id="selectNone" onclick="controls.enableRotate = false; resetView(); printLog('Disabled Orbit', warncolor, 'viewer');"><i class="fa fa-fw fa-th" aria-hidden="true"></i> 2D Mode</a>
+												<a class="dropdown-item" href="#" id="selectInv" onclick="controls.enableRotate = true; resetView(); printLog('Enabled Orbit', successcolor, 'viewer');"><i class="fa fa-fw fa-cube" aria-hidden="true"></i> 3D Mode</a>
+											</div>
+										</li>
 
-											<li class="nav-item dropdown">
-												<a class="nav-link dropdown-toggle" href="#" id="aboutDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="aboutDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												Help
 												</a>
-												<div class="dropdown-menu" aria-labelledby="aboutDropDown">
-													<a class="dropdown-item" href="#" onclick="$('#aboutModal').modal('show')"><i class="fa fa-fw fa-info" aria-hidden="true"></i>About</a>
-													<a class="dropdown-item" href="#" onclick="getChangelog()"><i class="fa fa-fw fa-list" aria-hidden="true"></i>Changelog</a>
-													<div class="dropdown-divider"></div>
-													<a class="dropdown-item disabled" href="#" ><i class="fa fa-fw fa-book" aria-hidden="true"></i>Documentation (Coming Soon)</a>
-												</div>
-											</li>
+											<div class="dropdown-menu" aria-labelledby="aboutDropDown">
+												<a class="dropdown-item" href="#" onclick="$('#aboutModal').modal('show')"><i class="fa fa-fw fa-info" aria-hidden="true"></i> About</a>
+												<a class="dropdown-item" href="#" onclick="getChangelog()"><i class="fa fa-fw fa-list" aria-hidden="true"></i> Changelog</a>
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item disabled" href="#"><i class="fa fa-fw fa-book" aria-hidden="true"></i> Documentation (Coming Soon)</a>
+											</div>
+										</li>
 
-										</ul>
-										<iframe src="https://ghbtns.com/github-btn.html?user=openbuilds&repo=cam&type=fork&count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
-									</div>
-								</nav>
-							</div>
-							<div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 15px; ">
-								<div id="buttonbar">
-									<div class="btn-group" role="group">
-										<span id="openbutton" class="btn btn-sm btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Open a drawing">
+									</ul>
+									<iframe src="https://ghbtns.com/github-btn.html?user=openbuilds&repo=cam&type=fork&count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+								</div>
+							</nav>
+						</div>
+						<div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 15px; ">
+							<div id="buttonbar">
+								<div class="btn-group" role="group">
+									<span id="openbutton" class="btn btn-sm btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Open a drawing">
 											<i class="fa fa-folder-open fa-fw"></i> Open
 											<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple />
 										</span>
-										<button data-tooltip="tooltip" data-placement="bottom" title="Insert document"  type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<button data-tooltip="tooltip" data-placement="bottom" title="Insert document" type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											<span class="sr-only">Toggle Dropdown</span>
 										</button>
-										<div class="dropdown-menu dropdown-menu-left">
-											<a class="dropdown-item" href="#" onclick="$('#partslibModal').modal('show')"><i class="far fa-star"></i> from Parts Library </a>
-										</div>
-									</div>
-									<div class="btn-group btn-group-toggle" data-toggle="buttons">
-										<label id="mouseSelectBtn" class="btn btn-sm btn-success active focus" data-tooltip="tooltip" data-placement="bottom" title="Select Mode">
-										<input type="radio" value="select" name="options" autocomplete="off" checked> <i class="fas fa-mouse-pointer"></i>
-										</label>
-										<label id="mouseMoveBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Move Mode">
-										<input type="radio" value="move" name="options" autocomplete="off"> <i class="fas fa-arrows-alt"></i>
-										</label>
-										<label id="mouseDelBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Delete Mode">
-										<input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fas fa-eraser"></i>
-										</label>
-										<label id="mouseScaleBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Scale / Position / Rotate Mode">
-										<input type="radio" value="scale" name="options"  autocomplete="off"> <i class="fas fa-ruler"></i>
-										</label>
-									</div>
-									<div class="btn-group" data-toggle="buttons" data-tooltip="tooltip" data-placement="bottom" title="Undo/Redo">
-										<button id="undoBtn" disabled class="btn btn-sm btn-dark" onclick="undo()"><i class="fas fa-undo"></i></button>
-										<button id="redoBtn" disabled class="btn btn-sm btn-dark" onclick="redo()"><i class="fas fa-redo"></i></button>
-									</div>
-									<div class="btn-group" data-toggle="buttons">
-										<button class="btn btn-sm btn-dark" onclick="resetView();" data-tooltip="tooltip" data-placement="bottom" title="View Documents"><i class="fa fa-eye" aria-hidden="true"></i></button>
-										<button class="btn btn-sm btn-dark" onclick="resetView(scene.getObjectByName('Grid'));" data-tooltip="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
-									</div>
-									<div class="btn-group" role="group" aria-label="Simulator">
-                    <button data-toggle="tooltip" data-placement="bottom" title="Run Simulator (Generate GCODE first!)" id="simstartbtn" class="btn btn-sm btn-sm btn-dark" title="Run realtime simulation" onclick="sim(0);" disabled><i class="fa fa-fighter-jet fa-fw"></i>sim play</button>
-                    <button data-toggle="tooltip" data-placement="bottom" title="Stop Simulator" id="simstopbtn" style="display: none;" class="btn btn-sm btn-sm btn-danger" title="Stop realtime simulation" onclick="simstop();"><i class="fa fa-stop fa-fw"></i>sim stop</button>
-                    <button data-toggle="tooltip" data-placement="bottom" title="Set Simulation Speed" class="btn btn-sm btn-sm btn-dark" title="Set sim speed" onclick="simSpeed();"><i class="fas fa-tachometer-alt"></i> <span id="simspeedval">1</span>x</button>
-                  </div>
-									<div class="btn-group" role="group">
-										<button data-tooltip="tooltip" data-placement="bottom" title="Add selected entities to a new toolpath" type="button" class="btn btn-sm btn-success" onclick="addJob(-1);" id="tpaddpath">
-											<i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-danger" id="selectCount">4</span>
-										</button>
-										<button data-tooltip="tooltip" data-placement="bottom" title="Add selected entities to an existing toolpath"  type="button" class="btn btn-sm btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="tpaddpath-dropdown">
-											<span class="sr-only">Toggle Dropdown</span>
-										</button>
-										<div class="dropdown-menu dropdown-menu-right" id="toolpathsmenu">
-											<!-- toolpaths here -->
-										</div>
+									<div class="dropdown-menu dropdown-menu-left">
+										<a class="dropdown-item" href="#" onclick="$('#partslibModal').modal('show')"><i class="far fa-star"></i> from Parts Library </a>
 									</div>
 								</div>
-								<div id="renderArea">
-									<div id="rendermenu"></div>
-									<div id="selection" style="visibility: hidden;"></div>
-									<div id="scalewindow" style="visibility: hidden;">
-										<h3>Scale it!</h3>
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<label id="mouseSelectBtn" class="btn btn-sm btn-success active focus" data-tooltip="tooltip" data-placement="bottom" title="Select Mode">
+										<input type="radio" value="select" name="options" autocomplete="off" checked> <i class="fas fa-mouse-pointer"></i>
+										</label>
+									<label id="mouseMoveBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Move Mode">
+										<input type="radio" value="move" name="options" autocomplete="off"> <i class="fas fa-arrows-alt"></i>
+										</label>
+									<label id="mouseDelBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Delete Mode">
+										<input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fas fa-eraser"></i>
+										</label>
+									<label id="mouseScaleBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Scale / Position / Rotate Mode">
+										<input type="radio" value="scale" name="options"  autocomplete="off"> <i class="fas fa-ruler"></i>
+										</label>
+								</div>
+								<div class="btn-group" data-toggle="buttons" data-tooltip="tooltip" data-placement="bottom" title="Undo/Redo">
+									<button id="undoBtn" disabled class="btn btn-sm btn-dark" onclick="undo()"><i class="fas fa-undo"></i></button>
+									<button id="redoBtn" disabled class="btn btn-sm btn-dark" onclick="redo()"><i class="fas fa-redo"></i></button>
+								</div>
+								<div class="btn-group" data-toggle="buttons">
+									<button class="btn btn-sm btn-dark" onclick="resetView();" data-tooltip="tooltip" data-placement="bottom" title="View Documents"><i class="fa fa-eye" aria-hidden="true"></i></button>
+									<button class="btn btn-sm btn-dark" onclick="resetView(scene.getObjectByName('Grid'));" data-tooltip="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
+								</div>
+								<div class="btn-group" role="group" aria-label="Simulator">
+									<button data-toggle="tooltip" data-placement="bottom" title="Run Simulator (Generate GCODE first!)" id="simstartbtn" class="btn btn-sm btn-sm btn-dark" title="Run realtime simulation" onclick="sim(0);" disabled><i class="fa fa-fighter-jet fa-fw"></i>sim play</button>
+									<button data-toggle="tooltip" data-placement="bottom" title="Stop Simulator" id="simstopbtn" style="display: none;" class="btn btn-sm btn-sm btn-danger" title="Stop realtime simulation" onclick="simstop();"><i class="fa fa-stop fa-fw"></i>sim stop</button>
+									<button data-toggle="tooltip" data-placement="bottom" title="Set Simulation Speed" class="btn btn-sm btn-sm btn-dark" title="Set sim speed" onclick="simSpeed();"><i class="fas fa-tachometer-alt"></i> <span id="simspeedval">1</span>x</button>
+								</div>
+								<div class="btn-group" role="group">
+									<button data-tooltip="tooltip" data-placement="bottom" title="Add selected entities to a new toolpath" type="button" class="btn btn-sm btn-success" onclick="addJob(-1);" id="tpaddpath">
+											<i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-danger" id="selectCount">4</span>
+										</button>
+									<button data-tooltip="tooltip" data-placement="bottom" title="Add selected entities to an existing toolpath" type="button" class="btn btn-sm btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+									  id="tpaddpath-dropdown">
+											<span class="sr-only">Toggle Dropdown</span>
+										</button>
+									<div class="dropdown-menu dropdown-menu-right" id="toolpathsmenu">
+										<!-- toolpaths here -->
 									</div>
-									<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;">
-	                  <!-- <span id="simgcode"></span> -->
-	                </div>
+								</div>
+							</div>
+							<div id="renderArea">
+								<div id="rendermenu"></div>
+								<div id="selection" style="visibility: hidden;"></div>
+								<div id="scalewindow" style="visibility: hidden;">
+									<h3>Scale it!</h3>
+								</div>
+								<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;">
+									<!-- <span id="simgcode"></span> -->
 								</div>
 							</div>
 						</div>
-						<div id="helpoverlay">
-							<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
-						</div>
 					</div>
-					<!-- #col2 (main content)-->
-					<div id="col2">
-						<div id="tree-cam-menu-panel" class="mobtab" style="height: 100%;">
-							<span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 200; color: #fff;">
+					<div id="helpoverlay">
+						<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
+					</div>
+				</div>
+				<!-- #col2 (main content)-->
+				<div id="col2">
+					<div id="tree-cam-menu-panel" class="mobtab" style="height: 100%;">
+						<span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 200; color: #fff;">
 							<i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
 							<i class="fa fa-object-group fa-stack-1x"></i>
 							</span>
-							<div class="card" id="renderToolpath" style="height: calc(50% - 4px);  margin-bottom: 12px;">
-								<div class="card-header" id="toolpathtreeheader">
-									<table style="width: 100%">
-										<tr class="jobsetupfile">
-											<td>
-												<label for="toolpathstable"><h6>Toolpaths</h6></label>
-											</td>
-											<td>
-												<div class="btn-group" data-toggle="buttons" data-tooltip="tooltip" data-placement="bottom" title="Undo/Redo">
-													<button class="btn btn-xs btn-success disabled" id="generatetpgcode" onclick="makeGcode();"><i class="fa fa-cubes" aria-hidden="true"></i> Generate G-Code</button>
-													<button class="btn btn-xs btn-danger" onclick="trashGcode();"><i class="fa fa-trash" aria-hidden="true"></i></button>
+						<div class="card" id="renderToolpath" style="height: calc(50% - 4px);  margin-bottom: 12px;">
+							<div class="card-header" id="toolpathtreeheader">
+								<table style="width: 100%">
+									<tr class="jobsetupfile">
+										<td>
+											<label for="toolpathstable"><h6>Toolpaths</h6></label>
+										</td>
+										<td>
+											<div class="btn-group" data-toggle="buttons" data-tooltip="tooltip" data-placement="bottom" title="Undo/Redo">
+												<button class="btn btn-xs btn-success disabled" id="generatetpgcode" onclick="makeGcode();"><i class="fa fa-cubes" aria-hidden="true"></i> Generate G-Code</button>
+												<button class="btn btn-xs btn-danger" onclick="trashGcode();"><i class="fa fa-trash" aria-hidden="true"></i></button>
+											</div>
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="dropdown">
+												<button id="omdsend" class="btn btn-xs btn-secondary dropdown-toggle disabled" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												    <span id="scanbutton"><i class="fas fa-play"></i> Send to Machine</span>
+												  </button>
+												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="driversmenu">
+													<h6 class="dropdown-header">Install OpenBuilds Machine Driver:</h6>
+													<a class="dropdown-item" href="#">Download Drivers</a>
 												</div>
-												<button class="btn btn-xs btn-primary disabled" id="savetpgcode" onclick="saveFile()"><i class="far fa-save"></i> Export GCODE</button>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div class="card-body" id="toolpathtree" style="height: calc(50% - 0px); overflow-y:scroll;"></div>
+											</div>
+										</td>
+										<td align="right">
+											<button class="btn btn-xs btn-primary disabled" id="savetpgcode" onclick="saveFile()"><i class="far fa-save"></i> Export GCODE</button>&nbsp;
+										</td>
+									</tr>
+								</table>
 							</div>
-							<div class="card" id="renderDocuments" style="height: 49%;">
-								<div class="card-header" id="filetreeheader">
-									<table style="width: 100%">
-										<tr class="jobsetupfile">
-											<td>
-												<label for="filetreetable"><h6>Documents</h6></label>
-											</td>
-											<td>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div class="card-body" id="filetree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
+							<div class="card-body" id="toolpathtree" style="height: calc(50% - 0px); overflow-y:scroll;"></div>
+						</div>
+						<div class="card" id="renderDocuments" style="height: 49%;">
+							<div class="card-header" id="filetreeheader">
+								<table style="width: 100%">
+									<tr class="jobsetupfile">
+										<td>
+											<label for="filetreetable"><h6>Documents</h6></label>
+										</td>
+										<td>
+										</td>
+									</tr>
+								</table>
 							</div>
+							<div class="card-body" id="filetree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
 						</div>
 					</div>
-				</div><!-- #container1 -->
-			</div><!-- .container-fluid -->
-		</div><!-- #page-container -->
-
-    <!-- #draganddrop -->
-		<div id="draganddrop" style="display: none;">
-			<div class="well">Drop File(s) Here!</div>
-			<img src="images/draganddrop.svg" />
+				</div>
+			</div>
+			<!-- #container1 -->
 		</div>
+		<!-- .container-fluid -->
+	</div>
+	<!-- #page-container -->
 
-    <!-- Hidden divs, used by components -->
-		<img id="imageDetect" crossOrigin width="160" height="120" style="display: none; visibility: hidden; float:left;" />
-		<div id="work-area" style="display: none; visibility: hidden; float:left;">
-			<div id="svgpreview"></div>
-		</div>
-		<!-- End Hidden Divs -->
+	<!-- #draganddrop -->
+	<div id="draganddrop" style="display: none;">
+		<div class="well">Drop File(s) Here!</div>
+		<img src="images/draganddrop.svg" />
+	</div>
 
-    <!-- Modals Divs -->
-		<div id="statusmodal" class="modal fade" role="dialog">
-			<div class="modal-dialog" role="document">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 id="statusTitle" class="modal-title">Status title</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<!-- Hidden divs, used by components -->
+	<img id="imageDetect" crossOrigin width="160" height="120" style="display: none; visibility: hidden; float:left;" />
+	<div id="work-area" style="display: none; visibility: hidden; float:left;">
+		<div id="svgpreview"></div>
+	</div>
+	<!-- End Hidden Divs -->
+
+	<!-- Modals Divs -->
+	<div id="statusmodal" class="modal fade" role="dialog">
+		<div class="modal-dialog" role="document">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="statusTitle" class="modal-title">Status title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 						</button>
-					</div>
-					<div class="modal-body">
-						<div id="statusBody"></div>
-						<div id="statusBody2"></div>
-					</div>
-					<div class="modal-footer" id="statusFooter"></div>
+				</div>
+				<div class="modal-body">
+					<div id="statusBody"></div>
+					<div id="statusBody2"></div>
+				</div>
+				<div class="modal-footer" id="statusFooter"></div>
+			</div>
+		</div>
+	</div>
+	<!-- #statusmodal -->
+
+
+	<div id="partslibModal" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Parts Library</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+				</div>
+				<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+					<div id="partslibrary"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
+						Close
+						</button>
 				</div>
 			</div>
 		</div>
-		<!-- #statusmodal -->
+	</div>
 
 
-		<div id="partslibModal" class="modal fade" role="dialog">
-			<div class="modal-dialog modal-lg" role="document">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Parts Library</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<div id="splashModal" class="modal fade" role="dialog">
+		<div class="modal-dialog" role="document">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Changelog</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 						</button>
-					</div>
-					<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-						<div id="partslibrary"></div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
-						Close
-						</button>
-					</div>
 				</div>
-			</div>
-		</div>
-
-
-		<div id="splashModal" class="modal fade" role="dialog">
-			<div class="modal-dialog" role="document">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Changelog</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-						<div id="changelog"></div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
+				<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+					<div id="changelog"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
 						Close
 						</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" onclick="localStorage.setItem('hideChangelog', true);">
+					<button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" onclick="localStorage.setItem('hideChangelog', true);">
 						Never show
 						</button>
-					</div>
 				</div>
 			</div>
 		</div>
-		<!-- #splashModal -->
+	</div>
+	<!-- #splashModal -->
 
-		<div id="aboutModal" class="modal fade" role="dialog">
-			<div class="modal-dialog" role="document">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">About / Credits</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<div id="aboutModal" class="modal fade" role="dialog">
+		<div class="modal-dialog" role="document">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">About / Credits</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 						</button>
-					</div>
-					<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-						OpenBuilds CAM was made possible through code and advice of the following projects
-									<dl>
-										<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/LaserWeb">LaserWeb Project</a> </dt>
-										<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/chilipeppr/">Chillipeppr Project</a> </dt>
-										<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/andrewhodel/millcrum">Millcrum</a> </dt>
-										<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/mrdoob/three.js/">Three.js</a> </dt>
-										<dt><i class="fas fa-code-branch"></i> <a href="https://sourceforge.net/p/jsclipper/">Clipper.js</a> </dt>
-                  </dl>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
+				</div>
+				<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+					OpenBuilds CAM was made possible through code and advice of the following projects
+					<dl>
+						<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/LaserWeb">LaserWeb Project</a> </dt>
+						<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/chilipeppr/">Chillipeppr Project</a> </dt>
+						<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/andrewhodel/millcrum">Millcrum</a> </dt>
+						<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/mrdoob/three.js/">Three.js</a> </dt>
+						<dt><i class="fas fa-code-branch"></i> <a href="https://sourceforge.net/p/jsclipper/">Clipper.js</a> </dt>
+					</dl>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
 						Close
 						</button>
-					</div>
 				</div>
 			</div>
 		</div>
-		<!-- #splashModal -->
+	</div>
+	<!-- #splashModal -->
 
-	</body>
-	<script type="text/javascript" src="lib/fontawesome5/svg-with-js/js/fontawesome-all.min.js"></script>
+</body>
+<script type="text/javascript" src="lib/fontawesome5/svg-with-js/js/fontawesome-all.min.js"></script>
 
-	<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="lib/popper.min.js"></script>
-	<script type="text/javascript" src="lib/bootstrap4/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="lib/jquery/jquery-ui.js"></script>
-	<script type="text/javascript" src="lib/jquery/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="lib/popper.min.js"></script>
+<script type="text/javascript" src="lib/bootstrap4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="lib/jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="lib/jquery/jquery.ui.touch-punch.min.js"></script>
 
-	<link type="text/css" rel="stylesheet" media="all" href="lib/bootoast/src/bootoast.css" />
-	<script type="text/javascript" src="lib/bootoast/src/bootoast.js"></script>
+<link type="text/css" rel="stylesheet" media="all" href="lib/bootoast/src/bootoast.css" />
+<script type="text/javascript" src="lib/bootoast/src/bootoast.js"></script>
 
-	<!-- Helpers -->
-	<script type="text/javascript" src="js/helpers.js"></script>
+<!-- Helpers -->
+<script type="text/javascript" src="js/helpers.js"></script>
 
-	<!-- Google Fonts as CAM paths -->
-	<script type="text/javascript" src="lib/jquery/fontselect/jquery.fontselect.min.js"></script>
-	<script type="text/javascript" src="lib/opentypejs/opentype.min.js"></script>
+<!-- Google Fonts as CAM paths -->
+<script type="text/javascript" src="lib/jquery/fontselect/jquery.fontselect.min.js"></script>
+<script type="text/javascript" src="lib/opentypejs/opentype.min.js"></script>
 
-	<!-- SimpleCAD -->
-	<script type="text/javascript" src="js/basic-cad-shapes.js"></script>
-	<script type="text/javascript" src="js/basic-cad-text.js"></script>
-	<script type="text/javascript" src="js/basic-cad-partslib.js"></script>
+<!-- SimpleCAD -->
+<script type="text/javascript" src="js/basic-cad-shapes.js"></script>
+<script type="text/javascript" src="js/basic-cad-text.js"></script>
+<script type="text/javascript" src="js/basic-cad-partslib.js"></script>
 
-	<!-- ThreeJS -->
-	<script type="text/javascript" src="lib/threejs/three.min.js"></script>
-	<script type="text/javascript" src="lib/threejs/GridRect.js"></script>
-	<script type="text/javascript" src="lib/threejs/OrbitControls.js"></script>
-	<script type="text/javascript" src="lib/threejs/DragControls.js"></script>
-	<script type="text/javascript" src="lib/threejs/Projector.js"></script>
-	<script type="text/javascript" src="lib/threejs/CanvasRenderer.js"></script>
-	<script type="text/javascript" src="lib/threejs/TransformControls.js"></script>
-	<script type="text/javascript" src="lib/threejs/TweenMax.min.js"></script>
-	<script type="text/javascript" src="js/viewer.js"></script>
-	<script type="text/javascript" src="js/viewer-ruler.js"></script>
+<!-- ThreeJS -->
+<script type="text/javascript" src="lib/threejs/three.min.js"></script>
+<script type="text/javascript" src="lib/threejs/GridRect.js"></script>
+<script type="text/javascript" src="lib/threejs/OrbitControls.js"></script>
+<script type="text/javascript" src="lib/threejs/DragControls.js"></script>
+<script type="text/javascript" src="lib/threejs/Projector.js"></script>
+<script type="text/javascript" src="lib/threejs/CanvasRenderer.js"></script>
+<script type="text/javascript" src="lib/threejs/TransformControls.js"></script>
+<script type="text/javascript" src="lib/threejs/TweenMax.min.js"></script>
+<script type="text/javascript" src="js/viewer.js"></script>
+<script type="text/javascript" src="js/viewer-ruler.js"></script>
 
 
-	<!-- CAM populated from threejs objects -->
-	<script type="text/javascript" src="lib/gl-matrix.js"></script>
-	<script type="text/javascript" src="lib/tbfleming/web-cam-cpp.js"></script>
-	<script type="text/javascript" src="lib/clipperjs/clipper_unminified.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-threegcode.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-fillpath.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-geometryutils.js"></script>
-	<script type="text/javascript" src="js/advanced-cam.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-tree.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-modal.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-preview.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-gcode.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-viewer-mouse.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-viewer-select.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-workspace-export.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-pretty-render.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-sim.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-keyboard-bindings.js"></script>
-	<script type="text/javascript" src="js/advanced-cam-transforms.js"></script>
+<!-- CAM populated from threejs objects -->
+<script type="text/javascript" src="lib/gl-matrix.js"></script>
+<script type="text/javascript" src="lib/tbfleming/web-cam-cpp.js"></script>
+<script type="text/javascript" src="lib/clipperjs/clipper_unminified.js"></script>
+<script type="text/javascript" src="js/advanced-cam-threegcode.js"></script>
+<script type="text/javascript" src="js/advanced-cam-fillpath.js"></script>
+<script type="text/javascript" src="js/advanced-cam-geometryutils.js"></script>
+<script type="text/javascript" src="js/advanced-cam.js"></script>
+<script type="text/javascript" src="js/advanced-cam-tree.js"></script>
+<script type="text/javascript" src="js/advanced-cam-modal.js"></script>
+<script type="text/javascript" src="js/advanced-cam-preview.js"></script>
+<script type="text/javascript" src="js/advanced-cam-gcode.js"></script>
+<script type="text/javascript" src="js/advanced-cam-viewer-mouse.js"></script>
+<script type="text/javascript" src="js/advanced-cam-viewer-select.js"></script>
+<script type="text/javascript" src="js/advanced-cam-workspace-export.js"></script>
+<script type="text/javascript" src="js/advanced-cam-pretty-render.js"></script>
+<script type="text/javascript" src="js/advanced-cam-sim.js"></script>
+<script type="text/javascript" src="js/advanced-cam-keyboard-bindings.js"></script>
+<script type="text/javascript" src="js/advanced-cam-transforms.js"></script>
 
-	<!-- DXF Library -->
-	<script type="text/javascript" src="lib/dxf/dxf-parser.js"></script>
-	<script type="text/javascript" src="lib/dxf/three-dxf.js"></script>
-	<script type="text/javascript" src="js/dxf-render.js"></script>
+<!-- DXF Library -->
+<script type="text/javascript" src="lib/dxf/dxf-parser.js"></script>
+<script type="text/javascript" src="lib/dxf/three-dxf.js"></script>
+<script type="text/javascript" src="js/dxf-render.js"></script>
 
-	<!-- lautr3k's SVG  Library -->
-	<script type="text/javascript" src="lib/lw.svg-parser/dist/lw.svg-parser.js"></script>
-	<script type="text/javascript" src="js/svgparser.js"></script>
+<!-- lautr3k's SVG  Library -->
+<script type="text/javascript" src="lib/lw.svg-parser/dist/lw.svg-parser.js"></script>
+<script type="text/javascript" src="js/svgparser.js"></script>
 
-	<!-- SVG Lasersaur Library -->
-	<!-- <script type="text/javascript" src="lib/svgreader/SVGReader.js"></script>
+<!-- SVG Lasersaur Library -->
+<!-- <script type="text/javascript" src="lib/svgreader/SVGReader.js"></script>
 	<script type="text/javascript" src="lib/svgreader/svg2three.js"></script>
 	<script type="text/javascript" src="lib/svgreader/vec2.js"></script> -->
 
-	<!-- Bitmap Tracing -->
-	<script type="text/javascript" src="lib/potrace/potrace.js"></script>
-	<script type="text/javascript" src="js/potrace.js"></script>
+<!-- Bitmap Tracing -->
+<script type="text/javascript" src="lib/potrace/potrace.js"></script>
+<script type="text/javascript" src="js/potrace.js"></script>
 
-	<!--Settings Widgets -->
-	<script type="text/javascript" src="js\application-settings-controller.js"></script>
+<!--Settings Widgets -->
+<script type="text/javascript" src="js\application-settings-controller.js"></script>
 
-	<!-- Saved/load settings -->
-	<script type="text/javascript" src="js/localstorage.js"></script>
-	<!-- Gcode Viewer -->
-	<script type="text/javascript" src="js/gcodeviewer.js"></script>
-	<!-- User Interface -->
-	<script type="text/javascript" src="js/main.js"></script>
+<!-- Saved/load settings -->
+<script type="text/javascript" src="js/localstorage.js"></script>
+<!-- Gcode Viewer -->
+<script type="text/javascript" src="js/gcodeviewer.js"></script>
+<!-- User Interface -->
+<script type="text/javascript" src="js/main.js"></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/rsvp@4/dist/rsvp.min.js"></script>
+<script type="text/javascript" src="js/integration-machine-driver.js"></script>
 
-  <script type="x-shader/x-vertex" id="vertexShader">
-		varying vec3 vWorldPosition;
+<script src="https://cdn.jsdelivr.net/npm/rsvp@4/dist/rsvp.min.js"></script>
 
-		void main() {
+<script type="x-shader/x-vertex" id="vertexShader">
+	varying vec3 vWorldPosition; void main() { vec4 worldPosition = modelMatrix * vec4( position, 1.0 ); vWorldPosition = worldPosition.xyz; gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 ); }
 
-			vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
-			vWorldPosition = worldPosition.xyz;
+</script>
+<script type="x-shader/x-fragment" id="fragmentShader">
+	uniform vec3 topColor; uniform vec3 bottomColor; uniform float offset; uniform float exponent; varying vec3 vWorldPosition; void main() { float h = normalize( vWorldPosition + offset ).z; gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max(
+	h , 0.0), exponent ), 0.0 ) ), 1.0 ); }
 
-			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+</script>
 
-		}
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-38524928-4"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
 
-	</script>
-	<script type="x-shader/x-fragment" id="fragmentShader">
-		uniform vec3 topColor;
-		uniform vec3 bottomColor;
-		uniform float offset;
-		uniform float exponent;
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
 
-		varying vec3 vWorldPosition;
+	gtag('config', 'UA-38524928-4');
+</script>
 
-		void main() {
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-46207169-2"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
 
-			float h = normalize( vWorldPosition + offset ).z;
-			gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
 
-		}
-
-	</script>
-
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-38524928-4"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'UA-38524928-4');
-	</script>
-
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-46207169-2"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'UA-46207169-2');
-	</script>
+	gtag('config', 'UA-46207169-2');
+</script>
 
 </html>
