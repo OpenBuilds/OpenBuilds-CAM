@@ -263,7 +263,7 @@ function init3D() {
   })();
 
   if (webgl) {
-    printLog('<h5><i class="fa fa-search fa-fw" aria-hidden="true"></i>WebGL Support found!</h5><b>success:</b><br> this application will work optimally on this device!<hr><p>', successcolor);
+    printLog('WebGL Support found! success: this application will work optimally on this device!');
     renderer = new THREE.WebGLRenderer({
       autoClearColor: true,
       antialias: false,

@@ -14,6 +14,20 @@ $(document).ready(function() {
 });
 
 
+function JSClock() {
+  var time = new Date();
+  var hour = time.getHours();
+  var minute = time.getMinutes();
+  var second = time.getSeconds();
+  var temp = '' + hour
+  if (hour == 0)
+    temp = '12';
+  temp += ((minute < 10) ? 'h0' : 'h') + minute;
+  temp += ((second < 10) ? 'm0' : 'm') + second + 's';
+  // temp += (hour >= 12) ? ' P.M.' : ' A.M.';
+  return temp;
+}
+
 function sendGcodeToOmd(ipaddress) {
   var textToWrite = prepgcodefile();
   var blob = new Blob([textToWrite], {
@@ -24,7 +38,11 @@ function sendGcodeToOmd(ipaddress) {
   var url = "http://" + ipaddress + "/upload"
   var fd = new FormData();
   // fd.append('fname', 'file.gcode');
-  fd.append('data', blob, "file.gcode");
+  var time = new Date();
+  var string = "obcam-" + time.yyyymmdd() + "-" + JSClock() + ".gcode"
+  console.log(string)
+
+  fd.append('data', blob, string);
   $.ajax({
     type: 'POST',
     url: url,
