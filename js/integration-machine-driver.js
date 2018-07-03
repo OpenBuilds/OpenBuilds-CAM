@@ -6,7 +6,11 @@ var scancnterr = 0;
 $(document).ready(function() {
   // Find local IPs:
   // disable until golive
-  //scanLAN()//
+  if ('https:' != document.location.protocol) {
+    console.log('Running on http - activating OMD Integration - not available in HTTPS at this time')
+    scanLAN()
+    $('#scanLanButton').show()
+  }
 });
 
 
@@ -17,7 +21,7 @@ function sendGcodeToOmd(ipaddress) {
   });
   console.log("Sending ", blob, " to ", ipaddress + '/upload')
 
-  var url = "//" + ipaddress + "/upload"
+  var url = "http://" + ipaddress + "/upload"
   var fd = new FormData();
   // fd.append('fname', 'file.gcode');
   fd.append('data', blob, "file.gcode");
@@ -95,7 +99,7 @@ function wsScan(subnet) {
       // for (var ctr = 1; ctr < 20; ctr++) {
       for (var ctr = 1; ctr < 255; ctr++) {
         setTimeout(function() {
-          var conn = new WebSocket("wss://" + subnet + ctr2++ + ":3000/socket.io/?EIO=3&transport=websocket");
+          var conn = new WebSocket("ws://" + subnet + ctr2++ + ":3000/socket.io/?EIO=3&transport=websocket");
           conn.onopen = function(evt) {
             scancntsuccess++;
             validAddrs.push(evt.target);
