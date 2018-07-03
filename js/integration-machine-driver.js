@@ -5,7 +5,8 @@ var scancnterr = 0;
 
 $(document).ready(function() {
   // Find local IPs:
-  scanLAN()
+  // disable until golive
+  //scanLAN()//
 });
 
 
