@@ -94,7 +94,8 @@ function mouseDown(event) {
       // sceneWidth = document.getElementById("renderArea").offsetWidth;
       // sceneHeight = document.getElementById("renderArea").offsetHeight;
       // offset = $('#renderArea').offset();
-      var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      // var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      var isModalOpen = Metro.dialog.isOpen('#statusmodal') // dont raycast if modal is over the viewer
       if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
         mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;
         mouseVector.y = -(event.offsetY / renderer.domElement.height) * 2 + 1;
@@ -152,7 +153,8 @@ function mouseDown(event) {
       // sceneWidth = document.getElementById("renderArea").offsetWidth;
       // sceneHeight = document.getElementById("renderArea").offsetHeight;
       // offset = $('#renderArea').offset();
-      var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      // var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      var isModalOpen = Metro.dialog.isOpen('#statusmodal') // dont raycast if modal is over the viewer
       if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
         mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;
         mouseVector.y = -(event.offsetY / renderer.domElement.height) * 2 + 1;
@@ -202,7 +204,8 @@ function mouseDown(event) {
       // sceneWidth = document.getElementById("renderArea").offsetWidth;
       // sceneHeight = document.getElementById("renderArea").offsetHeight;
       // offset = $('#renderArea').offset();
-      var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      // var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      var isModalOpen = Metro.dialog.isOpen('#statusmodal') // dont raycast if modal is over the viewer
       if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
         mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;
         mouseVector.y = -(event.offsetY / renderer.domElement.height) * 2 + 1;
@@ -355,14 +358,16 @@ function mouseMove(event) {
       // what to do if leftclick+drag in movemode
       // currently uses customised DragControls, but want to make own in future
       // if (event.which == 1) { // only on left mousedown
-      var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      // var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+      var isModalOpen = Metro.dialog.isOpen('#statusmodal') // dont raycast if modal is over the viewer
       if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
 
       }
       // }
     }
   } else { // just hovering - lets color
-    var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+    // var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
+    var isModalOpen = Metro.dialog.isOpen('#statusmodal') // dont raycast if modal is over the viewer
     if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
       mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;
       mouseVector.y = -(event.offsetY / renderer.domElement.height) * 2 + 1;

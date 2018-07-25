@@ -78,7 +78,7 @@ function saveSettingsLocal() {
     saveSetting(paramName, val);
   }
   printLog('<b>Saved Settings: <br>NB:</b> Please refresh page for settings to take effect', errorcolor, "settings");
-  $("#settingsmodal").modal("hide");
+  // $("#settingsmodal").modal("hide");
   console.groupEnd();
 };
 
@@ -137,8 +137,9 @@ function checkSettingsLocal() {
 
 
   if (anyissues) {
-    printLog(`<b>MISSING CONFIG: You need to configure your setup. </b>. Click Edit, <a href='#' onclick='$("#settingsmodal").modal("show");'><kbd>Settings <i class="fa fa-cogs"></i></kbd></a> on the top menu bar, and work through all the options`, errorcolor, "settings");
-    $("#settingsmodal").modal("show");
+    printLog(`<b>MISSING CONFIG: You need to configure your setup. </b>. Click Edit, <a href='#' onclick='Metro.dialog.open('#settingsmodal');'><kbd>Settings <i class="fa fa-cogs"></i></kbd></a> on the top menu bar, and work through all the options`, errorcolor, "settings");
+    // $("#settingsmodal").modal("show");
+    Metro.dialog.open('#settingsmodal');
   }
 
 

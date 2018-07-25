@@ -120,65 +120,54 @@ function getText(fontFamily, fontVariant, text, fontSize) {
 
 $(document).ready(function() {
   var modal = `
-<div id="addShapeText" class="modal fade" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add Text</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
+
+  <div class="dialog" data-overlay-click-close="true" data-role="dialog" data-cls-dialog="pos-fixed pos-top-center" id="addShapeText">
+    <div class="dialog-title" id="statusTitle">Add Text</div>
+    <div class="dialog-content">
+    <form>
+      <div class="form-group row">
+        Create a new set of text paths
+        <table>
+          <tr>
+            <th style="width: 150px;"></th><th style="width: 210px;"></th>
+          </tr>
+          <tr>
+            <td>Font: </td>
+            <td>
+              <div class="input-addon">
+                <span class="input-addon-label-left  active-border"><i class="fas fa-font"></i></span>
+                <input id="font" type="text" class="cam-form-field  active-border" />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Size: </td>
+            <td>
+              <div class="input-addon">
+                <span class="input-addon-label-left active-border"><i class="fas fa-text-height"></i></span>
+                <select class="cam-form-field cam-form-field-right  active-border" id="fontsize">
+                  <option value="20" selected>20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                  <option value="50">50</option>
+                  <option value="70">70</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
-      <div class="modal-body" style="margin-left: 10px; margin-right: 10px;">
-        <form>
-          <div class="form-group row">
-            Create a new set of text paths
-            <table>
-              <tr>
-                <th style="width: 150px;"></th><th style="width: 210px;"></th>
-              </tr>
-              <tr>
-                <td>Font: </td>
-                <td>
-                  <div class="input-addon">
-                    <span class="input-addon-label-left  active-border"><i class="fas fa-font"></i></span>
-                    <input id="font" type="text" class="cam-form-field  active-border" />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Size: </td>
-                <td>
-                  <div class="input-addon">
-                    <span class="input-addon-label-left active-border"><i class="fas fa-text-height"></i></span>
-                    <select class="cam-form-field cam-form-field-right  active-border" id="fontsize">
-                      <option value="20" selected>20</option>
-                      <option value="30">30</option>
-                      <option value="40">40</option>
-                      <option value="50">50</option>
-                      <option value="70">70</option>
-                    </select>
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </form>
-        <hr/>
-        <div class="input-addon">
-          <input style="width: 100%;" id="texttorender" class="active-border" value="Type Here"></input>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="form-group row">
-          <div class="col-sm-10">
-            <button type="button" class="btn btn-primary" id="CreateText">Create</button>
-          </div>
-        </div>
-      </div>
+    </form>
+    <hr/>
+    <div class="input-addon">
+      <input style="width: 100%;" id="texttorender" class="active-border" value="Type Here"></input>
+    </div>
+    </div>
+    <div class="dialog-actions" id="statusFooter">
+      <button class="button js-dialog-close">Cancel</button>
+      <button type="button" class="button js-dialog-close success" id="CreateText">Create</button>
     </div>
   </div>
-</div>
 `
   $("body").append(modal);
 

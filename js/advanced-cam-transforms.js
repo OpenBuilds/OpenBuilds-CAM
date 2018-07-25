@@ -13,82 +13,68 @@ function showScaleWindow(object) {
   var ycenter = (bbox2.max.y - (bbox2.max.y - bbox2.min.y) / 2).toFixed(2);
   // console.log(width, height, left, bottom)
   var template = `
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#scaletab">
-      SCALE
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#postab">
-      POSITION
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#rotatetab">
-      ROTATION
-      </a>
-    </li>
+
+  <ul class="tabs-expand-sm" data-role="tabs">
+    <li><a href="#_SCALE">SCALE</a></li>
+    <li><a href="#_POSITION">POSITION</a></li>
+    <li><a href="#_ROTATION">ROTATION</a></li>
   </ul>
 
-  <div class="tab-content">
-    <div id="scaletab" class="tab-pane fade show active">
+    <div id="_SCALE" class="tab-pane fade show active">
       <i class="fas fa-ruler"></i> <b>Scale</b>: <small>` + object.name + `</small>
       <table>
         <tr>
           <td>Width: </td>
+          <td><i class="fas fa-ruler-horizontal fa-fw"></i></td>
           <td>
             <div class="input-addon">
-              <span class="input-addon-label-left active-border"><i class="fas fa-ruler-horizontal"></i></span>
               <input type="text" class="cam-form-field active-border" value="` + width + `" id="scaleWidth"  objectseq="` + i + `" style="text-align: right;">
-              <span class="input-addon-label-right active-border">mm</span>
             </div>
           </td>
+          <td>mm</td>
         </tr>
         <tr>
           <td>Height: </td>
+          <td><i class="fas fa-ruler-vertical fa-fw"></i></td>
           <td>
             <div class="input-addon">
-              <span class="input-addon-label-left active-border"><i class="fas fa-ruler-vertical"></i></span>
               <input type="text" class="cam-form-field active-border" value="` + height + `" id="scaleHeight"  objectseq="` + i + `" style="text-align: right;">
-              <span class="input-addon-label-right active-border">mm</span>
             </div>
           </td>
+          <td>mm</td>
         </tr>
       </table>
-      <button type="button" class="btn btn-sm btn-danger" onclick="scalewindow.style.visibility = 'hidden';" aria-label="Close">
+      <button type="button" class="button alert" onclick="scalewindow.style.visibility = 'hidden';" aria-label="Close">
         Cancel
       </button>
-      <button type="button" class="btn btn-sm btn-success" aria-label="Close" onclick="scaleObj()">
+      <button type="button" class="button success" aria-label="Close" onclick="scaleObj()">
         Apply
       </button>
     </div>
-    <div id="postab" class="tab-pane fade">
+    <div id="_POSITION" class="tab-pane fade">
       <i class="far fa-clone"></i> <b>Position</b>: <small>` + object.name + `</small>
       <table>
         <tr>
           <td>
-            <div class="input-addon">
-            <span class="input-addon-label-left" style="text-align: left;"></span>
-            <span class="cam-form-field"><i class="fas fa-align-left"></i></span>
-            </div>
+          </td>
+          <td align="center">
+            <i class="fas fa-align-left fa-fw"></i>
+          </td>
+          <td align="center">
+            <i class="fas fa-align-center fa-fw"></i>
+          </td>
+          <td align="center">
+            <i class="fas fa-align-right fa-fw"></i>
           </td>
           <td>
-            <div class="input-addon" style="text-align: center;">
-            <span class="cam-form-field"><i class="fas fa-align-center"></i></span>
-            </div>
-          </td>
-          <td>
-            <div class="input-addon" style="text-align: right;">
-            <span class="cam-form-field"><i class="fas fa-align-right"></i></span>
-            <span class="input-addon-label-right-sm"></span>
-            </div>
           </td>
         </tr>
         <tr>
           <td>
+            <i class="fas fa-ruler-horizontal fa-fw"></i>
+          </td>
+          <td>
             <div class="input-addon">
-              <span class="input-addon-label-left"><i class="fas fa-ruler-horizontal"></i></span>
               <input type="text" class="cam-form-field active-border" value="` + left + `" id="left"  objectseq="` + i + `" style="text-align: right;">
             </div>
           </td>
@@ -100,14 +86,18 @@ function showScaleWindow(object) {
           <td>
             <div class="input-addon">
               <input type="text" class="cam-form-field active-border" value="` + right + `" id="right"  objectseq="` + i + `" style="text-align: right;">
-              <span class="input-addon-label-right-sm">mm</span>
             </div>
+          </td>
+          <td>
+            mm
           </td>
         </tr>
         <tr>
           <td>
+            <i class="fas fa-ruler-vertical fa-fw"></i>
+          </td>
+          <td>
             <div class="input-addon">
-              <span class="input-addon-label-left"><i class="fas fa-ruler-vertical"></i></span>
               <input type="text" class="cam-form-field active-border" value="` + bottom + `" id="bottom"  objectseq="` + i + `" style="text-align: right;">
             </div>
           </td>
@@ -119,43 +109,44 @@ function showScaleWindow(object) {
           <td>
             <div class="input-addon">
               <input type="text" class="cam-form-field active-border" value="` + top + `" id="top"  objectseq="` + i + `" style="text-align: right;">
-            <span class="input-addon-label-right-sm">mm</span>
             </div>
+          </td>
+          <td>
+            mm
           </td>
         </tr>
       </table>
-      <button type="button" class="btn btn-sm btn-danger" onclick="scalewindow.style.visibility = 'hidden';" aria-label="Close">
+      <button type="button" class="button alert" onclick="scalewindow.style.visibility = 'hidden';" aria-label="Close">
         Cancel
       </button>
-      <button type="button" class="btn btn-sm btn-success" aria-label="Close" onclick="moveObj()">
+      <button type="button" class="button success" aria-label="Close" onclick="moveObj()">
         Apply
       </button>
     </div>
-    <div id="rotatetab" class="tab-pane fade">
+    <div id="_ROTATION" class="tab-pane fade">
     <i class="fas fa-undo"></i> <b>Rotation</b>: <small>` + object.name + `</small>
       <table>
         <tr>
           <td>Angle: </td>
           <td>
             <div class="input-addon">
-              <span class="input-addon-label-left active-border"></span>
+              <span class="input-addon-label-left active-border"><i class="fas fa-undo fa-fw"></i> </span>
               <input type="text" class="cam-form-field active-border" value="45" id="rotationangle"  objectseq="` + i + `" style="text-align: right;">
               <span class="input-addon-label-right active-border">&deg;</span>
             </div>
           </td>
         </tr>
       </table>
-      <button type="button" class="btn btn-sm btn-danger" onclick="scalewindow.style.visibility = 'hidden';" aria-label="Close">
+      <button type="button" class="button alert" onclick="scalewindow.style.visibility = 'hidden';" aria-label="Close">
         Cancel
       </button>
-      <button type="button" class="btn btn-sm btn-success" aria-label="Close" onclick="rotateObj(1)">
+      <button type="button" class="button success" aria-label="Close" onclick="rotateObj(1)">
         Anticlockwise
       </button>
-      <button type="button" class="btn btn-sm btn-success" aria-label="Close" onclick="rotateObj(-1)">
+      <button type="button" class="button success" aria-label="Close" onclick="rotateObj(-1)">
         Clockwise
       </button>
     </div>
-  </div>
   `;
   $('#scalewindow').html(template)
   var aspect = width / height
@@ -208,6 +199,7 @@ function showScaleWindow(object) {
     $("#ycenter").val((parseFloat(ycenter) + parseFloat(diff)).toFixed(2));
     $("#top").val((parseFloat(top) + parseFloat(diff)).toFixed(2));
   });
+  Metro.init();
 }
 
 function scaleObj() {

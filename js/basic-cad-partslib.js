@@ -13,17 +13,18 @@ function usePartsLib(file, path) {
     printLog('DXF Opened', msgcolor, "file");
     // putFileObjectAtZero();
     resetView();
-    $("#partslibModal").modal('hide')
+    // $("#partslibModal").modal('hide')
+    Metro.dialog.close('#partslibModal')
     fillTree();
   });
 }
 
 $(document).ready(function() {
+  console.log("Loading PartsLib")
   $.get("./partslib/data.json", function(data) {
 
     var template = `
     <style>
-
 
       .image {
         opacity: 1;
@@ -54,41 +55,25 @@ $(document).ready(function() {
     </style>`
 
 
-    template += `<ul class="nav nav-tabs">`
-
-
+    template += `<ul class="tabs-expand-sm" data-role="tabs">`
     for (i = 0; i < data.children.length; i++) {
-      if (i == 0) {
-        template += `<li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#` + data.children[i].name + `">
-                          ` + data.children[i].name + `
-                        </a>
-                      </li>`
-      } else {
-        template += `<li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#` + data.children[i].name + `">
-                          ` + data.children[i].name + `
-                        </a>
-                      </li>`
-      }
-
-
+      template += `<li>
+                      <a href="#` + data.children[i].name + `">
+                        ` + data.children[i].name + `
+                      </a>
+                    </li>`
     }
-
-
     template += `</ul>
-    <div class="tab-content">
-      `
 
+      `
+    console.log(template)
     for (i = 0; i < data.children.length; i++) {
       var folder = data.children[i]
       var count = folder.children.length
       // console.group(folder.name, count)
-      if (i == 0) {
-        template += `<div id="` + data.children[i].name + `" class="tab-pane fade show active"><div class="container"><div class="row">`;
-      } else {
-        template += `<div id="` + data.children[i].name + `" class="tab-pane fade"><div class="container"><div class="row">`;
-      }
+
+      template += `<div id="` + data.children[i].name + `" class="p-1"><div class="container-fluid"><div class="row">`;
+
       // console.log(folder.name)
 
       if (folder.children.length == 0) {
@@ -96,7 +81,7 @@ $(document).ready(function() {
       }
 
       for (j = 0; j < folder.children.length; j++) {
-        if (j % 4 === 0) {
+        if (j % 3 === 0) {
           template += `</div><p><div class="row">`
         }
         var file = folder.children[j]
@@ -106,14 +91,12 @@ $(document).ready(function() {
         var size = bytesToSize(file.size)
         // console.log(title, path, imgurl, size)
         template += `
-        <div class = "col-sm-3">
+        <div class = "cell-4">
           <div class="img-thumbnail" style=" -webkit-transform-style: preserve-3d; -moz-transform-style: preserve-3d; transform-style: preserve-3d; background-color: #f7f7f7; width: 160px; height: 160px;">
             <img class="image" style="position: relative; top: 50%; transform: perspective(1px) translateY(-50%); max-width: 150px; max-height: 150px;" src="` + imgurl + `" alt="` + title + `">
             <div class="middle">
-              <div class="btn-group" role="group" >
-                <a href="./partslib/` + path + `" class="btn btn-sm btn-dark"><i class="fas fa-cloud-download-alt" data-toggle="tooltip" data-placement="bottom" title="Download" ></i></a>
-                <button onclick="usePartsLib('` + file.name + `','` + folder.name + `');" type="button" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="bottom" title="Use this part in CAM" ><i class="fas fa-plus"></i> Insert</button>
-              </div>
+                <a style="width: 100%;" href="./partslib/` + path + `" class="button primary"><i class="fas fa-cloud-download-alt" data-toggle="tooltip" data-placement="bottom" title="Download" ></i>Download</a><br><br>
+                <button style="width: 100%;" onclick="usePartsLib('` + file.name + `','` + folder.name + `');" type="button" class="button primary" data-toggle="tooltip" data-placement="bottom" title="Use this part in CAM" ><i class="fas fa-plus"></i> Insert</button>
             </div>
           </div><!-- end of imgthumb -->
         ` + title + ` <small>[` + size + `]</small>
@@ -122,7 +105,9 @@ $(document).ready(function() {
       template += `</div></div></div>`
       // console.groupEnd()
     }
-    template += `</div>` // tab content end
+    // template += `</div>` // tab content end
+    // console.log(template)
     $("#partslibrary").append(template)
+    Metro.init()
   });
 });

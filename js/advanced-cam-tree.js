@@ -34,12 +34,18 @@ function animateTree() {
     });
   }
   if (selectCount > 0) {
+
+    $("#tpaddpathParent").prop('disabled', false).removeClass('disabled')
     $("#selectCount").text(selectCount)
     $("#tpaddpath").prop('disabled', false);
+    $("#tpaddicon").addClass('fg-green')
+
     if (toolpathsInScene.length > 0) {
       $("#tpaddpath-dropdown").prop('disabled', false);
     }
   } else {
+    $("#tpaddpathParent").prop('disabled', true).addClass('disabled');
+    $("#tpaddicon").removeClass('fg-green')
     $("#selectCount").text("")
     $("#tpaddpath").prop('disabled', true);
     $("#tpaddpath-dropdown").prop('disabled', true);
@@ -184,6 +190,12 @@ function fillTree() {
   // $('#toolpathtreeheader').empty();
   $('#toolpathtree').empty();
   $('#toolpathsmenu').empty();
+
+  // Default Menu
+  var menuitem = `<li><a  href="#" onclick="addJob(-1);">Create a new operation</a></li>`;
+  $('#toolpathsmenu').append(menuitem);
+
+
   clearSceneFlag = true;
 
   // sort Documents Geometry (Travelling Salesman)
@@ -249,7 +261,7 @@ function fillTree() {
                     </div>
                   </td>
                   <td id="buttons` + i + `">
-                    <button class="btn btn-xs btn-danger remove" onclick="storeUndo(); objectsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <button class="tool-button alert remove" onclick="storeUndo(); objectsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
                   </td>
                 </tr>`
       }
@@ -344,8 +356,8 @@ function fillTree() {
     var table = `<table class="jobsetuptable" style="width: 100%" id="toolpathstable">`
     $('#toolpathtree').append(table)
 
-    var menuheader = `<h6 class="dropdown-header">Add selection to existing toolpath:</h6>`
-    $('#toolpathsmenu').append(menuheader);
+    // var menuheader = `<h6 class="dropdown-header">Add selection to existing toolpath:</h6>`
+    // $('#toolpathsmenu').append(menuheader);
 
     for (i = 0; i < toolpathsInScene.length; i++) {
       if (toolpathsInScene[i].type != "Mesh") {
@@ -371,28 +383,29 @@ function fillTree() {
 
                 </td>
                 <td>
-                <div class="btn-group" role="group" aria-label="Toolpath Options">`
+                <div class="toolbar">
+                `
 
         if (toolpathsInScene[i].userData.visible) {
-          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Hide toolpath and exclude from GCODE generation" class="btn btn-xs btn-warning" onclick="toggleToolpathVisibility(` + i + `, false);"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></button>`
+          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Hide toolpath and exclude from GCODE generation" class="tool-button warning" onclick="toggleToolpathVisibility(` + i + `, false);"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></button>`
         } else {
-          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Show toolpath and include in GCODE generation" class="btn btn-xs btn-warning" onclick="toggleToolpathVisibility(` + i + `, true);"><i class="fa fa-fw fa-eye" aria-hidden="true"></i></button>`
+          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Show toolpath and include in GCODE generation" class="tool-button alert" onclick="toggleToolpathVisibility(` + i + `, true);"><i class="fa fa-fw fa-eye" aria-hidden="true"></i></button>`
         }
 
         if (i > 0) {
-          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move down" class="btn btn-xs btn-success" onclick="moveOp(` + i + `, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
+          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move down" class="tool-button success" onclick="moveOp(` + i + `, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
         } else {
-          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move down" class="btn btn-xs btn-success disabled" onclick="moveOp(` + i + `, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
+          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move down" class="tool-button success disabled" onclick="moveOp(` + i + `, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
         }
 
         if (i < toolpathsInScene.length - 1) {
-          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="btn btn-xs btn-success" onclick="moveOp(` + i + `, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
+          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="tool-button success" onclick="moveOp(` + i + `, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
         } else {
-          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="btn btn-xs btn-success disabled" onclick="moveOp(` + i + `, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
+          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="tool-button success disabled" onclick="moveOp(` + i + `, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
         }
 
-        toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="btn btn-xs btn-danger" onclick="toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
-                <button data-tooltip="tooltip" data-placement="bottom" title="Edit toolpath" class="btn btn-xs btn-primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
+        toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="tool-button alert" onclick="toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <button data-tooltip="tooltip" data-placement="bottom" title="Edit toolpath" class="tool-button primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
                 </div>
                 </td>
                 </tr>
@@ -401,7 +414,7 @@ function fillTree() {
       $('#toolpathstable').append(toolp);
 
       // append toolpath to menu
-      var menuitem = `<a class="dropdown-item" href="#" onclick="addJob(` + i + `)">` + toolpathsInScene[i].name + `: ` + operation + `</a>`;
+      var menuitem = `<li><a  href="#" onclick="addJob(` + i + `)">` + toolpathsInScene[i].name + `: ` + operation + `</a></li>`;
       $('#toolpathsmenu').append(menuitem);
 
     }

@@ -11,265 +11,364 @@
 	<meta name="author" content="" />
 	<meta name="version" content="" />
 	<!-- Mobile Redirect if screen is too small. -->
+	<meta name="metro4:init" content="true">
+
 	<script type="text/javascript">
 		if (screen.width <= 720) {
 			window.location = "mobile.html";
 		}
 	</script>
-	<link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootstrap.min.css" />
+	<!-- <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootstrap.min.css" /> -->
 	<link type="text/css" rel="stylesheet" media="all" href="css/bootstrap4-fixes.css" />
 	<link rel="stylesheet" type="text/css" href="lib/jquery/fontselect/styles/fontselect-bootstrap4.css" />
-	<link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet"> -->
 	<link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
+	<link rel="stylesheet" href="lib/metro4/css/metro-all.css" />
 	<!-- <link type="text/css" rel="stylesheet" media="all" href="css/font-awesome.css" /> -->
 	<link rel="manifest" href="/manifest.json">
 </head>
 
 <body>
-	<div class="page-container sidebar-collapsed" id="wrap">
-		<div class="container-fluid" style="height: 100%; width: 100%; padding-left: 2px; padding-right: 2px;">
-			<div id="container1">
-				<!-- #col1 (sidebar) -->
-				<div id="col1">
-					<div class="card" style="height: calc(100% - 1.5px);">
-						<div class="card-header" style="padding: 0px;">
-							<nav class="navbar navbar-expand-md navbar-light bg-light">
-								<a class="navbar-brand" href="https://openbuilds.com/" target="_blank"><img src="images/logo.png"/></a>
-								<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-										<span class="navbar-toggler-icon"></span>
-									</button>
-								<div class="collapse navbar-collapse" id="navbarSupportedContent">
-									<ul class="navbar-nav mr-auto">
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle" href="#" id="fileDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												File
-												</a>
-											<div class="dropdown-menu" aria-labelledby="fileDropDown">
-												<label class="dropdown-item" style="margin: 0px;">
-													<i class="far fa-folder-open"></i> Open Document
-													<input type="file" id="filemenu" class="custom-file-input" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple style="height: 26px;"/>
-													</label>
-												<div class="dropdown-divider"></div>
-												<h6 class="dropdown-header"> Workspace</h6>
-												<a class="dropdown-item" href="#" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
-														<i class="far fa-file"></i> New Empty Workspace
-													</a>
-												<a class="dropdown-item" href="#" onclick="exportWorkspace();">
-														<i class="fas fa-download"></i> Export Workspace
-													</a>
-												<label class="dropdown-item" style="margin: 0px;">
-														<i class="fas fa-upload"></i> Import Workspace
-														<input type="file" id="workspaceImport" class="custom-file-input" accept=".json" multiple style="height: 26px;"/>
-													</label>
-												<div class="dropdown-divider"></div>
-												<a class="dropdown-item disabled" href="#" id="exportGcodeMenu" onclick="saveFile()">
-														<i class="far fa-save"></i> Export G-Code
-													</a>
-											</div>
-										</li>
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle" href="#" id="editDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												Edit
-												</a>
-											<div class="dropdown-menu" aria-labelledby="viewDropDown">
-												<h6 class="dropdown-header"> Selection</h6>
-												<a class="dropdown-item" href="#" id="selectAll"><i class="far fa-check-square"></i> Select All</a>
-												<a class="dropdown-item" href="#" id="selectNone"><i class="far fa-square"></i> Select None</a>
-												<a class="dropdown-item" href="#" id="selectInv"><i class="fas fa-check"></i> Invert Selection</a>
-												<div class="dropdown-divider"></div>
-												<a class="dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick='undo();'>
-														<i class="fas fa-undo"></i> Undo
-													</a>
-												<a class="dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick='redo();'>
-														<i class="fas fa-redo"></i> Redo
-													</a>
-												<div class="dropdown-divider"></div>
-												<a class="dropdown-item" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick='$("#settingsmodal").modal("show");'>
-														<i class="fa fa-fw fa-cogs" aria-hidden="true"></i> Settings
-													</a>
-											</div>
-										</li>
-
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle" href="#" id="insertDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												Insert
-												</a>
-											<div class="dropdown-menu" aria-labelledby="insertDropDown">
-												<h6 class="dropdown-header"> Insert</h6>
-												<a class="dropdown-item" href="#" onclick="$('#partslibModal').modal('show')"><i class="far fa-star"></i> from Parts Library </a>
-												<div class="dropdown-divider"></div>
-												<h6 class="dropdown-header"> Create</h6>
-												<a class="dropdown-item" href="#" onclick="$('#addShapeText').modal('show');"><i class="fas fa-font"></i> Text</a>
-												<a class="dropdown-item" href="#" onclick="$('#addShapeCircle').modal('show');"><i class="far fa-circle"></i> Circle</a>
-												<a class="dropdown-item" href="#" onclick="$('#addShapeRect').modal('show');"><i class="far fa-square"></i> Rectangle </a>
-											</div>
-										</li>
-
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle" href="#" id="viewDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												View
-												</a>
-											<div class="dropdown-menu" aria-labelledby="viewDropDown">
-												<a class="dropdown-item" href="#" id="viewReset" onclick="resetView();"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> Reset View</a>
-												<div class="dropdown-divider"></div>
-												<a class="dropdown-item" href="#" id="selectNone" onclick="controls.enableRotate = false; resetView(); printLog('Disabled Orbit', warncolor, 'viewer');"><i class="fa fa-fw fa-th" aria-hidden="true"></i> 2D Mode</a>
-												<a class="dropdown-item" href="#" id="selectInv" onclick="controls.enableRotate = true; resetView(); printLog('Enabled Orbit', successcolor, 'viewer');"><i class="fa fa-fw fa-cube" aria-hidden="true"></i> 3D Mode</a>
-											</div>
-										</li>
-
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle" href="#" id="aboutDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												Help
-												</a>
-											<div class="dropdown-menu" aria-labelledby="aboutDropDown">
-												<a class="dropdown-item" href="#" onclick="$('#aboutModal').modal('show')"><i class="fa fa-fw fa-info" aria-hidden="true"></i> About</a>
-												<a class="dropdown-item" href="#" onclick="getChangelog()"><i class="fa fa-fw fa-list" aria-hidden="true"></i> Changelog</a>
-												<div class="dropdown-divider"></div>
-												<a class="dropdown-item disabled" href="#"><i class="fa fa-fw fa-book" aria-hidden="true"></i> Documentation (Coming Soon)</a>
-											</div>
-										</li>
-
-									</ul>
-									<iframe src="https://ghbtns.com/github-btn.html?user=openbuilds&repo=cam&type=fork&count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+	<!-- container1 Drog Container wraps all other content -->
+	<div id="container1">
+		<div id="col1">
+			<div class="window" data-icon="<span class='mif-rocket'></span>" style="height: calc(100% - 2px);">
+				<div class="window-caption">
+					<span class="icon mif-cog"></span>
+					<span class="title">OpenBuilds CAM -  GCODE Generator</span>
+				</div>
+				<div class="window-content p-2" style="overflow-y:hidden; ">
+					<nav data-role="ribbonmenu">
+						<ul class="tabs-holder">
+							<li><a href="#section-two">File</a></li>
+						</ul>
+						<div class="content-holder">
+							<div class="section" id="section-two">
+								<div class="group">
+									<div class="ribbon-split-button">
+										<button class="ribbon-main btn-file" title="Open a drawing">
+									        <span class="icon">
+														<span class="far fa-folder-open fg-amber"></span>
+									        </span>
+													<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple />
+									    	</button>
+										<span class="ribbon-split dropdown-toggle">Open<br>Drawing</span>
+										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
+											<li><a href="#" onclick="Metro.dialog.open('#partslibModal')">Import from Parts Library</a></li>
+										</ul>
+									</div>
+									<span class="title">File</span>
 								</div>
-							</nav>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
+			                    <span class="icon">
+			                      <span class="far fa-file"></span>
+			                    </span>
+			                    <span class="caption">New Workspace</span>
+			                  </button>
+										<br>
+										<button class="ribbon-icon-button btn-file" title="Import Workspace">
+													<span class="icon">
+														<i class="far fa-folder-open"></i>
+													</span>
+													<input type="file" id="workspaceImport" accept=".json" multiple style="height: 26px;"/>
+													<span class="caption pl-1" > Import Workspace</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="exportWorkspace();">
+			                    <span class="icon">
+			                      <span class="fas fa-download"></span>
+			                    </span>
+			                    <span class="caption">Export Workspace</span>
+			                  </button>
+									</div>
+									<span class="title">Workspace</span>
+								</div>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="undo()">
+			                    <span class="icon">
+			                      <span class="fas fa-undo"></span>
+			                    </span>
+			                    <span class="caption">Undo</span>
+			                  </button>
+										<br>
+										<button class="ribbon-icon-button" onclick="redo()">
+			                    <span class="icon">
+			                      <span class="fas fa-redo"></span>
+			                    </span>
+			                    <span class="caption">Redo</span>
+			                  </button>
+									</div>
+									<span class="title">Undo/Redo</span>
+								</div>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button active" id="mouseSelectBtn">
+		                      <span class="icon">
+		                      	<span class="fas fa-mouse-pointer"></span>
+		                      </span>
+		                      <span class="caption">Select</span>
+	                    	</button>
+										<br>
+										<button class="ribbon-icon-button" id="mouseMoveBtn">
+		                      <span class="icon">
+		                      	<span class="fas fa-arrows-alt"></span>
+		                      </span>
+		                      <span class="caption">Move</span>
+	                    	</button>
+										<br>
+										<button class="ribbon-icon-button" id="mouseDelBtn">
+		                      <span class="icon">
+		                      	<span class="fas fa-eraser"></span>
+		                      </span>
+		                      <span class="caption">Erase</span>
+	                    	</button>
+									</div>
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" id="mouseScaleBtn">
+		                    	<span class="icon">
+		                      	<span class="fas fa-ruler"></span>
+		                      </span>
+		                      <span class="caption">Transform</span>
+	                    	</button>
+									</div>
+									<span class="title">Mouse Mode</span>
+								</div>
+
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" id="selectAll">
+			                    <span class="icon">
+			                      <span class="far fa-check-square"></span>
+			                    </span>
+			                    <span class="caption">All</span>
+			                  </button>
+										<br>
+										<button class="ribbon-icon-button" id="selectNone">
+			                    <span class="icon">
+			                      <span class="far fa-square"></span>
+			                    </span>
+			                    <span class="caption">None</span>
+			                  </button>
+										<br>
+										<button class="ribbon-icon-button" id="selectInv">
+			                    <span class="icon">
+			                      <span class="fas fa-check"></span>
+			                    </span>
+			                    <span class="caption">Invert</span>
+			                  </button>
+									</div>
+									<span class="title">Select</span>
+								</div>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="resetView();">
+			                    <span class="icon">
+			                      <span class="fa fa-eye"></span>
+			                    </span>
+			                    <span class="caption">Documents</span>
+			                  </button>
+										<br>
+										<button class="ribbon-icon-button" onclick="resetView(scene.getObjectByName('Grid'));">
+			                    <span class="icon">
+			                      <span class="fa fa-th"></span>
+			                    </span>
+			                    <span class="caption">Workspace</span>
+			                  </button>
+									</div>
+									<span class="title">Zoom</span>
+								</div>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="sim(0);" id="simstartbtn">
+			                    <span class="icon">
+			                      <span class="fa fa-fighter-jet fa-fw"></span>
+			                    </span>
+			                    <span class="caption">Play</span>
+			                  </button>
+										<br>
+										<button class="ribbon-icon-button" onclick="simstop();" id="simstopbtn" disabled>
+			                    <span class="icon">
+			                      <span class="fa fa-stop fa-fw"></span>
+			                    </span>
+			                    <span class="caption">Stop</span>
+			                  </button>
+										<br>
+										<button class="ribbon-icon-button" onclick="simSpeed();">
+			                    <span class="icon">
+			                      <span class="fas fa-tachometer-alt"></span>
+			                    </span>
+			                    <span class="caption"><span id="simspeedval">1</span>x</span>
+			                  </button>
+									</div>
+									<span class="title">Simulator</span>
+								</div>
+
+								<div class="group">
+									<div class="ribbon-split-button" id="tpaddpathParent">
+										<button class="ribbon-main" onclick="addJob(-1);" id="tpaddpath">
+									        <span class="icon">
+														<span class="fa-layers fa-fw">
+													    <i id="tpaddicon" class="fa fa-plus fg-green"></i>
+													    <span id="selectCount" class="fa-layers-text" data-fa-transform="shrink-2 up-5 right-5" style="font-weight:900; display: none;">0</span>
+													  </span>
+									        </span>
+									    	</button>
+										<span class="ribbon-split dropdown-toggle" id="tpaddpath-dropdown">Add Selection <br> to Job</span>
+										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" id="toolpathsmenu">
+											<li><a href="#" onclick="addJob(-1);">Add to a new operation</a></li>
+										</ul>
+									</div>
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="makeGcode();">
+													<span class="icon">
+														<span class="fa fa-cubes fg-brown"></span>
+													</span>
+													<span class="caption">Generate GCODE</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="saveFile()">
+													<span class="icon">
+														<span class="far fa-save fg-brandColor2"></span>
+													</span>
+													<span class="caption">Export GCODE</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="trashGcode();">
+													<span class="icon">
+														<span class="fa fa-trash fg-red"></span>
+													</span>
+													<span class="caption">Clear GCODE</span>
+												</button>
+										<br>
+									</div>
+									<span class="title">Toolpath</span>
+								</div>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeText ');">
+													<span class="icon">
+														<span class="fas fa-font"></span>
+													</span>
+													<span class="caption">Text</span>
+												</button>
+										<br>
+
+										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeCircle ');">
+			                    <span class="icon">
+			                      <span class="far fa-circle"></span>
+			                    </span>
+			                    <span class="caption">Circle</span>
+			                  </button>
+										<br>
+
+										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeRect ');">
+													<span class="icon">
+														<span class="far fa-square"></span>
+													</span>
+													<span class="caption">Rectangle</span>
+												</button>
+									</div>
+									<span class="title">Insert</span>
+								</div>
+
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #settingsmodal ');">
+			                    <span class="icon">
+			                      <span class="fa fa-fw fa-cogs"></span>
+			                    </span>
+			                    <span class="caption">Settings</span>
+			                  </button>
+										<br>
+										<button class="ribbon-icon-button" onclick="Metro.dialog.open('#aboutModal')">
+													<span class="icon">
+														<span class="fa fa-fw fa-info"></span>
+													</span>
+													<span class="caption">About</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="getChangelog()">
+			                    <span class="icon">
+			                      <span class="fa fa-fw fa-list"></span>
+			                    </span>
+			                    <span class="caption">Changelog</span>
+			                  </button>
+									</div>
+									<span class="title">App</span>
+								</div>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" style="display: none;">
+													<span class="icon">
+														<span class="fas fa-play"></span>
+													</span>
+													<span class="caption">Send to Machine <span id="omdversion"></span></span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" id="downloadDrivers" onclick="downloadDrivers()">
+													<span class="icon">
+														<span class="fas fa-download"></span>
+													</span>
+													<span class="caption">Install Drivers</span>
+												</button>
+										<br>
+									</div>
+									<span class="title">Send to Machine</span>
+								</div>
+							</div>
 						</div>
-						<div class="card-body" style="height: calc(100% - 65px); padding: 0; margin-bottom: 15px; ">
-							<div id="buttonbar">
-								<div class="btn-group" role="group">
-									<span id="openbutton" class="btn btn-sm btn-primary btn-file" data-tooltip="tooltip" data-placement="bottom" title="Open a drawing">
-											<i class="fa fa-folder-open fa-fw"></i> Open
-											<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple />
-										</span>
-									<button data-tooltip="tooltip" data-placement="bottom" title="Insert document" type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											<span class="sr-only">Toggle Dropdown</span>
-										</button>
-									<div class="dropdown-menu dropdown-menu-left">
-										<a class="dropdown-item" href="#" onclick="$('#partslibModal').modal('show')"><i class="far fa-star"></i> from Parts Library </a>
-									</div>
-								</div>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label id="mouseSelectBtn" class="btn btn-sm btn-success active focus" data-tooltip="tooltip" data-placement="bottom" title="Select Mode">
-										<input type="radio" value="select" name="options" autocomplete="off" checked> <i class="fas fa-mouse-pointer"></i>
-										</label>
-									<label id="mouseMoveBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Move Mode">
-										<input type="radio" value="move" name="options" autocomplete="off"> <i class="fas fa-arrows-alt"></i>
-										</label>
-									<label id="mouseDelBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Delete Mode">
-										<input type="radio" value="delete" name="options"  autocomplete="off"> <i class="fas fa-eraser"></i>
-										</label>
-									<label id="mouseScaleBtn" class="btn btn-sm btn-dark" data-tooltip="tooltip" data-placement="bottom" title="Scale / Position / Rotate Mode">
-										<input type="radio" value="scale" name="options"  autocomplete="off"> <i class="fas fa-ruler"></i>
-										</label>
-								</div>
-								<div class="btn-group" data-toggle="buttons" data-tooltip="tooltip" data-placement="bottom" title="Undo/Redo">
-									<button id="undoBtn" disabled class="btn btn-sm btn-dark" onclick="undo()"><i class="fas fa-undo"></i></button>
-									<button id="redoBtn" disabled class="btn btn-sm btn-dark" onclick="redo()"><i class="fas fa-redo"></i></button>
-								</div>
-								<div class="btn-group" data-toggle="buttons">
-									<button class="btn btn-sm btn-dark" onclick="resetView();" data-tooltip="tooltip" data-placement="bottom" title="View Documents"><i class="fa fa-eye" aria-hidden="true"></i></button>
-									<button class="btn btn-sm btn-dark" onclick="resetView(scene.getObjectByName('Grid'));" data-tooltip="tooltip" data-placement="bottom" title="View Workspace"><i class="fa fa-th" aria-hidden="true"></i></button>
-								</div>
-								<div class="btn-group" role="group" aria-label="Simulator">
-									<button data-toggle="tooltip" data-placement="bottom" title="Run Simulator (Generate GCODE first!)" id="simstartbtn" class="btn btn-sm btn-sm btn-dark" title="Run realtime simulation" onclick="sim(0);" disabled><i class="fa fa-fighter-jet fa-fw"></i>sim play</button>
-									<button data-toggle="tooltip" data-placement="bottom" title="Stop Simulator" id="simstopbtn" style="display: none;" class="btn btn-sm btn-sm btn-danger" title="Stop realtime simulation" onclick="simstop();"><i class="fa fa-stop fa-fw"></i>sim stop</button>
-									<button data-toggle="tooltip" data-placement="bottom" title="Set Simulation Speed" class="btn btn-sm btn-sm btn-dark" title="Set sim speed" onclick="simSpeed();"><i class="fas fa-tachometer-alt"></i> <span id="simspeedval">1</span>x</button>
-								</div>
-								<div class="btn-group" role="group">
-									<button data-tooltip="tooltip" data-placement="bottom" title="Add selected entities to a new toolpath" type="button" class="btn btn-sm btn-success" onclick="addJob(-1);" id="tpaddpath">
-											<i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job <span class="badge badge-danger" id="selectCount">4</span>
-										</button>
-									<button data-tooltip="tooltip" data-placement="bottom" title="Add selected entities to an existing toolpath" type="button" class="btn btn-sm btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-									  id="tpaddpath-dropdown">
-											<span class="sr-only">Toggle Dropdown</span>
-										</button>
-									<div class="dropdown-menu dropdown-menu-right" id="toolpathsmenu">
-										<!-- toolpaths here -->
-									</div>
-								</div>
-							</div>
-							<div id="renderArea">
-								<div id="rendermenu"></div>
-								<div id="selection" style="visibility: hidden;"></div>
-								<div id="scalewindow" style="visibility: hidden;">
-									<h3>Scale it!</h3>
-								</div>
-								<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;">
-									<!-- <span id="simgcode"></span> -->
-								</div>
-							</div>
+					</nav>
+					<div id="renderArea">
+						<div id="rendermenu"></div>
+						<div id="selection" style="visibility: hidden;"></div>
+						<div id="scalewindow" style="visibility: hidden;">
+							<h3>Scale it!</h3>
+						</div>
+						<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;">
 						</div>
 					</div>
 					<div id="helpoverlay">
 						<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
 					</div>
 				</div>
-				<!-- #col2 (main content)-->
-				<div id="col2">
-					<div id="tree-cam-menu-panel" class="mobtab" style="height: 100%;">
-						<span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 200; color: #fff;">
+			</div>
+		</div>
+		<!-- #col2 (main content)-->
+		<div id="col2">
+			<div style="height: calc(100% - 2px); overflow-y:hidden; ">
+
+				<!-- Flying Document -->
+				<span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 20000; color: #fff;">
 							<i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
 							<i class="fa fa-object-group fa-stack-1x"></i>
-							</span>
-						<div class="card" id="renderToolpath" style="height: calc(50% - 4px);  margin-bottom: 12px;">
-							<div class="card-header" id="toolpathtreeheader">
-								<table style="width: 100%">
-									<tr class="jobsetupfile">
-										<td>
-											<label for="toolpathstable"><h6>Toolpaths</h6></label>
-										</td>
-										<td>
-											<div class="btn-group" data-toggle="buttons" data-tooltip="tooltip" data-placement="bottom" title="Undo/Redo">
-												<button class="btn btn-xs btn-success disabled" id="generatetpgcode" onclick="makeGcode();"><i class="fa fa-cubes" aria-hidden="true"></i> Generate G-Code</button>
-												<button class="btn btn-xs btn-danger" onclick="trashGcode();"><i class="fa fa-trash" aria-hidden="true"></i></button>
-											</div>
+						</span>
 
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dropdown" id="scanLanButton" style="display: none;">
-												<button id="omdsend" class="btn btn-xs btn-secondary dropdown-toggle disabled" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												    <span id="scanbutton"><i class="fas fa-play"></i> Send to Machine</span>
-												  </button>
-												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="driversmenu">
-													<h6 class="dropdown-header">Install OpenBuilds Machine Driver:</h6>
-													<a class="dropdown-item" href="#">Download Drivers</a>
-												</div>
-											</div>
-										</td>
-										<td align="right">
-											<button class="btn btn-xs btn-primary disabled" id="savetpgcode" onclick="saveFile()"><i class="far fa-save"></i> Export GCODE</button>&nbsp;
-										</td>
-									</tr>
-								</table>
-							</div>
-							<div class="card-body" id="toolpathtree" style="height: calc(50% - 0px); overflow-y:scroll;"></div>
-						</div>
-						<div class="card" id="renderDocuments" style="height: 49%;">
-							<div class="card-header" id="filetreeheader">
-								<table style="width: 100%">
-									<tr class="jobsetupfile">
-										<td>
-											<label for="filetreetable"><h6>Documents</h6></label>
-										</td>
-										<td>
-										</td>
-									</tr>
-								</table>
-							</div>
-							<div class="card-body" id="filetree" style="height:calc(100% - 56px); overflow-y:scroll;"></div>
-						</div>
+				<div class="window" data-icon="<span class='mif-rocket'></span>" style=" height: 49%;">
+					<div class="window-caption">
+						<span class="icon fas fa-tasks"></span>
+						<span class="title">Toolpaths</span>
+					</div>
+					<div class="window-content p-2" id="toolpathtree" style="overflow-y:scroll;">
+						<!-- Toolpaths Here -->
+					</div>
+				</div>
+				<div id="renderDocuments" class="window mt-2" data-icon="<span class='mif-rocket'></span>" style=" height: 49%;">
+					<div class="window-caption">
+						<span class="icon far fa-file-alt"></span>
+						<span class="title">Documents</span>
+					</div>
+					<div class="window-content p-2" id="filetree" style="overflow-y:scroll; ">
+						<!-- Toolpaths Here -->
 					</div>
 				</div>
 			</div>
-			<!-- #container1 -->
 		</div>
-		<!-- .container-fluid -->
 	</div>
-	<!-- #page-container -->
 
 	<!-- #draganddrop -->
 	<div id="draganddrop" style="display: none;">
@@ -277,125 +376,74 @@
 		<img src="images/draganddrop.svg" />
 	</div>
 
-	<!-- Hidden divs, used by components -->
-	<img id="imageDetect" crossOrigin width="160" height="120" style="display: none; visibility: hidden; float:left;" />
-	<div id="work-area" style="display: none; visibility: hidden; float:left;">
-		<div id="svgpreview"></div>
-	</div>
-	<!-- End Hidden Divs -->
-
 	<!-- Modals Divs -->
-	<div id="statusmodal" class="modal fade" role="dialog">
-		<div class="modal-dialog" role="document">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 id="statusTitle" class="modal-title">Status title</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-				</div>
-				<div class="modal-body">
-					<div id="statusBody"></div>
-					<div id="statusBody2"></div>
-				</div>
-				<div class="modal-footer" id="statusFooter"></div>
-			</div>
+
+	<div class="dialog" data-overlay-click-close="true" data-cls-dialog="pos-fixed pos-top-center" data-role="dialog" id="statusmodal">
+		<div class="dialog-title" id="statusTitle">Status title </div>
+		<div class="dialog-content">
+			<div id="statusBody"></div>
+			<div id="statusBody2"></div>
 		</div>
-	</div>
-	<!-- #statusmodal -->
-
-
-	<div id="partslibModal" class="modal fade" role="dialog">
-		<div class="modal-dialog modal-lg" role="document">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Parts Library</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-				</div>
-				<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-					<div id="partslibrary"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
-						Close
-						</button>
-				</div>
-			</div>
+		<div class="dialog-actions" id="statusFooter">
+			<button class="button js-dialog-close">Disagree</button>
+			<button class="button primary js-dialog-close">Agree</button>
 		</div>
 	</div>
 
-
-	<div id="splashModal" class="modal fade" role="dialog">
-		<div class="modal-dialog" role="document">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Changelog</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-				</div>
-				<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-					<div id="changelog"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
-						Close
-						</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" onclick="localStorage.setItem('hideChangelog', true);">
-						Never show
-						</button>
-				</div>
-			</div>
+	<div class="dialog" data-overlay-click-close="true" data-cls-dialog="pos-fixed pos-top-center" data-role="dialog" id="partslibModal" data-width="800">
+		<div class="dialog-title">Parts Library</div>
+		<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+			<div id="partslibrary"></div>
+		</div>
+		<div class="dialog-actions">
+			<button class="button js-dialog-close">Cancel</button>
 		</div>
 	</div>
-	<!-- #splashModal -->
 
-	<div id="aboutModal" class="modal fade" role="dialog">
-		<div class="modal-dialog" role="document">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">About / Credits</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-				</div>
-				<div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-					OpenBuilds CAM was made possible through code and advice of the following projects
-					<dl>
-						<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/LaserWeb">LaserWeb Project</a> </dt>
-						<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/chilipeppr/">Chillipeppr Project</a> </dt>
-						<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/andrewhodel/millcrum">Millcrum</a> </dt>
-						<dt><i class="fas fa-code-branch"></i> <a href="https://github.com/mrdoob/three.js/">Three.js</a> </dt>
-						<dt><i class="fas fa-code-branch"></i> <a href="https://sourceforge.net/p/jsclipper/">Clipper.js</a> </dt>
-					</dl>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
-						Close
-						</button>
-				</div>
-			</div>
+	<div class="dialog" data-overlay-click-close="true" data-cls-dialog="pos-fixed pos-top-center" data-role="dialog" id="splashModal" data-width="600">
+		<div class="dialog-title">Changelog</div>
+		<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+			<div id="changelog"></div>
+		</div>
+		<div class="dialog-actions">
+			<button class="button js-dialog-close alert" onclick="localStorage.setItem('hideChangelog', true);">Never show</button>
+			<button class="button js-dialog-close primary">Close</button>
 		</div>
 	</div>
-	<!-- #splashModal -->
+
+	<div class="dialog" data-overlay-click-close="true" data-cls-dialog="pos-fixed pos-top-center" data-role="dialog" id="aboutModal" data-width="600">
+		<div class="dialog-title">About / Credits</div>
+		<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+			OpenBuilds CAM was made possible through code and advice of the following projects
+			<ul data-role="listview">
+				<li data-icon="<span class='fas fa-code-branch'>"><a href="https://github.com/LaserWeb">LaserWeb Project</a></li>
+				<li data-icon="<span class='fas fa-code-branch'>"><a href="https://github.com/chilipeppr/">Chillipeppr Project</a></li>
+				<li data-icon="<span class='fas fa-code-branch'>"><a href="https://github.com/andrewhodel/millcrum">Millcrum</a></li>
+				<li data-icon="<span class='fas fa-code-branch'>"><a href="https://github.com/mrdoob/three.js/">Three.js</a></li>
+				<li data-icon="<span class='fas fa-code-branch'>"><a href="https://sourceforge.net/p/jsclipper/">Clipper.js</a></li>
+			</ul>
+		</div>
+		<div class="dialog-actions">
+			<button class="button js-dialog-close">Close</button>
+		</div>
+	</div>
+
+
 
 </body>
 <script type="text/javascript" src="lib/fontawesome5/svg-with-js/js/fontawesome-all.min.js"></script>
 
 <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="lib/popper.min.js"></script>
-<script type="text/javascript" src="lib/bootstrap4/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="lib/popper.min.js"></script> -->
+<!-- <script type="text/javascript" src="lib/bootstrap4/js/bootstrap.min.js"></script> -->
 <script type="text/javascript" src="lib/jquery/jquery-ui.js"></script>
 <script type="text/javascript" src="lib/jquery/jquery.ui.touch-punch.min.js"></script>
 
 <link type="text/css" rel="stylesheet" media="all" href="lib/bootoast/src/bootoast.css" />
 <script type="text/javascript" src="lib/bootoast/src/bootoast.js"></script>
+
+<!-- METRO -->
+<script type="text/javascript" src="lib/metro4/js/metro.min.js"></script>
 
 <!-- Helpers -->
 <script type="text/javascript" src="js/helpers.js"></script>

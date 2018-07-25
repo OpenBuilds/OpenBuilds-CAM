@@ -38,16 +38,16 @@ function addJob(id) {
   $("#exportGcodeMenu").addClass("disabled");
 
   // animation to move "doc" to Toolpath - helps user visualise what happened
-  var btnpos = $("#tpaddpath").offset()
-  var targetpos = $("#toolpathtree").offset()
-  $("#flyingdoc").css('top', btnpos.top);
-  $("#flyingdoc").css('left', (btnpos.left + 50) + 'px');
-  $("#flyingdoc").fadeIn(100);
+  $("#flyingdoc").css('top', '0px');
+  $("#flyingdoc").css('left', '0px');
+  $("#flyingdoc").show();
   $("#flyingdoc").animate({
-    left: (targetpos.left + 50) + 'px',
-    top: targetpos.top + 'px'
-  }, "slow");
-  $("#flyingdoc").fadeOut();
+    left: '50px',
+    top: '80px'
+  }, 200);
+  setTimeout(function() {
+    $("#flyingdoc").hide();
+  }, 300);
 
   var toolpath;
   if (id > -1) { // Use Existing Toolpath

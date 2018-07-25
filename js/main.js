@@ -29,8 +29,6 @@ $(document).ready(function() {
   var fileOpen = document.getElementById('file');
   fileOpen.addEventListener('change', readFile, false);
 
-  var fileMenu = document.getElementById('filemenu');
-  fileMenu.addEventListener('change', readFile, false);
 
   // Fix for opening same file from http://stackoverflow.com/questions/32916687/uploading-same-file-into-text-box-after-clearing-it-is-not-working-in-chrome?lq=1
   $('#file').bind('click', function() {
@@ -77,16 +75,8 @@ errorHandlerJS = function() {
     //alert(message+"\n\n("+url+" line "+line+")");
     console.log(errmessage + "\n\n(" + url + " line " + line + ")");
     if (errmessage.indexOf('updateMatrixWorld') == -1) { // Ignoring threejs/google api messages, add more || as discovered
-      bootoast.toast({
-        message: `<h6><i class="fa fa-times-circle" aria-hidden="true"></i> Application Error:</h6><br>
-        <i>An unknown error occured: </i><br><b>` + errmessage + `</b>`,
-        type: 'danger',
-        position: 'top-center',
-        // icon: 'fa-times-circle',
-        timeout: 10,
-        animationDuration: 300,
-        dismissible: true
-      });
+      var message = `An unknown error occured:` + errmessage
+      Metro.toast.create(message, null, 10000, 'bg-red');
       // printLog(errmessage + "\n(" + url + " on line " + line + ")", errorcolor);
     }
   };
@@ -316,7 +306,7 @@ function printLog(text, color, logclass) {
 
 function getChangelog() {
   $("#changelog").empty()
-  var template2 = `<ul class="list-group">`
+  var template2 = ``
   $.get("https://api.github.com/repos/openbuilds/cam/commits?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
     // console.log(data)
     Object.keys(data).forEach(function(key) {
@@ -327,15 +317,48 @@ function getChangelog() {
       var committer = data[key].commit.committer.name
       var url = data[key].html_url
       var message = data[key].commit.message
-      template2 += `<li class="list-group-item list-group-item-light p-0 ">
-        <div class="d-flex flex-nowrap">
-          <div class="p-2"><img class="border border-light rounded" src="` + avatar + `" height="32px" width="32px"/></div>
-          <div class="p-2">
-          <small>` + formatDate(date) + `</small>:
-            <a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a> added <br><a href="` + url + `" target="_new"><h6 class="text-dark"><i class="fab fa-github"></i> ` + message + `</h6></a>
-          </div>
+
+      template2 += `
+      <div class="card">
+        <div class="card-header">
+            <div class="avatar">
+                <img src="` + avatar + `" />
+            </div>
+            <div class="name"><a href="` + authorurl + `">` + author + `</a></div>
+            <div class="date">` + formatDate(date) + `</div>
         </div>
-        </li>`
+        <div class="card-content p-2">
+             <i class="fab fa-github"></i> commit: <a href="` + url + `" target="_new"> ` + message + `</a>
+        </div>
+
+      </div>
+      `
+
+      // template2 += `
+      // <div class="card">
+      //     <div class="card-header">
+      //         <div class="avatar">
+      //             <img src="` + avatar + `" />
+      //         </div>
+      //         <div class="name"><a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a></div>
+      //         <div class="date">` + formatDate(date) + `</div>
+      //     </div>
+      //     <div class="card-content p-2">
+      //     Git commit: <a href="` + url + `" target="_new"><i class="fab fa-github"></i> ` + message + `
+      //     </div>
+      // </div>
+      //
+      // `
+
+      // template2 += `<li class="list-group-item list-group-item-light p-0 ">
+      //   <div class="d-flex flex-nowrap">
+      //     <div class="p-2"><img class="border border-light rounded" src="` + avatar + `" height="32px" width="32px"/></div>
+      //     <div class="p-2">
+      //     <small>` + formatDate(date) + `</small>:
+      //       <a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a> added <br><a href="` + url + `" target="_new"><h6 class="text-dark"><i class="fab fa-github"></i> ` + message + `</h6></a>
+      //     </div>
+      //   </div>
+      //   </li>`
     });
     // for (var key in data) {
     // }
@@ -344,8 +367,9 @@ function getChangelog() {
       </li>`
     template2 += `<ul>`
     $("#changelog").append(template2)
-    if (!$('#settingsmodal').is(':visible')) {
-      $('#splashModal').modal('show');
+    if (!Metro.dialog.isOpen('#settingsmodal')) {
+      // $('#splashModal').modal('show');
+      Metro.dialog.open('#splashModal')
     }
   });
 }

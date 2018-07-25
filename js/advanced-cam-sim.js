@@ -61,8 +61,8 @@ function simstop() {
     clearSceneFlag = true;
   }
   simstopped = true;
-  $('#simstartbtn').show();
-  $('#simstopbtn').hide();
+  $('#simstartbtn').attr('disabled', false);
+  $('#simstopbtn').attr('disabled', true);
   timefactor = 1;
   $('#simspeedval').text(timefactor);
   $('#gcodesent').html('0');
@@ -86,59 +86,50 @@ function simSpeed() {
 }
 
 function sim(startindex) {
-  lastLine = {
-    x: 0,
-    y: 0,
-    z: 0,
-    e: 0,
-    f: 0,
-    feedrate: null,
-    extruding: false
-  };
-  if (fancysim) {
-    simgcodeobj = new THREE.Object3D();
-    // take gcode, and it to that object
-    // createObjectFromGCode(gcode, object)
-    scene.add(simgcodeobj);
-  };
-  clearSceneFlag = true;
-  $("#conetext").show();
-  cone.visible = true
-  var posx = object.userData.lines[0].p2.x; //- (sizexmax/2);
-  var posy = object.userData.lines[0].p2.y; //- (sizeymax/2);
-  var posz = object.userData.lines[0].p2.z + 20;
-  cone.position.x = posx;
-  cone.position.y = posy;
-  cone.position.z = posz;
-  cone.material = new THREE.MeshPhongMaterial({
-    color: 0x28a745,
-    specular: 0x0000ff,
-    shininess: 100,
-    opacity: 0.9,
-    transparent: true
-  })
   if (typeof(object) == 'undefined' || !scene.getObjectByName('gcodeobject')) {
     console.log('No Gcode in Preview yet')
-    bootoast.toast({
-      message: '<h6><i class="fa fa-times-circle" aria-hidden="true"></i> No Gcode in Preview yet:</h6><br>Please setup toolpaths, and generate GCODE before running simulation',
-      type: 'danger',
-      position: 'top-center',
-      // icon: 'fa-times-circle',
-      timeout: 10,
-      animationDuration: 300,
-      dismissible: true
-    });
-    // if (!scene.getObjectByName('gcodeobject')) {
-    //   makeGcode();
-    // }
+    var message = `No Gcode in Preview yet: Please setup toolpaths, and generate GCODE before running simulation`
+    Metro.toast.create(message, null, 10000, 'bg-red');
     simstop()
   } else {
+    lastLine = {
+      x: 0,
+      y: 0,
+      z: 0,
+      e: 0,
+      f: 0,
+      feedrate: null,
+      extruding: false
+    };
+    if (fancysim) {
+      simgcodeobj = new THREE.Object3D();
+      // take gcode, and it to that object
+      // createObjectFromGCode(gcode, object)
+      scene.add(simgcodeobj);
+    };
+    clearSceneFlag = true;
+    $("#conetext").show();
+    cone.visible = true
+    var posx = object.userData.lines[0].p2.x; //- (sizexmax/2);
+    var posy = object.userData.lines[0].p2.y; //- (sizeymax/2);
+    var posz = object.userData.lines[0].p2.z + 20;
+    cone.position.x = posx;
+    cone.position.y = posy;
+    cone.position.z = posz;
+    cone.material = new THREE.MeshPhongMaterial({
+      color: 0x28a745,
+      specular: 0x0000ff,
+      shininess: 100,
+      opacity: 0.9,
+      transparent: true
+    })
+
     simstopped = false;
     // timefactor = 1;
     $('#simspeedval').text(timefactor);
     var simIdx = startindex;
-    $('#simstartbtn').hide();
-    $('#simstopbtn').show();
+    $('#simstartbtn').attr('disabled', true);
+    $('#simstopbtn').attr('disabled', false);
     $('#editorContextMenu').hide() // sometimes we launch sim(linenum) from the context menu... close it once running
     var runSim = function() {
       // editor.gotoLine(simIdx + 1)

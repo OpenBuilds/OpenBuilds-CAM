@@ -3,80 +3,87 @@ var dragcontrols;
 // var currentlySelected = [];
 
 function initMouseMode() {
-  $('input[type=radio][name=options]').change(function() {
-    mouseState = this.value
-    console.log(mouseState)
+  // $('input[type=radio][name=options]').change(function() {
+  // mouseState = this.value
+  //   console.log(mouseState)
 
+  scalewindow.style.visibility = "hidden";
+
+  // select mode
+  $('#mouseSelectBtn').on('click', function() {
+    mouseState = "select"
     scalewindow.style.visibility = "hidden";
-
-    // select mode
-    if (this.value == "select") {
-      $("#mouseSelectBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
-      $("#mouseMoveBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      $("#mouseDelBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      $("#mouseScaleBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      // setOpacity(toolpathsInScene, 0.6);
-      if (dragcontrols) {
-        dragcontrols.dispose();
-      }
-      // $('#renderArea').css('cursor', '');
-      if (controls.enableRotate) {
-        helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
-      } else {
-        helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
-      }
+    $("#mouseSelectBtn").addClass('active');
+    $("#mouseMoveBtn").removeClass('active');
+    $("#mouseDelBtn").removeClass('active');
+    $("#mouseScaleBtn").removeClass('active');
+    // setOpacity(toolpathsInScene, 0.6);
+    if (dragcontrols) {
+      dragcontrols.dispose();
     }
-
-    // move mode
-    if (this.value == "move") {
-      $("#mouseMoveBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
-      $("#mouseSelectBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      $("#mouseDelBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      $("#mouseScaleBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      deselectAllObjects()
-
-      // for (i = 0; i < objectsInScene.length; i++) {
-      //   var obj = objectsInScene[i]
-      //   obj.traverse(function(child) {
-      //     if (child.userData.selected) {
-      //       currentlySelected.push(child)
-      //     }
-      //   });
-      // }
-      // console.log(currentlySelected)
-      var documents2 = scene.getObjectByName("Documents");
-      dragcontrols = new THREE.DragControls(objectsInScene, camera, renderer.domElement);
-      helpoverlay.innerHTML = "<kbd>Left Mouse Drag</kbd> = Select Document to move / <kbd>Ctrl+Left Mouse Drag</kbd> = Select entity to move / <kbd>Del</kbd> = Delete Selected"
+    // $('#renderArea').css('cursor', '');
+    if (controls.enableRotate) {
+      helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
+    } else {
+      helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
     }
+  });
 
-    // delete mode
-    if (this.value == "delete") {
-      $("#mouseDelBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
-      $("#mouseMoveBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      $("#mouseSelectBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      $("#mouseScaleBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      deselectAllObjects()
-      $('#renderArea').css('cursor', '');
-      if (dragcontrols) {
-        dragcontrols.dispose();
-      }
-      helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = delete Entity / <kbd>Ctrl + Left Mouse Click</kbd> = Delete entire Document / <kbd>Del</kbd> = Delete Selected"
-    }
+  // move mode
+  $('#mouseMoveBtn').on('click', function() {
+    mouseState = "move"
+    scalewindow.style.visibility = "hidden";
+    $("#mouseSelectBtn").removeClass('active');
+    $("#mouseMoveBtn").addClass('active');
+    $("#mouseDelBtn").removeClass('active');
+    $("#mouseScaleBtn").removeClass('active');
+    deselectAllObjects()
 
-    // scale mode
-    if (this.value == "scale") {
-      if (dragcontrols) {
-        dragcontrols.dispose();
-      }
-      $("#mouseDelBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      $("#mouseMoveBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      $("#mouseSelectBtn").addClass('btn-dark').removeClass('focus').removeClass('btn-success');
-      $("#mouseScaleBtn").removeClass('btn-dark').addClass('focus').addClass('btn-success');
-      deselectAllObjects()
-      helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = Select Entity to scale"
+    // for (i = 0; i < objectsInScene.length; i++) {
+    //   var obj = objectsInScene[i]
+    //   obj.traverse(function(child) {
+    //     if (child.userData.selected) {
+    //       currentlySelected.push(child)
+    //     }
+    //   });
+    // }
+    // console.log(currentlySelected)
+    var documents2 = scene.getObjectByName("Documents");
+    dragcontrols = new THREE.DragControls(objectsInScene, camera, renderer.domElement);
+    helpoverlay.innerHTML = "<kbd>Left Mouse Drag</kbd> = Select Document to move / <kbd>Ctrl+Left Mouse Drag</kbd> = Select entity to move / <kbd>Del</kbd> = Delete Selected"
+  });
+
+  // delete mode
+  $('#mouseDelBtn').on('click', function() {
+    mouseState = "delete"
+    scalewindow.style.visibility = "hidden";
+    $("#mouseSelectBtn").removeClass('active');
+    $("#mouseMoveBtn").removeClass('active');
+    $("#mouseDelBtn").addClass('active');
+    $("#mouseScaleBtn").removeClass('active');
+    deselectAllObjects()
+    $('#renderArea').css('cursor', '');
+    if (dragcontrols) {
+      dragcontrols.dispose();
     }
-    // end if
-  }); // end radio.onChange
+    helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = delete Entity / <kbd>Ctrl + Left Mouse Click</kbd> = Delete entire Document / <kbd>Del</kbd> = Delete Selected"
+  });
+
+  // scale mode
+  $('#mouseScaleBtn').on('click', function() {
+    mouseState = "scale"
+    if (dragcontrols) {
+      dragcontrols.dispose();
+    }
+    $("#mouseSelectBtn").removeClass('active');
+    $("#mouseMoveBtn").removeClass('active');
+    $("#mouseDelBtn").removeClass('active');
+    $("#mouseScaleBtn").addClass('active');
+    deselectAllObjects()
+    helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = Select Entity to scale"
+  });
+  // end if
+
 
 };
 

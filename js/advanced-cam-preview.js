@@ -1,5 +1,5 @@
 function toolpathPreview(i) {
-  $("#omdsend").addClass("disabled");
+  $("#sendGcodeToMyMachine").addClass("disabled");
   $("#savetpgcode").addClass("disabled");
   $("#exportGcodeMenu").addClass("disabled");
   $("#previewToolpathBtn").html("<i class='fa fa-spinner fa-spin '></i> Calculating, please wait");
@@ -69,7 +69,8 @@ function toolpathPreviewExec(i) {
   } else if (operation == "Drag Knife: Cutout") {
     toolpathsInScene[i].userData.inflated = getToolpath("dragknife", i, DragOffset, 0, 1, 1, 0, false, false, false, false, union);
   }
-  $('#statusmodal').modal('hide');
+  // $('#statusmodal').modal('hide');
+  Metro.dialog.close('#statusmodal')
   fillTree()
   clearSceneFlag = true;
 }
@@ -124,16 +125,6 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
 }
 
 function toolpathErrorToast() {
-  bootoast.toast({
-    message: `<h6><i class="fa fa-times-circle" aria-hidden="true"></i> Toolpath Error:</h6><br>
-    <i>An error occured: </i><br>
-    We encountered an error while processing the toolpath: Either the file you are using has some issues, or the Toolpath settings you provided is wrong / won't work with the particular file / operation.
-    `,
-    type: 'danger',
-    position: 'top-center',
-    // icon: 'fa-times-circle',
-    timeout: 10,
-    animationDuration: 300,
-    dismissible: true
-  });
+  var message = `Toolpath Warning: We encountered some errors while processing the toolpath: Some elements may have been skipped. Either the file you are using has some issues, or the Toolpath settings you provided is wrong / won't work with the particular file / operation.`
+  Metro.toast.create(message, null, 10000, 'bg-amber');
 }
