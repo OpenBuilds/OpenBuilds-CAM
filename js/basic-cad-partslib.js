@@ -66,7 +66,7 @@ $(document).ready(function() {
     template += `</ul>
 
       `
-    console.log(template)
+    // console.log(template)
     for (i = 0; i < data.children.length; i++) {
       var folder = data.children[i]
       var count = folder.children.length

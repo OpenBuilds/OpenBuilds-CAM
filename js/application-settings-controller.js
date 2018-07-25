@@ -44,7 +44,8 @@ function setButton(type) {
   } else if (type == "smoothie") {
     template = `<img src="images/brd/` + type + `.png"/>  Smoothieboard`
   }
-  $('#elecType').html(template);
+  $('#context_toggle').html(template);
+
 }
 
 $(document).ready(function() {
@@ -60,84 +61,99 @@ $(document).ready(function() {
       </ul>
       <div class="p-1">
         <div id="_target_1">
-          Configure your machine specifics:
-          </p>
-          <h5>Firmware Settings</h5>
-          <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" type="button" id="elecType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="images/brd/grbl.png"/>Select Controller
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#" onclick="selectBoard('xpro');"><img src="images/brd/xpro.png"/>  Spark Concepts xPro</a>
-              <a class="dropdown-item" href="#" onclick="selectBoard('smoothie');"><img src="images/brd/smoothie.png"/>  Smoothieboard</a>
-              <a class="dropdown-item" href="#" onclick="selectBoard('grbl');"><img src="images/brd/grbl.png"/>  Generic GRBL</a>
-            </div>
-          </div>
-          <input type="hidden" class="form-control form-control-sm" id="firmwaretype" value="" >
-          Configure G-CODE Dialect (Specific to your machine/firmware)
-          <div class="form-group row">
-            <label for="scommand" class="col-sm-7 col-form-label">Spindle / Laser Command</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control form-control-sm" id="scommand" value="S" >
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="scommandscale" class="col-sm-7 col-form-label">Power/Speed Scale</label>
-            <div class="col-sm-5">
-              <input type="number" class="form-control form-control-sm" id="scommandscale" value="1" >
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="scommandnewline" class="col-sm-7 col-form-label">Power/Speed on new-line</label>
-            <div class="col-sm-5">
-              <input type="checkbox" id="scommandnewline" value="option1">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="g0command" class="col-sm-7 col-form-label">Rapid Move Command</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control form-control-sm" id="g0command" value="G0" >
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="g1command" class="col-sm-7 col-form-label">Linear Move Command</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control form-control-sm" id="g1command" value="G1" >
-            </div>
-          </div>
-          <p>
-          <h5>Workarea</h5>
-          <div class="form-group row">
-            <label for="sizexmax" class="col-sm-7 col-form-label">X-Axis Length</label>
-            <div class="col-sm-5">
-              <div class="input-group input-group-sm mb-3">
-                <input type="number" class="form-control " id="sizexmax" value="200" >
-                <div class="input-group-append">
-                  <span class="input-group-text">mm</span>
-                </div>
+          Configure your machine specifics:<br>
+
+          <form>
+              <div class="row mb-2">
+                  <label class="cell-sm-6"><b>Step 1:</b> Select your controller</label>
+                  <div class="cell-sm-6">
+                  <a style="width: 100%;" class="button secondary outline" id="context_toggle"><img src="images/brd/grbl.png"/> Select Controller</a>
+                  <ul class="d-menu" data-role="dropdown" data-toggle-element="#context_toggle">
+                    <li onclick="selectBoard('xpro');"><a href="#"><img src="images/brd/xpro.png"/>  Spark Concepts xPro</a></li>
+                    <li onclick="selectBoard('smoothie');"><a href="#"><img src="images/brd/smoothie.png"/>  Smoothieboard</a></li>
+                    <li class="divider"></li>
+                    <li onclick="selectBoard('grbl');"><a href="#"><img src="images/brd/grbl.png"/>  Generic GRBL</a></li>
+                  </ul>
+                  <input type="hidden" class="form-control form-control-sm" id="firmwaretype" value="" >
+                  </div>
               </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="sizeymax" class="col-sm-7 col-form-label">Y-Axis Length</label>
-            <div class="col-sm-5">
-              <div class="input-group input-group-sm mb-3">
-                <input type="number" class="form-control " id="sizeymax" value="200" >
-                <div class="input-group-append">
-                  <span class="input-group-text">mm</span>
-                </div>
+              <b>Step 2:</b> Configure G-CODE Dialect (Specific to your machine/firmware)
+              <div class="row mb-2">
+                  <label class="cell-sm-6">Spindle / Laser Command</label>
+                  <div class="cell-sm-6">
+                      <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="scommand" value="S" >
+                  </div>
               </div>
-            </div>
-          </div>
-          <h5>Gcode Generator Settings</h5>
-          <form class="form-horizontal">
-            <label for="startgcode" class="control-label">Start G-Code</label>
-            <textarea id="startgcode" class="form-control form-control-sm" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
-            <label for="endgcode" class="control-label">End G-Code</label>
-            <textarea id="endgcode" class="form-control form-control-sm" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
-            <label for="ihsgcode" class="control-label">Initial Height Sensing G-Code</label>
-            <textarea id="ihsgcode" class="form-control form-control-sm" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
+
+              <div class="row mb-2">
+                  <label class="cell-sm-6">Power/Speed Scale</label>
+                  <div class="cell-sm-6">
+                    <input type="number" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="scommandscale" value="1" >
+                  </div>
+              </div>
+
+              <div class="row mb-2">
+                  <label class="cell-sm-6">Power/Speed on new-line</label>
+                  <div class="cell-sm-6">
+                        <input data-role="checkbox" type="checkbox" id="scommandnewline" value="option1">
+                  </div>
+              </div>
+
+              <div class="row mb-2">
+                  <label class="cell-sm-6">Rapid Move Command</label>
+                  <div class="cell-sm-6">
+                      <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="g0command" value="G0" >
+                  </div>
+              </div>
+
+              <div class="row mb-2">
+                  <label class="cell-sm-6">Linear Move Command</label>
+                  <div class="cell-sm-6">
+                      <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="g1command" value="G1" >
+                  </div>
+              </div>
+
+              <b>Step 3:</b> Machine Workarea
+
+              <div class="row mb-2">
+                  <label class="cell-sm-6">X-Axis Length</label>
+                  <div class="cell-sm-6">
+                    <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizexmax" value="200" >
+                  </div>
+              </div>
+
+              <div class="row mb-2">
+                  <label class="cell-sm-6">Y-Axis Length</label>
+                  <div class="cell-sm-6">
+                    <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizeymax" value="200" >
+                  </div>
+              </div>
+
+              <b>Step 4:</b> CAM Pre/post Commands
+
+              <div class="row mb-2">
+                  <label class="cell-sm-6">Start G-Code</label>
+                  <div class="cell-sm-6">
+                    <textarea id="startgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
+                  </div>
+              </div>
+
+              <div class="row mb-2">
+                  <label class="cell-sm-6">End G-Code</label>
+                  <div class="cell-sm-6">
+                    <textarea id="endgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
+                  </div>
+              </div>
+
+              <div class="row mb-2">
+                  <label class="cell-sm-6">Initial Height Sensing G-Code</label>
+                  <div class="cell-sm-6">
+                    <textarea id="ihsgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
+                  </div>
+              </div>
+
           </form>
+
         </div>
         <div id="_target_2">
         <p>Download a backup profile or restore settings from a backup file:</p>
