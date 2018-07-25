@@ -371,20 +371,20 @@ function fillTree() {
 
         var toolp = `<tr class="jobsetupfile" id="toolpathrow` + i + `">
                 <td>
-                <i class="fa fa-fw fa-object-group" aria-hidden="true"></i>&nbsp;
-                <span class="entity-job" contenteditable="true" data-id="` + i + `">` + toolpathsInScene[i].name + `</span>
-                <h6 style="margin: 0px 0px;"><small><b>` + operation + `</b>`
+                  <table>
+                    <tr>
+                    <td>
+                    <h6 style="margin: 0px 0px;"><span class="entity-job" contenteditable="true" data-id="` + i + `">` + toolpathsInScene[i].name + `</span> <small><b>` + operation + `</b>`
         if (!toolpathsInScene[i].userData.visible) {
           toolp += " (hidden) "
         }
         toolp += `</small></h6>
-                </td>
-                <td>
-
-                </td>
-                <td>
-                <div class="toolbar">
-                `
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>
+                    <div class="toolbar">
+                    `
 
         if (toolpathsInScene[i].userData.visible) {
           toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Hide toolpath and exclude from GCODE generation" class="tool-button warning" onclick="toggleToolpathVisibility(` + i + `, false);"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></button>`
@@ -405,8 +405,11 @@ function fillTree() {
         }
 
         toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="tool-button alert" onclick="toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
-        <button data-tooltip="tooltip" data-placement="bottom" title="Edit toolpath" class="tool-button primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
-                </div>
+            <button data-tooltip="tooltip" data-placement="bottom" title="Edit toolpath" class="tool-button primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
+                    </div>
+                    </td>
+                    </tr>
+                  </table>
                 </td>
                 </tr>
                 `

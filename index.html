@@ -42,10 +42,12 @@
 				<div class="window-content pt-2" style="overflow-y:hidden; ">
 					<nav data-role="ribbonmenu">
 						<ul class="tabs-holder">
-							<li><a href="#section-two">File</a></li>
+							<li><a href="#section-workspace">Workspace</a></li>
+							<li><a href="#section-toolpath">Toolpath</a></li>
+							<li><a href="#section-settings">Settings</a></li>
 						</ul>
 						<div class="content-holder">
-							<div class="section" id="section-two">
+							<div class="section" id="section-workspace">
 								<div class="group">
 									<div class="ribbon-split-button">
 										<button class="ribbon-main btn-file" title="Open a drawing">
@@ -60,6 +62,33 @@
 										</ul>
 									</div>
 									<span class="title">File</span>
+								</div>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeText ');">
+													<span class="icon">
+														<span class="fas fa-font"></span>
+													</span>
+													<span class="caption">Text</span>
+												</button>
+										<br>
+
+										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeCircle ');">
+													<span class="icon">
+														<span class="far fa-circle"></span>
+													</span>
+													<span class="caption">Circle</span>
+												</button>
+										<br>
+
+										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeRect ');">
+													<span class="icon">
+														<span class="far fa-square"></span>
+													</span>
+													<span class="caption">Rectangle</span>
+												</button>
+									</div>
+									<span class="title">Insert</span>
 								</div>
 								<div class="group">
 									<div class="ribbon-group">
@@ -86,83 +115,6 @@
 			                  </button>
 									</div>
 									<span class="title">Workspace</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="undo()">
-			                    <span class="icon">
-			                      <span class="fas fa-undo"></span>
-			                    </span>
-			                    <span class="caption">Undo</span>
-			                  </button>
-										<br>
-										<button class="ribbon-icon-button" onclick="redo()">
-			                    <span class="icon">
-			                      <span class="fas fa-redo"></span>
-			                    </span>
-			                    <span class="caption">Redo</span>
-			                  </button>
-									</div>
-									<span class="title">Undo/Redo</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button active" id="mouseSelectBtn">
-		                      <span class="icon">
-		                      	<span class="fas fa-mouse-pointer"></span>
-		                      </span>
-		                      <span class="caption">Select</span>
-	                    	</button>
-										<br>
-										<button class="ribbon-icon-button" id="mouseMoveBtn">
-		                      <span class="icon">
-		                      	<span class="fas fa-arrows-alt"></span>
-		                      </span>
-		                      <span class="caption">Move</span>
-	                    	</button>
-										<br>
-										<button class="ribbon-icon-button" id="mouseDelBtn">
-		                      <span class="icon">
-		                      	<span class="fas fa-eraser"></span>
-		                      </span>
-		                      <span class="caption">Erase</span>
-	                    	</button>
-									</div>
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" id="mouseScaleBtn">
-		                    	<span class="icon">
-		                      	<span class="fas fa-ruler"></span>
-		                      </span>
-		                      <span class="caption">Transform</span>
-	                    	</button>
-									</div>
-									<span class="title">Mouse Mode</span>
-								</div>
-
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" id="selectAll">
-			                    <span class="icon">
-			                      <span class="far fa-check-square"></span>
-			                    </span>
-			                    <span class="caption">All</span>
-			                  </button>
-										<br>
-										<button class="ribbon-icon-button" id="selectNone">
-			                    <span class="icon">
-			                      <span class="far fa-square"></span>
-			                    </span>
-			                    <span class="caption">None</span>
-			                  </button>
-										<br>
-										<button class="ribbon-icon-button" id="selectInv">
-			                    <span class="icon">
-			                      <span class="fas fa-check"></span>
-			                    </span>
-			                    <span class="caption">Invert</span>
-			                  </button>
-									</div>
-									<span class="title">Select</span>
 								</div>
 								<div class="group">
 									<div class="ribbon-group">
@@ -207,17 +159,122 @@
 									</div>
 									<span class="title">Simulator</span>
 								</div>
+							</div>
+							<div class="section" id="section-settings">
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #settingsmodal ');">
+			                    <span class="icon">
+			                      <span class="fa fa-fw fa-cogs"></span>
+			                    </span>
+			                    <span class="caption">Settings</span>
+			                  </button>
+										<br>
+										<button class="ribbon-icon-button" onclick="Metro.dialog.open('#aboutModal')">
+													<span class="icon">
+														<span class="fa fa-fw fa-info"></span>
+													</span>
+													<span class="caption">About</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="getChangelog()">
+			                    <span class="icon">
+			                      <span class="fa fa-fw fa-list"></span>
+			                    </span>
+			                    <span class="caption">Changelog</span>
+			                  </button>
+									</div>
+									<span class="title">App</span>
+								</div>
+							</div>
+							<div class="section" id="section-toolpath">
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="undo()">
+													<span class="icon">
+														<span class="fas fa-undo"></span>
+													</span>
+													<span class="caption">Undo</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="redo()">
+													<span class="icon">
+														<span class="fas fa-redo"></span>
+													</span>
+													<span class="caption">Redo</span>
+												</button>
+									</div>
+									<span class="title">Undo/Redo</span>
+								</div>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button active" id="mouseSelectBtn">
+													<span class="icon">
+														<span class="fas fa-mouse-pointer"></span>
+													</span>
+													<span class="caption">Select</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" id="mouseMoveBtn">
+													<span class="icon">
+														<span class="fas fa-arrows-alt"></span>
+													</span>
+													<span class="caption">Move</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" id="mouseDelBtn">
+													<span class="icon">
+														<span class="fas fa-eraser"></span>
+													</span>
+													<span class="caption">Erase</span>
+												</button>
+									</div>
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" id="mouseScaleBtn">
+													<span class="icon">
+														<span class="fas fa-ruler"></span>
+													</span>
+													<span class="caption">Transform</span>
+												</button>
+									</div>
+									<span class="title">Mouse Mode</span>
+								</div>
 
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" id="selectAll">
+													<span class="icon">
+														<span class="far fa-check-square"></span>
+													</span>
+													<span class="caption">All</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" id="selectNone">
+													<span class="icon">
+														<span class="far fa-square"></span>
+													</span>
+													<span class="caption">None</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" id="selectInv">
+													<span class="icon">
+														<span class="fas fa-check"></span>
+													</span>
+													<span class="caption">Invert</span>
+												</button>
+									</div>
+									<span class="title">Select</span>
+								</div>
 								<div class="group">
 									<div class="ribbon-split-button" id="tpaddpathParent">
 										<button class="ribbon-main" onclick="addJob(-1);" id="tpaddpath">
-									        <span class="icon">
+													<span class="icon">
 														<span class="fa-layers fa-fw">
-													    <i id="tpaddicon" class="fa fa-plus fg-green"></i>
-													    <span id="selectCount" class="fa-layers-text" data-fa-transform="shrink-2 up-5 right-5" style="font-weight:900; display: none;">0</span>
-													  </span>
-									        </span>
-									    	</button>
+															<i id="tpaddicon" class="fa fa-plus fg-green"></i>
+															<span id="selectCount" class="fa-layers-text" data-fa-transform="shrink-2 up-5 right-5" style="font-weight:900; display: none;">0</span>
+														</span>
+													</span>
+												</button>
 										<span class="ribbon-split dropdown-toggle" id="tpaddpath-dropdown">Add Selection <br> to Job</span>
 										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" id="toolpathsmenu">
 											<li><a href="#" onclick="addJob(-1);">Add to a new operation</a></li>
@@ -248,59 +305,7 @@
 									</div>
 									<span class="title">Toolpath</span>
 								</div>
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeText ');">
-													<span class="icon">
-														<span class="fas fa-font"></span>
-													</span>
-													<span class="caption">Text</span>
-												</button>
-										<br>
 
-										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeCircle ');">
-			                    <span class="icon">
-			                      <span class="far fa-circle"></span>
-			                    </span>
-			                    <span class="caption">Circle</span>
-			                  </button>
-										<br>
-
-										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeRect ');">
-													<span class="icon">
-														<span class="far fa-square"></span>
-													</span>
-													<span class="caption">Rectangle</span>
-												</button>
-									</div>
-									<span class="title">Insert</span>
-								</div>
-
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #settingsmodal ');">
-			                    <span class="icon">
-			                      <span class="fa fa-fw fa-cogs"></span>
-			                    </span>
-			                    <span class="caption">Settings</span>
-			                  </button>
-										<br>
-										<button class="ribbon-icon-button" onclick="Metro.dialog.open('#aboutModal')">
-													<span class="icon">
-														<span class="fa fa-fw fa-info"></span>
-													</span>
-													<span class="caption">About</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" onclick="getChangelog()">
-			                    <span class="icon">
-			                      <span class="fa fa-fw fa-list"></span>
-			                    </span>
-			                    <span class="caption">Changelog</span>
-			                  </button>
-									</div>
-									<span class="title">App</span>
-								</div>
 								<div class="group">
 									<div class="ribbon-group">
 										<button class="ribbon-icon-button" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" style="display: none;">
