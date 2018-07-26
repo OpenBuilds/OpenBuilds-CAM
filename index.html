@@ -195,20 +195,19 @@
 									 <span class="caption">Settings</span>
 									</button>
 									<div class="ribbon-group">
-
+										<button class="ribbon-icon-button" onclick="getChangelog()">
+													<span class="icon">
+														<span class="fa fa-fw fa-list"></span>
+													</span>
+													<span class="caption">Changelog</span>
+												</button>
+										<br>
 										<button class="ribbon-icon-button" onclick="window.open('https://github.com/openbuilds/cam/fork', '_blank').focus();">
 													<span class="icon">
 														<span class="fas fa-code-branch"></span>
 													</span>
-													<span class="caption">Fork <span id="forksCount" class="border border-radius-3 bg-green fg-white pl-1 pr-1"> 0 </span></span>
+													<span class="caption">Fork <span id="forksCount" class="tally success"> 0 </span></span>
 												</button>
-										<br>
-										<button class="ribbon-icon-button" onclick="getChangelog()">
-			                    <span class="icon">
-			                      <span class="fa fa-fw fa-list"></span>
-			                    </span>
-			                    <span class="caption">Changelog</span>
-			                  </button>
 									</div>
 									<span class="title">App</span>
 								</div>
@@ -503,7 +502,7 @@
 				<div id="partslibrary"></div>
 			</div>
 			<div class="dialog-actions">
-				<button class="button js-dialog-close">Cancel</button>
+				<button class="button js-dialog-close">Close</button>
 			</div>
 		</div>
 

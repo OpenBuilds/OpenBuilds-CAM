@@ -344,7 +344,7 @@ function fillTree() {
         `
     $('#filetree').append(tableend)
   } else {
-    var instructions = `Please open a file from the <kbd>Open</kbd> button...`
+    var instructions = `Please open a file from the <kbd>Open Drawing</kbd> button, or create something using our Parts Library and Tools`
     $('#filetree').append(instructions)
 
   } // End of if (objectsInScene.length > 0)
@@ -425,7 +425,7 @@ function fillTree() {
     // contentEditable for Toolpath Name field - edit directly in toolpath table
 
   } else {
-    var instructions = `Please select some entities from the <b>Documents</b>, or by clicking them in the viewer.  Hold down Ctrl to select more than one in the viewer. Add them to a toolpath using the <br><kbd><i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job</kbd> button...`
+    var instructions = `Please select some entities from the <b>Documents</b>, or by clicking them in the viewer.  Hold down Ctrl to select more than one in the viewer. Add them to a toolpath using the <br><kbd>Toolpath</kbd> > <kbd> <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job</kbd> button...`
     $('#toolpathtree').append(instructions)
 
   } // End of if (toolpathsInScene.length > 0)
