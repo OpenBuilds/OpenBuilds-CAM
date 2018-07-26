@@ -136,31 +136,6 @@
 								</div>
 								<div class="group">
 									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="sim(0);" id="simstartbtn">
-			                    <span class="icon">
-			                      <span class="fa fa-fighter-jet fa-fw"></span>
-			                    </span>
-			                    <span class="caption">Play</span>
-			                  </button>
-										<br>
-										<button class="ribbon-icon-button" onclick="simstop();" id="simstopbtn" disabled>
-			                    <span class="icon">
-			                      <span class="fa fa-stop fa-fw"></span>
-			                    </span>
-			                    <span class="caption">Stop</span>
-			                  </button>
-										<br>
-										<button class="ribbon-icon-button" onclick="simSpeed();">
-			                    <span class="icon">
-			                      <span class="fas fa-tachometer-alt"></span>
-			                    </span>
-			                    <span class="caption"><span id="simspeedval">1</span>x</span>
-			                  </button>
-									</div>
-									<span class="title">Simulator</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
 										<button class="ribbon-icon-button active mouseSelectBtn" onclick="mouseSelectMode();">
 													<span class="icon">
 														<span class="fas fa-mouse-pointer"></span>
@@ -355,7 +330,31 @@
 									</div>
 									<span class="title">Toolpath</span>
 								</div>
-
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="sim(0);" id="simstartbtn">
+													<span class="icon">
+														<span class="fa fa-fighter-jet fa-fw"></span>
+													</span>
+													<span class="caption">Play</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="simstop();" id="simstopbtn" disabled>
+													<span class="icon">
+														<span class="fa fa-stop fa-fw"></span>
+													</span>
+													<span class="caption">Stop</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="simSpeed();">
+													<span class="icon">
+														<span class="fas fa-tachometer-alt"></span>
+													</span>
+													<span class="caption"><span id="simspeedval">1</span>x</span>
+												</button>
+									</div>
+									<span class="title">Simulator</span>
+								</div>
 								<div class="group">
 									<div class="ribbon-group">
 										<button class="ribbon-icon-button" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" style="display: none;">
