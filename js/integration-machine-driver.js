@@ -66,7 +66,7 @@ function noDriver() {
 }
 
 function downloadDrivers() {
-  $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest").done(function(release) {
+  $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c").done(function(release) {
     var asset = release.assets[0];
     var downloadCount = 0;
     var url = ""
@@ -96,7 +96,7 @@ function downloadDrivers() {
 }
 
 function getAvailableDriverVersion() {
-  $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest").done(function(release) {
+  $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c").done(function(release) {
     $('#omdavailversion').html("Machine Driver " + release.name)
     availableDriverVersion = release.name
   });
