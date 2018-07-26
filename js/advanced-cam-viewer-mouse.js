@@ -1,90 +1,70 @@
 var mouseState = "select"
 var dragcontrols;
-// var currentlySelected = [];
+
+// select mode
+function mouseSelectMode() {
+  mouseState = "select"
+  scalewindow.style.visibility = "hidden";
+  $(".mouseSelectBtn").addClass('active');
+  $(".mouseMoveBtn").removeClass('active');
+  $(".mouseDelBtn").removeClass('active');
+  $(".mouseScaleBtn").removeClass('active');
+  if (dragcontrols) {
+    dragcontrols.dispose();
+  }
+  if (controls.enableRotate) {
+    helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
+  } else {
+    helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
+  }
+};
+
+// move mode
+function mouseMoveMode() {
+  mouseState = "move"
+  scalewindow.style.visibility = "hidden";
+  $(".mouseSelectBtn").removeClass('active');
+  $(".mouseMoveBtn").addClass('active');
+  $(".mouseDelBtn").removeClass('active');
+  $(".mouseScaleBtn").removeClass('active');
+  deselectAllObjects()
+  var documents2 = scene.getObjectByName("Documents");
+  dragcontrols = new THREE.DragControls(objectsInScene, camera, renderer.domElement);
+  helpoverlay.innerHTML = "<kbd>Left Mouse Drag</kbd> = Select Document to move / <kbd>Ctrl+Left Mouse Drag</kbd> = Select entity to move / <kbd>Del</kbd> = Delete Selected"
+};
+
+// delete mode
+function mouseEraseMode() {
+  mouseState = "delete"
+  scalewindow.style.visibility = "hidden";
+  $(".mouseSelectBtn").removeClass('active');
+  $(".mouseMoveBtn").removeClass('active');
+  $(".mouseDelBtn").addClass('active');
+  $(".mouseScaleBtn").removeClass('active');
+  deselectAllObjects()
+  $('#renderArea').css('cursor', '');
+  if (dragcontrols) {
+    dragcontrols.dispose();
+  }
+  helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = delete Entity / <kbd>Ctrl + Left Mouse Click</kbd> = Delete entire Document / <kbd>Del</kbd> = Delete Selected"
+};
+
+// scale mode
+function mouseScaleMode() {
+  mouseState = "scale"
+  if (dragcontrols) {
+    dragcontrols.dispose();
+  }
+  $(".mouseSelectBtn").removeClass('active');
+  $(".mouseMoveBtn").removeClass('active');
+  $(".mouseDelBtn").removeClass('active');
+  $(".mouseScaleBtn").addClass('active');
+  deselectAllObjects()
+  helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = Select Entity to scale"
+};
 
 function initMouseMode() {
-  // $('input[type=radio][name=options]').change(function() {
-  // mouseState = this.value
-  //   console.log(mouseState)
-
   scalewindow.style.visibility = "hidden";
-
-  // select mode
-  $('#mouseSelectBtn').on('click', function() {
-    mouseState = "select"
-    scalewindow.style.visibility = "hidden";
-    $("#mouseSelectBtn").addClass('active');
-    $("#mouseMoveBtn").removeClass('active');
-    $("#mouseDelBtn").removeClass('active');
-    $("#mouseScaleBtn").removeClass('active');
-    // setOpacity(toolpathsInScene, 0.6);
-    if (dragcontrols) {
-      dragcontrols.dispose();
-    }
-    // $('#renderArea').css('cursor', '');
-    if (controls.enableRotate) {
-      helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
-    } else {
-      helpoverlay.innerHTML = "<kbd>Left Mouse</kbd> = Select / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected"
-    }
-  });
-
-  // move mode
-  $('#mouseMoveBtn').on('click', function() {
-    mouseState = "move"
-    scalewindow.style.visibility = "hidden";
-    $("#mouseSelectBtn").removeClass('active');
-    $("#mouseMoveBtn").addClass('active');
-    $("#mouseDelBtn").removeClass('active');
-    $("#mouseScaleBtn").removeClass('active');
-    deselectAllObjects()
-
-    // for (i = 0; i < objectsInScene.length; i++) {
-    //   var obj = objectsInScene[i]
-    //   obj.traverse(function(child) {
-    //     if (child.userData.selected) {
-    //       currentlySelected.push(child)
-    //     }
-    //   });
-    // }
-    // console.log(currentlySelected)
-    var documents2 = scene.getObjectByName("Documents");
-    dragcontrols = new THREE.DragControls(objectsInScene, camera, renderer.domElement);
-    helpoverlay.innerHTML = "<kbd>Left Mouse Drag</kbd> = Select Document to move / <kbd>Ctrl+Left Mouse Drag</kbd> = Select entity to move / <kbd>Del</kbd> = Delete Selected"
-  });
-
-  // delete mode
-  $('#mouseDelBtn').on('click', function() {
-    mouseState = "delete"
-    scalewindow.style.visibility = "hidden";
-    $("#mouseSelectBtn").removeClass('active');
-    $("#mouseMoveBtn").removeClass('active');
-    $("#mouseDelBtn").addClass('active');
-    $("#mouseScaleBtn").removeClass('active');
-    deselectAllObjects()
-    $('#renderArea').css('cursor', '');
-    if (dragcontrols) {
-      dragcontrols.dispose();
-    }
-    helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = delete Entity / <kbd>Ctrl + Left Mouse Click</kbd> = Delete entire Document / <kbd>Del</kbd> = Delete Selected"
-  });
-
-  // scale mode
-  $('#mouseScaleBtn').on('click', function() {
-    mouseState = "scale"
-    if (dragcontrols) {
-      dragcontrols.dispose();
-    }
-    $("#mouseSelectBtn").removeClass('active');
-    $("#mouseMoveBtn").removeClass('active');
-    $("#mouseDelBtn").removeClass('active');
-    $("#mouseScaleBtn").addClass('active');
-    deselectAllObjects()
-    helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = Select Entity to scale"
-  });
-  // end if
-
-
 };
 
 function setOpacity(array, opacity) {

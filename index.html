@@ -96,7 +96,7 @@
 			                    <span class="icon">
 			                      <span class="far fa-file"></span>
 			                    </span>
-			                    <span class="caption">New Workspace</span>
+			                    <span class="caption">New</span>
 			                  </button>
 										<br>
 										<button class="ribbon-icon-button btn-file" title="Import Workspace">
@@ -104,14 +104,14 @@
 														<i class="far fa-folder-open"></i>
 													</span>
 													<input type="file" id="workspaceImport" accept=".json" multiple style="height: 26px;"/>
-													<span class="caption pl-1" > Import Workspace</span>
+													<span class="caption pl-1" > Import</span>
 												</button>
 										<br>
 										<button class="ribbon-icon-button" onclick="exportWorkspace();">
 			                    <span class="icon">
 			                      <span class="fas fa-download"></span>
 			                    </span>
-			                    <span class="caption">Export Workspace</span>
+			                    <span class="caption">Export</span>
 			                  </button>
 									</div>
 									<span class="title">Workspace</span>
@@ -122,14 +122,14 @@
 			                    <span class="icon">
 			                      <span class="fa fa-eye"></span>
 			                    </span>
-			                    <span class="caption">Documents</span>
+			                    <span class="caption">Job</span>
 			                  </button>
 										<br>
 										<button class="ribbon-icon-button" onclick="resetView(scene.getObjectByName('Grid'));">
 			                    <span class="icon">
 			                      <span class="fa fa-th"></span>
 			                    </span>
-			                    <span class="caption">Workspace</span>
+			                    <span class="caption">Grid</span>
 			                  </button>
 									</div>
 									<span class="title">Zoom</span>
@@ -159,35 +159,39 @@
 									</div>
 									<span class="title">Simulator</span>
 								</div>
-							</div>
-							<div class="section" id="section-settings">
 								<div class="group">
 									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #settingsmodal ');">
-			                    <span class="icon">
-			                      <span class="fa fa-fw fa-cogs"></span>
-			                    </span>
-			                    <span class="caption">Settings</span>
-			                  </button>
-										<br>
-										<button class="ribbon-icon-button" onclick="Metro.dialog.open('#aboutModal')">
+										<button class="ribbon-icon-button active mouseSelectBtn" onclick="mouseSelectMode();">
 													<span class="icon">
-														<span class="fa fa-fw fa-info"></span>
+														<span class="fas fa-mouse-pointer"></span>
 													</span>
-													<span class="caption">About</span>
+													<span class="caption">Select</span>
 												</button>
 										<br>
-										<button class="ribbon-icon-button" onclick="getChangelog()">
-			                    <span class="icon">
-			                      <span class="fa fa-fw fa-list"></span>
-			                    </span>
-			                    <span class="caption">Changelog</span>
-			                  </button>
+										<button class="ribbon-icon-button mouseMoveBtn" onclick="mouseMoveMode();">
+													<span class="icon">
+														<span class="fas fa-arrows-alt"></span>
+													</span>
+													<span class="caption">Move</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button mouseDelBtn" onclick="mouseEraseMode();">
+													<span class="icon">
+														<span class="fas fa-eraser"></span>
+													</span>
+													<span class="caption">Erase</span>
+												</button>
 									</div>
-									<span class="title">App</span>
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button mouseScaleBtn" onclick="mouseScaleMode();">
+													<span class="icon">
+														<span class="fas fa-ruler"></span>
+													</span>
+													<span class="caption">Transform</span>
+												</button>
+									</div>
+									<span class="title">Mouse Mode</span>
 								</div>
-							</div>
-							<div class="section" id="section-toolpath">
 								<div class="group">
 									<div class="ribbon-group">
 										<button class="ribbon-icon-button" onclick="undo()">
@@ -206,23 +210,50 @@
 									</div>
 									<span class="title">Undo/Redo</span>
 								</div>
+							</div>
+							<div class="section" id="section-settings">
+								<div class="group">
+									<button class="ribbon-button" onclick="Metro.dialog.open('#settingsmodal');">
+										<span class="icon">
+										 <span class="fa fa-fw fa-cogs"></span>
+									 </span>
+									 <span class="caption">Settings</span>
+									</button>
+									<div class="ribbon-group">
+
+										<button class="ribbon-icon-button" onclick="window.open('https://github.com/openbuilds/cam/fork', '_blank').focus();">
+													<span class="icon">
+														<span class="fas fa-code-branch"></span>
+													</span>
+													<span class="caption">Fork <span id="forksCount" class="border border-radius-3 bg-green fg-white pl-1 pr-1"> 0 </span></span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="getChangelog()">
+			                    <span class="icon">
+			                      <span class="fa fa-fw fa-list"></span>
+			                    </span>
+			                    <span class="caption">Changelog</span>
+			                  </button>
+									</div>
+									<span class="title">App</span>
+								</div>
 								<div class="group">
 									<div class="ribbon-group">
-										<button class="ribbon-icon-button active" id="mouseSelectBtn">
+										<button class="ribbon-icon-button active mouseSelectBtn" onclick="mouseSelectMode();">
 													<span class="icon">
 														<span class="fas fa-mouse-pointer"></span>
 													</span>
 													<span class="caption">Select</span>
 												</button>
 										<br>
-										<button class="ribbon-icon-button" id="mouseMoveBtn">
+										<button class="ribbon-icon-button mouseMoveBtn" onclick="mouseMoveMode();">
 													<span class="icon">
 														<span class="fas fa-arrows-alt"></span>
 													</span>
 													<span class="caption">Move</span>
 												</button>
 										<br>
-										<button class="ribbon-icon-button" id="mouseDelBtn">
+										<button class="ribbon-icon-button mouseDelBtn" onclick="mouseEraseMode();">
 													<span class="icon">
 														<span class="fas fa-eraser"></span>
 													</span>
@@ -230,7 +261,7 @@
 												</button>
 									</div>
 									<div class="ribbon-group">
-										<button class="ribbon-icon-button" id="mouseScaleBtn">
+										<button class="ribbon-icon-button mouseScaleBtn" onclick="mouseScaleMode();">
 													<span class="icon">
 														<span class="fas fa-ruler"></span>
 													</span>
@@ -239,7 +270,26 @@
 									</div>
 									<span class="title">Mouse Mode</span>
 								</div>
-
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="undo()">
+													<span class="icon">
+														<span class="fas fa-undo"></span>
+													</span>
+													<span class="caption">Undo</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="redo()">
+													<span class="icon">
+														<span class="fas fa-redo"></span>
+													</span>
+													<span class="caption">Redo</span>
+												</button>
+									</div>
+									<span class="title">Undo/Redo</span>
+								</div>
+							</div>
+							<div class="section" id="section-toolpath">
 								<div class="group">
 									<div class="ribbon-group">
 										<button class="ribbon-icon-button" id="selectAll">
@@ -324,6 +374,57 @@
 										<br>
 									</div>
 									<span class="title">Send to Machine</span>
+								</div>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button active mouseSelectBtn" onclick="mouseSelectMode();">
+													<span class="icon">
+														<span class="fas fa-mouse-pointer"></span>
+													</span>
+													<span class="caption">Select</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button mouseMoveBtn" onclick="mouseMoveMode();">
+													<span class="icon">
+														<span class="fas fa-arrows-alt"></span>
+													</span>
+													<span class="caption">Move</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button mouseDelBtn" onclick="mouseEraseMode();">
+													<span class="icon">
+														<span class="fas fa-eraser"></span>
+													</span>
+													<span class="caption">Erase</span>
+												</button>
+									</div>
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button mouseScaleBtn" onclick="mouseScaleMode();">
+													<span class="icon">
+														<span class="fas fa-ruler"></span>
+													</span>
+													<span class="caption">Transform</span>
+												</button>
+									</div>
+									<span class="title">Mouse Mode</span>
+								</div>
+								<div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" onclick="undo()">
+													<span class="icon">
+														<span class="fas fa-undo"></span>
+													</span>
+													<span class="caption">Undo</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" onclick="redo()">
+													<span class="icon">
+														<span class="fas fa-redo"></span>
+													</span>
+													<span class="caption">Redo</span>
+												</button>
+									</div>
+									<span class="title">Undo/Redo</span>
 								</div>
 							</div>
 						</div>
@@ -415,25 +516,6 @@
 			<button class="button js-dialog-close primary">Close</button>
 		</div>
 	</div>
-
-	<div class="dialog" data-overlay-click-close="true" data-cls-dialog="pos-fixed pos-top-center" data-role="dialog" id="aboutModal" data-width="600">
-		<div class="dialog-title">About / Credits</div>
-		<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-			OpenBuilds CAM was made possible through code and advice of the following projects
-			<ul data-role="listview">
-				<li data-icon="<span class='fas fa-code-branch'>"><a href="https://github.com/LaserWeb">LaserWeb Project</a></li>
-				<li data-icon="<span class='fas fa-code-branch'>"><a href="https://github.com/chilipeppr/">Chillipeppr Project</a></li>
-				<li data-icon="<span class='fas fa-code-branch'>"><a href="https://github.com/andrewhodel/millcrum">Millcrum</a></li>
-				<li data-icon="<span class='fas fa-code-branch'>"><a href="https://github.com/mrdoob/three.js/">Three.js</a></li>
-				<li data-icon="<span class='fas fa-code-branch'>"><a href="https://sourceforge.net/p/jsclipper/">Clipper.js</a></li>
-			</ul>
-		</div>
-		<div class="dialog-actions">
-			<button class="button js-dialog-close">Close</button>
-		</div>
-	</div>
-
-
 
 </body>
 <script type="text/javascript" src="lib/fontawesome5/svg-with-js/js/fontawesome-all.min.js"></script>

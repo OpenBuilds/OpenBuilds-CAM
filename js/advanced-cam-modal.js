@@ -352,9 +352,9 @@ function setupJob(i) {
       <tr class="inputcnc inputpocket inputplasma inputdragknife inputlaser">
         <td colspan="2">
           <div>
-            <input type="checkbox" data-role="switch" data-caption="Advanced Settings" data-target='#collapsediv1' id="advanced` + i + `" objectseq="` + i + `" >
+            <input type="checkbox" data-role="switch" data-caption="Advanced Settings" id="advanced` + i + `" objectseq="` + i + `" >
           </div>
-          <div data-role="collapse" data-collapsed="true" data-toggle-element="#advanced` + i + `">
+          <div data-role="collapse" data-collapsed="true" data-toggle-element="#advanced` + i + `" id="collapsediv` + i + `">
           <table>
             <tr>
               <th style="width: 150px;"></th><th style="width: 210px;"></th>
@@ -458,9 +458,15 @@ function setupJob(i) {
     $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
     $('#advanced' + i).prop('checked', toolpathsInScene[i].userData.advanced);
     if (toolpathsInScene[i].userData.advanced) {
-      $("#collapsediv1").collapse('show')
+      setTimeout(function() {
+        $('#advanced' + i).prop('checked', true);
+        $('#collapsediv' + i).data("collapse")['expand']()
+      }, 200);
     } else {
-      $("#collapsediv1").collapse('hide')
+      setTimeout(function() {
+        $('#advanced' + i).prop('checked', false);
+        $('#collapsediv' + i).data("collapse")['collapse']()
+      }, 200);
     }
     typeofOperation(toolpathsInScene[i].userData.camOperation, i);
   } else {
@@ -481,10 +487,7 @@ function setupJob(i) {
       $('#tplasmakerf' + i).val(lastused.camPlasmaKerf);
       $('#tplasmazheight' + i).val(lastused.camPlasmaZHeight);
     }
-
   };
-
-
 }
 
 function noMode(i) {
@@ -543,8 +546,10 @@ function cncPocketMode(i) {
   $('.inputcnc').hide();
   $('.inputpocket').show();
   // force open Advanced and force Union by default
-  $('#advanced' + i).prop('checked', true);
-  $("#collapsediv1").collapse('show')
+  setTimeout(function() {
+    $('#advanced' + i).prop('checked', true);
+    $('#collapsediv' + i).data("collapse")['expand']()
+  }, 200);
   $('#tunion' + i).val("Yes").prop('selected', true);
 };
 

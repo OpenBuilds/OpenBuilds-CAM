@@ -374,7 +374,7 @@ function fillTree() {
                   <table>
                     <tr>
                     <td>
-                    <h6 style="margin: 0px 0px;"><span class="entity-job" contenteditable="true" data-id="` + i + `">` + toolpathsInScene[i].name + `</span> <small><b>` + operation + `</b>`
+                    <h6 style="margin: 0px 0px;"><small> <b><span contenteditable="true" data-id="` + i + `">` + toolpathsInScene[i].name + `</span> ` + operation + `</b>`
         if (!toolpathsInScene[i].userData.visible) {
           toolp += " (hidden) "
         }

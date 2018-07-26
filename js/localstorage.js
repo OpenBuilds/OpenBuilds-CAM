@@ -29,6 +29,7 @@ localParams = [
   // ['rapidspeed', true],
   ['sizexmax', true],
   ['sizeymax', true],
+  ['sizezmax', true],
   ['startgcode', false],
   ['laseron', false],
   ['laseroff', false],
@@ -43,7 +44,8 @@ localParams = [
   ['scommand', true],
   ['scommandscale', true],
   ['ihsgcode', false],
-  ['firmwaretype', true]
+  ['firmwaretype', true],
+  ['machinetype', true]
 ];
 
 

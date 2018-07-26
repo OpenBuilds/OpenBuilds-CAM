@@ -60,8 +60,7 @@ $(document).ready(function() {
 
   loadLastClosedOnPageload();
 
-
-
+  getForksCount();
 
 
 }); // End of document.ready
@@ -304,6 +303,15 @@ function printLog(text, color, logclass) {
   console.log(text)
 }
 
+function getForksCount() {
+  $("#forksCount").empty()
+  var template2 = ``
+  $.get("https://api.github.com/repos/OpenBuilds/cam/forks?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
+    console.log(data)
+    $("#forksCount").html(" " + data.length + " ");
+  });
+}
+
 function getChangelog() {
   $("#changelog").empty()
   var template2 = ``
@@ -333,32 +341,6 @@ function getChangelog() {
 
       </div>
       `
-
-      // template2 += `
-      // <div class="card">
-      //     <div class="card-header">
-      //         <div class="avatar">
-      //             <img src="` + avatar + `" />
-      //         </div>
-      //         <div class="name"><a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a></div>
-      //         <div class="date">` + formatDate(date) + `</div>
-      //     </div>
-      //     <div class="card-content p-2">
-      //     Git commit: <a href="` + url + `" target="_new"><i class="fab fa-github"></i> ` + message + `
-      //     </div>
-      // </div>
-      //
-      // `
-
-      // template2 += `<li class="list-group-item list-group-item-light p-0 ">
-      //   <div class="d-flex flex-nowrap">
-      //     <div class="p-2"><img class="border border-light rounded" src="` + avatar + `" height="32px" width="32px"/></div>
-      //     <div class="p-2">
-      //     <small>` + formatDate(date) + `</small>:
-      //       <a href="` + authorurl + `" target="_new"><span class="badge badge-secondary">` + author + `</span></a> added <br><a href="` + url + `" target="_new"><h6 class="text-dark"><i class="fab fa-github"></i> ` + message + `</h6></a>
-      //     </div>
-      //   </div>
-      //   </li>`
     });
     // for (var key in data) {
     // }
