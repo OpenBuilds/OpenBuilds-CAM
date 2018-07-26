@@ -33,8 +33,23 @@ function selectBoard(type) {
   $('#scommand').val(tplscommand);
   $('#scommandscale').val(tplsscale);
   $("#firmwaretype").val(type)
-  $('#context_toggle').html(template);
 
+
+  setBoardButton(type)
+
+};
+
+function setBoardButton(type) {
+  if (type == "grbl") {
+    template = `<img src="images/brd/` + type + `.png"/>  Generic GRBL`
+  } else if (type == "xpro") {
+    template = `<img src="images/brd/` + type + `.png"/>  Spark Concepts xPro`
+  } else if (type == "smoothie") {
+    template = `<img src="images/brd/` + type + `.png"/>  Smoothieboard`
+  } else {
+    template = `<img src="images/brd/grbl.png"/>Select Controller`
+  }
+  $('#context_toggle').html(template);
 };
 
 function selectMachine(type) {
@@ -121,6 +136,45 @@ function selectMachine(type) {
   $("#sizexmax").val(xaxis)
   $("#sizeymax").val(yaxis)
   $("#sizezmax").val(zaxis)
+  $('#context_toggle2').html(template);
+
+  setMachineButton(type);
+};
+
+function setMachineButton(type) {
+  if (type == "sphinx55") {
+    template = `<img src="images/mch/` + type + `.png"/>  Sphinx 55`
+  } else if (type == "sphinx1050") {
+    template = `<img src="images/mch/` + type + `.png"/>  Sphinx 1050`
+  } else if (type == "workbee1050") {
+    template = `<img src="images/mch/` + type + `.png"/>  Workbee 1050`
+  } else if (type == "workbee1010") {
+    template = `<img src="images/mch/` + type + `.png"/>  Workbee 1010`
+  } else if (type == "workbee1510") {
+    template = `<img src="images/mch/` + type + `.png"/>  Workbee 1510`
+  } else if (type == "sphinx1050") {
+    template = `<img src="images/mch/` + type + `.png"/>  Sphinx 1050`
+  } else if (type == "sphinx1050") {
+    template = `<img src="images/mch/` + type + `.png"/>  Sphinx 1050`
+  } else if (type == "acro55") {
+    template = `<img src="images/mch/` + type + `.png"/>  Acro 55`
+  } else if (type == "acro510") {
+    template = `<img src="images/mch/` + type + `.png"/>  Acro 510`
+  } else if (type == "acro1010") {
+    template = `<img src="images/mch/` + type + `.png"/>  Acro 1010`
+  } else if (type == "acro1510") {
+    template = `<img src="images/mch/` + type + `.png"/>  Acro 1510`
+  } else if (type == "acro1515") {
+    template = `<img src="images/mch/` + type + `.png"/>  Acro 1515`
+  } else if (type == "minimill") {
+    template = `<img src="images/mch/` + type + `.png"/>  MiniMill`
+  } else if (type == "cbeam") {
+    template = `<img src="images/mch/` + type + `.png"/>  C-Beam Machine`
+  } else if (type == "cbeamxl") {
+    template = `<img src="images/mch/` + type + `.png"/>  C-Beam XL`
+  } else {
+    template = `<img src="images/mch/sphinx55.png"/>  Select Machine`
+  }
   $('#context_toggle2').html(template);
 };
 
