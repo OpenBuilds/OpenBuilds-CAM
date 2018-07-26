@@ -380,7 +380,11 @@ function animate() {
     clearSceneFlag = false;
   } // end clearSceneFlag
 
-  requestAnimationFrame(animate);
+  // Limited FPS https://stackoverflow.com/questions/11285065/limiting-framerate-in-three-js-to-increase-performance-requestanimationframe
+  setTimeout(function() {
+    requestAnimationFrame(animate);
+  }, 40);
+
   renderer.render(scene, camera);
 }
 
