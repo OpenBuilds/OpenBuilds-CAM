@@ -94,7 +94,7 @@ function loadSettingsLocal() {
     if (val) {
       // console.log('Loading: ' + paramName + ' : ' + val);
       if (paramName == 'firmwaretype') {
-        setButton(val)
+        // setButton(val)
       }
       if (paramName == 'scommandnewline') {
         $('#' + paramName).prop('checked', parseBoolean(val));
