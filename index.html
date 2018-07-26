@@ -356,18 +356,18 @@
 								</div>
 								<div class="group">
 									<div class="ribbon-group">
-										<button class="ribbon-icon-button disabled" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" style="display: none;">
+										<button class="ribbon-icon-button disabled" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" style="display: none; height: 36px">
 													<span class="icon">
 														<span class="fas fa-play"></span>
 													</span>
-													<span class="caption">Send to Machine <span id="omdversion"></span></span>
+													<span class="caption">Send to Machine <br><small id="omdversion"></small></span>
 												</button>
 										<br>
-										<button class="ribbon-icon-button" id="downloadDrivers" onclick="downloadDrivers()">
+										<button class="ribbon-icon-button" id="downloadDrivers" onclick="downloadDrivers()" style="height: 36px">
 													<span class="icon">
 														<span class="fas fa-download"></span>
 													</span>
-													<span class="caption">Install Drivers</span>
+													<span class="caption">Install Drivers<br><small id="omdavailversion"></small></span>
 												</button>
 										<br>
 									</div>
@@ -609,6 +609,7 @@
 
 <script type="text/javascript" src="js/integration-machine-driver.js"></script>
 
+<!-- Used by CAD-text -->
 <script src="https://cdn.jsdelivr.net/npm/rsvp@4/dist/rsvp.min.js"></script>
 
 <script type="x-shader/x-vertex" id="vertexShader">

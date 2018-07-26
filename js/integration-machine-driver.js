@@ -1,5 +1,6 @@
 var DriverCheckinterval;
 var alreadyDetected = false;
+var availableDriverVersion = 'v0.0.0'
 
 $(document).ready(function() {
 
@@ -44,11 +45,16 @@ $(document).ready(function() {
   var DriverCheckinterval = setInterval(function() {
     checkIfDriverIsInstalled();
   }, 1000);
+
+  getAvailableDriverVersion()
+
 });
 
 function hasDriver(version) {
-  $("#omdversion").html(" v" + version)
-  $("#downloadDrivers").fadeOut("slow");
+  $("#omdversion").html("Machine Driver v" + version)
+  if (availableDriverVersion == "v" + version) {
+    $("#downloadDrivers").fadeOut("slow");
+  }
   $("#sendGcodeToMyMachine").fadeIn("slow");
   alreadyDetected = true;
 }
@@ -86,6 +92,13 @@ function downloadDrivers() {
     var releaseInfo = release.name + " was updated " + timeAgo;
     // console.log(asset.browser_download_url);
     // console.log(releaseInfo);
+  });
+}
+
+function getAvailableDriverVersion() {
+  $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest").done(function(release) {
+    $('#omdavailversion').html("Machine Driver " + release.name)
+    availableDriverVersion = release.name
   });
 }
 

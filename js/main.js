@@ -307,7 +307,7 @@ function getForksCount() {
   $("#forksCount").empty()
   var template2 = ``
   $.get("https://api.github.com/repos/OpenBuilds/cam/forks?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
-    console.log(data)
+    // console.log(data)
     $("#forksCount").html(" " + data.length + " ");
   });
 }
