@@ -53,7 +53,7 @@ function setBoardButton(type) {
 };
 
 function selectMachine(type) {
-  console.log("Loading Firmware Template")
+  console.log("Loading Machine Template")
   if (type == "sphinx55") {
     var xaxis = 833
     var yaxis = 325

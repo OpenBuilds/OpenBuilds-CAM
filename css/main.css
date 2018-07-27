@@ -260,18 +260,19 @@ button:focus {outline:0 !important;}
 #rendermenu {
   /* margin-left: 20px;
   margin-right: 20px; */
-  text-align: center;
+  /* text-align: center; */
   position: absolute;
   top: 10px;
-  left: 0px;
-  background: rgba(128, 128, 128, 0.2);
-  color: #444;
+  left: 5px;
+  background: #f5f6f7;
+  /* color: #444; */
   /* border: 1px dashed rgba(55, 55, 55, 0.5); */
+  border: 1px solid rgb(218, 219, 220);
   border-radius: 4px;
-  width: 100%;
+  /* width: 100%; */
   z-index: 1;
   /* visibility: hidden; */
-  text-shadow: rgba(0,0,0,.2) 0 0 1px;
+  /* text-shadow: rgba(0,0,0,.2) 0 0 1px; */
   -webkit-font-smoothing: antialiased;
 }
 

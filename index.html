@@ -293,19 +293,16 @@
 									<div class="ribbon-split-button" id="tpaddpathParent">
 										<button class="ribbon-main" onclick="addJob(-1);" id="tpaddpath">
 													<span class="icon">
-														<span class="fa-layers fa-fw">
 															<i id="tpaddicon" class="fa fa-plus fg-green"></i>
-															<span id="selectCount" class="fa-layers-text" data-fa-transform="shrink-2 up-5 right-5" style="font-weight:900; display: none;">0</span>
-														</span>
 													</span>
 												</button>
-										<span class="ribbon-split dropdown-toggle" id="tpaddpath-dropdown">Add Selection <br> to Job</span>
+										<span class="ribbon-split dropdown-toggle" id="tpaddpath-dropdown">Add Selection<br>to Job <span id="selectCount" class="tally success"></span></span>
 										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" id="toolpathsmenu">
 											<li><a href="#" onclick="addJob(-1);">Add to a new operation</a></li>
 										</ul>
 									</div>
 									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="makeGcode();">
+										<button class="ribbon-icon-button" onclick="makeGcode();" id="generatetpgcode">
 													<span class="icon">
 														<span class="fa fa-cubes fg-brown"></span>
 													</span>
@@ -428,7 +425,8 @@
 						</div>
 					</nav>
 					<div id="renderArea">
-						<div id="rendermenu"></div>
+						<div id="rendermenu">
+						</div>
 						<div id="selection" style="visibility: hidden;"></div>
 						<div id="scalewindow" style="visibility: hidden;">
 							<h3>Scale it!</h3>
@@ -466,8 +464,10 @@
 						<span class="icon far fa-file-alt"></span>
 						<span class="title">Documents</span>
 					</div>
-					<div class="window-content p-2" id="filetree" style="overflow-y:scroll; ">
-						<!-- Toolpaths Here -->
+					<div class="window-content p-2" style="overflow-y:scroll; ">
+						<!-- Documents Here -->
+						<ul data-role="treeview pl-0" id="left-tree-view">
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -520,7 +520,7 @@
 	</div>
 
 </body>
-<script type="text/javascript" src="lib/fontawesome5/svg-with-js/js/fontawesome-all.min.js"></script>
+<script type="text/javascript" src="lib/fontawesome5/js/all.js"></script>
 
 <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
 <!-- <script type="text/javascript" src="lib/popper.min.js"></script> -->
@@ -567,6 +567,7 @@
 <script type="text/javascript" src="js/advanced-cam-fillpath.js"></script>
 <script type="text/javascript" src="js/advanced-cam-geometryutils.js"></script>
 <script type="text/javascript" src="js/advanced-cam.js"></script>
+<script type="text/javascript" src="js/advanced-cam-doctree.js"></script>
 <script type="text/javascript" src="js/advanced-cam-tree.js"></script>
 <script type="text/javascript" src="js/advanced-cam-modal.js"></script>
 <script type="text/javascript" src="js/advanced-cam-preview.js"></script>
