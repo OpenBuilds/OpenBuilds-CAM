@@ -1,0 +1,18 @@
+canvas { cursor: move; }
+
+.parametersdiv {
+  border: 0px solid rgb(200,200,200);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding: 0px;
+}
+
+.parametersdiv .header {
+  font-weight: bold;
+}
+
+.statusdiv {
+  width: 500px;
+  margin-bottom: 10px;
+}

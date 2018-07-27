@@ -43,7 +43,7 @@ function drawDXF(file, fileName) {
   // fileObject.translateX((sizexmax / 2) * -1);
   // fileObject.translateY((sizeymax / 2) * -1);
   // putFileObjectAtZero(fileObject);
-  scene.add(fileObject);
+  // scene.add(fileObject);
   // calcZeroOffset(fileObject)
   objectsInScene.push(fileObject)
   layers = [];
