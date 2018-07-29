@@ -57,8 +57,9 @@
 													<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp" multiple />
 									    	</button>
 										<span class="ribbon-split dropdown-toggle">Open<br>Drawing</span>
-										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
+										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" style="text-align: left;">
 											<li><a href="#" onclick="Metro.dialog.open('#partslibModal')">Import from Parts Library</a></li>
+											<li><a href="#" onclick="Metro.dialog.open('#gearGenModal')">Create using Involute Gearset Generator</a></li>
 										</ul>
 									</div>
 									<span class="title">File</span>
@@ -485,8 +486,8 @@
 		<!-- Hide Dialogs until called -->
 		<!-- openjscad output -->
 		<textarea id="dxf" style="width: 565px; height: 400px;"></textarea>
-		<div id="openjscad"></div>
-		<div oncontextmenu="return false;" id="viewerContext"></div>
+		<!-- <div id="openjscad"></div>
+		<div oncontextmenu="return false;" id="viewerContext"></div> -->
 		<!-- avoiding popup when right mouse is clicked -->
 
 		<div class="dialog" data-overlay-click-close="true" data-cls-dialog="pos-fixed pos-top-center" data-role="dialog" id="statusmodal">
@@ -522,29 +523,105 @@
 			</div>
 		</div>
 
-		<!-- <ul class="nav nav-tabs nav-justified" role="tablist">
-			<li id="jsV" class="active">
-				<a id="jsVA" href="#">Parametric</a>
-			</li>
-			<li id="jsE">
-				<a id="jsEA" href="#">OpenJSCAD</a>
-			</li>
-			<li id="jsD" style="display:none;">
-				<a id="jsDA" href="#">DXF</a>
-			</li>
-		</ul>
 
-		<div id="jsView">
-			<div id="viewer"></div>
-			<div class="btn btn-danger" id="generateOutputFileButton2"><i class="fa fa-street-view fa-lg"></i>Prepare for Laser Cutting</div>
-			<p>
-				<div class="btn btn-danger" id="generatePreview" style="display: none;"><i class="fa fa-street-view fa-lg"></i>Preview</div>
-				<div id="JSHelp"> </div>
+		<div class="dialog" data-overlay-click-close="true" data-cls-dialog="pos-fixed pos-top-center" data-role="dialog" id="gearGenModal" data-width="600">
+			<div class="dialog-title">Gear Generator</div>
+			<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+				<div id="viewer" style="display: none;"></div>
+				<form data-role="validator" id="gearGen">
+					<div class="row border-bottom bd-gray">
+						<label class="cell-sm-2">Gear Type:</label>
+						<div class="cell-sm-10">
+							<input name="geartype" type="radio" data-role="radio" data-caption="Gearset: External" value="external" checked onchange="gearType($(this).val())">
+							<input name="geartype" type="radio" data-role="radio" data-caption="Gearset: Rack and Pinion" value="rack" onchange="gearType($(this).val())">
+							<input name="geartype" type="radio" data-role="radio" data-caption="Gearset: Internal" value="internal" onchange="gearType($(this).val())">
+							<input name="geartype" type="radio" data-role="radio" data-caption="Single Gear" value="single" onchange="gearType($(this).val())">
+						</div>
+					</div>
+
+
+					<div class="row">
+						<label class="cell-sm-4"></label>
+						<div class="cell-sm-4 ">
+							<center><small id="gear1title">Gear 1</small></center>
+						</div>
+						<div class="cell-sm-4">
+							<center><small id="gear2title">Gear 2</small></center>
+						</div>
+					</div>
+					<div class="row">
+						<label class="cell-sm-4">toothCount<br><small>(Number of teeth per gear)</small></label>
+						<div class="cell-sm-4 pt-2">
+							<input id="toothCount1" data-role="input" type="number" value="45" data-append="x" data-clear-button="false">
+						</div>
+						<div class="cell-sm-4 pt-2">
+							<input id="toothCount2" data-role="input" type="number" value="50" data-append="x" data-clear-button="false">
+						</div>
+					</div>
+					<div class="row border-bottom bd-gray">
+						<label class="cell-sm-4">centerHoleDiameter<br><small>(0 for no hole)</small></label>
+						<div class="cell-sm-4 pt-2">
+							<input id="centerHoleDiameter1" data-role="input" type="number" value="20" data-append="mm" data-clear-button="false" min="0" max="200">
+						</div>
+						<div class="cell-sm-4 pt-2">
+							<input id="centerHoleDiameter2" data-role="input" type="number" value="20" data-append="mm" data-clear-button="false" min="0" max="200">
+						</div>
+					</div>
+					<div class="row border-bottom bd-gray">
+						<label class="cell-sm-8">circularPitch<br><small>(the circumference of the pitch circle divided by the number of teeth)</small></label>
+						<div class="cell-sm-4 pt-2">
+							<input id="circularPitch" data-role="input" type="number" value="8" data-clear-button="false">
+						</div>
+					</div>
+					<div class="row border-bottom bd-gray">
+						<label class="cell-sm-8">pressureAngle<br><small>(common values are 14.5, 20 and 25 degrees)</small></label>
+						<div class="cell-sm-4 pt-2">
+							<input id="pressureAngle" data-role="input" type="number" value="20" data-append="deg" data-clear-button="false">
+						</div>
+					</div>
+					<div>
+						<input type="checkbox" data-role="switch" data-caption="Advanced Settings" id="advancedGear">
+					</div>
+					<div data-role="collapse" data-collapsed="true" data-toggle-element="#advancedGear">
+						<!-- <div class="row border-bottom bd-gray">
+							<label class="cell-sm-8">clearance<br><small>(minimal distance between the apex of a tooth and the trough of the other gear; in length units)</small></label>
+							<div class="cell-sm-4 pt-2">
+								<input id="gearClearance" data-role="input" type="number" value="0.05" data-append="mm" data-clear-button="false">
+							</div>
+						</div>
+						<div class="row border-bottom bd-gray">
+							<label class="cell-sm-8">backlash<br><small>(minimal distance between meshing gears; in length units)</small></label>
+							<div class="cell-sm-4 pt-2">
+								<input id="backlash" data-role="input" type="number" value="0.05" data-append="mm" data-clear-button="false">
+							</div>
+						</div> -->
+						<div class="row border-bottom bd-gray">
+							<label class="cell-sm-8">profileShift<br><small>(indicates what portion of gear one's addendum height should be shifted to gear two. E.g., a value of 0.1 means the adddendum of gear two is increased by a factor of 1.1 while the height of the addendum of gear one is reduced to 0.9 of its normal height.)</small></label>
+							<div class="cell-sm-4 pt-2">
+								<input id="profileShift" data-role="input" type="number" value="0" data-clear-button="false">
+							</div>
+						</div>
+						<div class="row border-bottom bd-gray">
+							<label class="cell-sm-8">resolution<br><small>Number of segments per 360 degree of rotation (only used for circles and arcs); 90 is plenty</small></label>
+							<div class="cell-sm-4 pt-2">
+								<input id="resolution" data-role="input" type="number" value="30" data-clear-button="false">
+							</div>
+						</div>
+						<div class="row border-bottom bd-gray">
+							<label class="cell-sm-8">stepsPerToothAngle<br><small>Rotation steps per tooth angle when assembling the tooth profile (3 = draft, 10 = good quality). Increasing the value will result in smoother profiles at the cost of significantly higher calcucation time. Increase in small increments and check the result by zooming in.</small></label>
+							<div class="cell-sm-4 pt-2">
+								<input id="stepsPerToothAngle" data-role="input" type="number" value="3" data-clear-button="false">
+							</div>
+						</div>
+					</div>
+				</form>
+				<br>
+			</div>
+			<div class="dialog-actions">
+				<button class="button js-dialog-close">Close</button>
+				<button class="button success js-dialog-close" onclick="createGear();">Create Gears</button>
+			</div>
 		</div>
-
-		-->
-
-
 	</div>
 
 </body>
@@ -644,7 +721,7 @@
 <script src="lib/openjscad/src/openjscad.js"></script>
 <script src="lib/openjscad/src/openscad.js"></script>
 <script src="lib/openjscad/src/formats.js"></script>
-<script src="lib/openjscad/LaserWebapps.js"></script>
+<script src="lib/openjscad/geargen.js"></script>
 
 
 <!-- Used by CAD-text -->

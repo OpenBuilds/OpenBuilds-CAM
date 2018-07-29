@@ -1,4 +1,5 @@
 // Involute spur gear builder jscad script. Licensed under the MIT license (http://opensource.org/licenses/mit-license.php). Copyright 2014 Dr. Rainer Hessmer
+// http://hessmer.org/gears/InvoluteSpurGearBuilder.html
 var g_ExpandToCAGParams = {
   pathradius: 0.01,
   resolution: 2
@@ -11,20 +12,20 @@ var GearType = {
 };
 
 // todo populate from UI
-var paramsset = {
-  circularPitch: 8,
-  pressureAngle: 20,
-  clearance: 0.05,
-  backlash: 0.05,
-  toothCount1: 15,
-  centerHoleDiameter1: 20,
-  profileShift: -0,
-  toothCount2: 50,
-  centerHoleDiameter2: 4,
-  type: 3,
-  resolution: 30,
-  stepsPerToothAngle: 3
-}
+// var paramsset = {
+//   circularPitch: 8,
+//   pressureAngle: 20,
+//   clearance: 0.05,
+//   backlash: 0.05,
+//   toothCount1: 15,
+//   centerHoleDiameter1: 20,
+//   profileShift: -0,
+//   toothCount2: 50,
+//   centerHoleDiameter2: 4,
+//   type: 3,
+//   resolution: 30,
+//   stepsPerToothAngle: 3
+// }
 
 function main(params) {
 
