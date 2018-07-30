@@ -173,16 +173,16 @@ function mouseDown(event) {
               printLog('Clicked on : ' + obj.name, successcolor, "viewer")
               console.log(obj.userData.link)
               if (event.ctrlKey) {
-                idx = $("#" + obj.userData.link).parent().find('input').attr('id').split('.');
-                i = parseInt(idx[1]);
-                j = parseInt(idx[2]);
+                idx = obj.userData.link.split('link')[1].split('_');
+                i = parseInt(idx[0]);
+                j = parseInt(idx[1]);
                 console.log(i, j);
                 objectsInScene.splice('`+i+`', 1)
                 fillTree();
               } else {
-                idx = $("#" + obj.userData.link).parent().find('input').attr('id').split('.');
-                i = parseInt(idx[1]);
-                j = parseInt(idx[2]);
+                idx = obj.userData.link.split('link')[1].split('_');
+                i = parseInt(idx[0]);
+                j = parseInt(idx[1]);
                 console.log(i, j);
                 objectsInScene[i].remove(objectsInScene[i].children[j]);
                 fillTree();
