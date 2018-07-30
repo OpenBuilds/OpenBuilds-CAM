@@ -51,9 +51,9 @@ function loadLastClosedOnPageload() {
       Metro.dialog.create({
         width: 500,
         title: "Found a recoverable workspace.",
-        content: "<div>Would you like to load the previously used workspace, or would you like to start with a clean New workspace?</div>",
+        content: "<div>Would you like to recover the previously used workspace, or would you like to start with a clean New workspace?</div>",
         actions: [{
-            caption: "<i class=\"far fa-fw fa-save\"></i>Load the previous Workspace",
+            caption: "<i class=\"far fa-fw fa-save\"></i>Recover last used Workspace",
             cls: "js-dialog-close success",
             onclick: function() {
               parseLoadWorkspace(lastWorkspace)
