@@ -59,7 +59,7 @@ function addRect(width, height) {
 $(document).ready(function() {
   var modal = `
 
-  <div class="dialog" data-overlay-click-close="true" data-role="dialog" data-cls-dialog="pos-fixed pos-top-center" id="addShapeCircle">
+  <div class="dialog" data-overlay-click-close="true" data-role="dialog" id="addShapeCircle" data-to-top="true">
     <div class="dialog-title" id="statusTitle">Add shape: Circle</div>
     <div class="dialog-content">
     <form>
@@ -78,7 +78,7 @@ $(document).ready(function() {
     </div>
   </div>
 
-  <div class="dialog" data-overlay-click-close="true" data-role="dialog" data-cls-dialog="pos-fixed pos-top-center" id="addShapeRect">
+  <div class="dialog" data-overlay-click-close="true" data-role="dialog" id="addShapeRect" data-to-top="true">
 		<div class="dialog-title" id="statusTitle">Add shape: Rectangle</div>
 		<div class="dialog-content">
     <form>

@@ -165,7 +165,7 @@ $(document).ready(function() {
   var modal = `
   <!-- Settings Modal -->
 
-  <div class="dialog" data-overlay-click-close="true" data-role="dialog" data-cls-dialog="pos-fixed pos-top-center" id="settingsmodal" data-width="730">
+  <div class="dialog" data-overlay-click-close="true" data-role="dialog" id="settingsmodal" data-width="730" data-to-top="true">
     <div class="dialog-title">Application Settings</div>
     <div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
 

@@ -1,5 +1,5 @@
 /*
- * Metro 4 Components Library v4.2.15 build @@build (https://metroui.org.ua)
+ * Metro 4 Components Library v4.2.16 build @@build (https://metroui.org.ua)
  * Copyright 2018 Sergey Pimenov
  * Licensed under MIT
  */
@@ -18607,8 +18607,12 @@ aside::after {
 }
 .table.compact th,
 .table.compact td {
-  padding: .3rem;
-  font-size: .9em;
+  padding: 3px 8px;
+  font-size: 80%;
+}
+.table.compact th .checkbox,
+.table.compact td .checkbox {
+  height: auto;
 }
 .table .check-cell {
   width: 36px!important;
@@ -18652,10 +18656,10 @@ aside::after {
 .table-inspector {
   display: none;
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   background-color: #ffffff;
   color: #1d1d1d;
   z-index: 500;
@@ -20053,6 +20057,25 @@ textarea.focused .input-clear-button,
 .input.focused .input-clear-button,
 .textarea.focused .input-clear-button,
 .select.focused .input-clear-button,
+input[type=text]:hover .input-clear-button,
+input[type=password]:hover .input-clear-button,
+input[type=tel]:hover .input-clear-button,
+input[type=datetime-local]:hover .input-clear-button,
+input[type=email]:hover .input-clear-button,
+input[type=file]:hover .input-clear-button,
+input[type=month]:hover .input-clear-button,
+input[type=number]:hover .input-clear-button,
+input[type=search]:hover .input-clear-button,
+input[type=time]:hover .input-clear-button,
+input[type=url]:hover .input-clear-button,
+input[type=week]:hover .input-clear-button,
+input[type=file]:hover .input-clear-button,
+select:hover .input-clear-button,
+textarea:hover .input-clear-button,
+.file:hover .input-clear-button,
+.input:hover .input-clear-button,
+.textarea:hover .input-clear-button,
+.select:hover .input-clear-button,
 input[type=text]:focus .input-reveal-button,
 input[type=password]:focus .input-reveal-button,
 input[type=tel]:focus .input-reveal-button,
@@ -20090,7 +20113,26 @@ textarea.focused .input-reveal-button,
 .file.focused .input-reveal-button,
 .input.focused .input-reveal-button,
 .textarea.focused .input-reveal-button,
-.select.focused .input-reveal-button {
+.select.focused .input-reveal-button,
+input[type=text]:hover .input-reveal-button,
+input[type=password]:hover .input-reveal-button,
+input[type=tel]:hover .input-reveal-button,
+input[type=datetime-local]:hover .input-reveal-button,
+input[type=email]:hover .input-reveal-button,
+input[type=file]:hover .input-reveal-button,
+input[type=month]:hover .input-reveal-button,
+input[type=number]:hover .input-reveal-button,
+input[type=search]:hover .input-reveal-button,
+input[type=time]:hover .input-reveal-button,
+input[type=url]:hover .input-reveal-button,
+input[type=week]:hover .input-reveal-button,
+input[type=file]:hover .input-reveal-button,
+select:hover .input-reveal-button,
+textarea:hover .input-reveal-button,
+.file:hover .input-reveal-button,
+.input:hover .input-reveal-button,
+.textarea:hover .input-reveal-button,
+.select:hover .input-reveal-button {
   visibility: visible;
 }
 input[type=text]:disabled,
@@ -20256,6 +20298,9 @@ label {
 }
 .input input::-webkit-clear-button {
   display: none;
+}
+.input input::-webkit-inner-spin-button {
+  height: 100%;
 }
 .input .button-group {
   display: -webkit-box;
