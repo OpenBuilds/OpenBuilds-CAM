@@ -429,9 +429,22 @@
 						<div id="rendermenu"></div>
 						<div id="selection" style="visibility: hidden;"></div>
 					</div>
-					<div id="scalewindow" style="visibility: hidden;" data-role="draggable">
-						<h3>Scale it!</h3>
+
+					<div id="scalewindow" style="visibility: hidden;" data-role="draggable" data-drag-element=".drag-element">
+						<div class="window">
+							<div class="window-caption drag-element">
+								<span class="icon fas fa-ruler"></span>
+								<span class="title">Transform</span>
+								<div class="buttons">
+									<span class="btn-close" onclick="scalewindow.style.visibility = 'hidden';"></span>
+								</div>
+							</div>
+							<div class="window-content p-2" id="scalewindowcontent">
+								<!--  -->
+							</div>
+						</div>
 					</div>
+
 					<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;">
 					</div>
 				</div>

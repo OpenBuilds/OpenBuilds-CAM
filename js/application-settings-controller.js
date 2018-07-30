@@ -216,6 +216,28 @@ $(document).ready(function() {
               <h6 class="fg-secondary">Customise Defaults<br><small>Setup your own preferences from the defaults provided, as needed</small></h6>
               <hr class="bg-secondary">
               <div>
+
+                <div class="row mb-2">
+                    <label class="cell-sm-6">X-Axis Length</label>
+                    <div class="cell-sm-6">
+                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizexmax" value="200" data-append="mm">
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <label class="cell-sm-6">Y-Axis Length</label>
+                    <div class="cell-sm-6">
+                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizeymax" value="200" data-append="mm">
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <label class="cell-sm-6">Z-Axis Length</label>
+                    <div class="cell-sm-6">
+                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizezmax" value="100" data-append="mm">
+                    </div>
+                </div>
+
                 <div class="row mb-2">
                     <label class="cell-sm-6">Spindle / Laser Command</label>
                     <div class="cell-sm-6">
@@ -248,27 +270,6 @@ $(document).ready(function() {
                     <label class="cell-sm-6">Linear Move Command</label>
                     <div class="cell-sm-6">
                         <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="g1command" value="G1" >
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">X-Axis Length</label>
-                    <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizexmax" value="200" data-append="mm">
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Y-Axis Length</label>
-                    <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizeymax" value="200" data-append="mm">
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Z-Axis Length</label>
-                    <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizezmax" value="100" data-append="mm">
                     </div>
                 </div>
 

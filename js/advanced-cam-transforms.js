@@ -22,7 +22,7 @@ function showScaleWindow(object) {
 
     <div id="_SCALE" class="tab-pane fade show active">
       <i class="fas fa-ruler"></i> <b>Scale</b>: <small>` + object.name + `</small>
-      <table>
+      <table style="width: 410px;">
         <tr>
           <td>Width: </td>
           <td><i class="fas fa-ruler-horizontal fa-fw"></i></td>
@@ -53,20 +53,20 @@ function showScaleWindow(object) {
     </div>
     <div id="_POSITION" class="tab-pane fade">
       <i class="far fa-clone"></i> <b>Position</b>: <small>` + object.name + `</small>
-      <table>
+      <table style="width: 410px;">
         <tr>
-          <td>
+          <td style="width: 50px;">
           </td>
-          <td align="center">
+          <td align="center" style="width: 100px;">
             <i class="fas fa-align-left fa-fw"></i>
           </td>
-          <td align="center">
+          <td align="center"  style="width: 100px;">
             <i class="fas fa-align-center fa-fw"></i>
           </td>
-          <td align="center">
+          <td align="center"  style="width: 100px;">
             <i class="fas fa-align-right fa-fw"></i>
           </td>
-          <td>
+          <td style="width: 50px;">
           </td>
         </tr>
         <tr>
@@ -125,7 +125,7 @@ function showScaleWindow(object) {
     </div>
     <div id="_ROTATION" class="tab-pane fade">
     <i class="fas fa-undo"></i> <b>Rotation</b>: <small>` + object.name + `</small>
-      <table>
+      <table style="width: 410px;">
         <tr>
           <td>Angle: </td>
           <td>
@@ -148,7 +148,7 @@ function showScaleWindow(object) {
       </button>
     </div>
   `;
-  $('#scalewindow').html(template)
+  $('#scalewindowcontent').html(template)
   var aspect = width / height
   $("#scaleWidth").keyup(function() {
     var width = Number($(this).val());
