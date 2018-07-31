@@ -454,7 +454,7 @@ $(document).ready(function() {
                 <div class="row mb-2">
                     <label class="cell-sm-6">Y-Axis Length</label>
                     <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizeymax" value="300" data-append="mm">
+                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizeymax" value="200" data-append="mm">
                     </div>
                 </div>
 

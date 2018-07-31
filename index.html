@@ -59,7 +59,7 @@
 										<span class="ribbon-split dropdown-toggle">Open<br>Drawing</span>
 										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" style="text-align: left;">
 											<li><a href="#" onclick="Metro.dialog.open('#partslibModal')">Import from Parts Library</a></li>
-											<li><a href="#" onclick="Metro.dialog.open('#gearGenModal')">Create using Involute Gearset Generator</a></li>
+											<!-- <li><a href="#" onclick="Metro.dialog.open('#gearGenModal')">Create using Involute Gearset Generator</a></li> -->
 										</ul>
 									</div>
 									<span class="title">File</span>
@@ -537,7 +537,7 @@
 		</div>
 
 
-		<div class="dialog" data-overlay-click-close="true" data-role="dialog" id="gearGenModal" data-width="600" data-to-top="true">
+		<!-- <div class="dialog" data-overlay-click-close="true" data-role="dialog" id="gearGenModal" data-width="600" data-to-top="true">
 			<div class="dialog-title">Gear Generator</div>
 			<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
 				<div id="viewer" style="display: none;"></div>
@@ -596,18 +596,6 @@
 						<input type="checkbox" data-role="switch" data-caption="Advanced Settings" id="advancedGear">
 					</div>
 					<div data-role="collapse" data-collapsed="true" data-toggle-element="#advancedGear">
-						<!-- <div class="row border-bottom bd-gray">
-							<label class="cell-sm-8">clearance<br><small>(minimal distance between the apex of a tooth and the trough of the other gear; in length units)</small></label>
-							<div class="cell-sm-4 pt-2">
-								<input id="gearClearance" data-role="input" type="number" value="0.05" data-append="mm" data-clear-button="false">
-							</div>
-						</div>
-						<div class="row border-bottom bd-gray">
-							<label class="cell-sm-8">backlash<br><small>(minimal distance between meshing gears; in length units)</small></label>
-							<div class="cell-sm-4 pt-2">
-								<input id="backlash" data-role="input" type="number" value="0.05" data-append="mm" data-clear-button="false">
-							</div>
-						</div> -->
 						<div class="row border-bottom bd-gray">
 							<label class="cell-sm-8">profileShift<br><small>(indicates what portion of gear one's addendum height should be shifted to gear two. E.g., a value of 0.1 means the adddendum of gear two is increased by a factor of 1.1 while the height of the addendum of gear one is reduced to 0.9 of its normal height.)</small></label>
 							<div class="cell-sm-4 pt-2">
@@ -635,7 +623,7 @@
 				<button class="button success js-dialog-close" onclick="createGear();">Create Gears</button>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 </body>
 <script type="text/javascript" src="lib/fontawesome5/js/all.js"></script>
@@ -727,12 +715,12 @@
 
 
 <!-- OpenJSCAD -->
-<script src="lib/openjscad/src/csg.js"></script>
+<!-- <script src="lib/openjscad/src/csg.js"></script>
 <script src="lib/openjscad/src/threecsg.js"></script>
 <script src="lib/openjscad/src/openjscad.js"></script>
 <script src="lib/openjscad/src/openscad.js"></script>
 <script src="lib/openjscad/src/formats.js"></script>
-<script src="lib/openjscad/geargen.js"></script>
+<script src="lib/openjscad/geargen.js"></script> -->
 
 
 <!-- Used by CAD-text -->

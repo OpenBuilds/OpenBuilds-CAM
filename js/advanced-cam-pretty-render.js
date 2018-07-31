@@ -1,6 +1,7 @@
 // borrowed code from https://github.com/chilipeppr/widget-eagle/blob/master/widget.js
 
 function getMeshLineFromClipperPath(opts) {
+  // console.log(opts);
   var width = opts.width ? opts.width : 1;
   var paths = opts.clipperPath;
   var isSolid = 'isSolid' in opts ? opts.isSolid : true;
