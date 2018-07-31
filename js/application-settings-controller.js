@@ -323,7 +323,6 @@ function selectMachine(type) {
   $("#sizexmax").val(xaxis)
   $("#sizeymax").val(yaxis)
   $("#sizezmax").val(zaxis)
-  $('#context_toggle2').html(template);
 
   setMachineButton(type);
 };
