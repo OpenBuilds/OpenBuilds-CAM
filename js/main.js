@@ -54,9 +54,9 @@ $(document).ready(function() {
 
   // Changelog
 
-  if (!localStorage.getItem('hideChangelog')) {
-    getChangelog();
-  }
+  // if (!localStorage.getItem('hideChangelog')) {
+  //   getChangelog();
+  // }
 
   loadLastClosedOnPageload();
 
