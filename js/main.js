@@ -62,6 +62,10 @@ $(document).ready(function() {
 
   getForksCount();
 
+  setTimeout(function() {
+    resetView()
+  }, 2000)
+
 
 }); // End of document.ready
 
