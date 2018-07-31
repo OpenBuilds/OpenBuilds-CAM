@@ -68,7 +68,7 @@ function delta(num1, num2) {
 }
 
 function mouseDown(event) {
-  console.log(event.target)
+  // console.log(event.target)
   if (mouseState == "select") {
     // helpoverlay.style.visibility = "visible";
     if (event.which == 1) { // only on left mousedown
