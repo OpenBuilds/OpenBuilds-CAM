@@ -2,44 +2,44 @@ var DriverCheckinterval;
 var alreadyDetected = false;
 var availableDriverVersion = 'v0.0.0'
 
-$(document).ready(function() {
-
-  function checkIfDriverIsInstalled() {
-    if (!alreadyDetected) {
-      var conn = new WebSocket("wss://mymachine.openbuilds.com:3001/socket.io/?EIO=3&transport=websocket");
-      conn.onopen = function(evt) {
-        // console.log("Valid Driver at ", evt.target);
-        setTimeout(function() {
-          conn.close();
-        }, 500);
-        var url = "https://mymachine.openbuilds.com:3001/api/version"
-        $.ajax({
-          url: url,
-          type: 'GET',
-          async: true,
-          cache: false,
-          timeout: 1000,
-          error: function() {
-            // console.log("Failed to retrieve OpenBuilds Machine Driver version information from the API at " + evt.target.url);
-          },
-          success: function(msg) {
-            var instance = JSON.parse(msg)
-            var host = instance.ipaddress.split(':')[0];
-            var menuitem = `<a class="dropdown-item" href="#" onclick="sendGcodeToOmd('` + instance.ipaddress + `')">` + instance.application + ` v` + instance.version + ` (` + host + `)</a>`;
-            // console.log(menuitem);
-            hasDriver(instance.version)
-          }
-        });
-      };
-      conn.onerror = function(evt) {
-        // console.error("Could not find a valid instance of OpenBuilds Machine Driver at " + evt.target.url + " /  Download and install the Driver from https://github.com/OpenBuilds/SW-Machine-Drivers/releases    Alternatively, your PC may be disconnected from the Internet. ");
-        setTimeout(function() {
-          conn.close();
-        }, 50);
-        noDriver()
-      };
+function checkIfDriverIsInstalled() {
+  if (!alreadyDetected) {
+    var conn = new WebSocket("wss://mymachine.openbuilds.com:3001/socket.io/?EIO=3&transport=websocket");
+    conn.onopen = function(evt) {
+      // console.log("Valid Driver at ", evt.target);
+      setTimeout(function() {
+        conn.close();
+      }, 500);
+      var url = "https://mymachine.openbuilds.com:3001/api/version"
+      $.ajax({
+        url: url,
+        type: 'GET',
+        async: true,
+        cache: false,
+        timeout: 1000,
+        error: function() {
+          // console.log("Failed to retrieve OpenBuilds Machine Driver version information from the API at " + evt.target.url);
+        },
+        success: function(msg) {
+          var instance = JSON.parse(msg)
+          var host = instance.ipaddress.split(':')[0];
+          var menuitem = `<a class="dropdown-item" href="#" onclick="sendGcodeToOmd('` + instance.ipaddress + `')">` + instance.application + ` v` + instance.version + ` (` + host + `)</a>`;
+          // console.log(menuitem);
+          hasDriver(instance.version)
+        }
+      });
+    };
+    conn.onerror = function(evt) {
+      // console.error("Could not find a valid instance of OpenBuilds Machine Driver at " + evt.target.url + " /  Download and install the Driver from https://github.com/OpenBuilds/SW-Machine-Drivers/releases    Alternatively, your PC may be disconnected from the Internet. ");
+      setTimeout(function() {
+        conn.close();
+      }, 50);
+      noDriver()
     };
   };
+};
+
+$(document).ready(function() {
 
   // Check if Driver is running
   var DriverCheckinterval = setInterval(function() {
@@ -57,12 +57,13 @@ function hasDriver(version) {
   }
   $("#sendGcodeToMyMachine").fadeIn("slow");
   alreadyDetected = true;
+  $('#installDriversOnSettingspage').hide();
 }
 
 function noDriver() {
   $("#sendGcodeToMyMachine").fadeOut("slow");
   $("#downloadDrivers").fadeIn("slow");
-
+  $('#installDriversOnSettingspage').show();
 }
 
 function downloadDrivers() {
@@ -97,7 +98,7 @@ function downloadDrivers() {
 
 function getAvailableDriverVersion() {
   $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c").done(function(release) {
-    $('#omdavailversion').html("Machine Driver " + release.name)
+    $('.omdavailversion').html("Machine Driver " + release.name)
     availableDriverVersion = release.name
   });
 }

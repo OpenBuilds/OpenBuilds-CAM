@@ -161,6 +161,14 @@ function setMachineButton(type) {
   $('#context_toggle2').html(template);
 };
 
+// <button class="ribbon-icon-button" id="downloadDrivers" onclick="downloadDrivers()" style="height: 36px">
+//       <span class="icon">
+//         <span class="fas fa-download"></span>
+//       </span>
+//       <span class="caption">Install Drivers<br><small id="omdavailversion"></small></span>
+//     </button>
+//
+
 $(document).ready(function() {
   var modal = `
   <!-- Settings Modal -->
@@ -171,8 +179,17 @@ $(document).ready(function() {
 
         <form>
           <ul class="step-list">
+
+            <li id="installDriversOnSettingspage">
+              <h6 class="fg-secondary">Install Drivers<br><small>Used to Connect to and control you machine</small></h6>
+              <hr class="bg-secondary">
+              <div>
+                <button onclick="downloadDrivers()" style="width: 100%;" class="button secondary outline"><span class="fas fa-download"></span> Install and run Drivers <small>(Available: </small><small class="omdavailversion"></small><small> )</small></button>
+              </div>
+            </li>
+
             <li>
-              <h6 class="fg-secondary">Select your controller<br><small>Sets approximate defaults below</small></h6>
+              <h6 class="fg-secondary">Select your controller<br><small>Sets approximate defaults below, which should suffice for most users</small></h6>
               <hr class="bg-secondary">
               <div>
                 <a style="width: 100%;" class="button dropdown-toggle secondary outline" id="context_toggle"><img src="images/brd/grbl.png"/> Select Controller</a>
@@ -186,7 +203,7 @@ $(document).ready(function() {
             </li>
 
             <li>
-              <h6 class="fg-secondary">Select your Machine<br><small>Sets approximate defaults below</small></h6>
+              <h6 class="fg-secondary">Select your Machine<br><small>Sets approximate defaults below, which should suffice for most users</small></h6>
               <hr class="bg-secondary">
               <div>
                 <a style="width: 100%;" class="button dropdown-toggle secondary outline" id="context_toggle2"><img src="images/mch/sphinx55.png"/> Select Machine</a>
@@ -213,7 +230,7 @@ $(document).ready(function() {
             </li>
 
             <li>
-              <h6 class="fg-secondary">Customise Defaults<br><small>Setup your own preferences from the defaults provided, as needed</small></h6>
+              <h6 class="fg-secondary">Customise Defaults<br><small>From your machine and controller choice above we have prepopulated the settings below.  If you have any custom requirements, please customise the settings below</small></h6>
               <hr class="bg-secondary">
               <div>
 

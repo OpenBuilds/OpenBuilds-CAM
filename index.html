@@ -189,7 +189,7 @@
 							</div>
 							<div class="section" id="section-settings">
 								<div class="group">
-									<button class="ribbon-button" onclick="Metro.dialog.open('#settingsmodal');">
+									<button class="ribbon-button" onclick="alreadyDetected = false; checkIfDriverIsInstalled(); Metro.dialog.open('#settingsmodal');">
 										<span class="icon">
 										 <span class="fa fa-fw fa-cogs"></span>
 									 </span>
@@ -365,7 +365,7 @@
 													<span class="icon">
 														<span class="fas fa-download"></span>
 													</span>
-													<span class="caption">Install Drivers<br><small id="omdavailversion"></small></span>
+													<span class="caption">Install Drivers<br><small class="omdavailversion"></small></span>
 												</button>
 										<br>
 									</div>
