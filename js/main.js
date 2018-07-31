@@ -66,7 +66,6 @@ $(document).ready(function() {
     resetView()
   }, 2000)
 
-
 }); // End of document.ready
 
 // Error handling

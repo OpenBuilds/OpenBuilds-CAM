@@ -91,19 +91,25 @@ function animateTree() {
   }
   if (selectCount > 0) {
     $("#tpaddpathParent").prop('disabled', false).removeClass('disabled')
-    $("#selectCount").html(" " + selectCount + " ");
+    $(".selectCount").html(" " + selectCount + " ");
     $("#tpaddpath").prop('disabled', false);
+    $('#floating-tpaddpath-btn').prop('disabled', false);
+    $('#floating-tpaddpath-btn').addClass('success')
+    // $('#floating-tpaddpath-btn').html('<span class="icon">+' + selectCount + '</span>')
     $("#tpaddicon").addClass('fg-green')
-    $("#selectCount").show();
+    $(".selectCount").show();
     if (toolpathsInScene.length > 0) {
       $("#tpaddpath-dropdown").prop('disabled', false);
     }
   } else {
     $("#tpaddpathParent").prop('disabled', true).addClass('disabled');
     $("#tpaddicon").removeClass('fg-green')
-    $("#selectCount").hide();
-    $("#selectCount").html(" " + selectCount + " ");
+    $(".selectCount").hide();
+    $(".selectCount").html(" " + selectCount + " ");
     $("#tpaddpath").prop('disabled', true);
+    $('#floating-tpaddpath-btn').prop('disabled', true);
+    $('#floating-tpaddpath-btn').removeClass('success')
+    // $('#floating-tpaddpath-btn').html('<span class="icon"><span class="mif-plus"></span></span>')
     $("#tpaddpath-dropdown").prop('disabled', true);
   }
 }

@@ -298,7 +298,7 @@
 															<i id="tpaddicon" class="fa fa-plus fg-green"></i>
 													</span>
 												</button>
-										<span class="ribbon-split dropdown-toggle" id="tpaddpath-dropdown">Add Selection<br>to Job <span id="selectCount" class="tally success"></span></span>
+										<span class="ribbon-split dropdown-toggle" id="tpaddpath-dropdown">Add Selection<br>to Job <span class="tally success selectCount"></span></span>
 										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" id="toolpathsmenu">
 											<li><a href="#" onclick="addJob(-1);">Add to a new operation</a></li>
 										</ul>
@@ -427,7 +427,11 @@
 						</div>
 					</nav>
 					<div id="renderArea">
-						<div id="rendermenu"></div>
+						<div id="rendermenu">
+							<button class="action-button success" id="floating-tpaddpath-btn" onclick="addJob(-1);" title="Add Selection to Toolpath">
+    						<span class="icon"><span class="mif-plus"></span></span>
+							</button>
+						</div>
 						<div id="selection" style="visibility: hidden;"></div>
 					</div>
 

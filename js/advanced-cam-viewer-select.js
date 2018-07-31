@@ -68,6 +68,7 @@ function delta(num1, num2) {
 }
 
 function mouseDown(event) {
+  console.log(event.target)
   if (mouseState == "select") {
     // helpoverlay.style.visibility = "visible";
     if (event.which == 1) { // only on left mousedown
@@ -96,7 +97,8 @@ function mouseDown(event) {
       // offset = $('#renderArea').offset();
       // var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
       var isModalOpen = Metro.dialog.isOpen('#statusmodal') // dont raycast if modal is over the viewer
-      if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
+      var target = $(event.target);
+      if (!isModalOpen && target.is("canvas")) { // the first 390px = sidebar - we dont want to catch the mouse there..
         mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;
         mouseVector.y = -(event.offsetY / renderer.domElement.height) * 2 + 1;
         camera.updateProjectionMatrix();
