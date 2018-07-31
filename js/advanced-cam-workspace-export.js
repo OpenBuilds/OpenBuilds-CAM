@@ -215,12 +215,25 @@ function loadWorkspace(f) {
 }
 
 
+function IsJsonString(str) {
+  try {
+    var json = JSON.parse(str);
+    return (typeof json === 'object');
+  } catch (e) {
+    return false;
+  }
+};
+
 // Parse loaded/undo/redo workspace data
 function parseLoadWorkspace(json) {
   objectsInScene.length = 0;
   toolpathsInScene.length = 0;
   var loader = new THREE.ObjectLoader();
-  var newWorkspace = JSON.parse(json)
+  if (IsJsonString(json)) {
+    var newWorkspace = JSON.parse(json);
+  } else {
+    var newWorkspace = json;
+  }
   for (var key in newWorkspace.objects) {
     var object = loader.parse(newWorkspace.objects[key]);
     objectsInScene.push(object)
