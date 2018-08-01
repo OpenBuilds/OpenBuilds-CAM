@@ -1,6 +1,7 @@
 var DriverCheckinterval;
 var alreadyDetected = false;
 var availableDriverVersion = 'v0.0.0'
+var installedDriver = 'not detected'
 
 function checkIfDriverIsInstalled() {
   if (!alreadyDetected) {
@@ -38,6 +39,7 @@ $(document).ready(function() {
 });
 
 function hasDriver(version) {
+  installedDriver = version
   $("#omdversion").html("Machine Driver v" + version)
   if (availableDriverVersion == "v" + version) {
     $("#downloadDrivers").fadeOut("slow");
@@ -48,6 +50,8 @@ function hasDriver(version) {
 }
 
 function noDriver() {
+  installedDriver = 'not detected'
+  $("#omdversion").html("Machine Driver v" + installedDriver)
   $("#sendGcodeToMyMachine").fadeOut("slow");
   $("#downloadDrivers").fadeIn("slow");
   $('#installDriversOnSettingspage').show();

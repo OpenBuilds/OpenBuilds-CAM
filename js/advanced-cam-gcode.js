@@ -34,6 +34,8 @@ function makeGcode() {
 
         toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS);
         $("#sendGcodeToMyMachine").removeClass("disabled");
+        $("#sendGcodeToMyMachine").attr('title', "Send GCODE to the OpenBuilds Machine Driver running on this PC");
+        $("#omdversion").html("Machine Driver v" + installedDriver)
         $("#savetpgcode").removeClass("disabled");
         $("#exportGcodeMenu").removeClass("disabled");
 

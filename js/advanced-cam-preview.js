@@ -1,5 +1,7 @@
 function toolpathPreview(i) {
   $("#sendGcodeToMyMachine").addClass("disabled");
+  $("#sendGcodeToMyMachine").attr('title', "No GCODE to Send yet. Please setup Toolpaths and Generate GCODE first!");
+  $("#omdversion").html("No GCODE to Send")
   $("#savetpgcode").addClass("disabled");
   $("#exportGcodeMenu").addClass("disabled");
   $("#previewToolpathBtn").html("<i class='fa fa-spinner fa-spin '></i> Calculating, please wait");
