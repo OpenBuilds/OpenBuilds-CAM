@@ -16,6 +16,9 @@ var camvideo;
 var objectsInScene = []; //array that holds all objects we added to the scene.
 var clearSceneFlag = false;
 
+// pause Animation when we loose webgl context focus
+var pauseAnimation = false;
+
 var size = new THREE.Vector3();
 
 var sky;
@@ -308,84 +311,85 @@ function init3D() {
   mouseVector = new THREE.Vector3();
   raycaster.linePrecision = 1
 
-
 }
 
 function animate() {
-  camera.updateMatrixWorld();
-  animateTree();
-  simAnimate();
+  if (!pauseAnimation) {
+    camera.updateMatrixWorld();
+    animateTree();
+    simAnimate();
 
-  // half-hide toolpaths in delete/move mode
-  if (mouseState == "select") {
-    setOpacity(toolpathsInScene, 0.6);
-  } else {
-    setOpacity(toolpathsInScene, 0.1);
-  }
-
-  if (simstopped == true) {
+    // half-hide toolpaths in delete/move mode
     if (mouseState == "select") {
       setOpacity(toolpathsInScene, 0.6);
     } else {
       setOpacity(toolpathsInScene, 0.1);
     }
-  } else {
-    setOpacity(toolpathsInScene, 0.1);
-  }
 
-
-
-  if (clearSceneFlag) {
-    while (scene.children.length > 1) {
-      scene.remove(scene.children[1])
+    if (simstopped == true) {
+      if (mouseState == "select") {
+        setOpacity(toolpathsInScene, 0.6);
+      } else {
+        setOpacity(toolpathsInScene, 0.1);
+      }
+    } else {
+      setOpacity(toolpathsInScene, 0.1);
     }
 
-    var documents = new THREE.Group();
-    documents.name = "Documents";
-    for (i = 0; i < objectsInScene.length; i++) {
-      documents.add(objectsInScene[i])
-    }
-    scene.add(documents)
 
-    var toolpaths = new THREE.Group();
-    toolpaths.name = "Toolpaths";
-    for (i = 0; i < toolpathsInScene.length; i++) {
 
-      if (toolpathsInScene[i].userData.visible) {
-        if (toolpathsInScene[i].userData.inflated) {
-          if (toolpathsInScene[i].userData.inflated.userData.pretty) {
-            if (toolpathsInScene[i].userData.inflated.userData.pretty.children.length > 0) {
-              toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
+    if (clearSceneFlag) {
+      while (scene.children.length > 1) {
+        scene.remove(scene.children[1])
+      }
+
+      var documents = new THREE.Group();
+      documents.name = "Documents";
+      for (i = 0; i < objectsInScene.length; i++) {
+        documents.add(objectsInScene[i])
+      }
+      scene.add(documents)
+
+      var toolpaths = new THREE.Group();
+      toolpaths.name = "Toolpaths";
+      for (i = 0; i < toolpathsInScene.length; i++) {
+
+        if (toolpathsInScene[i].userData.visible) {
+          if (toolpathsInScene[i].userData.inflated) {
+            if (toolpathsInScene[i].userData.inflated.userData.pretty) {
+              if (toolpathsInScene[i].userData.inflated.userData.pretty.children.length > 0) {
+                toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
+              } else {
+                toolpaths.add(toolpathsInScene[i].userData.inflated);
+              }
             } else {
               toolpaths.add(toolpathsInScene[i].userData.inflated);
             }
-          } else {
-            toolpaths.add(toolpathsInScene[i].userData.inflated);
-          }
-        };
+          };
+        }
       }
-    }
-    scene.add(toolpaths)
+      scene.add(toolpaths)
 
-    if (fancysim == true) {
-      scene.add(simgcodeobj)
-    } else {
-      if (object) {
-        scene.add(object)
+      if (fancysim == true) {
+        scene.add(simgcodeobj)
+      } else {
+        if (object) {
+          scene.add(object)
+        }
+
       }
 
-    }
 
+      clearSceneFlag = false;
+    } // end clearSceneFlag
 
-    clearSceneFlag = false;
-  } // end clearSceneFlag
+    // Limited FPS https://stackoverflow.com/questions/11285065/limiting-framerate-in-three-js-to-increase-performance-requestanimationframe
+    setTimeout(function() {
+      requestAnimationFrame(animate);
+    }, 40);
 
-  // Limited FPS https://stackoverflow.com/questions/11285065/limiting-framerate-in-three-js-to-increase-performance-requestanimationframe
-  setTimeout(function() {
-    requestAnimationFrame(animate);
-  }, 40);
-
-  renderer.render(scene, camera);
+    renderer.render(scene, camera);
+  }
 }
 
 
