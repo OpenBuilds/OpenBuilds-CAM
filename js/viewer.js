@@ -311,6 +311,11 @@ function init3D() {
   mouseVector = new THREE.Vector3();
   raycaster.linePrecision = 1
 
+  setTimeout(function() {
+    resetView()
+    animate();
+  }, 200)
+
 }
 
 function animate() {
