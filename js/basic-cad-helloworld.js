@@ -7,5 +7,6 @@ function helloWorld() {
     resetView();
     // $("#partslibModal").modal('hide')
     fillTree();
+    makeGcode();
   });
 }
