@@ -548,7 +548,7 @@ $(window).on('resize', function() {
   camera.updateProjectionMatrix();
   controls.reset();
   setTimeout(function() {
-    $('#viewReset').click();
+    resetView();
   }, 100);
   // setTimeout(function(){ $('#tabsLayers a[href="#allView"]').trigger('click'); }, 100);
 
