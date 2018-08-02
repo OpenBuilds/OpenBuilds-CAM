@@ -25,7 +25,7 @@ function filldoctree() {
     // Add Nodes under Documents for each Document.  Documents have id=doc0, doc1, etc doc+i
     var template = '';
     for (i = 0; i < objectsInScene.length; i++) {
-      template += `<li data-icon="<span class='far fa-file'></span>" data-caption="` + objectsInScene[i].name + `"><ul id="doc` + i + `"></ul></li>`
+      template += `<li data-icon="<span class='far fa-file'></span>" data-caption="` + objectsInScene[i].name + `"><button class="button mini flat-button" onclick="storeUndo(); objectsInScene.splice(` + i + `,1); fillTree();"><i class="far fa-fw fa-trash-alt"></i></button><ul id="doc` + i + `"></ul></li>`
     };
     $('#documenttree').append(template);
 
@@ -46,7 +46,7 @@ function filldoctree() {
       var template = '';
       for (j = 0; j < layersinthisdoc.length; j++) {
         // Layers
-        template += `<li  class="expanded" data-icon="<span class='fas fa-layer-group'></span>" data-caption="Layer: ` + layersinthisdoc[j] + `"><ul id="doc` + i + `layer` + layersinthisdoc[j].replace(/ /g, '') + `"></ul></li>`
+        template += `<li  data-collapsed="true" data-icon="<span class='fas fa-layer-group'></span>" data-caption="Layer: ` + layersinthisdoc[j] + `"><ul id="doc` + i + `layer` + layersinthisdoc[j].replace(/ /g, '') + `"></ul></li>`
       }
       // console.log("Document " + i + "contains layers: ", layersinthisdoc, template)
       $('#doc' + i).append(template);
