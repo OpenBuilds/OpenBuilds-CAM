@@ -110,25 +110,32 @@ function JSClock() {
 
 function sendGcodeToMyMachine() {
   var textToWrite = prepgcodefile();
-  var blob = new Blob([textToWrite], {
-    type: "text/plain"
-  });
-  console.log("Sending ", blob, " to https://mymachine.openbuilds.com:3001/")
-  var url = "https://mymachine.openbuilds.com:3001/upload"
-  var fd = new FormData();
-  // fd.append('fname', 'file.gcode');
-  var time = new Date();
-  var string = "obcam-" + time.yyyymmdd() + "-" + JSClock() + ".gcode"
-  console.log(string)
+  if (textToWrite.split('\n').length < 10) {
+    var message = `No GCODE yet! Please setup some toolpaths, and Generate GCODE before you can use this function`
+    Metro.toast.create(message, null, 4000, 'bg-red');
+  } else {
+    var blob = new Blob([textToWrite], {
+      type: "text/plain"
+    });
+    console.log("Sending ", blob, " to https://mymachine.openbuilds.com:3001/")
+    var url = "https://mymachine.openbuilds.com:3001/upload"
+    var fd = new FormData();
+    // fd.append('fname', 'file.gcode');
+    var time = new Date();
+    var string = "obcam-" + time.yyyymmdd() + "-" + JSClock() + ".gcode"
+    console.log(string)
 
-  fd.append('data', blob, string);
-  $.ajax({
-    type: 'POST',
-    url: url,
-    data: fd,
-    processData: false,
-    contentType: false
-  }).done(function(data) {
-    // console.log(data);
-  });
+    fd.append('data', blob, string);
+    $.ajax({
+      type: 'POST',
+      url: url,
+      data: fd,
+      processData: false,
+      contentType: false
+    }).done(function(data) {
+      // console.log(data);
+      var message = `GCODE Successfully sent to OpenBuilds Machine Driver! Continue from the OpenBuilds Machine Driver window`
+      Metro.toast.create(message, null, 4000);
+    });
+  };
 }

@@ -10,56 +10,63 @@ function trashGcode() {
 
 
 function makeGcode() {
-  $('#gcodejobs').empty();
 
-  $("#generatetpgcode").html("<i class='fa fa-spinner fa-spin '></i> Generating, please wait");
-  $("#generatetpgcode").prop('disabled', true);
+  if (toolpathsInScene.length > 0) {
 
-  setTimeout(function() {
-    for (j = 0; j < toolpathsInScene.length; j++) {
-      console.log(toolpathsInScene[j].userData.visible)
-      if (toolpathsInScene[j].userData.visible) {
+    $('#gcodejobs').empty();
 
-        // todo: Settings params
-        var rapidSpeed = 1000;
-        var toolon = "";
-        var tooloff = "";
-        // toolpath settings is applied to the parent Toolpath.  Each child in the "toolpath" is processed with the same settings
-        var Feedrate = toolpathsInScene[j].userData.camFeedrate
-        var Plungerate = toolpathsInScene[j].userData.camPlungerate
-        var LaserPower = toolpathsInScene[j].userData.camLaserPower
-        var ZClearance = toolpathsInScene[j].userData.camZClearance
-        var PlasmaIHS = toolpathsInScene[j].userData.camPlasmaIHS
+    $("#generatetpgcode").html("<i class='fa fa-spinner fa-spin '></i> Generating, please wait");
+    $("#generatetpgcode").prop('disabled', true);
+
+    setTimeout(function() {
+      for (j = 0; j < toolpathsInScene.length; j++) {
+        console.log(toolpathsInScene[j].userData.visible)
+        if (toolpathsInScene[j].userData.visible) {
+
+          // todo: Settings params
+          var rapidSpeed = 1000;
+          var toolon = "";
+          var tooloff = "";
+          // toolpath settings is applied to the parent Toolpath.  Each child in the "toolpath" is processed with the same settings
+          var Feedrate = toolpathsInScene[j].userData.camFeedrate
+          var Plungerate = toolpathsInScene[j].userData.camPlungerate
+          var LaserPower = toolpathsInScene[j].userData.camLaserPower
+          var ZClearance = toolpathsInScene[j].userData.camZClearance
+          var PlasmaIHS = toolpathsInScene[j].userData.camPlasmaIHS
 
 
-        toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS);
-        $("#sendGcodeToMyMachine").removeClass("disabled");
-        $("#sendGcodeToMyMachine").attr('title', "Send GCODE to the OpenBuilds Machine Driver running on this PC");
-        $("#omdversion").html("Machine Driver v" + installedDriver)
-        $("#savetpgcode").removeClass("disabled");
-        $("#exportGcodeMenu").removeClass("disabled");
+          toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS);
+          $("#omdversion").html("Machine Driver v" + installedDriver)
+          $("#savetpgcode").removeClass("disabled");
+          $("#exportGcodeMenu").removeClass("disabled");
 
-        var template = `
-			<form class="form-horizontal">
-				<label for="gcode` + i + `" class="control-label">` + toolpathsInScene[j].name + `</label>
-				<textarea id="gcode` + i + `" spellcheck="false" style="width: 100%; height: 80px;" placeholder="processing..." disabled></textarea>
-			</form>`
-        $('#gcodejobs').append(template);
-        $('#gcode' + i).val(toolpathsInScene[j].userData.gcode);
+          //   var template = `
+          // <form class="form-horizontal">
+          // 	<label for="gcode` + i + `" class="control-label">` + toolpathsInScene[j].name + `</label>
+          // 	<textarea id="gcode` + i + `" spellcheck="false" style="width: 100%; height: 80px;" placeholder="processing..." disabled></textarea>
+          // </form>`
+          //   $('#gcodejobs').append(template);
+          $('#gcode' + i).val(toolpathsInScene[j].userData.gcode);
+        }
       }
-    }
 
-    var startgcode = document.getElementById('startgcode').value;
-    $('#startgcodefinal').val(startgcode)
-    var endgcode = document.getElementById('endgcode').value;
-    $('#endgcodefinal').val(endgcode);
+      var startgcode = document.getElementById('startgcode').value;
+      $('#startgcodefinal').val(startgcode)
+      var endgcode = document.getElementById('endgcode').value;
+      $('#endgcodefinal').val(endgcode);
 
-    openGCodeFromText()
+      openGCodeFromText()
 
-    $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
-    $("#generatetpgcode").prop('disabled', false);
-    enableSim();
-  }, 200);
+      $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
+      $("#generatetpgcode").prop('disabled', false);
+      enableSim();
+    }, 200);
+
+  } else {
+    var message = `Toolpath Error: No Toolpaths added yet.  You need to select some entities, add them to a new toolpath, and configure the toolpath, before generating GCODE`
+    Metro.toast.create(message, null, 4000, 'bg-red');
+  }
+
 
 
 
