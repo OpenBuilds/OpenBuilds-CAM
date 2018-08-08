@@ -17,11 +17,29 @@ function checkIfDriverIsInstalled() {
       // console.log("Failed to retrieve OpenBuilds Machine Driver version information from the API at " + evt.target.url);
     },
     success: function(msg) {
-      var instance = JSON.parse(msg)
-      var host = instance.ipaddress.split(':')[0];
-      var menuitem = `<a class="dropdown-item" href="#" onclick="sendGcodeToOmd('` + instance.ipaddress + `')">` + instance.application + ` v` + instance.version + ` (` + host + `)</a>`;
-      // console.log(menuitem);
-      hasDriver(instance.version)
+      if (!alreadyDetected) {
+        var instance = JSON.parse(msg)
+        var host = instance.ipaddress.split(':')[0];
+        var menuitem = `<a class="dropdown-item" href="#" onclick="sendGcodeToOmd('` + instance.ipaddress + `')">` + instance.application + ` v` + instance.version + ` (` + host + `)</a>`;
+        // console.log(menuitem);
+        // hasDriver(instance.version)
+        setTimeout(function() {
+          // console.log('checking for update')
+          printLog("<span class='fg-green'>Checking for Updates</span>")
+          $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c").done(function(release) {
+            var availVersion = release.name.substr(1)
+            var currentVersion = instance.version
+            // hasDriver(instance.version)
+            // console.log(versionCompare(availVersion, currentVersion), availVersion, currentVersion);
+            if (versionCompare(availVersion, currentVersion) == 1) {
+              console.log('outdated')
+              oldDriver(currentVersion, availVersion)
+            } else {
+              hasDriver(instance.version)
+            }
+          });
+        }, 10)
+      }
     }
   });
   // };
@@ -50,13 +68,25 @@ function hasDriver(version) {
 }
 
 function noDriver() {
+  alreadyDetected = false;
   installedDriver = 'not detected'
   $("#DriverDetected").fadeOut("slow");
   $("#noDriverDetected").fadeIn("slow");
   $('#installDriversOnSettingspage').show();
   $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting the OpenBuilds Machine Driver")
+  $('#installDriverMessage').html('Connecting to a machine, requires that you have the OpenBuilds Machine Driver installed.')
 }
 
+function oldDriver(version, availVersion) {
+  alreadyDetected = true;
+  installedDriver = version
+  $("#DriverDetected").fadeOut("slow");
+  $("#noDriverDetected").fadeIn("slow");
+  $('#installDriversOnSettingspage').show();
+  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. You are running an outdated version of the OpenBuilds Machine Driver v." + version + ". Please update to v" + availVersion)
+  $('#installDriverMessage').html('Connecting to a machine, requires that you have the latest OpenBuilds Machine Driver installed. <br>You are running version <code>' + version + "</code> - Please update to version <code>" + availVersion + "</code> or newer...")
+  $('#installDriverHelp').hide();
+}
 // Loop to check if we can use Machine Integration
 setInterval(function() {
   if (objectsInScene.length < 1) {
@@ -166,4 +196,49 @@ function sendGcodeToMyMachine() {
       Metro.toast.create(message, null, 4000);
     });
   };
+}
+
+function versionCompare(v1, v2, options) {
+  var lexicographical = options && options.lexicographical,
+    zeroExtend = options && options.zeroExtend,
+    v1parts = v1.split('.'),
+    v2parts = v2.split('.');
+
+  function isValidPart(x) {
+    return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
+  }
+
+  if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
+    return NaN;
+  }
+
+  if (zeroExtend) {
+    while (v1parts.length < v2parts.length) v1parts.push("0");
+    while (v2parts.length < v1parts.length) v2parts.push("0");
+  }
+
+  if (!lexicographical) {
+    v1parts = v1parts.map(Number);
+    v2parts = v2parts.map(Number);
+  }
+
+  for (var i = 0; i < v1parts.length; ++i) {
+    if (v2parts.length == i) {
+      return 1;
+    }
+
+    if (v1parts[i] == v2parts[i]) {
+      continue;
+    } else if (v1parts[i] > v2parts[i]) {
+      return 1;
+    } else {
+      return -1;
+    }
+  }
+
+  if (v1parts.length != v2parts.length) {
+    return -1;
+  }
+
+  return 0;
 }

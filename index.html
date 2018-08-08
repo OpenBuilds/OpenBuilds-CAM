@@ -484,13 +484,14 @@
 						<span class="title">Connection</span>
 					</div>
 					<div class="window-content p-2" id="connectiontree" style="overflow-y:scroll;">
-						<div id="noDriverDetected">
+
+						<div id="noDriverDetected" style="display:none;">
 							<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
 								<a href="#" onclick="downloadDrivers()" class="button"><span class="fas fa-download"></span> Install Drivers</a>
 								<a href="#" class="info omdavailversion">v1.0.0</a>
 							</div><br>
-							<p class="text-secondary">Connecting to a machine, requires that you have the OpenBuilds Machine Driver installed. <br> </p>
-							<p class="text-small">If you have not installed it yet, you can download it above, or if you have the latest version installed already, please start it.<br> If you still see this message, we are experiencing a problem detecting your driver<br> You can also export GCODE
+							<p class="text-secondary" id="installDriverMessage">Connecting to a machine, requires that you have the OpenBuilds Machine Driver installed.</p>
+							<p class="text-small" id="installDriverHelp">If you have not installed it yet, you can download it above, or if you have the latest version installed already, please start it.<br> If you still see this message, we are experiencing a problem detecting your driver<br> You can also export GCODE
 								and send it to your machine</p>
 						</div>
 
@@ -504,12 +505,13 @@
 							<p class="text-small" id="validDocuments"><i class='fas fa-times fa-fw fg-red'></i>2. No Documents yet</p>
 							<p class="text-small" id="validToolpaths"><i class='fas fa-times fa-fw fg-red'></i>3. No Toolpaths yet</p>
 							<p class="text-small" id="validGcode"><i class='fas fa-times fa-fw fg-red'></i>4. No GCODE yet</p>
+							<br>
+							<button class="image-button" id="activateDriver" onclick="activateDriver()" style="width: 100%">
+								<span class="icon"><span class="far fa-window-restore"></span></span>
+								<span class="caption">Show Driver Window</span>
+							</button>
 						</div>
-						<br>
-						<button class="image-button" id="activateDriver" onclick="activateDriver()" style="width: 100%">
-							<span class="icon"><span class="far fa-window-restore"></span></span>
-							<span class="caption">Show Driver Window</span>
-						</button>
+
 
 					</div>
 				</div>
