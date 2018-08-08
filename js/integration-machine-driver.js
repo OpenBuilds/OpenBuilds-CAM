@@ -4,27 +4,27 @@ var availableDriverVersion = 'v0.0.0'
 var installedDriver = 'not detected'
 
 function checkIfDriverIsInstalled() {
-  if (!alreadyDetected) {
-    var url = "https://mymachine.openbuilds.com:3001/api/version"
-    $.ajax({
-      url: url,
-      type: 'GET',
-      async: true,
-      cache: false,
-      timeout: 1000,
-      error: function() {
-        noDriver()
-        // console.log("Failed to retrieve OpenBuilds Machine Driver version information from the API at " + evt.target.url);
-      },
-      success: function(msg) {
-        var instance = JSON.parse(msg)
-        var host = instance.ipaddress.split(':')[0];
-        var menuitem = `<a class="dropdown-item" href="#" onclick="sendGcodeToOmd('` + instance.ipaddress + `')">` + instance.application + ` v` + instance.version + ` (` + host + `)</a>`;
-        // console.log(menuitem);
-        hasDriver(instance.version)
-      }
-    });
-  };
+  // if (!alreadyDetected) {
+  var url = "https://mymachine.openbuilds.com:3001/api/version"
+  $.ajax({
+    url: url,
+    type: 'GET',
+    async: true,
+    cache: false,
+    timeout: 1000,
+    error: function() {
+      noDriver()
+      // console.log("Failed to retrieve OpenBuilds Machine Driver version information from the API at " + evt.target.url);
+    },
+    success: function(msg) {
+      var instance = JSON.parse(msg)
+      var host = instance.ipaddress.split(':')[0];
+      var menuitem = `<a class="dropdown-item" href="#" onclick="sendGcodeToOmd('` + instance.ipaddress + `')">` + instance.application + ` v` + instance.version + ` (` + host + `)</a>`;
+      // console.log(menuitem);
+      hasDriver(instance.version)
+    }
+  });
+  // };
 };
 
 $(document).ready(function() {
@@ -40,22 +40,36 @@ $(document).ready(function() {
 
 function hasDriver(version) {
   installedDriver = version
-  $("#omdversion").html("Machine Driver v" + version)
   if (availableDriverVersion == "v" + version) {
-    $("#downloadDrivers").fadeOut("slow");
+    $("#noDriverDetected").fadeOut("slow");
   }
-  $("#sendGcodeToMyMachine").fadeIn("slow");
+  $("#DriverDetected").fadeIn("slow");
   alreadyDetected = true;
   $('#installDriversOnSettingspage').hide();
+  $('#detectedVersion').html("<i class='fas fa-check fa-fw fg-green'></i>1. Detected OpenBuilds Machine Driver: " + version)
 }
 
 function noDriver() {
   installedDriver = 'not detected'
-  $("#omdversion").html("Machine Driver v" + installedDriver)
-  $("#sendGcodeToMyMachine").fadeOut("slow");
-  $("#downloadDrivers").fadeIn("slow");
+  $("#DriverDetected").fadeOut("slow");
+  $("#noDriverDetected").fadeIn("slow");
   $('#installDriversOnSettingspage').show();
+  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting the OpenBuilds Machine Driver")
 }
+
+// Loop to check if we can use Machine Integration
+setInterval(function() {
+  if (objectsInScene.length < 1) {
+    $('#validDocuments').html("<i class='fas fa-times fa-fw fg-red'></i>2. No Documents yet")
+  } else {
+    $('#validDocuments').html("<i class='fas fa-check fa-fw fg-green'></i>2. Valid Documents")
+  }
+  if (toolpathsInScene.length < 1) {
+    $('#validToolpaths').html("<i class='fas fa-times fa-fw fg-red'></i>3. No Toolpaths yet")
+  } else {
+    $('#validToolpaths').html("<i class='fas fa-check fa-fw fg-green'></i>3. Valid Toolpaths")
+  }
+}, 1000);
 
 function downloadDrivers() {
   $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c").done(function(release) {
@@ -89,7 +103,7 @@ function downloadDrivers() {
 
 function getAvailableDriverVersion() {
   $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c").done(function(release) {
-    $('.omdavailversion').html("Machine Driver " + release.name)
+    $('.omdavailversion').html(release.name)
     availableDriverVersion = release.name
   });
 }
@@ -106,6 +120,20 @@ function JSClock() {
   temp += ((second < 10) ? 'm0' : 'm') + second + 's';
   // temp += (hour >= 12) ? ' P.M.' : ' A.M.';
   return temp;
+}
+
+function activateDriver() {
+  var url = "https://mymachine.openbuilds.com:3001/activate"
+  $.ajax({
+    type: 'GET',
+    url: url,
+    processData: false,
+    contentType: false
+  }).done(function(data) {
+    // console.log(data);
+    var message = data
+    Metro.toast.create(message, null, 4000);
+  });
 }
 
 function sendGcodeToMyMachine() {

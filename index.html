@@ -34,7 +34,7 @@
 	<!-- container1 Drog Container wraps all other content -->
 	<div id="container1">
 		<div id="col1">
-			<div class="window drop-shadow" style="height: calc(100% - 2px);">
+			<div class="window drop-shadow" style="height: calc(100% - 10px);">
 				<div class="window-caption bg-openbuilds">
 					<span class="icon mif-cog"></span>
 					<span class="title">OpenBuilds CAM - GCODE Generator - Public Beta</span>
@@ -355,25 +355,6 @@
 								</div>
 								<div class="group">
 									<div class="ribbon-group">
-										<button class="ribbon-icon-button" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" style="display: none; height: 36px">
-													<span class="icon">
-														<span class="fas fa-play"></span>
-													</span>
-													<span class="caption">Send to Machine <br><small id="omdversion">No GCODE to Send</small></span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" id="downloadDrivers" onclick="downloadDrivers()" style="height: 36px">
-													<span class="icon">
-														<span class="fas fa-download"></span>
-													</span>
-													<span class="caption">Install Drivers<br><small class="omdavailversion"></small></span>
-												</button>
-										<br>
-									</div>
-									<span class="title">Send to Machine</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
 										<button class="ribbon-icon-button active mouseSelectBtn" onclick="mouseSelectMode();">
 													<span class="icon">
 														<span class="fas fa-mouse-pointer"></span>
@@ -461,7 +442,7 @@
 
 		<!-- #col2 (main content)-->
 		<div id="col2">
-			<div style="height: calc(100% - 2px); overflow-y:hidden; padding-right:5px;">
+			<div style="height: 100%; overflow-y:hidden; padding-right:5px;">
 
 				<!-- Flying Document -->
 				<span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 20000; color: #fff;">
@@ -469,24 +450,67 @@
 							<i class="fa fa-object-group fa-stack-1x"></i>
 						</span>
 
-				<div class="window drop-shadow" style=" height: 49%;">
-					<div class="window-caption bg-openbuilds">
-						<span class="icon fas fa-tasks"></span>
-						<span class="title">Toolpaths</span>
-					</div>
-					<div class="window-content p-2" id="toolpathtree" style="overflow-y:scroll;">
-						<!-- Toolpaths Here -->
-					</div>
-				</div>
-				<div id="renderDocuments" class="window mt-2 drop-shadow" style=" height: 49%;">
+				<div id="renderDocuments" class="window drop-shadow" style="height: calc(23% - 10px);">
 					<div class="window-caption bg-openbuilds">
 						<span class="icon far fa-file-alt"></span>
 						<span class="title">Documents</span>
 					</div>
 					<div class="window-content p-2" style="overflow-y:scroll; ">
 						<!-- Documents Here -->
+						<div id="nodocuments" style="display:none;">
+							<p class="text-secondary">Please load some vectors from DXF, SVG or Images using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open Drawing</kbd> button, or insert from the inbuilt library and tools </p>
+						</div>
 						<ul data-role="treeview pl-0" id="left-tree-view">
 						</ul>
+					</div>
+				</div>
+				<div class="window drop-shadow mt-2" style="height: calc(43% - 10px);">
+					<div class="window-caption bg-openbuilds">
+						<span class="icon fas fa-tasks"></span>
+						<span class="title">Toolpaths</span>
+						<div class="buttons">
+							<button type="button" class="button bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button>
+							<button type="button" class="button bg-openbuilds secondary" onclick="saveFile();"><span class="fa fa-save"></span></button>
+						</div>
+					</div>
+					<div class="window-content p-2" id="toolpathtree" style="overflow-y:scroll;">
+						<!-- Toolpaths Here -->
+					</div>
+				</div>
+
+				<div class="window mt-2 drop-shadow" style="height: calc(33% - 10px);">
+					<div class="window-caption bg-openbuilds">
+						<span class="icon fas fa-tasks"></span>
+						<span class="title">Connection</span>
+					</div>
+					<div class="window-content p-2" id="connectiontree" style="overflow-y:scroll;">
+						<div id="noDriverDetected">
+							<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
+								<a href="#" onclick="downloadDrivers()" class="button"><span class="fas fa-download"></span> Install Drivers</a>
+								<a href="#" class="info omdavailversion">v1.0.0</a>
+							</div><br>
+							<p class="text-secondary">Connecting to a machine, requires that you have the OpenBuilds Machine Driver installed. <br> </p>
+							<p class="text-small">If you have not installed it yet, you can download it above, or if you have the latest version installed already, please start it.<br> If you still see this message, we are experiencing a problem detecting your driver<br> You can also export GCODE
+								and send it to your machine</p>
+						</div>
+
+						<div id="DriverDetected" style="display:none;">
+
+							<button class="image-button success" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" disabled style="width: 100%">
+						    <span class="icon"><span class="fas fa-play"></span></span>
+    						<span class="caption">Transfer GCODE to Machine Driver</span>
+							</button>
+							<p class="text-small" id="detectedVersion"></p>
+							<p class="text-small" id="validDocuments"><i class='fas fa-times fa-fw fg-red'></i>2. No Documents yet</p>
+							<p class="text-small" id="validToolpaths"><i class='fas fa-times fa-fw fg-red'></i>3. No Toolpaths yet</p>
+							<p class="text-small" id="validGcode"><i class='fas fa-times fa-fw fg-red'></i>4. No GCODE yet</p>
+						</div>
+						<br>
+						<button class="image-button" id="activateDriver" onclick="activateDriver()" style="width: 100%">
+							<span class="icon"><span class="far fa-window-restore"></span></span>
+							<span class="caption">Show Driver Window</span>
+						</button>
+
 					</div>
 				</div>
 			</div>

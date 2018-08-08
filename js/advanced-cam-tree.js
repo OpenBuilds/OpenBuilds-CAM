@@ -82,7 +82,7 @@ function fillTree() {
           toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="tool-button success disabled" onclick="moveOp(` + i + `, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
         }
 
-        toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="tool-button alert" onclick="toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
+        toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="tool-button alert" onclick="storeUndo(); toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
             <button data-tooltip="tooltip" data-placement="bottom" title="Edit toolpath" class="tool-button primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
                     </div>
                     </td>
@@ -101,7 +101,7 @@ function fillTree() {
     }
 
   } else {
-    var instructions = `Please select some entities from the <b>Documents</b>, or by clicking them in the viewer.  Hold down Ctrl to select more than one in the viewer. Add them to a toolpath using the <br><kbd class="bg-openbuilds">Toolpath</kbd> > <kbd class="bg-openbuilds"> <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job</kbd> button...`
+    var instructions = `<p class="text-secondary">Please select some entities by clicking them in the viewer.  Hold down Ctrl to select more than one in the viewer. Add them to a toolpath using the <br><kbd class="bg-openbuilds">Toolpath</kbd> > <kbd class="bg-openbuilds"> <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job</kbd> button, or the <kbd class="bg-openbuilds"><i class="fa fa-plus"></i></kbd> shortcut button...</p>`
     $('#toolpathtree').append(instructions)
   } // End of if (toolpathsInScene.length > 0)
 

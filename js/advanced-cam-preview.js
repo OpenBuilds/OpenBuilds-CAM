@@ -1,4 +1,6 @@
 function toolpathPreview(i) {
+  trashGcode();
+  $('#validGcode').html("<i class='fas fa-times fa-fw fg-red'></i> No GCODE yet")
   $("#savetpgcode").addClass("disabled");
   $("#exportGcodeMenu").addClass("disabled");
   $("#previewToolpathBtn").html("<i class='fa fa-spinner fa-spin '></i> Calculating, please wait");

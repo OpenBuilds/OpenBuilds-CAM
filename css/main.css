@@ -222,7 +222,7 @@ button:focus {outline:0 !important;}
     /* border-right: dashed 1px #aaa; */
     float:right;
     width: 330px;
-    height: calc(100% - 20px);
+    height: 100%;
     padding: 2px 5px 5px 5px;
     /*overflow-y: auto;*/
     overflow-x: none;
@@ -231,7 +231,7 @@ button:focus {outline:0 !important;}
 #col1 {
     float:left;
     width:calc(100% - 331px);
-    height: calc(100% - 20px);
+    height: 100%;
     padding: 2px 5px 5px 5px;
 }
 

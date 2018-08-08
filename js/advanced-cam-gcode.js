@@ -6,6 +6,7 @@ function trashGcode() {
     object = false;
   }
   disableSim()
+  $('#sendGcodeToMyMachine').prop('disabled', true);;
 }
 
 
@@ -36,7 +37,6 @@ function makeGcode() {
 
 
           toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS);
-          $("#omdversion").html("Machine Driver v" + installedDriver)
           $("#savetpgcode").removeClass("disabled");
           $("#exportGcodeMenu").removeClass("disabled");
 
@@ -59,6 +59,8 @@ function makeGcode() {
 
       $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
       $("#generatetpgcode").prop('disabled', false);
+      $('#validGcode').html("<i class='fas fa-check fa-fw fg-green'></i> GCODE Ready to be sent ");
+      $('#sendGcodeToMyMachine').prop('disabled', false);
       enableSim();
     }, 200);
 
@@ -66,10 +68,6 @@ function makeGcode() {
     var message = `Toolpath Error: No Toolpaths added yet.  You need to select some entities, add them to a new toolpath, and configure the toolpath, before generating GCODE`
     Metro.toast.create(message, null, 4000, 'bg-red');
   }
-
-
-
-
 }
 
 function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapidSpeed, toolon, tooloff, clearanceHeight, zoffset, PlasmaIHS) {

@@ -62,7 +62,10 @@ function filldoctree() {
 
     $('#tpaddpath').removeClass('disabled');
     $('#tpaddpath-dropdown').removeClass('disabled');
-  } // End of if (objectsInScene.length > 0)
+    $('#nodocuments').hide()
+  } else { // End of if (objectsInScene.length > 0
+    $('#nodocuments').show()
+  }
 }
 
 // runs in threejs animate() loop: Sets colors and checkboxes of items based on userdata.selected=true/false
