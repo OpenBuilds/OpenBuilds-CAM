@@ -44,7 +44,7 @@ function fillTree() {
         if (toolpathsInScene[i].userData.camOperation) {
           operation = toolpathsInScene[i].userData.camOperation
         } else {
-          operation = "not configured"
+          operation = "not configured <i class='fas fa-times fa-fw fg-red'></i>"
         }
 
         var toolp = `<tr class="jobsetupfile" id="toolpathrow` + i + `">
@@ -83,7 +83,7 @@ function fillTree() {
         }
 
         toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="tool-button alert" onclick="storeUndo(); toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
-            <button data-tooltip="tooltip" data-placement="bottom" title="Edit toolpath" class="tool-button primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
+            <button data-tooltip="tooltip" data-placement="bottom" title="Configure toolpath" class="tool-button primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
                     </div>
                     </td>
                     </tr>

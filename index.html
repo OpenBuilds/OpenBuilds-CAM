@@ -33,6 +33,10 @@
 <body>
 	<!-- container1 Drog Container wraps all other content -->
 	<div id="container1">
+		<span class="fa-layers fa-fw fa-4x" id="flyingdoc" style="display: none; position: absolute; z-index: 20000;">
+				<i class="fas fa-square fg-red"></i>
+				<i class="fa fa-object-group fg-white" data-fa-transform="shrink-6"></i>
+			</span>
 		<div id="col1">
 			<div class="window drop-shadow" style="height: calc(100% - 10px);">
 				<div class="window-caption bg-openbuilds">
@@ -311,7 +315,7 @@
 													<span class="caption">Generate GCODE</span>
 												</button>
 										<br>
-										<button class="ribbon-icon-button" onclick="saveFile()">
+										<button id="gcodesavebtn1" class="ribbon-icon-button" onclick="saveFile()" disabled>
 													<span class="icon">
 														<span class="far fa-save fg-brandColor2"></span>
 													</span>
@@ -444,12 +448,6 @@
 		<div id="col2">
 			<div style="height: 100%; overflow-y:hidden; padding-right:5px;">
 
-				<!-- Flying Document -->
-				<span class="fa-stack fa-lg" id="flyingdoc" style="display: none; position: absolute; z-index: 20000; color: #fff;">
-							<i class="fa fa-square fa-stack-2x text-danger fa-inverse" ></i>
-							<i class="fa fa-object-group fa-stack-1x"></i>
-						</span>
-
 				<div id="renderDocuments" class="window drop-shadow" style="height: calc(23% - 10px);">
 					<div class="window-caption bg-openbuilds">
 						<span class="icon far fa-file-alt"></span>
@@ -469,8 +467,8 @@
 						<span class="icon fas fa-tasks"></span>
 						<span class="title">Toolpaths</span>
 						<div class="buttons">
-							<button type="button" class="button bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button>
-							<button type="button" class="button bg-openbuilds secondary" onclick="saveFile();"><span class="fa fa-save"></span></button>
+							<button type="button" id="generatetpgcode2" class="button bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button>
+							<button type="button" id="gcodesavebtn2" class="button bg-openbuilds secondary" onclick="saveFile();" disabled><span class="fa fa-save"></span></button>
 						</div>
 					</div>
 					<div class="window-content p-2" id="toolpathtree" style="overflow-y:scroll;">

@@ -16,8 +16,12 @@ function makeGcode() {
 
     $('#gcodejobs').empty();
 
+    // Button on Ribbon Menu
     $("#generatetpgcode").html("<i class='fa fa-spinner fa-spin '></i> Generating, please wait");
     $("#generatetpgcode").prop('disabled', true);
+    // Button on Window bar above Toolpaths
+    $("#generatetpgcode2").html("<i class='fa fa-spinner fa-spin '></i> Generating, please wait");
+    $("#generatetpgcode2").prop('disabled', true);
 
     setTimeout(function() {
       for (j = 0; j < toolpathsInScene.length; j++) {
@@ -57,8 +61,16 @@ function makeGcode() {
 
       openGCodeFromText()
 
+      // Button on Ribbom Menu
       $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
       $("#generatetpgcode").prop('disabled', false);
+      // Button on Window title bar
+      $("#generatetpgcode2").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
+      $("#generatetpgcode2").prop('disabled', false);
+
+      $('#gcodesavebtn1').prop('disabled', false);
+      $('#gcodesavebtn2').prop('disabled', false);
+
       $('#validGcode').html("<i class='fas fa-check fa-fw fg-green'></i> GCODE Ready to be sent ");
       $('#sendGcodeToMyMachine').prop('disabled', false);
       enableSim();

@@ -1,5 +1,7 @@
 function toolpathPreview(i) {
   trashGcode();
+  $('#gcodesavebtn1').prop('disabled', true);
+  $('#gcodesavebtn2').prop('disabled', true);
   $('#validGcode').html("<i class='fas fa-times fa-fw fg-red'></i> No GCODE yet")
   $("#savetpgcode").addClass("disabled");
   $("#exportGcodeMenu").addClass("disabled");
