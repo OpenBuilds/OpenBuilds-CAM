@@ -101,15 +101,28 @@ setInterval(function() {
   }
 }, 1000);
 
-function downloadDrivers() {
+function downloadDrivers(os) {
   $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c").done(function(release) {
+    console.log(release)
     var asset = release.assets[0];
     var downloadCount = 0;
     var url = ""
     for (var i = 0; i < release.assets.length; i++) {
       var asset = release.assets[i]
-      if (asset.browser_download_url.match(".exe$")) {
-        console.log('found the exe at: ' + asset.browser_download_url)
+
+      if (os == "win") {
+        var rex = ".exe$"
+      } else if (os == "mac") {
+        var rex = ".dmg$"
+      } else if (os == "appimage") {
+        var rex = ".AppImage"
+      } else if (os == "deb$") {
+        var rex = ".deb$"
+      }
+
+      console.log("Checking if we can find a " + rex + " in the assets")
+      if (asset.browser_download_url.match(rex)) {
+        console.log('found the ' + rex + ' at: ' + asset.browser_download_url)
         url = asset.browser_download_url
         if (window.navigator.userAgent.indexOf('Windows') != -1) {
           window.location = url

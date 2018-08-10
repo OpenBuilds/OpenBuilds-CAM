@@ -376,14 +376,6 @@ function setMachineButton(type) {
   $('#context_toggle2').html(template);
 };
 
-// <button class="ribbon-icon-button" id="downloadDrivers" onclick="downloadDrivers()" style="height: 36px">
-//       <span class="icon">
-//         <span class="fas fa-download"></span>
-//       </span>
-//       <span class="caption">Install Drivers<br><small id="omdavailversion"></small></span>
-//     </button>
-//
-
 $(document).ready(function() {
   var modal = `
   <!-- Settings Modal -->
