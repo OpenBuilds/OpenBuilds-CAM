@@ -82,18 +82,22 @@ errorHandlerJS = function() {
 
 // Function to execute when opening file (triggered by fileOpen.addEventListener('change', readFile, false); )
 function readFile(evt) {
-  console.group("New FileOpen Event:");
-  console.log(evt);
-  console.groupEnd();
-  // Close the menu
-  $("#drop1").dropdown("toggle");
+  $('#documentstree').hide();
+  $('#documentactivity').show();
+  setTimeout(function() {
+    console.group("New FileOpen Event:");
+    console.log(evt);
+    console.groupEnd();
+    // Close the menu
+    $("#drop1").dropdown("toggle");
 
-  // Files
-  var files = evt.target.files || evt.dataTransfer.files;
+    // Files
+    var files = evt.target.files || evt.dataTransfer.files;
 
-  for (var i = 0; i < files.length; i++) {
-    loadFile(files[i]);
-  }
+    for (var i = 0; i < files.length; i++) {
+      loadFile(files[i]);
+    }
+  }, 0)
 }
 
 // drag/drop
@@ -217,8 +221,8 @@ function loadFile(f) {
       // Not usable
     }
   }
-  $('#filestatus').hide();
-  $('#tree-cam-menu').click();
+  // $('#filestatus').hide();
+  // $('#tree-cam-menu').click();
   if (control) {
     scene.remove(control);
     controls.reset();
@@ -227,8 +231,12 @@ function loadFile(f) {
     fillTree();
   }, 250);
   setTimeout(function() {
-    viewExtents(objectsInScene[objectsInScene.length - 1]);
+    resetView();
   }, 300);
+  setTimeout(function() {
+    $('#documentstree').show();
+    $('#documentactivity').hide();
+  }, 400)
 
 }
 

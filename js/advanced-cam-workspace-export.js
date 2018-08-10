@@ -226,8 +226,6 @@ function IsJsonString(str) {
 
 // Parse loaded/undo/redo workspace data
 function parseLoadWorkspace(json) {
-  $('#toolpathtree').hide();
-  $('#toolpathactivity').show()
   objectsInScene.length = 0;
   toolpathsInScene.length = 0;
   var loader = new THREE.ObjectLoader();
@@ -236,11 +234,15 @@ function parseLoadWorkspace(json) {
   } else {
     var newWorkspace = json;
   }
+  $('#documentstree').hide();
+  $('#documentactivity').show();
   for (var key in newWorkspace.objects) {
     var object = loader.parse(newWorkspace.objects[key]);
     objectsInScene.push(object)
   }
   fillTree();
+  $('#documentstree').show();
+  $('#documentactivity').hide();
   for (var key in newWorkspace.toolpaths) {
     var object = loader.parse(newWorkspace.toolpaths[key]);
     toolpathsInScene.push(object)

@@ -455,11 +455,19 @@
 					</div>
 					<div class="window-content p-2" style="overflow-y:scroll; ">
 						<!-- Documents Here -->
-						<div id="nodocuments" style="display:none;">
-							<p class="text-secondary">Please load some vectors from DXF, SVG or Images using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open Drawing</kbd> button, or insert from the inbuilt library and tools </p>
+						<div class="pt-2" id="documentactivity" style="display: none;">
+							<center>
+								<h5>Please Wait </h5>
+								<div data-role="activity" data-type="ring" data-style="dark"></div>
+								<h6>Parsing Documents...</h6>
 						</div>
-						<ul data-role="treeview pl-0" id="left-tree-view">
-						</ul>
+						<div id="documentstree">
+							<div id="nodocuments" style="display:none;">
+								<p class="text-secondary">Please load some vectors from DXF, SVG or Images using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open Drawing</kbd> button, or insert from the inbuilt library and tools </p>
+							</div>
+							<ul data-role="treeview pl-0" id="left-tree-view">
+							</ul>
+						</div>
 					</div>
 				</div>
 				<div class="window drop-shadow mt-2" style="height: calc(43% - 10px);">
