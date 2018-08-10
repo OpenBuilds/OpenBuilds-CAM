@@ -160,9 +160,9 @@ function activateDriver() {
     processData: false,
     contentType: false
   }).done(function(data) {
-    // console.log(data);
-    var message = data
-    Metro.toast.create(message, null, 4000);
+    console.log(data);
+    // var message = data
+    // Metro.toast.create(message, null, 4000);
   });
 }
 
