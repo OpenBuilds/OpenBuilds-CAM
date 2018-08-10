@@ -1,4 +1,9 @@
+var runningPreviews = 0;
+
 function toolpathPreview(i) {
+  runningPreviews++
+  $('#toolpathtree').hide();
+  $('#toolpathactivity').show()
   trashGcode();
   $('#gcodesavebtn1').prop('disabled', true);
   $('#gcodesavebtn2').prop('disabled', true);
@@ -123,6 +128,12 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
   }
   if (toolpath.children.length < 1) {
     toolpathErrorToast();
+  }
+  runningPreviews--
+
+  if (runningPreviews == 0) {
+    $('#toolpathactivity').hide()
+    $('#toolpathtree').fadeIn();
   }
   return toolpath
 }
