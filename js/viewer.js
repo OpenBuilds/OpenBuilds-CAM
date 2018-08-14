@@ -292,11 +292,15 @@ function init3D() {
 
   controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.target.set(0, 0, 0); // view direction perpendicular to XY-plane
-  controls.mouseButtons = {
-    ORBIT: THREE.MOUSE.MIDDLE,
-    ZOOM: false,
-    PAN: THREE.MOUSE.RIGHT
-  };
+  var isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  if (!isMac) {
+    controls.mouseButtons = {
+      ORBIT: THREE.MOUSE.MIDDLE,
+      ZOOM: false,
+      PAN: THREE.MOUSE.RIGHT
+    };
+  }
+
 
   controls.enableRotate = true;
   controls.enableZoom = true; // optional
