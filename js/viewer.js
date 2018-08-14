@@ -300,8 +300,6 @@ function init3D() {
       PAN: THREE.MOUSE.RIGHT
     };
   }
-
-
   controls.enableRotate = true;
   controls.enableZoom = true; // optional
   controls.maxDistance = 8000; // limit max zoom out
