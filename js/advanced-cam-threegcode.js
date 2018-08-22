@@ -43,7 +43,7 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
       } else {
         var zval = -i
       }
-      console.log(i * config.zstep > config.zdepth, i * config.zstep, i, zval)
+      // console.log(i * config.zstep > config.zdepth, i * config.zstep, i, zval)
       // console.log(i, config.zstart, config.zstep, config.zdepth, zval);
       var drawClipperPathsconfig = {
         paths: inflatedPaths,
@@ -111,6 +111,7 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
   if (config.offset > minimumToolDiaForPreview || config.offset < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
     inflateGrpZ.userData.pretty = prettyGrp
   };
+  inflateGrpZ.userData.toolDia = config.offset * 2
   return inflateGrpZ;
 };
 
@@ -272,6 +273,7 @@ pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zde
         pocketGrp.userData.pretty = prettyGrp;
       }
       pocketGrp.children = pocketGrp.children.reverse(); // Inside Out! Breakthrough!
+      pocketGrp.userData.toolDia = config.offset * 2
       return pocketGrp;
     } // end no union
   }
@@ -324,6 +326,7 @@ dragknifePath = function(config) { //}, infobject, inflateVal, zstep, zdepth) {
       break;
     }
   }
+  dragknifeGrp.userData.toolDia = config.offset * 2
   return dragknifeGrp
 };
 

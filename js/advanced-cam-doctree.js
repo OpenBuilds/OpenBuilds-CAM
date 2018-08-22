@@ -3,7 +3,14 @@ function filldoctree() {
   $('#left-tree-view').empty();
 
   clearSceneFlag = true;
-  sortDocumentsByGeometryStartpoint()
+
+  // Two sorting strategies:
+
+  // Travelling Salesman Sort
+  // sortDocumentsByGeometryStartpoint()
+
+  // Sort Smallest to Largest
+  sortPolyGons();
 
   if (objectsInScene.length > 0) {
 
@@ -33,7 +40,11 @@ function filldoctree() {
     for (i = 0; i < objectsInScene.length; i++) {
       var layersinthisdoc = []
       for (j = 0; j < objectsInScene[i].children.length; j++) {
-        var layer = objectsInScene[i].children[j].userData.layer.label
+        if (objectsInScene[i].children[j].userData.layer) {
+          var layer = objectsInScene[i].children[j].userData.layer.label
+        } else {
+          var layer = 'layer1'
+        }
         var found = jQuery.inArray(layer, layersinthisdoc);
         if (found >= 0) {
           // Element was found already
@@ -55,7 +66,11 @@ function filldoctree() {
       for (j = 0; j < objectsInScene[i].children.length; j++) {
         var template = ` <li id="link` + i + `_` + j + `" data-icon="<span class='fas fa-vector-square'></span>" data-caption="` + objectsInScene[i].children[j].name + `"></li>`
         objectsInScene[i].children[j].userData.link = "link" + i + "_" + j;
-        var layer = objectsInScene[i].children[j].userData.layer.label.replace(/ /g, '')
+        if (objectsInScene[i].children[j].userData.layer) {
+          var layer = objectsInScene[i].children[j].userData.layer.label.replace(/ /g, '')
+        } else {
+          var layer = 'layer1'
+        }
         $('#doc' + i + 'layer' + layer).append(template);
       }
     };

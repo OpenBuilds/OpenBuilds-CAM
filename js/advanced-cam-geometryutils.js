@@ -48,3 +48,68 @@ function sortDocumentsByGeometryStartpoint() {
     });
   }
 }
+
+// Sort vectors from small-to-largest
+function sortPolyGons() {
+  for (i = 0; i < objectsInScene.length; i++) {
+    var array = objectsInScene[i].children
+    objectsInScene[i].children = array.sort(function(a, b) {
+      var aArea = calcPolygonArea(a.geometry.vertices)
+      var bArea = calcPolygonArea(b.geometry.vertices)
+      // var aArea = parseFloat(distanceFormula(0, a.geometry.vertices[0].x, 0, a.geometry.vertices[0].y))
+      // var bArea = parseFloat(distanceFormula(0, b.geometry.vertices[0].x, 0, b.geometry.vertices[0].y));
+      if (aArea < bArea) {
+        return -1;
+      }
+      if (aArea > bArea) {
+        return 1;
+      }
+    });
+  }
+}
+
+function calcPolygonArea(vertices) {
+  var total = 0;
+
+  for (var i = 0, l = vertices.length; i < l; i++) {
+    var addX = vertices[i].x;
+    var addY = vertices[i == vertices.length - 1 ? 0 : i + 1].y;
+    var subX = vertices[i == vertices.length - 1 ? 0 : i + 1].x;
+    var subY = vertices[i].y;
+
+    total += (addX * addY * 0.5);
+    total -= (subX * subY * 0.5);
+  }
+
+  return Math.abs(total);
+}
+
+function indexOfMax(arr) {
+  if (arr.length === 0) {
+    return -1;
+  }
+
+  var max = 0;
+  var maxIndex = 0;
+
+  for (var i = 1; i < arr.length - 1; i++) {
+    var dist = distanceFormula(arr[i].x, arr[i + 1].x, arr[i].y, arr[i + 1].y)
+    // console.log("dist " + dist + " / index " + i)
+    if (dist > max) {
+      maxIndex = i;
+      max = dist;
+    }
+  }
+
+  return maxIndex;
+}
+
+// circular rotation of array (sort by largest helper)
+Array.prototype.rotateRight = function(n) {
+  this.unshift.apply(this, this.splice(n, this.length))
+  return this;
+}
+// example rotation
+// var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+// months.rotateRight( 6 )
+// console.log(months)

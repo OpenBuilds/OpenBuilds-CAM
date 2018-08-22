@@ -122,6 +122,9 @@ function initAdvancedCAM() {
     } else if (id.indexOf('tOpName') == 0) {
       $('#svgOpName').text(newval);
       updateCamUserData(objectseq);
+    } else if (id.indexOf('tRampPlunge') == 0) {
+      $('#svgOpName').text(newval);
+      updateCamUserData(objectseq);
     } else if (id.indexOf('advanced') == 0) {
       // $('#svgUnion').text(newval);
       updateCamUserData(objectseq);
@@ -160,6 +163,7 @@ function updateCamUserData(i) {
   toolpathsInScene[i].userData.camTabDepth = $('#tabdepth' + i).val();
   toolpathsInScene[i].userData.camTabWidth = $('#tabWidth' + i).val();
   toolpathsInScene[i].userData.camTabSpace = $('#tabSpace' + i).val();
+  toolpathsInScene[i].userData.tRampPlunge = $('#tRampPlunge' + i).val();
   toolpathsInScene[i].userData.advanced = $('#advanced' + i).is(":checked");; // Marlin, Stepcraft, Mach3, LinuxCNC
   toolpathsInScene[i].name = $('#tOpName' + i).val();
   $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
@@ -360,6 +364,18 @@ function setupJob(i) {
               <th style="width: 150px;"></th><th style="width: 210px;"></th>
             </tr>
             <tr class="inputcnc inputpocket">
+              <td>Plunge: Ramp In</td>
+              <td>
+                <div class="input-addon">
+                  <span class="input-addon-label-left active-border"><i class="fas fa-ruler fa-fw"></i></span>
+                  <select class="cam-form-field cam-form-field-right active-border" id="tRampPlunge` + i + `" objectseq="` + i + `" style="width: 180px; padding: 0px;">
+                    <option selected>No</option>
+                    <option>Yes</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr class="inputcnc inputpocket">
               <td>Cut Depth: Start</td>
               <td>
                 <div class="input-addon">
@@ -452,6 +468,7 @@ function setupJob(i) {
     $('#tabdepth' + i).val(toolpathsInScene[i].userData.camTabDepth);
     $('#tabWidth' + i).val(toolpathsInScene[i].userData.camTabWidth);
     $('#tabSpace' + i).val(toolpathsInScene[i].userData.camTabSpace);
+    $('#tRampPlunge' + i).val(toolpathsInScene[i].userData.tRampPlunge);
     $('#tplasmaihs' + i).val(toolpathsInScene[i].userData.camPlasmaIHS).prop('selected', true);
     $('#tunion' + i).val(toolpathsInScene[i].userData.camUnion).prop('selected', true);
     $('#tOpName' + i).val(toolpathsInScene[i].name);
@@ -486,6 +503,7 @@ function setupJob(i) {
       $('#tplungespeed' + i).val(lastused.camPlungerate);
       $('#tplasmakerf' + i).val(lastused.camPlasmaKerf);
       $('#tplasmazheight' + i).val(lastused.camPlasmaZHeight);
+      // $('#tRampPlunge' + i).val(lastused.tRampPlunge);
     }
   };
 }

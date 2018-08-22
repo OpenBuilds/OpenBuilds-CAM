@@ -38,9 +38,9 @@ function makeGcode() {
           var LaserPower = toolpathsInScene[j].userData.camLaserPower
           var ZClearance = toolpathsInScene[j].userData.camZClearance
           var PlasmaIHS = toolpathsInScene[j].userData.camPlasmaIHS
+          var rampplunge = toolpathsInScene[j].userData.tRampPlunge == "Yes" ? true : false;
 
-
-          toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS);
+          toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
           $("#savetpgcode").removeClass("disabled");
           $("#exportGcodeMenu").removeClass("disabled");
 
@@ -74,7 +74,7 @@ function makeGcode() {
       $('#validGcode').html("<i class='fas fa-check fa-fw fg-green'></i> GCODE Ready to be sent ");
       $('#sendGcodeToMyMachine').prop('disabled', false);
       enableSim();
-    }, 200);
+    }, 100);
 
   } else {
     var message = `Toolpath Error: No Toolpaths added yet.  You need to select some entities, add them to a new toolpath, and configure the toolpath, before generating GCODE`
@@ -82,7 +82,7 @@ function makeGcode() {
   }
 }
 
-function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapidSpeed, toolon, tooloff, clearanceHeight, zoffset, PlasmaIHS) {
+function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapidSpeed, toolon, tooloff, clearanceHeight, zoffset, PlasmaIHS, rampplunge) {
 
   // empty string to store gcode
   var g = "";
@@ -111,14 +111,39 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
     $("#generatetpgcode").prop('disabled', false);
   } else {
     toolpathGrp.traverse(function(child) {
-      // console.log(child);
+      var toolDia = toolpathGrp.userData.toolDia;
+      if (toolDia < 0) {
+        toolDia = toolDia * -1
+      }
+      // console.log(toolpathGrp);
       if (child.type == "Line") {
         var xpos_offset = child.position.x;
         var ypos_offset = child.position.y;
         // let's create gcode for all points in line
+
+        // Find longest segment
+        var bestSegment = indexOfMax(child.geometry.vertices)
+        console.log('longest section' + bestSegment)
+
+        child.geometry.vertices.rotateRight(bestSegment)
+
         for (i = 0; i < child.geometry.vertices.length; i++) {
           // Convert to World Coordinates
           var localPt = child.geometry.vertices[i];
+          if (child.geometry.vertices[i + 1]) {
+            var localPt2 = child.geometry.vertices[i + 1]; // The next point - used for ramp plunges
+            var worldPt2 = toolpathGrp.localToWorld(localPt2.clone()); // The next point - used for ramp plunges
+            var xpos2 = worldPt2.x // The next point - used for ramp plunges
+            var ypos2 = worldPt2.y // The next point - used for ramp plunges
+            if (child.geometry.type == "CircleGeometry") {
+              xpos2 = (xpos2 + xpos_offset);
+              ypos2 = (ypos2 + ypos_offset);
+            }
+            var zpos2 = worldPt2.z;
+            if (zoffset) {
+              zpos2 = zpos2 - zoffset;
+            }
+          }
           var worldPt = toolpathGrp.localToWorld(localPt.clone());
           var xpos = worldPt.x
           var ypos = worldPt.y
@@ -159,12 +184,51 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
               g += g0 + seekrate;
               g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + "\n"; // Move to XY position
 
-              // then plunge
+              // then plunge at G0 to Z0 (No need to go slow, air)
               g += "\n" + g0 + " Z0\n"; // G0 to Z0 then Plunge!
+
             }
 
+            // then G1 plunge into material
 
-            g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
+            if (!rampplunge) {
+              // console.log("Direct Plunge")
+              g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
+            } else {
+              // console.log("Ramp Plunge")
+              // console.log(xpos, xpos2, ypos, ypos2)
+              var d = distanceFormula(xpos, xpos2, ypos, ypos2)
+              if (d > (toolDia * 5)) {
+                // console.log("Ramp Plunge: Long enough")
+                // We can do ramp in our own little space - easiest
+                var deltaX = xpos2 - xpos;
+                var deltaY = ypos2 - ypos;
+                // get the line angle
+                var ang = Math.atan2(deltaY, deltaX);
+                // convert it to degrees for later math with addDegree
+                ang = ang * 180 / Math.PI;
+
+                var npt = [xpos, ypos]
+                npt = newPointFromDistanceAndAngle(npt, ang, (toolDia * 5));
+                if (lastxyz.z) {
+                  var zdelta = zpos - lastxyz.z;
+                } else {
+                  var zdelta = zpos - 0;
+                }
+                // console.log(zdelta)
+                g += "\n" + g0 + " Z" + lastxyz.z + "\n"; // G0 to Z0 then Plunge!
+                g += g1 + " F" + plungeSpeed;
+                g += " X" + npt[0].toFixed(4) + " Y" + npt[1].toFixed(4) + " Z" + (zpos - (zdelta / 2)).toFixed(4) + "\n"; // Move to XY position
+                g += g1 + " F" + plungeSpeed;
+                g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + " Z" + zpos.toFixed(4) + "\n"; // Move to XY position
+              } else {
+                // console.log("Ramp Plunge: Too short:" + d)
+                // Too short, either include next segment or something else
+              }
+              // g += g1 + " F" + feedrate
+              // g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + "\n"; // Move to XY position
+              // g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
+            }
 
             isAtClearanceHeight = false;
 
