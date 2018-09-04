@@ -14,7 +14,7 @@ $(document).keydown(function(e) {
     // console.log('control + z');
     undo()
     return false;
-  } else if (e.which === 89) { // Press ctrl+y to Redo after undo (same as ctrl+shift+i)
+  } else if (e.which === 89 && e.ctrlKey) { // Press ctrl+y to Redo after undo (same as ctrl+shift+i)
     // console.log('control + y');
     redo()
     return false;
