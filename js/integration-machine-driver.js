@@ -124,9 +124,9 @@ function downloadDrivers(os) {
       if (asset.browser_download_url.match(rex)) {
         console.log('found the ' + rex + ' at: ' + asset.browser_download_url)
         url = asset.browser_download_url
-        if (window.navigator.userAgent.indexOf('Windows') != -1) {
-          window.location = url
-        }
+        // if (window.navigator.userAgent.indexOf('Windows') != -1) {
+        window.location = url
+        // }
       }
     }
     var oneHour = 60 * 60 * 1000;
