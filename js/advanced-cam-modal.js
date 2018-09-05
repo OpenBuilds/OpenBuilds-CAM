@@ -364,7 +364,7 @@ function setupJob(i) {
               <th style="width: 150px;"></th><th style="width: 210px;"></th>
             </tr>
             <tr class="inputcnc inputpocket">
-              <td>Plunge: Ramp In</td>
+              <td>Plunge: Ramp In<br><div class="text-small">[beta] Experimental!</div></td>
               <td>
                 <div class="input-addon">
                   <span class="input-addon-label-left active-border"><i class="fas fa-ruler fa-fw"></i></span>
@@ -468,7 +468,11 @@ function setupJob(i) {
     $('#tabdepth' + i).val(toolpathsInScene[i].userData.camTabDepth);
     $('#tabWidth' + i).val(toolpathsInScene[i].userData.camTabWidth);
     $('#tabSpace' + i).val(toolpathsInScene[i].userData.camTabSpace);
-    $('#tRampPlunge' + i).val(toolpathsInScene[i].userData.tRampPlunge);
+    if (toolpathsInScene[i].userData.tRampPlunge) {
+      $('#tRampPlunge' + i).val(toolpathsInScene[i].userData.tRampPlunge).prop('selected', true);
+    } else {
+      $('#tRampPlunge' + i).val("No").prop('selected', true);
+    }
     $('#tplasmaihs' + i).val(toolpathsInScene[i].userData.camPlasmaIHS).prop('selected', true);
     $('#tunion' + i).val(toolpathsInScene[i].userData.camUnion).prop('selected', true);
     $('#tOpName' + i).val(toolpathsInScene[i].name);

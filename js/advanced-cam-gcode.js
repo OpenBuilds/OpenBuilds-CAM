@@ -122,10 +122,10 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
         // let's create gcode for all points in line
 
         // Find longest segment
-        var bestSegment = indexOfMax(child.geometry.vertices)
-        console.log('longest section' + bestSegment)
-
-        child.geometry.vertices.rotateRight(bestSegment)
+        // var bestSegment = indexOfMax(child.geometry.vertices)
+        // console.log('longest section' + bestSegment)
+        //
+        // child.geometry.vertices.rotateRight(bestSegment)
 
         for (i = 0; i < child.geometry.vertices.length; i++) {
           // Convert to World Coordinates
