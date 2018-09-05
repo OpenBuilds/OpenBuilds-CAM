@@ -8,7 +8,12 @@ function addCircle(radius) {
   }
   var geometry = new THREE.CircleGeometry(radius, 32);
   geometry.vertices.shift();
-  geometry.vertices.push(geometry.vertices[0]);
+  var endx = parseFloat(geometry.vertices[0].x)
+  var endy = parseFloat(geometry.vertices[0].y)
+  var endz = parseFloat(geometry.vertices[0].z)
+  geometry.vertices.push(
+    new THREE.Vector3(endx, endy, endz),
+  );
   var material = new THREE.MeshBasicMaterial({
     color: 0xffff00
   });

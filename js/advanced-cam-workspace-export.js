@@ -262,8 +262,8 @@ function changePositionToGeoTranslate() {
     for (j = 0; j < object.children.length; j++) {
       object.children[j].geometry.translate(object.children[j].position.x, object.children[j].position.y, 0)
       object.children[j].geometry.translate(object.position.x, object.position.y, 0)
-      object.children[j].position.x = 0;
       object.children[j].geometry.verticesNeedUpdate = true
+      object.children[j].position.x = 0;
       object.children[j].position.y = 0;
     }
     object.position.x = 0;
