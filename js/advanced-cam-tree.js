@@ -71,15 +71,15 @@ function fillTree() {
         }
 
         if (i > 0) {
-          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move down" class="tool-button success" onclick="moveOp(` + i + `, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
+          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="tool-button success" onclick="moveOp(` + i + `, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
         } else {
-          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move down" class="tool-button success disabled" onclick="moveOp(` + i + `, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
+          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="tool-button success disabled" onclick="moveOp(` + i + `, -1); fillTree();"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>`
         }
 
         if (i < toolpathsInScene.length - 1) {
-          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="tool-button success" onclick="moveOp(` + i + `, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
+          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move down" class="tool-button success" onclick="moveOp(` + i + `, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
         } else {
-          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move up" class="tool-button success disabled" onclick="moveOp(` + i + `, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
+          toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Move down" class="tool-button success disabled" onclick="moveOp(` + i + `, 1); fillTree();"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>`
         }
 
         toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="tool-button alert" onclick="storeUndo(); toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
