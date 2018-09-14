@@ -19,13 +19,13 @@ function addText() {
             version: "1.00"
           };
           drawFile("Text: " + string + " (" + font[0] + ")", tags, true);
-          $("#addShapeText").modal("hide");
+          // $("#addShapeText").modal("hide");
           resetView();
         });
       })
       .catch(function(error) {
         console.error('error:', error);
-        $("#addShapeText").modal("hide");
+        // $("#addShapeText").modal("hide");
         resetView();
       });
 
