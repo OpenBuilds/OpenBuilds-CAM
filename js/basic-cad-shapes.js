@@ -17,10 +17,25 @@ function addCircle(radius) {
   var material = new THREE.MeshBasicMaterial({
     color: 0xffff00
   });
-  var circle = new THREE.Line(geometry, material);
+
+  var geometry2 = new THREE.Geometry();
+
+  for (i = 0; i < geometry.vertices.length; i++) {
+    var x = parseFloat(geometry.vertices[i].x)
+    var y = parseFloat(geometry.vertices[i].y)
+    var z = parseFloat(geometry.vertices[i].z)
+    geometry2.vertices.push(
+      new THREE.Vector3(x, y, z),
+    );
+  }
+
+
+  // geometry2.translate(radius, radius, 0)
+  var circle = new THREE.Line(geometry2, material);
   circle.name = "circle"
-  circle.translateX(radius);
-  circle.translateY(radius);
+  // circle.geometry.verticesNeedUpdate = true
+  // circle.translateX(radius);
+  // circle.translateY(radius);
   fileObject.add(circle);
   fileObject.name = "Internal CAD" + Math.random()
   if (!existingInternalCad) {
@@ -68,13 +83,7 @@ $(document).ready(function() {
     <div class="dialog-title" id="statusTitle">Add shape: Circle</div>
     <div class="dialog-content">
     <form>
-      <div class="form-group row">
-        <label for="circleRadius" class="col-sm-2 col-form-label">Radius</label>
-        <div class="col-sm-5">
-          <input type="number" class="form-control" id="circleRadius" value="10">
-        </div>
-        <label for="circleRadius" class="col-sm-5 col-form-label">mm</label>
-      </div>
+      <input type="number" class="form-control" id="circleRadius" value="10" data-role="input" data-append="mm" data-prepend="Radius">
     </form>
     </div>
     <div class="dialog-actions" id="statusFooter">
@@ -87,20 +96,9 @@ $(document).ready(function() {
 		<div class="dialog-title" id="statusTitle">Add shape: Rectangle</div>
 		<div class="dialog-content">
     <form>
-      <div class="form-group row">
-        <label for="rectX" class="col-sm-2 col-form-label">Width</label>
-        <div class="col-sm-5">
-          <input type="number" class="form-control" id="rectX" value="100">
-        </div>
-        <label for="rectX" class="col-sm-5 col-form-label">mm</label>
-      </div>
-      <div class="form-group row">
-        <label for="rectY" class="col-sm-2 col-form-label">Height</label>
-        <div class="col-sm-5">
-          <input type="number" class="form-control" id="rectY" value="50">
-        </div>
-        <label for="rectY" class="col-sm-5 col-form-label">mm</label>
-      </div>
+      <input type="number" class="form-control" id="rectX" value="100" data-role="input" data-append="mm" data-prepend="Width">
+      <br>
+      <input type="number" class="form-control" id="rectY" value="50" data-role="input" data-append="mm" data-prepend="Height">
     </form>
 		</div>
 		<div class="dialog-actions" id="statusFooter">

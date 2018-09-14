@@ -102,7 +102,7 @@ function undo() {
   if (undoStore.length > 0) {
     storeRedo();
     var lastWorkspace = undoStore.shift()
-    parseLoadWorkspace(lastWorkspace)
+    parseLoadWorkspace(lastWorkspace, false)
   }
 }
 
@@ -110,7 +110,7 @@ function redo() {
   if (redoStore.length > 0) {
     storeUndo();
     var lastWorkspace = redoStore.shift()
-    parseLoadWorkspace(lastWorkspace)
+    parseLoadWorkspace(lastWorkspace, false)
   }
 }
 
@@ -225,7 +225,7 @@ function IsJsonString(str) {
 };
 
 // Parse loaded/undo/redo workspace data
-function parseLoadWorkspace(json) {
+function parseLoadWorkspace(json, resetView) {
   objectsInScene.length = 0;
   toolpathsInScene.length = 0;
   var loader = new THREE.ObjectLoader();
@@ -251,7 +251,9 @@ function parseLoadWorkspace(json) {
   for (i = 0; i < toolpathsInScene.length; i++) {
     toolpathPreview(i);
   }
-  resetView();
+  if (resetView) {
+    resetView();
+  }
   return true;
 }
 
