@@ -1,5 +1,5 @@
 /*
- * Metro 4 Components Library v4.2.22 build @@build (https://metroui.org.ua)
+ * Metro 4 Components Library v4.2.16 build @@build (https://metroui.org.ua)
  * Copyright 2018 Sergey Pimenov
  * Licensed under MIT
  */
@@ -90,14 +90,14 @@
   cursor: pointer;
   display: block;
   position: relative;
-  padding: 0.5rem 0.75rem;
+  padding: .5rem .75rem;
   line-height: 1;
   font-size: 1rem;
   text-decoration: none;
   background-color: #ffffff;
   color: #1d1d1d;
   border: 1px solid #dfdfdf;
-  margin: 0.25rem;
+  margin: .25rem;
 }
 .dataTables_paginate .previous:hover,
 .dataTables_paginate .next:hover,

@@ -22,19 +22,13 @@ function initLocalStorage() {
 // $("#settings-menu-panel input, #settings-menu-panel textarea, #settings-menu-panel select").each(function() {console.log(this.id + ": " + $(this).val())});
 
 localParams = [
-  // [paramName, required]
-  // ['rapidspeed', true],
   ['sizexmax', true],
   ['sizeymax', true],
   ['sizezmax', true],
   ['startgcode', false],
   ['laseron', false],
   ['laseroff', false],
-  // ['lasermultiply', true],
-  // ['homingseq', true],
   ['endgcode', false],
-  // ['lasertestpower', false],
-  // ['lasertestduration', false],
   ['g0command', true],
   ['g1command', true],
   ['scommandnewline', true],
@@ -256,82 +250,138 @@ function setBoardButton(type) {
 
 var controller = ""
 
+function selectToolhead() {
+  console.log('selecttool')
+  var toolArr = $("#toolheadSelect").val()
+  if (toolArr) {
+    $('#startgcode').val("")
+    $('#endgcode').val("")
+    var startcode = "G54; Work Coordinates\nG21; mm-mode\nG90; Absolute Positioning\n";
+    var endcode = "";
+    for (i = 0; i < toolArr.length; i++) {
+      var type = toolArr[i]
+      if (type == 'spindleonoff') {
+        console.log('Add Spindle')
+        startcode += "M3 S10000; Spindle On\n"
+        endcode += "M5 S0; Spindle Off\n"
+      }
+      if (type == 'laserm3') {
+        console.log('Add Laser Constant')
+        startcode += "M3; Constant Power Laser On\n"
+        endcode += "M5; Laser Off\n"
+      }
+      if (type == 'laserm4') {
+        console.log('Add Laser Dynamic')
+        startcode += "M4; Dynamic Power Laser On\n"
+        endcode += "M5; Laser Off\n"
+      }
+      if (type == 'misting') {
+        console.log('Add Misting')
+        startcode += "M8; Coolant On\n"
+        endcode += "M9; Coolant Off\n"
+      }
+    }
+    $('#startgcode').val(startcode)
+    $('#endgcode').val(endcode)
+  } else {
+    $('#startgcode').val("")
+    $('#endgcode').val("")
+  }
+}
+
 function selectMachine(type) {
   console.log("Loading Machine Template")
   if (type == "sphinx55") {
     var xaxis = 833
     var yaxis = 325
     var zaxis = 85
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "sphinx1050") {
     var xaxis = 333
     var yaxis = 325
     var zaxis = 85
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "workbee1050") {
     var xaxis = 335
     var yaxis = 760
     var zaxis = 122
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "workbee1010") {
     var xaxis = 824
     var yaxis = 780
     var zaxis = 122
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "workbee1510") {
     var xaxis = 824
     var yaxis = 1280
     var zaxis = 122
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "sphinx1050") {
     var xaxis = 333
     var yaxis = 325
     var zaxis = 85
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "sphinx1050") {
     var xaxis = 333
     var yaxis = 325
     var zaxis = 85
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "acro55") {
     var xaxis = 300
     var yaxis = 300
     var zaxis = 0
+    $('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro510") {
     var xaxis = 300
     var yaxis = 800
     var zaxis = 0
+    $('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro1010") {
     var xaxis = 800
     var yaxis = 800
     var zaxis = 0
+    $('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro1510") {
     var xaxis = 1300
     var yaxis = 800
     var zaxis = 0
+    $('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro1515") {
     var xaxis = 1300
     var yaxis = 1300
     var zaxis = 0
+    $('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "minimill") {
     var xaxis = 120
     var yaxis = 195
     var zaxis = 80
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "cbeam") {
     var xaxis = 350
     var yaxis = 280
     var zaxis = 32
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "cbeamxl") {
     var xaxis = 750
     var yaxis = 330
     var zaxis = 51
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "leadmachine1010") {
     var xaxis = 730
     var yaxis = 810
     var zaxis = 90
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "leadmachine55") {
     var xaxis = 250
     var yaxis = 310
     var zaxis = 90
+    $('#toolheadSelect').data('select').val('spindleonoff')
   }
   $("#machinetype").val(type)
   $("#sizexmax").val(xaxis)
   $("#sizeymax").val(yaxis)
   $("#sizezmax").val(zaxis)
-
+  selectToolhead();
   setMachineButton(type);
 };
 
@@ -421,7 +471,7 @@ $(document).ready(function() {
                         <a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux Driver (DEB)</a>
                         <a href="#" class="info omdavailversion">v1.0.0</a>
                       </div>
-                      
+
                         <div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
                           <a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux Driver (AppImage)</a>
                           <a href="#" class="info omdavailversion">v1.0.0</a>
@@ -476,6 +526,21 @@ $(document).ready(function() {
                   <li onclick="selectMachine('workbee1510');"><a href="#"><img src="images/mch/workbee1510.png"/>  OpenBuilds Workbee 1510</a></li>
                 </ul>
                 <input type="hidden" class="form-control form-control-sm" id="machinetype" value="" >
+              </div>
+            </li>
+
+            <li>
+              <h6 class="fg-grayBlue">Select your Tool initialization<br><small>Sets approximate defaults below, which should suffice for most users</small></h6>
+              <hr class="bg-grayBlue">
+              <div>
+                <select data-filter="false" data-on-change="selectToolhead();" id="toolheadSelect" data-role="select" title="" multiple class="secondary">
+
+                      <option data-template="<span class='icon fas fas fa-tag' data-fa-transform='rotate-225'></span> $1" value="spindleonoff">Turn Spindle on and Off (M3/M5)</option>
+                      <option data-template="<span class='icon fas fa-circle'></span> $1" value="laserm3">Turn Laser on and Off: Constant Power (M3/M5)</option>
+                      <option selected data-template="<span class='icon fas fa-adjust'></span> $1" value="laserm4">Turn Laser on and Off: Dynamic  Power (M4/M5)</option>
+                      <option data-template="<span class='icon fas fa-tint'></span> $1" value="misting">Enable Misting/Cooling: (M8/M9)</option>
+
+                </select>
               </div>
             </li>
 
@@ -584,4 +649,5 @@ $(document).ready(function() {
   <!-- #settingsmodal -->
   `
   $("body").append(modal);
+  selectToolhead();
 });

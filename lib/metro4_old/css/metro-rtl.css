@@ -1,5 +1,5 @@
 /*
- * Metro 4 Components Library v4.2.22 build 699 (https://metroui.org.ua)
+ * Metro 4 Components Library v4.2.16 build @@build (https://metroui.org.ua)
  * Copyright 2018 Sergey Pimenov
  * Licensed under MIT
  */
@@ -94,12 +94,12 @@ input[dir=rtl] {
 .textarea[dir=rtl] .input-clear-button,
 .textarea.rtl .input-clear-button {
   right: auto;
-  left: 0.25rem;
+  left: .25rem;
 }
 .textarea[dir=rtl] .input-clear-button ~ textarea,
 .textarea.rtl .input-clear-button ~ textarea {
   padding-left: 48px;
-  padding-right: 0.75rem;
+  padding-right: .75rem;
 }
 .select[dir=rtl],
 .select.rtl {
@@ -108,17 +108,17 @@ input[dir=rtl] {
       -ms-flex-direction: row-reverse;
           flex-direction: row-reverse;
 }
-.select[dir=rtl] .select-input,
-.select.rtl .select-input {
-  -webkit-box-ordinal-group: 4;
-      -ms-flex-order: 3;
-          order: 3;
+.select[dir=rtl] input,
+.select.rtl input {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
 }
 .select[dir=rtl] .prepend,
 .select.rtl .prepend {
-  -webkit-box-ordinal-group: 5;
-      -ms-flex-order: 4;
-          order: 4;
+  -webkit-box-ordinal-group: 4;
+      -ms-flex-order: 3;
+          order: 3;
 }
 .select[dir=rtl] .append,
 .select.rtl .append {
@@ -126,19 +126,13 @@ input[dir=rtl] {
       -ms-flex-order: 1;
           order: 1;
 }
-.select[dir=rtl] .button-group,
-.select.rtl .button-group {
-  -webkit-box-ordinal-group: 3;
-      -ms-flex-order: 2;
-          order: 2;
-}
 .select[dir=rtl].dropdown-toggle,
 .select.rtl.dropdown-toggle {
   padding-right: 0!important;
-  padding-left: 0.9rem;
+  padding-left: 1.5rem;
 }
 .select[dir=rtl].dropdown-toggle::before,
 .select.rtl.dropdown-toggle::before {
-  margin-left: 0.9rem;
+  margin-left: 1.25rem;
   left: 0;
 }

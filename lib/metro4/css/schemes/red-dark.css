@@ -1,5 +1,5 @@
 /*
- * Metro 4 Components Library v4.2.16 build @@build (https://metroui.org.ua)
+ * Metro 4 Components Library v4.2.22 build @@build (https://metroui.org.ua)
  * Copyright 2018 Sergey Pimenov
  * Licensed under MIT
  */
@@ -206,7 +206,7 @@ textarea.focused,
   background-color: rgba(115, 0, 20, 0.25);
 }
 .switch input[type="checkbox"]:disabled:not(:checked) ~ .check::after {
-  opacity: .5;
+  opacity: 0.5;
 }
 .button,
 .command-button,
