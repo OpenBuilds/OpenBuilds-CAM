@@ -262,7 +262,7 @@ function selectToolhead() {
       var type = toolArr[i]
       if (type == 'spindleonoff') {
         console.log('Add Spindle')
-        startcode += "M3 S10000; Spindle On\n"
+        startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
         endcode += "M5 S0; Spindle Off\n"
       }
       if (type == 'laserm3') {

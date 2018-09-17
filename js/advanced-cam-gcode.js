@@ -84,6 +84,12 @@ function makeGcode() {
 
 function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapidSpeed, toolon, tooloff, clearanceHeight, zoffset, PlasmaIHS, rampplunge) {
 
+  // Calculate Correct S Value
+  //laserPwr // 0-100%
+
+  var laserPwr = laserPwr / 100 * parseInt($('#scommandscale').val());
+
+
   // empty string to store gcode
   var g = "";
   g += "; Operation " + index + ": " + toolpathsInScene[index].userData.camOperation;
