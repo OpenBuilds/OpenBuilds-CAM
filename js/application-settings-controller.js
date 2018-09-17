@@ -292,12 +292,12 @@ function selectToolhead() {
 function selectMachine(type) {
   console.log("Loading Machine Template")
   if (type == "sphinx55") {
-    var xaxis = 833
+    var xaxis = 333
     var yaxis = 325
     var zaxis = 85
     $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "sphinx1050") {
-    var xaxis = 333
+    var xaxis = 833
     var yaxis = 325
     var zaxis = 85
     $('#toolheadSelect').data('select').val('spindleonoff')
@@ -315,16 +315,6 @@ function selectMachine(type) {
     var xaxis = 824
     var yaxis = 1280
     var zaxis = 122
-    $('#toolheadSelect').data('select').val('spindleonoff')
-  } else if (type == "sphinx1050") {
-    var xaxis = 333
-    var yaxis = 325
-    var zaxis = 85
-    $('#toolheadSelect').data('select').val('spindleonoff')
-  } else if (type == "sphinx1050") {
-    var xaxis = 333
-    var yaxis = 325
-    var zaxis = 85
     $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "acro55") {
     var xaxis = 300
