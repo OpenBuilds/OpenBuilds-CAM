@@ -14,6 +14,9 @@ function typeofOperation(newval, objectseq) {
   } else if (newval == "Laser: Vector (raster fill) (Beta)") {
     laserOutsideMode(objectseq);
     updateCamUserData(objectseq);
+  } else if (newval == "CNC: Vector (no offset)") {
+    cncNoOffsetMode(objectseq);
+    updateCamUserData(objectseq);
   } else if (newval == "CNC: Vector (path outside)") {
     cncOutsideMode(objectseq);
     updateCamUserData(objectseq);
@@ -215,6 +218,7 @@ function setupJob(i) {
             <span class="input-addon-label-left active-border"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i></span>
             <select class="cam-form-field cam-form-field-right active-border" id="toperation` + i + `" objectseq="` + i + `" style="width: 180px; padding: 0px;">
               <option>... Select Operation ...</option>
+              <option>CNC: Vector (no offset)</option>
               <option>CNC: Vector (path inside)</option>
               <option>CNC: Vector (path outside)</option>
               <option>CNC: Pocket</option>
@@ -233,7 +237,7 @@ function setupJob(i) {
         </td>
 
       </tr>
-      <tr class="inputcnc inputpocket">
+      <tr class="inputcnc inputpocket inputtooldia">
         <td>Endmill Diameter</td>
         <td>
           <div class="input-addon">
@@ -560,6 +564,15 @@ function cncOutsideMode(i) {
   $('.inputplasma').hide();
   $('.inputcnc').show();
 };
+
+function cncNoOffsetMode(i) {
+  $('.inputlaser').hide();
+  $('.inputpocket').hide();
+  $('.inputdragknife').hide();
+  $('.inputplasma').hide();
+  $('.inputcnc').show();
+  $('.inputtooldia').hide();
+}
 
 function cncPocketMode(i) {
   $('.inputlaser').hide();
