@@ -228,6 +228,14 @@ function loadFile(f) {
         printLog('Gerber Opened');
         resetView();
       };
+    } else if (f.name.match(/.txt$/i)) { // Excellon Drill File
+      r.readAsText(f);
+      r.onload = function(e) {
+        var gerbdata = r.result;
+        parseExcellon(gerbdata, f.name);
+        printLog('Gerber Opened');
+        resetView();
+      };
     } else {
       // Not usable
     }
