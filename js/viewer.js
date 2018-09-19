@@ -279,7 +279,7 @@ function init3D() {
   };
 
   $('#renderArea').append(renderer.domElement);
-  renderer.setClearColor(0xffffff, 1); // Background color of viewer = transparent
+  renderer.setClearColor(0xffffff, 0); // Background color of viewer = transparent
   // renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
   renderer.clear();
 
@@ -386,6 +386,13 @@ function animate() {
 
       }
 
+      var hovers = new THREE.Group();
+      hovers.name = "Hover";
+      for (i = 0; i < hoverShapesinScene.length; i++) {
+        hovers.add(hoverShapesinScene[i])
+        console.log('added ' + i)
+      }
+      scene.add(hovers)
 
       clearSceneFlag = false;
     } // end clearSceneFlag

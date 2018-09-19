@@ -4,6 +4,7 @@ var mousedown = false,
   offset = {};
 var worldstartcoords, worldendcoords;
 var selectobj, arrow;
+var hoverShapesinScene = []
 
 function selectAll() {
   for (i = 0; i < objectsInScene.length; i++) {
@@ -409,23 +410,30 @@ function mouseMove(event) {
             $('#renderArea').css('cursor', 'pointer');
           }
           // console.log(obj)
+          hoverShapesinScene.length = 0;
           if (mouseState == "scale" || (mouseState == "move" && !event.ctrlKey) || (mouseState == "delete" && event.ctrlKey)) {
             obj = obj.parent
             obj.traverse(function(child) {
               if (child.type == "Line") {
                 child.userData.hover = true;
+                hoverShapesinScene.push(shapeFromLine(child))
               }
             });
+            clearSceneFlag = true;
           } else {
             obj.traverse(function(child) {
               if (child.type == "Line") {
                 child.userData.hover = true;
+                hoverShapesinScene.push(shapeFromLine(child))
               }
             });
+            clearSceneFlag = true;
           }
 
         } else { // hovering over nothing
           $('#renderArea').css('cursor', '');
+          hoverShapesinScene.length = 0;
+          clearSceneFlag = true;
           for (i = 0; i < objectsInScene.length; i++) {
             var obj = objectsInScene[i];
             obj.traverse(function(child) {
@@ -435,10 +443,36 @@ function mouseMove(event) {
             });
           }
         }
+        // console.log(hoverShapesinScene)
       } // end raycast hover event
     } // end !ismodalopen
   } // end just hovering
 };
+
+function shapeFromLine(object) {
+  if (object.geometry.vertices.length > 2) {
+    var newShape = new THREE.Shape();
+    newShape.moveTo(object.geometry.vertices[0].x, object.geometry.vertices[0].y)
+    for (k = i; k < object.geometry.vertices.length; k++) {
+      newShape.lineTo(object.geometry.vertices[k].x, object.geometry.vertices[k].y);
+    }
+    newShape.autoClose = true;
+    var geometry = new THREE.ShapeGeometry(newShape);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0x0088ff,
+      overdraw: 0.5,
+      opacity: 0.4
+    });
+    material.color.setRGB(0, 0.48, 1);
+    material.transparent = true;
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(object.position.x, object.position.y, object.position.z);
+    mesh.rotation.set(object.rotation.x, object.rotation.x, object.rotation.x);
+    mesh.scale.set(object.scale.x, object.scale.y, object.scale.z);
+    return mesh
+  }
+
+}
 
 function XinSelectRange(x) {
   var a = worldstartcoords.x

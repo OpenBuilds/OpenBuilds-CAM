@@ -217,6 +217,17 @@ function loadFile(f) {
         // $('#imageThumb').attr('src', e.target.result);
       }
       r.readAsDataURL(f);
+
+    } else if (f.name.match(/.gtl$/i) || f.name.match(/.gbl$/i) || f.name.match(/.gbr$/i)) {
+      // console.log(f.name + " is a DXF file");
+      // console.log('Reader: ', r)
+      r.readAsText(f);
+      r.onload = function(e) {
+        var gerbdata = r.result;
+        parseGerber(gerbdata, f.name);
+        printLog('Gerber Opened');
+        resetView();
+      };
     } else {
       // Not usable
     }
