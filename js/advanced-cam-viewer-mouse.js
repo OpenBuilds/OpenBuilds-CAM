@@ -37,7 +37,7 @@ function mouseMoveMode() {
   $(".mouseMoveBtn").addClass('active');
   $(".mouseDelBtn").removeClass('active');
   $(".mouseScaleBtn").removeClass('active');
-  deselectAllObjects()
+  // deselectAllObjects()
   var documents2 = scene.getObjectByName("Documents");
   dragcontrols = new THREE.DragControls(objectsInScene, camera, renderer.domElement);
   helpoverlay.innerHTML = "<kbd>Left Mouse Drag</kbd> = Select Document to move / <kbd>Ctrl+Left Mouse Drag</kbd> = Select entity to move / <kbd>Del</kbd> = Delete Selected"

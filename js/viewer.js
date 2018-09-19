@@ -390,7 +390,7 @@ function animate() {
       hovers.name = "Hover";
       for (i = 0; i < hoverShapesinScene.length; i++) {
         hovers.add(hoverShapesinScene[i])
-        console.log('added ' + i)
+        // console.log('added ' + i)
       }
       scene.add(hovers)
 

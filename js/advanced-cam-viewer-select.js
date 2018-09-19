@@ -416,7 +416,9 @@ function mouseMove(event) {
             obj.traverse(function(child) {
               if (child.type == "Line") {
                 child.userData.hover = true;
-                hoverShapesinScene.push(shapeFromLine(child))
+                if (mouseState == "move" && child.userData.selected) {
+                  hoverShapesinScene.push(shapeFromLine(child))
+                }
               }
             });
             clearSceneFlag = true;

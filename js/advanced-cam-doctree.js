@@ -1,3 +1,5 @@
+var selectCount = 0;
+
 function filldoctree() {
   // Empty the Documents node
   $('#left-tree-view').empty();
@@ -85,7 +87,7 @@ function filldoctree() {
 
 // runs in threejs animate() loop: Sets colors and checkboxes of items based on userdata.selected=true/false
 function animateTree() {
-  var selectCount = 0;
+  selectCount = 0;
   for (i = 0; i < objectsInScene.length; i++) {
     var obj = objectsInScene[i]
     obj.traverse(function(child) {
