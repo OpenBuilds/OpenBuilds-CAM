@@ -415,9 +415,14 @@ function mouseMove(event) {
             obj = obj.parent
             obj.traverse(function(child) {
               if (child.type == "Line") {
-                child.userData.hover = true;
-                if (mouseState == "move" && child.userData.selected) {
+                if (selectCount == 0) {
+                  child.userData.hover = true;
                   hoverShapesinScene.push(shapeFromLine(child))
+                } else {
+                  if (mouseState == "move" && child.userData.selected) {
+                    child.userData.hover = true;
+                    hoverShapesinScene.push(shapeFromLine(child))
+                  }
                 }
               }
             });
