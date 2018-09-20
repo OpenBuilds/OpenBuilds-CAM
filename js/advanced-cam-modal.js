@@ -539,10 +539,10 @@ function laserMode(i) {
   $('.inputpocket').hide();
   $('.inputdragknife').hide();
   $('.inputplasma').hide();
-  $('.inputlaser').show();
   $(".inputlasernooffset").hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaser').show();
 };
 
 function laserInsideMode(i) {
@@ -550,9 +550,9 @@ function laserInsideMode(i) {
   $('.inputpocket').hide();
   $('.inputdragknife').hide();
   $('.inputplasma').hide();
-  $('.inputlaser').show();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaser').show();
 };
 
 function laserOutsideMode(i) {
@@ -560,9 +560,9 @@ function laserOutsideMode(i) {
   $('.inputpocket').hide();
   $('.inputdragknife').hide();
   $('.inputplasma').hide();
-  $('.inputlaser').show();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaser').show();
 };
 
 function drillMode(i) {
@@ -614,8 +614,8 @@ function cncNoOffsetMode(i) {
   $('.inputplasma').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
-  $('.inputcnc').show();
   $('.inputtooldia').hide();
+  $('.inputcnc').show();
 }
 
 function cncPocketMode(i) {

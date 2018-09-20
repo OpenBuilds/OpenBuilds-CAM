@@ -417,7 +417,11 @@ function mouseMove(event) {
               if (child.type == "Line") {
                 if (selectCount == 0) {
                   child.userData.hover = true;
-                  hoverShapesinScene.push(shapeFromLine(child))
+                  if (mouseState == "delete") {
+                    hoverShapesinScene.push(shapeFromLine(child, 0x880000, 0.4))
+                  } else {
+                    hoverShapesinScene.push(shapeFromLine(child, 0x0088ff, 0.4))
+                  }
                 } else {
                   if (mouseState == "move" && child.userData.selected) {
                     child.userData.hover = true;
