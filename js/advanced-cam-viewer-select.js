@@ -435,7 +435,11 @@ function mouseMove(event) {
             obj.traverse(function(child) {
               if (child.type == "Line") {
                 child.userData.hover = true;
-                hoverShapesinScene.push(shapeFromLine(child, 0x880000, 0.4))
+                if (mouseState == "delete") {
+                  hoverShapesinScene.push(shapeFromLine(child, 0x880000, 0.4))
+                } else {
+                  hoverShapesinScene.push(shapeFromLine(child, 0x0088ff, 0.4))
+                }
               }
             });
             clearSceneFlag = true;
