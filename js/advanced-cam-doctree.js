@@ -92,8 +92,9 @@ function animateTree() {
     var obj = objectsInScene[i]
     obj.traverse(function(child) {
       if (child.type == "Line" && child.userData.selected) {
-        if (child.userData.hover || !child.userData.select) {
-          child.material.color.setRGB(0, 0.48, 1);
+        if (child.userData.hover) {
+          // child.material.color.setRGB(0, 0.48, 1);
+          child.material.color.setRGB(1, 0.2, 0.27);
         } else {
           child.material.color.setRGB(1, 0.2, 0.27);
         }
