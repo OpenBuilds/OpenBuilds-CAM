@@ -421,7 +421,7 @@ function mouseMove(event) {
                 } else {
                   if (mouseState == "move" && child.userData.selected) {
                     child.userData.hover = true;
-                    hoverShapesinScene.push(shapeFromLine(child))
+                    hoverShapesinScene.push(shapeFromLine(child, 0x0088ff, 0.4))
                   }
                 }
               }
@@ -431,7 +431,7 @@ function mouseMove(event) {
             obj.traverse(function(child) {
               if (child.type == "Line") {
                 child.userData.hover = true;
-                hoverShapesinScene.push(shapeFromLine(child))
+                hoverShapesinScene.push(shapeFromLine(child, 0x0088ff, 0.4))
               }
             });
             clearSceneFlag = true;
@@ -456,7 +456,7 @@ function mouseMove(event) {
   } // end just hovering
 };
 
-function shapeFromLine(object) {
+function shapeFromLine(object, color, opacity) {
   if (object.geometry.vertices.length > 2) {
     var newShape = new THREE.Shape();
     newShape.moveTo(object.geometry.vertices[0].x, object.geometry.vertices[0].y)
@@ -466,11 +466,12 @@ function shapeFromLine(object) {
     newShape.autoClose = true;
     var geometry = new THREE.ShapeGeometry(newShape);
     var material = new THREE.MeshBasicMaterial({
-      color: 0x0088ff,
+      color: color,
       overdraw: 0.5,
-      opacity: 0.4
+      opacity: opacity,
+      side: THREE.DoubleSide,
     });
-    material.color.setRGB(0, 0.48, 1);
+    // material.color.setRGB(0, 0.48, 1);
     material.transparent = true;
     var mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(object.position.x, object.position.y, object.position.z);

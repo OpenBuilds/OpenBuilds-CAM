@@ -78,7 +78,15 @@ function toolpathPreviewExec(i) {
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, 0, 1, 1, 0, false, false, false, false, union);
   } else if (operation == "Drag Knife: Cutout") {
     toolpathsInScene[i].userData.inflated = getToolpath("dragknife", i, DragOffset, 0, 1, 1, 0, false, false, false, false, union);
+  } else if (operation == "Drill: Peck (Centered)") {
+    toolpathsInScene[i].userData.inflated = getToolpath("peckdrill", i, (ToolDia / 2), 0, ZStep, ZDepth, 0, false, false, false, false, union);
+  } else if (operation == "Drill: Continuous (Centered)") {
+    toolpathsInScene[i].userData.inflated = getToolpath("drill", i, (ToolDia / 2), 0, 0, ZDepth, 0, false, false, false, false, union);
   }
+
+  // Drill options
+  // <option>Drill: Peck (Centered)</option>
+  // <option</option>
   // $('#statusmodal').modal('hide');
   Metro.dialog.close('#statusmodal')
   fillTree()
@@ -116,6 +124,14 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
   if (operation == "dragknife") {
     var toolpath = dragknifePath(config, toolpathsInScene[index], offset, zstep, zdepth);
   }
+
+  if (operation == "peckdrill") {
+    var toolpath = drill(config);
+  }
+
+  if (operation == "drill") {
+    var toolpath = drill(config);
+  }
   toolpath.userData.type = "toolpath";
   // lets check if we has success, if not, raise an error message
   var errorcount = 0;
@@ -126,7 +142,7 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
     }
   }
   if (errorcount > 0) {
-    toolpathErrorToast();
+    // toolpathErrorToast();
   }
   if (toolpath.children.length < 1) {
     toolpathErrorToast();
