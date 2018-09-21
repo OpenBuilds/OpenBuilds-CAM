@@ -128,16 +128,22 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
         // let's create gcode for all points in line
 
         // Find longest segment
-        // var bestSegment = indexOfMax(child.geometry.vertices)
+        // console.log("Vertices before optimise: ", child.geometry.vertices)
+        var bestSegment = indexOfMax(child.geometry.vertices)
         // console.log('longest section' + bestSegment)
-        //
-        // child.geometry.vertices.rotateRight(bestSegment)
+        var clone = child.geometry.vertices.slice(0);
+        clone.splice(-1, 1) // remove the last point (as its the "go back to first point"-point which will just be a duplicate point after rotation)
+        var optimisedVertices = clone.rotateRight(bestSegment)
+        optimisedVertices.push(optimisedVertices[0]) // add back the "go back to first point"-point - from the new first point
+        // console.log("Vertices after optimise: ", optimisedVertices)
 
-        for (i = 0; i < child.geometry.vertices.length; i++) {
+        for (i = 0; i < optimisedVertices.length; i++) {
+
+
           // Convert to World Coordinates
-          var localPt = child.geometry.vertices[i];
-          if (child.geometry.vertices[i + 1]) {
-            var localPt2 = child.geometry.vertices[i + 1]; // The next point - used for ramp plunges
+
+          if (i == 0) {
+            var localPt2 = optimisedVertices[i + 1]; // The next point - used for ramp plunges
             var worldPt2 = toolpathGrp.localToWorld(localPt2.clone()); // The next point - used for ramp plunges
             var xpos2 = worldPt2.x // The next point - used for ramp plunges
             var ypos2 = worldPt2.y // The next point - used for ramp plunges
@@ -150,6 +156,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
               zpos2 = zpos2 - zoffset;
             }
           }
+          var localPt = optimisedVertices[i];
           var worldPt = toolpathGrp.localToWorld(localPt.clone());
           var xpos = worldPt.x
           var ypos = worldPt.y
@@ -162,6 +169,8 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             zpos = zpos - zoffset;
           }
 
+
+          console.log(i, xpos, ypos, zpos)
           // First Move To
           if (i == 0) {
             // first point in line where we start lasering/milling
@@ -181,7 +190,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             }
 
             if (lastxyz.x == xpos.toFixed(4) && lastxyz.y == ypos.toFixed(4)) {
-              // console.log("No need to plunge, can stay at z " + lastxyz.z)
+              console.log("No need to plunge, can stay at z " + lastxyz.z)
             } else {
               // move to clearance height, at first points XY pos
               if (!isAtClearanceHeight) {
@@ -198,10 +207,10 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             // then G1 plunge into material
 
             if (!rampplunge) {
-              // console.log("Direct Plunge")
+              console.log("Direct Plunge")
               g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
             } else {
-              // console.log("Ramp Plunge")
+              console.log("Ramp Plunge")
               // console.log(xpos, xpos2, ypos, ypos2)
               var d = distanceFormula(xpos, xpos2, ypos, ypos2)
               if (d > (toolDia * 5)) {
@@ -228,7 +237,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
                 g += g1 + " F" + plungeSpeed;
                 g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + " Z" + zpos.toFixed(4) + "\n"; // Move to XY position
               } else {
-                // console.log("Ramp Plunge: Too short:" + d)
+                console.error("Ramp Plunge: Too short:" + d)
                 // Too short, either include next segment or something else
               }
               // g += g1 + " F" + feedrate

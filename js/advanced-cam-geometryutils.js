@@ -106,8 +106,10 @@ function indexOfMax(arr) {
 
 // circular rotation of array (sort by largest helper)
 Array.prototype.rotateRight = function(n) {
-  this.unshift.apply(this, this.splice(n, this.length))
-  return this;
+  var clone = this.slice(0);
+
+  clone.unshift.apply(clone, clone.splice(n, clone.length))
+  return clone;
 }
 // example rotation
 // var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

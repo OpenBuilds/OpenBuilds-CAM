@@ -155,6 +155,7 @@ function sim(startindex) {
       }
       if (object.userData.lines[simIdx].p2.feedrate == null) {
         var feedrate = 0.00
+        simTime = 0.01
       } else {
         var feedrate = object.userData.lines[simIdx].p2.feedrate
       }
