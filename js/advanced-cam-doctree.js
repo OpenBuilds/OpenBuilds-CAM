@@ -1,5 +1,59 @@
 var selectCount = 0;
 
+function treeClick(checkbox) {
+  var type = checkbox.getAttribute("data-type");
+  var checked = checkbox.checked;
+  var object = checkbox.getAttribute("data-object");
+  var child = checkbox.getAttribute("data-child");
+  var layer = checkbox.getAttribute("data-layer");
+  console.log("Event: " + (checked ? "Selected" : "Deselected") + " Object: " + object + ", child: " + child + ", layer: " + layer)
+  if (type == "doc") {
+    if (checked) {
+      var object = objectsInScene[object]
+      object.traverse(function(child) {
+        if (child.type == "Line") {
+          child.userData.selected = true;
+        }
+      });
+    } else {
+      var object = objectsInScene[object]
+      object.traverse(function(child) {
+        if (child.type == "Line") {
+          child.userData.selected = false;
+        }
+      });
+    }
+  }
+  if (type == "layer") {
+    if (checked) {
+      var object = objectsInScene[object]
+      object.traverse(function(child) {
+        if (child.type == "Line") {
+          if (child.userData.layer.label == layer) {
+            child.userData.selected = true;
+          }
+        }
+      });
+    } else {
+      var object = objectsInScene[object]
+      object.traverse(function(child) {
+        if (child.type == "Line") {
+          if (child.userData.layer.label == layer) {
+            child.userData.selected = false;
+          }
+        }
+      });
+    }
+  }
+  if (type == "vector") {
+    if (checked) {
+      objectsInScene[object].children[child].userData.selected = true;
+    } else {
+      objectsInScene[object].children[child].userData.selected = false;
+    }
+  }
+}
+
 function filldoctree() {
   // Empty the Documents node
   $('#left-tree-view').empty();
@@ -24,7 +78,7 @@ function filldoctree() {
     };
 
     // Create a New Tree on Viewer, with a Documents Node
-    var template = `<ul data-role="treeview" id="doctree">
+    var template = `<ul data-role="treeview" id="doctree" data-on-node-click="treeClick(this);" data-on-check-click="treeClick(this);">
       <li data-icon="<span class='far fa-folder'></span>" data-caption="Documents">
         <ul id="documenttree">
         </ul>
@@ -34,7 +88,8 @@ function filldoctree() {
     // Add Nodes under Documents for each Document.  Documents have id=doc0, doc1, etc doc+i
     var template = '';
     for (i = 0; i < objectsInScene.length; i++) {
-      template += `<li data-icon="<span class='far fa-file'></span>" data-caption="` + objectsInScene[i].name + `"><button class="button mini flat-button" onclick="storeUndo(); objectsInScene.splice(` + i + `,1); fillTree();"><i class="far fa-fw fa-trash-alt"></i></button><ul id="doc` + i + `"></ul></li>`
+      // <button class='button mini flat-button' onclick='storeUndo(); objectsInScene.splice(` + i + `,1); fillTree();''><i class='far fa-fw fa-trash-alt'></i></button>
+      template += `<li><input id="checkbox_` + i + `" type="checkbox" data-role="checkbox" data-caption="<span class='far fa-file'></span>` + objectsInScene[i].name + `" data-type="doc" data-object="` + i + `"><ul id="doc` + i + `"></ul></li>`
     };
     $('#documenttree').append(template);
 
@@ -59,14 +114,14 @@ function filldoctree() {
       var template = '';
       for (j = 0; j < layersinthisdoc.length; j++) {
         // Layers
-        template += `<li  data-collapsed="true" data-icon="<span class='fas fa-layer-group'></span>" data-caption="Layer: ` + layersinthisdoc[j] + `"><ul id="doc` + i + `layer` + layersinthisdoc[j].replace(/ /g, '') + `"></ul></li>`
+        template += `<li  data-collapsed="true"><input type="checkbox" data-role="checkbox" data-caption="<span class='fas fa-layer-group'></span>` + layersinthisdoc[j] + `" data-type="layer" data-object="` + i + `" data-layer="` + layersinthisdoc[j] + `"><ul id="doc` + i + `layer` + layersinthisdoc[j].replace(/ /g, '') + `"></ul></li>`
       }
       // console.log("Document " + i + "contains layers: ", layersinthisdoc, template)
       $('#doc' + i).append(template);
 
       // Add Vectors to Layers
       for (j = 0; j < objectsInScene[i].children.length; j++) {
-        var template = ` <li id="link` + i + `_` + j + `" data-icon="<span class='fas fa-vector-square'></span>" data-caption="` + objectsInScene[i].children[j].name + `"></li>`
+        var template = ` <li><input id="checkbox_` + i + `_` + j + `" type="checkbox" data-role="checkbox" data-caption="<span class='fas fa-vector-square'></span>` + objectsInScene[i].children[j].name + `" data-type="vector" data-object="` + i + `" data-child="` + j + `" data-layer="` + layersinthisdoc[j] + `"></li>`
         objectsInScene[i].children[j].userData.link = "link" + i + "_" + j;
         if (objectsInScene[i].children[j].userData.layer) {
           var layer = objectsInScene[i].children[j].userData.layer.label.replace(/ /g, '')
@@ -90,7 +145,9 @@ function animateTree() {
   selectCount = 0;
   for (i = 0; i < objectsInScene.length; i++) {
     var obj = objectsInScene[i]
-    obj.traverse(function(child) {
+    var childselectcount = 0;
+    for (j = 0; j < obj.children.length; j++) {
+      var child = obj.children[j]
       if (child.type == "Line" && child.userData.selected) {
         if (child.userData.hover) {
           // child.material.color.setRGB(0, 0.48, 1);
@@ -98,7 +155,8 @@ function animateTree() {
         } else {
           child.material.color.setRGB(1, 0.2, 0.27);
         }
-        var $link = $('#' + child.userData.link).css('color', '#e74c3c');
+        $('#checkbox_' + i + '_' + j).prop('checked', true);
+        childselectcount++
         selectCount++
       } else if (child.type == "Line" && !child.userData.selected) {
         if (child.userData.hover) {
@@ -106,9 +164,14 @@ function animateTree() {
         } else {
           child.material.color.setRGB(0, 0, 0);
         }
-        var $link = $('#' + child.userData.link).css('color', '#222');
+        $('#checkbox_' + i + '_' + j).prop('checked', false);
       }
-    });
+    }
+    if (childselectcount == obj.children.length) {
+      $('#checkbox_' + i).prop('checked', true);
+    } else {
+      $('#checkbox_' + i).prop('checked', false);
+    }
   }
   if (selectCount > 0) {
     $("#tpaddpathParent").prop('disabled', false).removeClass('disabled')

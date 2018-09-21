@@ -170,7 +170,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           }
 
 
-          console.log(i, xpos, ypos, zpos)
+          // console.log(i, xpos, ypos, zpos)
           // First Move To
           if (i == 0) {
             // first point in line where we start lasering/milling
