@@ -7,6 +7,10 @@ function trashGcode() {
   }
   disableSim()
   $('#sendGcodeToMyMachine').prop('disabled', true);;
+  $('#gcodesavebtn2').addClass('disabled');
+  $('#gcodetrashbtn2').addClass('disabled');
+  $('#gcodeexporticon').removeClass('fg-grayBlue').addClass('fg-gray');
+  $('#trashicon').removeClass('fg-red').addClass('fg-gray');
 }
 
 
@@ -68,8 +72,11 @@ function makeGcode() {
       $("#generatetpgcode2").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
       $("#generatetpgcode2").prop('disabled', false);
 
-      $('#gcodesavebtn1').prop('disabled', false);
-      $('#gcodesavebtn2').prop('disabled', false);
+      // $('#gcodesavebtn1').prop('disabled', false);
+      $('#gcodesavebtn2').removeClass('disabled');
+      $('#gcodetrashbtn2').removeClass('disabled');
+      $('#gcodeexporticon').addClass('fg-grayBlue').removeClass('fg-gray');
+      $('#trashicon').addClass('fg-red').removeClass('fg-gray');
 
       $('#validGcode').html("<i class='fas fa-check fa-fw fg-green'></i> GCODE Ready to be sent ");
       $('#sendGcodeToMyMachine').prop('disabled', false);

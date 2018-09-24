@@ -47,7 +47,6 @@
 					<nav data-role="ribbonmenu">
 						<ul class="tabs-holder">
 							<li><a href="#section-workspace">Workspace</a></li>
-							<li><a href="#section-toolpath">Toolpath</a></li>
 							<li><a href="#section-settings">Settings</a></li>
 						</ul>
 						<div class="content-holder">
@@ -173,6 +172,31 @@
 									</div>
 									<span class="title">Mouse Mode</span>
 								</div>
+								<!-- <div class="group">
+									<div class="ribbon-group">
+										<button class="ribbon-icon-button" id="selectAll">
+													<span class="icon">
+														<span class="far fa-check-square"></span>
+													</span>
+													<span class="caption">All</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" id="selectNone">
+													<span class="icon">
+														<span class="far fa-square"></span>
+													</span>
+													<span class="caption">None</span>
+												</button>
+										<br>
+										<button class="ribbon-icon-button" id="selectInv">
+													<span class="icon">
+														<span class="fas fa-check"></span>
+													</span>
+													<span class="caption">Invert</span>
+												</button>
+									</div>
+									<span class="title">Select</span>
+								</div> -->
 								<div class="group">
 									<div class="ribbon-group">
 										<button class="ribbon-icon-button" onclick="undo()">
@@ -269,129 +293,10 @@
 									<span class="title">Undo/Redo</span>
 								</div>
 							</div>
-							<div class="section" id="section-toolpath">
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" id="selectAll">
-													<span class="icon">
-														<span class="far fa-check-square"></span>
-													</span>
-													<span class="caption">All</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" id="selectNone">
-													<span class="icon">
-														<span class="far fa-square"></span>
-													</span>
-													<span class="caption">None</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" id="selectInv">
-													<span class="icon">
-														<span class="fas fa-check"></span>
-													</span>
-													<span class="caption">Invert</span>
-												</button>
-									</div>
-									<span class="title">Select</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-split-button" id="tpaddpathParent">
-										<button class="ribbon-main" onclick="addJob(-1);" id="tpaddpath">
-													<span class="icon">
-															<i id="tpaddicon" class="fa fa-plus fg-green"></i>
-													</span>
-												</button>
-										<span class="ribbon-split dropdown-toggle" id="tpaddpath-dropdown">Add Selection<br>to Job <span class="tally success selectCount"></span></span>
-										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" id="toolpathsmenu">
-											<li><a href="#" onclick="addJob(-1);">Add to a new operation</a></li>
-										</ul>
-									</div>
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="makeGcode();" id="generatetpgcode">
-													<span class="icon">
-														<span class="fa fa-cubes fg-brown"></span>
-													</span>
-													<span class="caption">Generate GCODE</span>
-												</button>
-										<br>
-										<button id="gcodesavebtn1" class="ribbon-icon-button" onclick="saveFile()" disabled>
-													<span class="icon">
-														<span class="far fa-save fg-brandColor2"></span>
-													</span>
-													<span class="caption">Export GCODE</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" onclick="trashGcode();">
-													<span class="icon">
-														<span class="fa fa-trash fg-red"></span>
-													</span>
-													<span class="caption">Clear GCODE</span>
-												</button>
-										<br>
-									</div>
-									<span class="title">Toolpath</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button active mouseSelectBtn" onclick="mouseSelectMode();">
-													<span class="icon">
-														<span class="fas fa-mouse-pointer"></span>
-													</span>
-													<span class="caption">Select</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button mouseMoveBtn" onclick="mouseMoveMode();">
-													<span class="icon">
-														<span class="fas fa-arrows-alt"></span>
-													</span>
-													<span class="caption">Move</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button mouseDelBtn" onclick="mouseEraseMode();">
-													<span class="icon">
-														<span class="fas fa-eraser"></span>
-													</span>
-													<span class="caption">Erase</span>
-												</button>
-									</div>
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button mouseScaleBtn" onclick="mouseScaleMode();">
-													<span class="icon">
-														<span class="fas fa-ruler"></span>
-													</span>
-													<span class="caption">Transform</span>
-												</button>
-									</div>
-									<span class="title">Mouse Mode</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="undo()">
-													<span class="icon">
-														<span class="fas fa-undo"></span>
-													</span>
-													<span class="caption">Undo</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" onclick="redo()">
-													<span class="icon">
-														<span class="fas fa-redo"></span>
-													</span>
-													<span class="caption">Redo</span>
-												</button>
-									</div>
-									<span class="title">Undo/Redo</span>
-								</div>
-							</div>
+
 						</div>
 					</nav>
 					<div id="renderArea">
-						<div id="rendermenu">
-							<button class="action-button success" id="floating-tpaddpath-btn" onclick="addJob(-1);" title="Add Selection to Toolpath">
-    						<span class="icon"><span class="mif-plus"></span></span>
-							</button>
-						</div>
 						<div id="selection" style="visibility: hidden;"></div>
 					</div>
 
@@ -417,10 +322,10 @@
 					<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
 				</div>
 				<div id="simoverlay" class="text-center">
-					<button class="button dark" onclick="simSpeed();"><span class="icon"><span class="fas fa-tachometer-alt"></span></span><span class="caption"><span id="simspeedval">1</span>x</span></button>
-					<button id="runSimBtn" title="Run simulation" class="button dark" onclick="sim(0)" disabled><i class="fas fa-fighter-jet"></i> Simulate</button>&nbsp;
-					<button id="stopSimBtn" style="display: none;" title="Stop Sim" class="button dark" onclick="simstop()"><i class="fas fa-stop"></i> Stop Sim</button>&nbsp;
-					<button id="resetViewBtn" title="Stop Sim" class="button dark" onclick="resetView(object)"><i class="fas fa-stop"></i> Reset View</button>&nbsp;
+					<button class="button dark drop-shadow" onclick="simSpeed();"><span class="icon"><span class="fas fa-tachometer-alt"></span></span><span class="caption"><span id="simspeedval">1</span>x</span></button>
+					<button id="runSimBtn" title="Run simulation" class="button dark drop-shadow" onclick="sim(0)" disabled><i class="fas fa-fighter-jet"></i> Simulate</button>&nbsp;
+					<button id="stopSimBtn" style="display: none;" title="Stop Sim" class="button dark drop-shadow" onclick="simstop()"><i class="fas fa-stop"></i> Stop Sim</button>&nbsp;
+					<button id="resetViewBtn" title="Stop Sim" class="button dark drop-shadow" onclick="resetView(object)"><i class="fas fa-stop"></i> Reset View</button>&nbsp;
 				</div>
 			</div>
 		</div>
@@ -429,12 +334,17 @@
 		<div id="col2">
 			<div style="height: 100%; overflow-y:hidden; padding-right:5px;">
 
-				<div id="renderDocuments" class="window drop-shadow" style="height: calc(23% - 10px);">
+				<div id="renderDocuments" class="window drop-shadow" style="height: calc(40% - 165px);">
 					<div class="window-caption bg-openbuilds">
 						<span class="icon far fa-file-alt"></span>
 						<span class="title">Documents</span>
 					</div>
-					<div class="window-content p-2" style="overflow-y:scroll; ">
+					<div id="selectoverlay" class="text-center">
+						<button class="button small dark outline bg-white drop-shadow" id="selectAll"><span class="far fa-check-square"></span> All</button>
+						<button class="button small dark outline bg-white drop-shadow" id="selectNone"><span class="far fa-square"></span> None</button>
+						<button class="button small dark outline bg-white drop-shadow" id="selectInv"><span class="fas fa-check"></span> Invert</button>
+					</div>
+					<div class="window-content p-2" style="overflow-y:scroll;">
 						<!-- Documents Here -->
 						<div class="pt-2" id="documentactivity" style="display: none;">
 							<center>
@@ -442,6 +352,7 @@
 								<div data-role="activity" data-type="ring" data-style="dark"></div>
 								<h6>Parsing Documents...</h6>
 						</div>
+
 						<div id="documentstree">
 							<div id="nodocuments" style="display:none;">
 								<p class="text-secondary">Please load some vectors from DXF, SVG or Images using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open Drawing</kbd> button, or insert from the inbuilt library and tools </p>
@@ -449,34 +360,47 @@
 							<ul data-role="treeview pl-0" id="left-tree-view">
 							</ul>
 						</div>
+
 					</div>
+
 				</div>
-				<div class="window drop-shadow mt-2" style="height: calc(43% - 10px);">
+				<div class="window drop-shadow mt-2" style="height: calc(60% - 165px);">
 					<div class="window-caption bg-openbuilds">
 						<span class="icon fas fa-tasks"></span>
 						<span class="title">Toolpaths</span>
 						<div class="buttons">
-							<button type="button " id="generatetpgcode2" class="button bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button>
-							<button type="button" id="gcodesavebtn2" class="button bg-openbuilds secondary" onclick="saveFile();" disabled><span class="fa fa-save"></span></button>
+							<!-- <button type="button " id="generatetpgcode2" class="button small bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button> -->
 						</div>
 					</div>
-					<div class="pt-2" id="toolpathactivity" style="display: none;">
-						<center>
-							<h5>Please Wait </h5>
-							<div data-role="activity" data-type="ring" data-style="dark"></div>
-							<h6>Calculating Toolpaths...</h6>
+					<div id="tpathoverlay" class="text-center">
+						<button id="addJobBtn" class="button small dark outline drop-shadow dropdown-toggle"><span class="icon fa fa-plus"></span> Add <span class="selectCount" style="display: none;"> 0 </span></button>
+						<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="toolpathsmenu" data-toggle-element="#addJobBtn">
+							<li><a href="#" onclick="addJob(-1);"><span class="icon fa fa-plus"></span> Create a new Operation</a></li>
+						</ul>
+						<button class="button small dark outline drop-shadow" title="Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes icon"></span>Generate GCODE</button>
+						<button class="button small dark outline drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span id="gcodeexporticon" class="fa fa-save icon fg-gray"></span></button>
+						<button class="button small dark outline drop-shadow" title="Clear GCODE" id="gcodetrashbtn2" onclick="trashGcode();"><span id="trashicon" class="fa fa-trash fg-gray icon"></span></button>
 					</div>
-					<div class="window-content p-2" id="toolpathtree" style="overflow-y:scroll;">
+
+					<div class="window-content p-2" style="overflow-y:auto;">
+						<div class="pt-2" id="toolpathactivity" style="display: none;">
+							<center>
+								<h5>Please Wait </h5>
+								<div data-role="activity" data-type="ring" data-style="dark"></div>
+								<h6>Calculating Toolpaths...</h6>
+						</div>
+						<div id="toolpathtree">
+						</div>
 						<!-- Toolpaths Here -->
 					</div>
 				</div>
 
-				<div class="window mt-2 drop-shadow" style="height: calc(33% - 10px);">
+				<div class="window mt-2 drop-shadow" style="height: 330px;">
 					<div class="window-caption bg-openbuilds">
 						<span class="icon fas fa-tasks"></span>
 						<span class="title">Connection</span>
 					</div>
-					<div class="window-content p-2" id="connectiontree" style="overflow-y:scroll;">
+					<div class="window-content p-2" id="connectiontree" style="overflow-y:auto;">
 
 						<div class="row">
 							<div class="cell">

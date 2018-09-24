@@ -89,7 +89,7 @@ function filldoctree() {
     var template = '';
     for (i = 0; i < objectsInScene.length; i++) {
       // <button class='button mini flat-button' onclick='storeUndo(); objectsInScene.splice(` + i + `,1); fillTree();''><i class='far fa-fw fa-trash-alt'></i></button>
-      template += `<li><input id="checkbox_` + i + `" type="checkbox" data-role="checkbox" data-caption="<span class='far fa-file'></span>` + objectsInScene[i].name + `" data-type="doc" data-object="` + i + `"><ul id="doc` + i + `"></ul></li>`
+      template += `<li><input id="checkbox_` + i + `" type="checkbox" data-role="checkbox" data-caption="<span class='far fa-file'></span> ` + objectsInScene[i].name + `" data-type="doc" data-object="` + i + `"><ul id="doc` + i + `"></ul></li>`
     };
     $('#documenttree').append(template);
 
@@ -114,14 +114,14 @@ function filldoctree() {
       var template = '';
       for (j = 0; j < layersinthisdoc.length; j++) {
         // Layers
-        template += `<li  data-collapsed="true"><input type="checkbox" data-role="checkbox" data-caption="<span class='fas fa-layer-group'></span>` + layersinthisdoc[j] + `" data-type="layer" data-object="` + i + `" data-layer="` + layersinthisdoc[j] + `"><ul id="doc` + i + `layer` + layersinthisdoc[j].replace(/ /g, '') + `"></ul></li>`
+        template += `<li  data-collapsed="true"><input type="checkbox" data-role="checkbox" data-caption="<span class='fas fa-layer-group'></span> ` + layersinthisdoc[j] + `" data-type="layer" data-object="` + i + `" data-layer="` + layersinthisdoc[j] + `"><ul id="doc` + i + `layer` + layersinthisdoc[j].replace(/ /g, '') + `"></ul></li>`
       }
       // console.log("Document " + i + "contains layers: ", layersinthisdoc, template)
       $('#doc' + i).append(template);
 
       // Add Vectors to Layers
       for (j = 0; j < objectsInScene[i].children.length; j++) {
-        var template = ` <li><input id="checkbox_` + i + `_` + j + `" type="checkbox" data-role="checkbox" data-caption="<span class='fas fa-vector-square'></span>` + objectsInScene[i].children[j].name + `" data-type="vector" data-object="` + i + `" data-child="` + j + `" data-layer="` + layersinthisdoc[j] + `"></li>`
+        var template = ` <li><input id="checkbox_` + i + `_` + j + `" type="checkbox" data-role="checkbox" data-caption="<span class='fas fa-vector-square'></span> ` + objectsInScene[i].children[j].name + `" data-type="vector" data-object="` + i + `" data-child="` + j + `" data-layer="` + layersinthisdoc[j] + `"></li>`
         objectsInScene[i].children[j].userData.link = "link" + i + "_" + j;
         if (objectsInScene[i].children[j].userData.layer) {
           var layer = objectsInScene[i].children[j].userData.layer.label.replace(/ /g, '')
@@ -182,11 +182,11 @@ function animateTree() {
   }
   if (selectCount > 0) {
     $("#tpaddpathParent").prop('disabled', false).removeClass('disabled')
-    $(".selectCount").html(" " + selectCount + " ");
+    $(".selectCount").html("[ " + selectCount + " ]");
     $("#tpaddpath").prop('disabled', false);
-    $('#floating-tpaddpath-btn').prop('disabled', false);
-    $('#floating-tpaddpath-btn').addClass('success')
-    // $('#floating-tpaddpath-btn').html('<span class="icon">+' + selectCount + '</span>')
+    // $('#floating-tpaddpath-btn').prop('disabled', false);
+    // $('#floating-tpaddpath-btn').addClass('success')
+    $('#addJobBtn').addClass('bg-green').addClass('fg-white').removeClass('disabled');
     $("#tpaddicon").addClass('fg-green')
     $(".selectCount").show();
     if (toolpathsInScene.length > 0) {
@@ -196,11 +196,11 @@ function animateTree() {
     $("#tpaddpathParent").prop('disabled', true).addClass('disabled');
     $("#tpaddicon").removeClass('fg-green')
     $(".selectCount").hide();
-    $(".selectCount").html(" " + selectCount + " ");
+    $(".selectCount").html("[ " + selectCount + " ]");
     $("#tpaddpath").prop('disabled', true);
-    $('#floating-tpaddpath-btn').prop('disabled', true);
-    $('#floating-tpaddpath-btn').removeClass('success')
-    // $('#floating-tpaddpath-btn').html('<span class="icon"><span class="mif-plus"></span></span>')
+    // $('#floating-tpaddpath-btn').prop('disabled', true);
+    // $('#floating-tpaddpath-btn').removeClass('success')
+    $('#addJobBtn').removeClass('bg-green').removeClass('fg-white').addClass('disabled');
     $("#tpaddpath-dropdown").prop('disabled', true);
   }
 }

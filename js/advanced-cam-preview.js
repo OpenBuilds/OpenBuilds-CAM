@@ -5,8 +5,13 @@ function toolpathPreview(i) {
   $('#toolpathtree').hide();
   $('#toolpathactivity').show()
   trashGcode();
-  $('#gcodesavebtn1').prop('disabled', true);
-  $('#gcodesavebtn2').prop('disabled', true);
+  // $('#gcodesavebtn1').prop('disabled', true);
+  $('#gcodesavebtn2').addClass('disabled');
+  $('#gcodetrashbtn2').addClass('disabled');
+  $('#gcodeexporticon').removeClass('fg-grayBlue').addClass('fg-gray');
+  $('#trashicon').removeClass('fg-red').addClass('fg-gray');
+
+
   $('#validGcode').html("<i class='fas fa-times fa-fw fg-red'></i> No GCODE yet")
   $("#savetpgcode").addClass("disabled");
   $("#exportGcodeMenu").addClass("disabled");

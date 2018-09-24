@@ -23,7 +23,7 @@ function fillTree() {
   $('#toolpathsmenu').empty();
 
   // Default Menu
-  var menuitem = `<li><a  href="#" onclick="addJob(-1);">Create a new operation</a></li>`;
+  var menuitem = `<li><a  href="#" onclick="addJob(-1);"><span class="fa fa-fw fa-plus"></span>Create a new operation...</a></li>`;
   $('#toolpathsmenu').append(menuitem);
 
   clearSceneFlag = true;
@@ -95,7 +95,11 @@ function fillTree() {
       $('#toolpathstable').append(toolp);
 
       // append toolpath to menu
-      var menuitem = `<li><a  href="#" onclick="addJob(` + i + `)">` + toolpathsInScene[i].name + `: ` + operation + `</a></li>`;
+      var string = `Add to: ` + toolpathsInScene[i].name + `: ` + operation
+      if (string.length > 32) {
+        string = string.substring(0, 32) + "..."
+      }
+      var menuitem = `<li><a  href="#" onclick="addJob(` + i + `)">` + string + `</a></li>`;
       $('#toolpathsmenu').append(menuitem);
 
     }

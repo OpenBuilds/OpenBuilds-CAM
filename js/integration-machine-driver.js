@@ -51,17 +51,21 @@ $(document).ready(function() {
   var DriverCheckinterval = setInterval(function() {
     checkIfDriverIsInstalled();
   }, 1000);
-
   getAvailableDriverVersion()
 
 });
 
 function hasDriver(version) {
   installedDriver = version
-  if (availableDriverVersion == "v" + version) {
-    $("#noDriverDetected").fadeOut("slow");
+  if (versionCompare(availableDriverVersion, "v" + version) == 1) {
+    //
+  } else {
+    $("#noDriverDetected").hide();
   }
-  $("#DriverDetected").fadeIn("slow");
+  if (availableDriverVersion == "v" + version) {
+    $("#noDriverDetected").hide();
+  }
+  $("#DriverDetected").show();
   alreadyDetected = true;
   $('#installDriversOnSettingspage').hide();
   $('#detectedVersion').html("<i class='fas fa-check fa-fw fg-green'></i>1. Detected OpenBuilds Machine Driver: " + version)
@@ -70,8 +74,8 @@ function hasDriver(version) {
 function noDriver() {
   alreadyDetected = false;
   installedDriver = 'not detected'
-  $("#DriverDetected").fadeOut("slow");
-  $("#noDriverDetected").fadeIn("slow");
+  $("#DriverDetected").hide();
+  $("#noDriverDetected").show();
   $('#installDriversOnSettingspage').show();
   $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting the OpenBuilds Machine Driver")
   $('#installDriverMessage').html('Connecting to a machine, requires that you have the OpenBuilds Machine Driver installed.')
@@ -80,8 +84,8 @@ function noDriver() {
 function oldDriver(version, availVersion) {
   alreadyDetected = true;
   installedDriver = version
-  $("#DriverDetected").fadeOut("slow");
-  $("#noDriverDetected").fadeIn("slow");
+  $("#DriverDetected").hide();
+  $("#noDriverDetected").show();
   $('#installDriversOnSettingspage').show();
   $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. You are running an outdated version of the OpenBuilds Machine Driver v." + version + ". Please update to v" + availVersion)
   $('#installDriverMessage').html('Connecting to a machine, requires that you have the latest OpenBuilds Machine Driver installed. <br>You are running version <code>' + version + "</code> - Please update to version <code>" + availVersion + "</code> or newer...")
