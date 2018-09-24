@@ -5,11 +5,11 @@ var timefactor = 1,
 var simgcodeobj;
 
 function enableSim() {
-  $("#simstartbtn").prop('disabled', false);
+  $('#runSimBtn').prop('disabled', false)
 }
 
 function disableSim() {
-  $("#simstartbtn").prop('disabled', true);
+  $('#runSimBtn').prop('disabled', true)
 }
 
 function simAnimate() {
@@ -61,8 +61,8 @@ function simstop() {
     clearSceneFlag = true;
   }
   simstopped = true;
-  $('#simstartbtn').attr('disabled', false);
-  $('#simstopbtn').attr('disabled', true);
+  $('#runSimBtn').show()
+  $('#stopSimBtn').hide()
   timefactor = 1;
   $('#simspeedval').text(timefactor);
   $('#gcodesent').html('0');
@@ -128,8 +128,8 @@ function sim(startindex) {
     // timefactor = 1;
     $('#simspeedval').text(timefactor);
     var simIdx = startindex;
-    $('#simstartbtn').attr('disabled', true);
-    $('#simstopbtn').attr('disabled', false);
+    $('#runSimBtn').hide()
+    $('#stopSimBtn').show()
     $('#editorContextMenu').hide() // sometimes we launch sim(linenum) from the context menu... close it once running
     var runSim = function() {
       // editor.gotoLine(simIdx + 1)

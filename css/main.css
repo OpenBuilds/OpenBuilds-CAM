@@ -221,7 +221,7 @@ button:focus {outline:0 !important;}
 #col2 {
     /* border-right: dashed 1px #aaa; */
     float:right;
-    width: 330px;
+    width: 350px;
     height: 100%;
     padding: 2px 5px 5px 5px;
     /*overflow-y: auto;*/
@@ -230,7 +230,7 @@ button:focus {outline:0 !important;}
 }
 #col1 {
     float:left;
-    width:calc(100% - 331px);
+    width:calc(100% - 351px);
     height: 100%;
     padding: 2px 5px 5px 5px;
 }
@@ -292,6 +292,25 @@ button:focus {outline:0 !important;}
   height: calc(50% - 0px); overflow-y:scroll;
 } */
 
+#simoverlay {
+  font-size: 12px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 6px;
+  text-align: left;
+  position: absolute;
+  bottom: 30px;
+  left: -20px;
+  /* background: rgba(240, 240, 240, 0.85);
+  color: #444;
+  border-radius: 4px; */
+  width: 100%;
+  z-index: 1;
+  text-shadow: rgba(0,0,0,.2) 0 0 1px;
+  -webkit-font-smoothing: antialiased;
+  /* border: 1px solid rgba(55, 55, 55, 0.5); */
+}
+
 #helpoverlay {
   font-size: 12px;
   margin-left: 20px;
@@ -310,6 +329,7 @@ button:focus {outline:0 !important;}
   -webkit-font-smoothing: antialiased;
   border: 1px solid rgba(55, 55, 55, 0.5);
 }
+
 #helpoverlay > kbd {
   background: rgba(128, 128, 128, 0.6);
   color: #222;

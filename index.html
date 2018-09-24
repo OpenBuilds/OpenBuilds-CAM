@@ -334,31 +334,6 @@
 								</div>
 								<div class="group">
 									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="sim(0);" id="simstartbtn">
-													<span class="icon">
-														<span class="fa fa-fighter-jet fa-fw"></span>
-													</span>
-													<span class="caption">Play</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" onclick="simstop();" id="simstopbtn" disabled>
-													<span class="icon">
-														<span class="fa fa-stop fa-fw"></span>
-													</span>
-													<span class="caption">Stop</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" onclick="simSpeed();">
-													<span class="icon">
-														<span class="fas fa-tachometer-alt"></span>
-													</span>
-													<span class="caption"><span id="simspeedval">1</span>x</span>
-												</button>
-									</div>
-									<span class="title">Simulator</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
 										<button class="ribbon-icon-button active mouseSelectBtn" onclick="mouseSelectMode();">
 													<span class="icon">
 														<span class="fas fa-mouse-pointer"></span>
@@ -441,6 +416,12 @@
 				<div id="helpoverlay">
 					<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
 				</div>
+				<div id="simoverlay" class="text-center">
+					<button class="button dark" onclick="simSpeed();"><span class="icon"><span class="fas fa-tachometer-alt"></span></span><span class="caption"><span id="simspeedval">1</span>x</span></button>
+					<button id="runSimBtn" title="Run simulation" class="button dark" onclick="sim(0)" disabled><i class="fas fa-fighter-jet"></i> Simulate</button>&nbsp;
+					<button id="stopSimBtn" style="display: none;" title="Stop Sim" class="button dark" onclick="simstop()"><i class="fas fa-stop"></i> Stop Sim</button>&nbsp;
+					<button id="resetViewBtn" title="Stop Sim" class="button dark" onclick="resetView(object)"><i class="fas fa-stop"></i> Reset View</button>&nbsp;
+				</div>
 			</div>
 		</div>
 
@@ -475,7 +456,7 @@
 						<span class="icon fas fa-tasks"></span>
 						<span class="title">Toolpaths</span>
 						<div class="buttons">
-							<button type="button" id="generatetpgcode2" class="button bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button>
+							<button type="button " id="generatetpgcode2" class="button bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button>
 							<button type="button" id="gcodesavebtn2" class="button bg-openbuilds secondary" onclick="saveFile();" disabled><span class="fa fa-save"></span></button>
 						</div>
 					</div>
