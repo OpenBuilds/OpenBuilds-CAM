@@ -142,6 +142,7 @@ function filldoctree() {
 
 // runs in threejs animate() loop: Sets colors and checkboxes of items based on userdata.selected=true/false
 function animateTree() {
+  var tree = $('#doctree').data('treeview');
   selectCount = 0;
   for (i = 0; i < objectsInScene.length; i++) {
     var obj = objectsInScene[i]
@@ -155,7 +156,10 @@ function animateTree() {
         } else {
           child.material.color.setRGB(1, 0.2, 0.27);
         }
-        $('#checkbox_' + i + '_' + j).prop('checked', true);
+        var check = $('#checkbox_' + i + '_' + j);
+        check.prop('checked', true);
+        tree._recheck(check);
+        // $('#checkbox_' + i + '_' + j).prop('checked', true);
         childselectcount++
         selectCount++
       } else if (child.type == "Line" && !child.userData.selected) {
@@ -164,14 +168,17 @@ function animateTree() {
         } else {
           child.material.color.setRGB(0, 0, 0);
         }
-        $('#checkbox_' + i + '_' + j).prop('checked', false);
+        var check = $('#checkbox_' + i + '_' + j);
+        check.prop('checked', false);
+        tree._recheck(check);
+        // $('#checkbox_' + i + '_' + j).prop('checked', false);
       }
     }
-    if (childselectcount == obj.children.length) {
-      $('#checkbox_' + i).prop('checked', true);
-    } else {
-      $('#checkbox_' + i).prop('checked', false);
-    }
+    // if (childselectcount == obj.children.length) {
+    //   $('#checkbox_' + i).prop('checked', true);
+    // } else {
+    //   $('#checkbox_' + i).prop('checked', false);
+    // }
   }
   if (selectCount > 0) {
     $("#tpaddpathParent").prop('disabled', false).removeClass('disabled')
