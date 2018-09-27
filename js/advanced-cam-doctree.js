@@ -170,7 +170,10 @@ function animateTree() {
         }
         var check = $('#checkbox_' + i + '_' + j);
         check.prop('checked', false);
-        tree._recheck(check);
+        var tree = $('#doctree').data('treeview');
+        if (tree) {
+          tree._recheck(check);
+        }
         // $('#checkbox_' + i + '_' + j).prop('checked', false);
       }
     }
