@@ -1,4 +1,7 @@
-function addCircle(radius) {
+function addCircle(radius, segments) {
+  if (segments < 1) {
+    segments = 32;
+  }
   console.log("Adding circle: " + radius)
   var existingInternalCad = scene.getObjectByName("Internal CAD", true);
   if (!existingInternalCad) {
@@ -6,7 +9,7 @@ function addCircle(radius) {
   } else {
     fileObject = existingInternalCad;
   }
-  var geometry = new THREE.CircleGeometry(radius, 32);
+  var geometry = new THREE.CircleGeometry(radius, segments);
   geometry.vertices.shift();
   var endx = parseFloat(geometry.vertices[0].x)
   var endy = parseFloat(geometry.vertices[0].y)
@@ -84,6 +87,9 @@ $(document).ready(function() {
     <div class="dialog-content">
     <form>
       <input type="number" class="form-control" id="circleRadius" value="10" data-role="input" data-append="mm" data-prepend="Radius">
+      <br>
+      <input type="number" class="form-control" id="circleSegments" value="32" data-role="input"  data-prepend="Segments">
+      <small>Segments determines the smoothness of the circle, as circles are processed as Polylines</small>
     </form>
     </div>
     <div class="dialog-actions" id="statusFooter">
@@ -113,7 +119,8 @@ $(document).ready(function() {
     console.log("Clicked on CreateCircle")
     event.preventDefault();
     var radius = $("#circleRadius").val();
-    addCircle(radius);
+    var segments = $("#circleSegments").val();
+    addCircle(radius, segments);
   });
 
   $("#CreateRect").on("click", function() {
