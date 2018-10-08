@@ -18,7 +18,8 @@ function addCircle(radius, segments) {
     new THREE.Vector3(endx, endy, endz),
   );
   var material = new THREE.MeshBasicMaterial({
-    color: 0xffff00
+    color: 0xffff00,
+    side: THREE.DoubleSide
   });
 
   var geometry2 = new THREE.Geometry();
@@ -46,6 +47,7 @@ function addCircle(radius, segments) {
   }
   setTimeout(function() {
     fillTree();
+    changePositionToGeoTranslate();
   }, 250);
 }
 
@@ -65,7 +67,8 @@ function addRect(width, height) {
   // rectgeom.faces.push(new THREE.Face3(0, 1, 2));
   // rectgeom.faces.push(new THREE.Face3(0, 3, 2));
   var material = new THREE.MeshBasicMaterial({
-    color: 0xffff00
+    color: 0xffff00,
+    side: THREE.DoubleSide
   });
   var rectangle = new THREE.Line(rectgeom, material);
   rectangle.name = "rectangle"
@@ -76,6 +79,7 @@ function addRect(width, height) {
   }
   setTimeout(function() {
     fillTree();
+    changePositionToGeoTranslate();
   }, 250);
 }
 
