@@ -378,18 +378,18 @@ function mouseMove(event) {
       raycaster.setFromCamera(mouseVector, camera);
       // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
       // upwards of 10k objects and slows the filter down immensely
-      scene.remove(arrow);
-      var dir = new THREE.Vector3(raycaster.ray.direction.x, raycaster.ray.direction.y, raycaster.ray.direction.z);
-      //normalize the direction vector (convert to vector of length 1)
-      dir.normalize();
-      var origin = new THREE.Vector3(raycaster.ray.origin.x, raycaster.ray.origin.y, raycaster.ray.origin.z);
-      arrow = new THREE.ArrowHelper(dir, origin, 1000, 0xff0000, 5, 5);
-      scene.add(arrow);
+      // scene.remove(arrow);
+      // var dir = new THREE.Vector3(raycaster.ray.direction.x, raycaster.ray.direction.y, raycaster.ray.direction.z);
+      // //normalize the direction vector (convert to vector of length 1)
+      // dir.normalize();
+      // var origin = new THREE.Vector3(raycaster.ray.origin.x, raycaster.ray.origin.y, raycaster.ray.origin.z);
+      // arrow = new THREE.ArrowHelper(dir, origin, 1000, 0xff0000, 5, 5);
+      // scene.add(arrow);
       var documents = scene.getObjectByName("Documents");
       // console.log(documents)
       if (documents) {
         var intersects = raycaster.intersectObjects(documents.children, true)
-        console.log(intersects)
+        // console.log(intersects)
         if (intersects.length > 0) {
           // clear all hover colors
           for (i = 0; i < objectsInScene.length; i++) {
