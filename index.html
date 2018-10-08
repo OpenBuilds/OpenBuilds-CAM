@@ -53,12 +53,12 @@
 							<div class="section" id="section-workspace">
 								<div class="group">
 									<div class="ribbon-split-button">
-										<button class="ribbon-main btn-file" title="Open a drawing">
-									        <span class="icon">
+										<div class="ribbon-main btn-file" title="Open a drawing">
+											<span class="icon">
 														<span class="far fa-folder-open fg-amber"></span>
-									        </span>
-													<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple />
-									    	</button>
+											</span>
+											<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple />
+										</div>
 										<span class="ribbon-split dropdown-toggle">Open<br>Drawing</span>
 										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" style="text-align: left;">
 											<li><a href="#" onclick="helloWorld();">Open "Hello World" example</a></li>
@@ -104,13 +104,13 @@
 			                    <span class="caption">New</span>
 			                  </button>
 										<br>
-										<button class="ribbon-icon-button btn-file" title="Import Workspace">
-													<span class="icon">
+										<div class="ribbon-icon-button btn-file" title="Import Workspace">
+											<span class="icon">
 														<i class="far fa-folder-open"></i>
 													</span>
-													<input type="file" id="workspaceImport" accept=".json" multiple style="height: 26px;"/>
-													<span class="caption pl-1" > Import</span>
-												</button>
+											<input type="file" id="workspaceImport" accept=".json" multiple style="height: 26px;" />
+											<span class="caption pl-1"> Import</span>
+										</div>
 										<br>
 										<button class="ribbon-icon-button" onclick="exportWorkspace();">
 			                    <span class="icon">
