@@ -4,7 +4,8 @@ var mousedown = false,
   offset = {};
 var worldstartcoords, worldendcoords;
 var selectobj, arrow;
-var hoverShapesinScene = []
+var hoverShapesinScene = [];
+var mouseIsDown = false;
 
 function selectAll() {
   for (i = 0; i < objectsInScene.length; i++) {
@@ -69,6 +70,7 @@ function delta(num1, num2) {
 }
 
 function mouseDown(event) {
+  mouseIsDown = true;
   // console.log(event.target)
   if (mouseState == "select") {
     // helpoverlay.style.visibility = "visible";
@@ -243,6 +245,7 @@ function mouseDown(event) {
 }
 
 function mouseUp(event) {
+  mouseIsDown = false;;
   if (mouseState == "move") {
 
   }
@@ -261,9 +264,10 @@ function mouseUp(event) {
 }
 
 function mouseMove(event) {
+  console.log(event)
   // make sure we are in a select mode.
   // helpoverlay.style.visibility = "visible";
-  if (event.which == 1) { // only on left mousedown
+  if (mouseIsDown) { // only on left mousedown
     if (mouseState == "select") {
       // lets wait for mouse to move at least a few pixels, just to eliminate false "selections" if user is simply clicking on an object (hysteresys)
       if (delta(event.clientX, mousedowncoords.x) > 10 && delta(event.clientX, mousedowncoords.x) > 10 || delta(event.clientX, mousedowncoords.x) < -10 && delta(event.clientX, mousedowncoords.x) < -10) {
@@ -369,6 +373,7 @@ function mouseMove(event) {
       // }
     }
   } else { // just hovering - lets color
+    console.log(event)
     // var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
     var isModalOpen = Metro.dialog.isOpen('#statusmodal') // dont raycast if modal is over the viewer
     if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
