@@ -264,7 +264,7 @@ function mouseUp(event) {
 }
 
 function mouseMove(event) {
-  console.log(event)
+  // console.log(event)
   // make sure we are in a select mode.
   // helpoverlay.style.visibility = "visible";
   if (mouseIsDown) { // only on left mousedown
@@ -373,7 +373,7 @@ function mouseMove(event) {
       // }
     }
   } else { // just hovering - lets color
-    console.log(event)
+    // console.log(event)
     // var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
     var isModalOpen = Metro.dialog.isOpen('#statusmodal') // dont raycast if modal is over the viewer
     if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
