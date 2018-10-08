@@ -247,7 +247,7 @@ button:focus {outline:0 !important;}
 }
 
 #scalewindow {
-  min-width: 350px;
+  min-width: 380px;
   position: absolute;
   /* padding: 8px; */
   background: rgba(255, 255, 255, 0.92);

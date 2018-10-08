@@ -14,11 +14,12 @@ function showScaleWindow(object) {
   // console.log(width, height, left, bottom)
   var template = `
 
-  <ul class="tabs-expand-sm" data-role="tabs">
+  <ul data-role="tabs" data-expand="true">
     <li><a href="#_SCALE">SCALE</a></li>
     <li><a href="#_POSITION">POSITION</a></li>
     <li><a href="#_ROTATION">ROTATION</a></li>
   </ul>
+
 
     <div id="_SCALE" class="tab-pane fade show active">
       <i class="fas fa-ruler"></i> <b>Scale</b>: <small>` + object.name + `</small>
