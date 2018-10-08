@@ -119,7 +119,7 @@ $(document).ready(function() {
   `
   $("body").append(modal);
 
-  $("#CreateCircle").on("click", function() {
+  $("#CreateCircle").on("click", function(event) {
     console.log("Clicked on CreateCircle")
     event.preventDefault();
     var radius = $("#circleRadius").val();
@@ -127,7 +127,7 @@ $(document).ready(function() {
     addCircle(radius, segments);
   });
 
-  $("#CreateRect").on("click", function() {
+  $("#CreateRect").on("click", function(event) {
     event.preventDefault();
     var width = $("#rectX").val();
     var height = $("#rectY").val();
