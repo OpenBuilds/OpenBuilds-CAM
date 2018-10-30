@@ -221,7 +221,7 @@ button:focus {outline:0 !important;}
 #col2 {
     /* border-right: dashed 1px #aaa; */
     float:right;
-    width: 350px;
+    /* width: 350px; */
     height: 100%;
     padding: 2px 5px 5px 5px;
     /*overflow-y: auto;*/
@@ -230,7 +230,7 @@ button:focus {outline:0 !important;}
 }
 #col1 {
     float:left;
-    width:calc(100% - 351px);
+    /* width:calc(100% - 351px); */
     height: 100%;
     padding: 2px 5px 5px 5px;
 }
@@ -713,7 +713,6 @@ d-grid {border: none; padding: 20px;}
 }
 
 .jobsetupchild td:first-child {
-    background: url(tablebg.gif) 4px 54% no-repeat;
     padding-left: 15px;
     text-align: left;
 }
@@ -798,10 +797,10 @@ d-grid {border: none; padding: 20px;}
 
 #draganddrop {
     position: absolute;
-    top:80px;
-    bottom:30px;
-    left:85px;
-    right:20px;
+    top:20px;
+    bottom:70px;
+    left:50px;
+    right:50px;
     z-index:10;
     background-color: rgba(250, 250, 250, 0.8);
     font-size: 20px;

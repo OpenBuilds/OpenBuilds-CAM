@@ -1,5 +1,5 @@
 /*
- * Metro 4 Components Library v4.2.24 build 702 (https://metroui.org.ua)
+ * Metro 4 Components Library v4.2.26 build 704 (https://metroui.org.ua)
  * Copyright 2018 Sergey Pimenov
  * Licensed under MIT
  */
@@ -8,6 +8,33 @@
 }
 .bg-transparent {
   background-color: transparent !important;
+}
+.bg-hover:hover {
+  background-color: rgba(29, 29, 29, 0.1) !important;
+}
+.bg-hover2:hover {
+  background-color: rgba(29, 29, 29, 0.5) !important;
+}
+.bg-hover-light:hover {
+  background-color: rgba(255, 255, 255, 0.01) !important;
+}
+.bg-hover-light1:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+.bg-hover-light2:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+.bg-hover-light3:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+.bg-facebook {
+  background-color: #60b5f0;
+}
+.bg-twitter {
+  background-color: #4464a2;
+}
+.bg-github {
+  background-color: #7B7E8C;
 }
 .bd-default {
   border-color: #dfdfdf !important;

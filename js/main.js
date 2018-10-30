@@ -102,7 +102,7 @@ function readFile(evt) {
 
 // drag/drop
 function initDragDrop() {
-  var dropTarget = document.getElementById('container1');
+  var dropTarget = document.getElementById('renderArea');
 
   var onDragLeave = function(e) {
     e.stopPropagation();

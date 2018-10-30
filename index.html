@@ -18,16 +18,13 @@
 			window.location = "mobile.html";
 		}
 	</script>
-	<!-- <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap4/css/bootstrap.min.css" /> -->
-	<link type="text/css" rel="stylesheet" media="all" href="css/bootstrap4-fixes.css" />
 	<link rel="stylesheet" type="text/css" href="lib/jquery/fontselect/styles/fontselect-bootstrap4.css" />
-	<!-- <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet"> -->
+	<link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
 	<link rel="stylesheet" href="lib/metro4/css/metro-all.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="css/sidebarmenu.css" />
-	<!-- <link type="text/css" rel="stylesheet" media="all" href="css/font-awesome.css" /> -->
 	<link rel="manifest" href="/manifest.json">
 </head>
 
@@ -38,378 +35,382 @@
 				<i class="fas fa-square fg-red"></i>
 				<i class="fa fa-object-group fg-white" data-fa-transform="shrink-6"></i>
 			</span>
-		<div id="col1">
-			<div class="window drop-shadow" style="height: calc(100% - 10px);">
-				<div class="window-caption bg-openbuilds">
-					<span class="icon mif-cog"></span>
-					<span class="title">OpenBuilds CAM - GCODE Generator - Public Beta</span>
-				</div>
-				<div class="window-content pt-2" style="overflow-y:hidden; ">
-					<nav data-role="ribbonmenu">
-						<ul class="tabs-holder">
-							<li><a href="#section-workspace">Workspace</a></li>
-							<li><a href="#section-settings">Settings</a></li>
-						</ul>
-						<div class="content-holder">
-							<div class="section" id="section-workspace">
-								<div class="group">
-									<div class="ribbon-split-button">
-										<div class="ribbon-main btn-file" title="Open a drawing">
-											<span class="icon">
-														<span class="far fa-folder-open fg-amber"></span>
-											</span>
-											<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple />
+		<div data-role="splitter" data-split-sizes="70,30" class="h-100">
+			<div id="col1">
+				<div class="window drop-shadow" style="height: calc(100% - 10px);">
+					<div class="window-caption bg-openbuilds">
+						<span class="icon mif-cog"></span>
+						<span class="title">OpenBuilds CAM - GCODE Generator - Public Beta</span>
+					</div>
+					<div class="window-content pt-2" style="overflow-y:hidden; ">
+						<nav data-role="ribbonmenu">
+							<ul class="tabs-holder">
+								<li><a href="#section-workspace">Workspace</a></li>
+								<li><a href="#section-settings">Settings</a></li>
+							</ul>
+							<div class="content-holder">
+								<div class="section" id="section-workspace">
+									<div class="group">
+										<div class="ribbon-split-button">
+											<div class="ribbon-main btn-file" title="Open a drawing">
+												<span class="icon">
+															<span class="far fa-folder-open fg-amber"></span>
+												</span>
+												<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple />
+											</div>
+											<span class="ribbon-split dropdown-toggle">Open<br>Drawing</span>
+											<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" style="text-align: left;">
+												<li><a href="#" onclick="$('#file').trigger('click');">Open File (DXF, SVG, Image, Gerber, Excellon)</a></li>
+												<li class="divider"></li>
+												<li><a href="#" onclick="helloWorld();">Open "Hello World" example</a></li>
+												<li><a href="#" onclick="Metro.dialog.open('#partslibModal')">Import from Parts Library</a></li>
+												<!-- <li><a href="#" onclick="Metro.dialog.open('#gearGenModal')">Create using Involute Gearset Generator</a></li> -->
+											</ul>
 										</div>
-										<span class="ribbon-split dropdown-toggle">Open<br>Drawing</span>
-										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" style="text-align: left;">
-											<li><a href="#" onclick="$('#file').trigger('click');">Open File (DXF, SVG, Image, Gerber, Excellon)</a></li>
-											<li class="divider"></li>
-											<li><a href="#" onclick="helloWorld();">Open "Hello World" example</a></li>
-											<li><a href="#" onclick="Metro.dialog.open('#partslibModal')">Import from Parts Library</a></li>
-											<!-- <li><a href="#" onclick="Metro.dialog.open('#gearGenModal')">Create using Involute Gearset Generator</a></li> -->
-										</ul>
+										<span class="title">File</span>
 									</div>
-									<span class="title">File</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeText ');">
-													<span class="icon">
-														<span class="fas fa-font"></span>
-													</span>
-													<span class="caption">Text</span>
-												</button>
-										<br>
+									<div class="group">
+										<div class="ribbon-group">
+											<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeText ');">
+														<span class="icon">
+															<span class="fas fa-font"></span>
+														</span>
+														<span class="caption">Text</span>
+													</button>
+											<br>
 
-										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeCircle ');">
-													<span class="icon">
-														<span class="far fa-circle"></span>
-													</span>
-													<span class="caption">Circle</span>
-												</button>
-										<br>
+											<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeCircle ');">
+														<span class="icon">
+															<span class="far fa-circle"></span>
+														</span>
+														<span class="caption">Circle</span>
+													</button>
+											<br>
 
-										<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeRect ');">
-													<span class="icon">
-														<span class="far fa-square"></span>
-													</span>
-													<span class="caption">Rectangle</span>
-												</button>
-									</div>
-									<span class="title">Insert</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
-			                    <span class="icon">
-			                      <span class="far fa-file"></span>
-			                    </span>
-			                    <span class="caption">New</span>
-			                  </button>
-										<br>
-										<div class="ribbon-icon-button btn-file" title="Import Workspace">
-											<span class="icon">
-														<i class="far fa-folder-open"></i>
-													</span>
-											<input type="file" id="workspaceImport" accept=".json" multiple style="height: 26px;" />
-											<span class="caption pl-1"> Import</span>
+											<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeRect ');">
+														<span class="icon">
+															<span class="far fa-square"></span>
+														</span>
+														<span class="caption">Rectangle</span>
+													</button>
 										</div>
-										<br>
-										<button class="ribbon-icon-button" onclick="exportWorkspace();">
-			                    <span class="icon">
-			                      <span class="fas fa-download"></span>
-			                    </span>
-			                    <span class="caption">Export</span>
-			                  </button>
+										<span class="title">Insert</span>
 									</div>
-									<span class="title">Workspace</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="resetView();">
-			                    <span class="icon">
-			                      <span class="fa fa-eye"></span>
-			                    </span>
-			                    <span class="caption">Job</span>
-			                  </button>
-										<br>
-										<button class="ribbon-icon-button" onclick="resetView(scene.getObjectByName('Grid'));">
-			                    <span class="icon">
-			                      <span class="fa fa-th"></span>
-			                    </span>
-			                    <span class="caption">Grid</span>
-			                  </button>
+									<div class="group">
+										<div class="ribbon-group">
+											<button class="ribbon-icon-button" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
+				                    <span class="icon">
+				                      <span class="far fa-file"></span>
+				                    </span>
+				                    <span class="caption">New</span>
+				                  </button>
+											<br>
+											<div class="ribbon-icon-button btn-file" title="Import Workspace">
+												<span class="icon">
+															<i class="far fa-folder-open"></i>
+														</span>
+												<input type="file" id="workspaceImport" accept=".json" multiple style="height: 26px;" />
+												<span class="caption pl-1"> Import</span>
+											</div>
+											<br>
+											<button class="ribbon-icon-button" onclick="exportWorkspace();">
+				                    <span class="icon">
+				                      <span class="fas fa-download"></span>
+				                    </span>
+				                    <span class="caption">Export</span>
+				                  </button>
+										</div>
+										<span class="title">Workspace</span>
 									</div>
-									<span class="title">Zoom</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="undo()">
-													<span class="icon">
-														<span class="fas fa-undo"></span>
-													</span>
-													<span class="caption">Undo</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" onclick="redo()">
-													<span class="icon">
-														<span class="fas fa-redo"></span>
-													</span>
-													<span class="caption">Redo</span>
-												</button>
+									<div class="group">
+										<div class="ribbon-group">
+											<button class="ribbon-icon-button" onclick="resetView();">
+				                    <span class="icon">
+				                      <span class="fa fa-eye"></span>
+				                    </span>
+				                    <span class="caption">Job</span>
+				                  </button>
+											<br>
+											<button class="ribbon-icon-button" onclick="resetView(scene.getObjectByName('Grid'));">
+				                    <span class="icon">
+				                      <span class="fa fa-th"></span>
+				                    </span>
+				                    <span class="caption">Grid</span>
+				                  </button>
+										</div>
+										<span class="title">Zoom</span>
 									</div>
-									<span class="title">Undo/Redo</span>
-								</div>
-							</div>
-							<div class="section" id="section-settings">
-								<div class="group">
-									<button class="ribbon-button" onclick="alreadyDetected = false; checkIfDriverIsInstalled(); Metro.dialog.open('#settingsmodal');">
-										<span class="icon">
-										 <span class="fa fa-fw fa-cogs"></span>
-									 </span>
-									 <span class="caption">Settings</span>
-									</button>
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="getChangelog()">
-													<span class="icon">
-														<span class="fa fa-fw fa-list"></span>
-													</span>
-													<span class="caption">Changelog</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" onclick="window.open('https://github.com/openbuilds/cam/fork', '_blank').focus();">
-													<span class="icon">
-														<span class="fas fa-code-branch"></span>
-													</span>
-													<span class="caption">Fork <span id="forksCount" class="tally success"> 0 </span></span>
-												</button>
+									<div class="group">
+										<div class="ribbon-group">
+											<button class="ribbon-icon-button" onclick="undo()">
+														<span class="icon">
+															<span class="fas fa-undo"></span>
+														</span>
+														<span class="caption">Undo</span>
+													</button>
+											<br>
+											<button class="ribbon-icon-button" onclick="redo()">
+														<span class="icon">
+															<span class="fas fa-redo"></span>
+														</span>
+														<span class="caption">Redo</span>
+													</button>
+										</div>
+										<span class="title">Undo/Redo</span>
 									</div>
-									<span class="title">App</span>
 								</div>
-								<div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" onclick="undo()">
-													<span class="icon">
-														<span class="fas fa-undo"></span>
-													</span>
-													<span class="caption">Undo</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" onclick="redo()">
-													<span class="icon">
-														<span class="fas fa-redo"></span>
-													</span>
-													<span class="caption">Redo</span>
-												</button>
+								<div class="section" id="section-settings">
+									<div class="group">
+										<button class="ribbon-button" onclick="alreadyDetected = false; checkIfDriverIsInstalled(); Metro.dialog.open('#settingsmodal');">
+											<span class="icon">
+											 <span class="fa fa-fw fa-cogs"></span>
+										 </span>
+										 <span class="caption">Settings</span>
+										</button>
+										<div class="ribbon-group">
+											<button class="ribbon-icon-button" onclick="getChangelog()">
+														<span class="icon">
+															<span class="fa fa-fw fa-list"></span>
+														</span>
+														<span class="caption">Changelog</span>
+													</button>
+											<br>
+											<button class="ribbon-icon-button" onclick="window.open('https://github.com/openbuilds/cam/fork', '_blank').focus();">
+														<span class="icon">
+															<span class="fas fa-code-branch"></span>
+														</span>
+														<span class="caption">Fork <span id="forksCount" class="tally success"> 0 </span></span>
+													</button>
+										</div>
+										<span class="title">App</span>
 									</div>
-									<span class="title">Undo/Redo</span>
+									<div class="group">
+										<div class="ribbon-group">
+											<button class="ribbon-icon-button" onclick="undo()">
+														<span class="icon">
+															<span class="fas fa-undo"></span>
+														</span>
+														<span class="caption">Undo</span>
+													</button>
+											<br>
+											<button class="ribbon-icon-button" onclick="redo()">
+														<span class="icon">
+															<span class="fas fa-redo"></span>
+														</span>
+														<span class="caption">Redo</span>
+													</button>
+										</div>
+										<span class="title">Undo/Redo</span>
+									</div>
 								</div>
-							</div>
 
+							</div>
+						</nav>
+						<div id="renderArea">
+							<!-- #draganddrop -->
+							<div id="draganddrop" style="display: none;">
+								<div class="well">Drop File(s) Here!</div>
+								<img src="images/draganddrop.svg" />
+							</div>
+							<div class="sidemenu">
+								<div class="tbtn tbtnactive mouseSelectBtn" onclick="mouseSelectMode();" title="Mouse Select Mode">
+									<i class="fa fas fa-mouse-pointer" aria-hidden="true"></i>
+								</div>
+
+								<div class="tbtn mouseMoveBtn" onclick="mouseMoveMode();" title="Mouse Move Mode">
+									<i class="fas fa-arrows-alt " aria-hidden="true"></i>
+								</div>
+
+								<div class="tbtn mouseDelBtn" onclick="mouseEraseMode();" title="Mouse Erase Mode">
+									<i class="fas fa-eraser " aria-hidden="true"></i>
+								</div>
+								<!-- <hr class="bg-grayBlue"> -->
+								<div class="tbtn mouseScaleBtn" onclick="mouseScaleMode();" title="Mouse Scale/Move/Rotate Mode">
+									<i class="fas fa-ruler mouseScaleBtn" aria-hidden="true"></i>
+								</div>
+
+							</div>
+							<div id="selection" style="visibility: hidden;"></div>
 						</div>
-					</nav>
-					<div id="renderArea">
-						<div class="sidemenu">
-							<div class="tbtn tbtnactive mouseSelectBtn" onclick="mouseSelectMode();" title="Mouse Select Mode">
-								<i class="fa fas fa-mouse-pointer" aria-hidden="true"></i>
-							</div>
 
-							<div class="tbtn mouseMoveBtn" onclick="mouseMoveMode();" title="Mouse Move Mode">
-								<i class="fas fa-arrows-alt " aria-hidden="true"></i>
-							</div>
-
-							<div class="tbtn mouseDelBtn" onclick="mouseEraseMode();" title="Mouse Erase Mode">
-								<i class="fas fa-eraser " aria-hidden="true"></i>
-							</div>
-							<!-- <hr class="bg-grayBlue"> -->
-							<div class="tbtn mouseScaleBtn" onclick="mouseScaleMode();" title="Mouse Scale/Move/Rotate Mode">
-								<i class="fas fa-ruler mouseScaleBtn" aria-hidden="true"></i>
-							</div>
-
-						</div>
-						<div id="selection" style="visibility: hidden;"></div>
-					</div>
-
-					<div id="scalewindow" style="visibility: hidden;" data-role="draggable" data-drag-element=".drag-element">
-						<div class="window">
-							<div class="window-caption drag-element bg-openbuilds">
-								<span class="icon fas fa-ruler"></span>
-								<span class="title">Transform</span>
-								<div class="buttons">
-									<span class="btn-close" onclick="scalewindow.style.visibility = 'hidden';"></span>
+						<div id="scalewindow" style="visibility: hidden;" data-role="draggable" data-drag-element=".drag-element">
+							<div class="window">
+								<div class="window-caption drag-element bg-openbuilds">
+									<span class="icon fas fa-ruler"></span>
+									<span class="title">Transform</span>
+									<div class="buttons">
+										<span class="btn-close" onclick="scalewindow.style.visibility = 'hidden';"></span>
+									</div>
+								</div>
+								<div class="window-content p-2" id="scalewindowcontent">
+									<!--  -->
 								</div>
 							</div>
-							<div class="window-content p-2" id="scalewindowcontent">
-								<!--  -->
-							</div>
+						</div>
+
+						<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;">
 						</div>
 					</div>
-
-					<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;">
+					<div id="helpoverlay">
+						<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
 					</div>
-				</div>
-				<div id="helpoverlay">
-					<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
-				</div>
-				<div id="simoverlay" class="text-center">
-					<button class="button dark drop-shadow" onclick="simSpeed();"><span class="icon"><span class="fas fa-tachometer-alt"></span></span><span class="caption"><span id="simspeedval">1</span>x</span></button>
-					<button id="runSimBtn" title="Run simulation" class="button dark drop-shadow" onclick="sim(0)" disabled><i class="fas fa-fighter-jet"></i> Simulate</button>&nbsp;
-					<button id="stopSimBtn" style="display: none;" title="Stop Sim" class="button dark drop-shadow" onclick="simstop()"><i class="fas fa-stop"></i> Stop Sim</button>&nbsp;
-					<button id="resetViewBtn" title="Stop Sim" class="button dark drop-shadow" onclick="resetView(object)"><i class="fas fa-stop"></i> Reset View</button>&nbsp;
+					<div id="simoverlay" class="text-center">
+						<button class="button dark drop-shadow" onclick="simSpeed();"><span class="icon"><span class="fas fa-tachometer-alt"></span></span><span class="caption"><span id="simspeedval">1</span>x</span></button>
+						<button id="runSimBtn" title="Run simulation" class="button dark drop-shadow" onclick="sim(0)" disabled><i class="fas fa-fighter-jet"></i> Simulate</button>&nbsp;
+						<button id="stopSimBtn" style="display: none;" title="Stop Sim" class="button dark drop-shadow" onclick="simstop()"><i class="fas fa-stop"></i> Stop Sim</button>&nbsp;
+						<button id="resetViewBtn" title="Stop Sim" class="button dark drop-shadow" onclick="resetView(object)"><i class="fas fa-stop"></i> Reset View</button>&nbsp;
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- #col2 (main content)-->
-		<div id="col2">
-			<div style="height: 100%; overflow-y:hidden; padding-right:5px;">
+			<!-- #col2 (main content)-->
+			<div id="col2">
+				<!-- <div style="height: 100%; overflow-y:hidden; padding-right:5px;"> -->
 
-				<div id="renderDocuments" class="window drop-shadow" style="height: calc(40% - 165px);">
-					<div class="window-caption bg-openbuilds">
-						<span class="icon far fa-file-alt"></span>
-						<span class="title">Documents</span>
-					</div>
-					<div id="selectoverlay" class="text-center">
-						<button class="button small dark outline bg-white drop-shadow" id="selectAll"><span class="far fa-check-square"></span> All</button>
-						<button class="button small dark outline bg-white drop-shadow" id="selectNone"><span class="far fa-square"></span> None</button>
-						<button class="button small dark outline bg-white drop-shadow" id="selectInv"><span class="fas fa-check"></span> Invert</button>
-					</div>
-					<div class="window-content p-2" style="overflow-y:scroll;">
-						<!-- Documents Here -->
-						<div class="pt-2" id="documentactivity" style="display: none;">
-							<center>
-								<h5>Please Wait </h5>
-								<div data-role="activity" data-type="ring" data-style="dark"></div>
-								<h6>Parsing Documents...</h6>
+				<div data-role="splitter" data-split-mode="vertical" class="h-100">
+
+					<div id="renderDocuments" class="window drop-shadow">
+						<div class="window-caption bg-openbuilds">
+							<span class="icon far fa-file-alt"></span>
+							<span class="title">Documents</span>
 						</div>
-
-						<div id="documentstree">
-							<div id="nodocuments" style="display:none;">
-								<p class="text-secondary">Please load some vectors from DXF, SVG or Images using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open Drawing</kbd> button, or insert from the inbuilt library and tools </p>
+						<div id="selectoverlay" class="text-center">
+							<button class="button small dark outline bg-white drop-shadow" id="selectAll"><span class="far fa-check-square"></span> All</button>
+							<button class="button small dark outline bg-white drop-shadow" id="selectNone"><span class="far fa-square"></span> None</button>
+							<button class="button small dark outline bg-white drop-shadow" id="selectInv"><span class="fas fa-check"></span> Invert</button>
+						</div>
+						<div class="window-content p-2" style="overflow-y:scroll;">
+							<!-- Documents Here -->
+							<div class="pt-2" id="documentactivity" style="display: none;">
+								<center>
+									<h5>Please Wait </h5>
+									<div data-role="activity" data-type="ring" data-style="dark"></div>
+									<h6>Parsing Documents...</h6>
 							</div>
-							<ul data-role="treeview pl-0" id="left-tree-view">
+
+							<div id="documentstree">
+								<div id="nodocuments" style="display:none;">
+									<p class="text-secondary">Please load some vectors from DXF, SVG or Images using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open Drawing</kbd> button, or insert from the inbuilt library and tools </p>
+								</div>
+								<ul data-role="treeview pl-0" id="left-tree-view">
+								</ul>
+							</div>
+
+						</div>
+
+					</div>
+					<div class="window drop-shadow mt-2">
+						<div class="window-caption bg-openbuilds">
+							<span class="icon fas fa-tasks"></span>
+							<span class="title">Toolpaths</span>
+							<div class="buttons">
+								<!-- <button type="button " id="generatetpgcode2" class="button small bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button> -->
+							</div>
+						</div>
+						<div id="tpathoverlay" class="text-center">
+							<button id="addJobBtn" class="button small dark outline drop-shadow dropdown-toggle"><span class="icon fa fa-plus"></span> Add <span class="selectCount" style="display: none;"> 0 </span></button>
+							<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="toolpathsmenu" data-toggle-element="#addJobBtn">
+								<li><a href="#" onclick="addJob(-1);"><span class="icon fa fa-plus"></span> Create a new Operation</a></li>
 							</ul>
+							<button class="button small dark outline drop-shadow" title="Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes icon"></span>Generate GCODE</button>
+							<button class="button small dark outline drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span id="gcodeexporticon" class="fa fa-save icon fg-gray"></span></button>
+							<button class="button small dark outline drop-shadow" title="Clear GCODE" id="gcodetrashbtn2" onclick="trashGcode();"><span id="trashicon" class="fa fa-trash fg-gray icon"></span></button>
 						</div>
 
-					</div>
-
-				</div>
-				<div class="window drop-shadow mt-2" style="height: calc(60% - 165px);">
-					<div class="window-caption bg-openbuilds">
-						<span class="icon fas fa-tasks"></span>
-						<span class="title">Toolpaths</span>
-						<div class="buttons">
-							<!-- <button type="button " id="generatetpgcode2" class="button small bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button> -->
+						<div class="window-content p-2" style="overflow-y:auto;">
+							<div class="pt-2" id="toolpathactivity" style="display: none;">
+								<center>
+									<h5>Please Wait </h5>
+									<div data-role="activity" data-type="ring" data-style="dark"></div>
+									<h6>Calculating Toolpaths...</h6>
+							</div>
+							<div id="toolpathtree">
+							</div>
+							<!-- Toolpaths Here -->
 						</div>
 					</div>
-					<div id="tpathoverlay" class="text-center">
-						<button id="addJobBtn" class="button small dark outline drop-shadow dropdown-toggle"><span class="icon fa fa-plus"></span> Add <span class="selectCount" style="display: none;"> 0 </span></button>
-						<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="toolpathsmenu" data-toggle-element="#addJobBtn">
-							<li><a href="#" onclick="addJob(-1);"><span class="icon fa fa-plus"></span> Create a new Operation</a></li>
-						</ul>
-						<button class="button small dark outline drop-shadow" title="Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes icon"></span>Generate GCODE</button>
-						<button class="button small dark outline drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span id="gcodeexporticon" class="fa fa-save icon fg-gray"></span></button>
-						<button class="button small dark outline drop-shadow" title="Clear GCODE" id="gcodetrashbtn2" onclick="trashGcode();"><span id="trashicon" class="fa fa-trash fg-gray icon"></span></button>
-					</div>
 
-					<div class="window-content p-2" style="overflow-y:auto;">
-						<div class="pt-2" id="toolpathactivity" style="display: none;">
-							<center>
-								<h5>Please Wait </h5>
-								<div data-role="activity" data-type="ring" data-style="dark"></div>
-								<h6>Calculating Toolpaths...</h6>
+					<div class="window mt-2 drop-shadow">
+						<div class="window-caption bg-openbuilds">
+							<span class="icon fas fa-tasks"></span>
+							<span class="title">Connection</span>
 						</div>
-						<div id="toolpathtree">
-						</div>
-						<!-- Toolpaths Here -->
-					</div>
-				</div>
+						<div class="window-content p-2" id="connectiontree" style="overflow-y:auto;">
 
-				<div class="window mt-2 drop-shadow" style="height: 330px;">
-					<div class="window-caption bg-openbuilds">
-						<span class="icon fas fa-tasks"></span>
-						<span class="title">Connection</span>
-					</div>
-					<div class="window-content p-2" id="connectiontree" style="overflow-y:auto;">
+							<div class="row">
+								<div class="cell">
+									<div id="noDriverDetected" style="display:none;">
+										<nav data-role="ribbonmenu">
+											<ul class="tabs-holder">
+												<li><a href="#tab-win"><i class="fab fa-windows"></i> Windows</a></li>
+												<li><a href="#tab-mac"><i class="fab fa-apple"></i> Mac</a></li>
+												<li><a href="#tab-linux"><i class="fab fa-linux"></i> Linux</a></li>
+											</ul>
 
-						<div class="row">
-							<div class="cell">
-								<div id="noDriverDetected" style="display:none;">
-									<nav data-role="ribbonmenu">
-										<ul class="tabs-holder">
-											<li><a href="#tab-win"><i class="fab fa-windows"></i> Windows</a></li>
-											<li><a href="#tab-mac"><i class="fab fa-apple"></i> Mac</a></li>
-											<li><a href="#tab-linux"><i class="fab fa-linux"></i> Linux</a></li>
-										</ul>
-
-										<div class="content-holder">
-											<div class="section" id="tab-win">
-												<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-													<a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows Driver (EXE)</a>
-													<a href="#" class="info omdavailversion">v1.0.0</a>
-												</div><br>
-											</div>
-											<div class="section" id="tab-mac">
-												<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-													<a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> OSX Driver (DMG)</a>
-													<a href="#" class="info omdavailversion">v1.0.0</a>
-												</div><br>
-											</div>
-											<div class="section" id="tab-linux">
-												<div>
+											<div class="content-holder">
+												<div class="section" id="tab-win">
 													<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-														<a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux Driver (DEB)</a>
+														<a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows Driver (EXE)</a>
 														<a href="#" class="info omdavailversion">v1.0.0</a>
-													</div>
-													<p>
+													</div><br>
+												</div>
+												<div class="section" id="tab-mac">
+													<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
+														<a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> OSX Driver (DMG)</a>
+														<a href="#" class="info omdavailversion">v1.0.0</a>
+													</div><br>
+												</div>
+												<div class="section" id="tab-linux">
+													<div>
 														<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-															<a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux Driver (AppImage)</a>
+															<a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux Driver (DEB)</a>
 															<a href="#" class="info omdavailversion">v1.0.0</a>
 														</div>
+														<p>
+															<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
+																<a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux Driver (AppImage)</a>
+																<a href="#" class="info omdavailversion">v1.0.0</a>
+															</div>
+													</div>
 												</div>
 											</div>
-										</div>
-									</nav>
+										</nav>
 
 
-									<p class="text-secondary" id="installDriverMessage">Connecting to a machine, requires that you have the OpenBuilds Machine Driver installed.</p>
-									<p class="text-small" id="installDriverHelp">If you have not installed it yet, you can download it above, or if you have the latest version installed already, please start it.<br> If you still see this message, we are experiencing a problem detecting your driver<br> You can also export
-										GCODE and send it to your machine</p>
+										<p class="text-secondary" id="installDriverMessage">Connecting to a machine, requires that you have the OpenBuilds Machine Driver installed.</p>
+										<p class="text-small" id="installDriverHelp">If you have not installed it yet, you can download it above, or if you have the latest version installed already, please start it.<br> If you still see this message, we are experiencing a problem detecting your driver<br> You can also export
+											GCODE and send it to your machine</p>
 
+									</div>
+
+									<div id="DriverDetected" style="display:none;">
+
+										<button class="image-button success" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" disabled style="width: 100%">
+										    <span class="icon"><span class="fas fa-play"></span></span>
+				    						<span class="caption">Transfer GCODE to Machine Driver</span>
+											</button>
+										<p class="text-small" id="detectedVersion"></p>
+										<p class="text-small" id="validDocuments"><i class='fas fa-times fa-fw fg-red'></i>2. No Documents yet</p>
+										<p class="text-small" id="validToolpaths"><i class='fas fa-times fa-fw fg-red'></i>3. No Toolpaths yet</p>
+										<p class="text-small" id="validGcode"><i class='fas fa-times fa-fw fg-red'></i>4. No GCODE yet</p>
+										<br>
+										<button class="image-button" id="activateDriver" onclick="activateDriver()" style="width: 100%">
+												<span class="icon"><span class="far fa-window-restore"></span></span>
+												<span class="caption">Show Driver Window</span>
+											</button>
+									</div>
 								</div>
-
-								<div id="DriverDetected" style="display:none;">
-
-									<button class="image-button success" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" disabled style="width: 100%">
-								    <span class="icon"><span class="fas fa-play"></span></span>
-		    						<span class="caption">Transfer GCODE to Machine Driver</span>
-									</button>
-									<p class="text-small" id="detectedVersion"></p>
-									<p class="text-small" id="validDocuments"><i class='fas fa-times fa-fw fg-red'></i>2. No Documents yet</p>
-									<p class="text-small" id="validToolpaths"><i class='fas fa-times fa-fw fg-red'></i>3. No Toolpaths yet</p>
-									<p class="text-small" id="validGcode"><i class='fas fa-times fa-fw fg-red'></i>4. No GCODE yet</p>
-									<br>
-									<button class="image-button" id="activateDriver" onclick="activateDriver()" style="width: 100%">
-										<span class="icon"><span class="far fa-window-restore"></span></span>
-										<span class="caption">Show Driver Window</span>
-									</button>
-								</div>
+								<!-- <div class="cell">
+										<img src="driver.png" />
+									</div> -->
 							</div>
-							<!-- <div class="cell">
-								<img src="driver.png" />
-							</div> -->
-						</div>
 
+						</div>
 					</div>
 				</div>
+				<!-- </div> -->
 			</div>
 		</div>
-	</div>
-
-	<!-- #draganddrop -->
-	<div id="draganddrop" style="display: none;">
-		<div class="well">Drop File(s) Here!</div>
-		<img src="images/draganddrop.svg" />
 	</div>
 
 	<!-- Modals Divs -->
@@ -552,8 +553,8 @@
 <script type="text/javascript" src="lib/jquery/jquery-ui.js"></script>
 <script type="text/javascript" src="lib/jquery/jquery.ui.touch-punch.min.js"></script>
 
-<link type="text/css" rel="stylesheet" media="all" href="lib/bootoast/src/bootoast.css" />
-<script type="text/javascript" src="lib/bootoast/src/bootoast.js"></script>
+<!-- <link type="text/css" rel="stylesheet" media="all" href="lib/bootoast/src/bootoast.css" />
+<script type="text/javascript" src="lib/bootoast/src/bootoast.js"></script> -->
 
 <!-- METRO -->
 <script type="text/javascript" src="lib/metro4/js/metro.min.js"></script>
