@@ -28,13 +28,24 @@ function drawDXF(file, fileName) {
 
   var fileLayers = [];
 
+  var errorcount = 0
+
   for (i = 0; i < dxf2.entities.length; i++) {
     fileLayers.push(dxf2.entities[i].layer)
     // console.log('drawEntity - DXF: ' + i)
-    drawEntity(i, dxf2.entities[i]);
+    var dxfentity = drawEntity(i, dxf2.entities[i]);
+    if (dxfentity) {
+      fileObject.add(dxfentity);
+    } else {
+      errorcount++
+    }
     // console.log( dxf2.entities[i].type + i)
   };
 
+  if (errorcount > 0) {
+    var message = fileName + " contained some unsupported entities. These were ignored."
+    Metro.toast.create(message, null, 6000, 'bg-amber');
+  }
 
   fileObject.name = fileName;
   fileObject.userData.layers = $.unique(fileLayers);

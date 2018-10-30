@@ -158,8 +158,6 @@ function animateTree() {
         }
         var check = $('#checkbox_' + i + '_' + j);
         check.prop('checked', true);
-        tree._recheck(check);
-        // $('#checkbox_' + i + '_' + j).prop('checked', true);
         childselectcount++
         selectCount++
       } else if (child.type == "Line" && !child.userData.selected) {
@@ -170,18 +168,12 @@ function animateTree() {
         }
         var check = $('#checkbox_' + i + '_' + j);
         check.prop('checked', false);
-        var tree = $('#doctree').data('treeview');
-        if (tree) {
-          tree._recheck(check);
-        }
-        // $('#checkbox_' + i + '_' + j).prop('checked', false);
       }
     }
-    // if (childselectcount == obj.children.length) {
-    //   $('#checkbox_' + i).prop('checked', true);
-    // } else {
-    //   $('#checkbox_' + i).prop('checked', false);
-    // }
+    var tree = $('#doctree').data('treeview');
+    if (tree) {
+      tree._recheck(check);
+    }
   }
   if (selectCount > 0) {
     $("#tpaddpathParent").prop('disabled', false).removeClass('disabled')
