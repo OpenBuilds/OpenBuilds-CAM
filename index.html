@@ -26,6 +26,7 @@
 	<link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
 	<link rel="stylesheet" href="lib/metro4/css/metro-all.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/sidebarmenu.css" />
 	<!-- <link type="text/css" rel="stylesheet" media="all" href="css/font-awesome.css" /> -->
 	<link rel="manifest" href="/manifest.json">
 </head>
@@ -61,6 +62,8 @@
 										</div>
 										<span class="ribbon-split dropdown-toggle">Open<br>Drawing</span>
 										<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" style="text-align: left;">
+											<li><a href="#" onclick="$('#file').trigger('click');">Open File (DXF, SVG, Image, Gerber, Excellon)</a></li>
+											<li class="divider"></li>
 											<li><a href="#" onclick="helloWorld();">Open "Hello World" example</a></li>
 											<li><a href="#" onclick="Metro.dialog.open('#partslibModal')">Import from Parts Library</a></li>
 											<!-- <li><a href="#" onclick="Metro.dialog.open('#gearGenModal')">Create using Involute Gearset Generator</a></li> -->
@@ -141,64 +144,6 @@
 								</div>
 								<div class="group">
 									<div class="ribbon-group">
-										<button class="ribbon-icon-button active mouseSelectBtn" onclick="mouseSelectMode();">
-													<span class="icon">
-														<span class="fas fa-mouse-pointer"></span>
-													</span>
-													<span class="caption">Select</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button mouseMoveBtn" onclick="mouseMoveMode();">
-													<span class="icon">
-														<span class="fas fa-arrows-alt"></span>
-													</span>
-													<span class="caption">Move</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button mouseDelBtn" onclick="mouseEraseMode();">
-													<span class="icon">
-														<span class="fas fa-eraser"></span>
-													</span>
-													<span class="caption">Erase</span>
-												</button>
-									</div>
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button mouseScaleBtn" onclick="mouseScaleMode();">
-													<span class="icon">
-														<span class="fas fa-ruler"></span>
-													</span>
-													<span class="caption">Transform</span>
-												</button>
-									</div>
-									<span class="title">Mouse Mode</span>
-								</div>
-								<!-- <div class="group">
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button" id="selectAll">
-													<span class="icon">
-														<span class="far fa-check-square"></span>
-													</span>
-													<span class="caption">All</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" id="selectNone">
-													<span class="icon">
-														<span class="far fa-square"></span>
-													</span>
-													<span class="caption">None</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button" id="selectInv">
-													<span class="icon">
-														<span class="fas fa-check"></span>
-													</span>
-													<span class="caption">Invert</span>
-												</button>
-									</div>
-									<span class="title">Select</span>
-								</div> -->
-								<div class="group">
-									<div class="ribbon-group">
 										<button class="ribbon-icon-button" onclick="undo()">
 													<span class="icon">
 														<span class="fas fa-undo"></span>
@@ -243,39 +188,6 @@
 								</div>
 								<div class="group">
 									<div class="ribbon-group">
-										<button class="ribbon-icon-button active mouseSelectBtn" onclick="mouseSelectMode();">
-													<span class="icon">
-														<span class="fas fa-mouse-pointer"></span>
-													</span>
-													<span class="caption">Select</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button mouseMoveBtn" onclick="mouseMoveMode();">
-													<span class="icon">
-														<span class="fas fa-arrows-alt"></span>
-													</span>
-													<span class="caption">Move</span>
-												</button>
-										<br>
-										<button class="ribbon-icon-button mouseDelBtn" onclick="mouseEraseMode();">
-													<span class="icon">
-														<span class="fas fa-eraser"></span>
-													</span>
-													<span class="caption">Erase</span>
-												</button>
-									</div>
-									<div class="ribbon-group">
-										<button class="ribbon-icon-button mouseScaleBtn" onclick="mouseScaleMode();">
-													<span class="icon">
-														<span class="fas fa-ruler"></span>
-													</span>
-													<span class="caption">Transform</span>
-												</button>
-									</div>
-									<span class="title">Mouse Mode</span>
-								</div>
-								<div class="group">
-									<div class="ribbon-group">
 										<button class="ribbon-icon-button" onclick="undo()">
 													<span class="icon">
 														<span class="fas fa-undo"></span>
@@ -297,6 +209,24 @@
 						</div>
 					</nav>
 					<div id="renderArea">
+						<div class="sidemenu">
+							<div class="tbtn tbtnactive mouseSelectBtn" onclick="mouseSelectMode();" title="Mouse Select Mode">
+								<i class="fa fas fa-mouse-pointer" aria-hidden="true"></i>
+							</div>
+
+							<div class="tbtn mouseMoveBtn" onclick="mouseMoveMode();" title="Mouse Move Mode">
+								<i class="fas fa-arrows-alt " aria-hidden="true"></i>
+							</div>
+
+							<div class="tbtn mouseDelBtn" onclick="mouseEraseMode();" title="Mouse Erase Mode">
+								<i class="fas fa-eraser " aria-hidden="true"></i>
+							</div>
+							<!-- <hr class="bg-grayBlue"> -->
+							<div class="tbtn mouseScaleBtn" onclick="mouseScaleMode();" title="Mouse Scale/Move/Rotate Mode">
+								<i class="fas fa-ruler mouseScaleBtn" aria-hidden="true"></i>
+							</div>
+
+						</div>
 						<div id="selection" style="visibility: hidden;"></div>
 					</div>
 

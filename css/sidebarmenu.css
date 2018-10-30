@@ -1,0 +1,47 @@
+.sidemenu {
+  margin-left: 0px;
+  padding: 4px;
+  padding-top: 10px;
+  display: block;
+  background-color: #f5f6f7;
+  width: 40px;
+  height: calc(100% - 15px);
+  background-color: #f5f6f7;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  border-right: 1px solid #dadbdc;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.tbtn {
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: #f5f6f7;
+  padding-top: 5px;
+	width: 32px;
+	height: 32px;
+  color: #000;
+	display: flex;
+	justify-content: center;
+	visibility: visible;
+	/* & .fa { align-self: center; } */
+}
+
+.tbtn:hover {
+  border-color: #a4cef9;
+  background-color: rgba(164, 206, 249, 0.58);
+}
+
+.tbtn:active {
+  border-color: #1979ca;
+  background-color: rgba(164, 206, 249, 0.8) !important;
+}
+
+.tbtnactive {
+  box-shadow: 0.5px 0.5px 1px #555 inset;
+  border-color: #1979ca;
+  background-color: rgba(164, 206, 249, 0.2) !important;
+}

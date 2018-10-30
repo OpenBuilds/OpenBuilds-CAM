@@ -105,7 +105,7 @@ function fillTree() {
     }
 
   } else {
-    var instructions = `<p class="text-secondary">Please select some entities by clicking them in the viewer.  Hold down Ctrl to select more than one in the viewer. Add them to a toolpath using the <br><kbd class="bg-openbuilds">Toolpath</kbd> > <kbd class="bg-openbuilds"> <i class="fa fa-plus" aria-hidden="true"></i> Add selection to Job</kbd> button, or the <kbd class="bg-openbuilds"><i class="fa fa-plus"></i></kbd> shortcut button...</p>`
+    var instructions = `<p class="text-secondary">Please select some entities by clicking them in the viewer.  Hold down Ctrl to select more than one in the viewer, or from the Documents tree above. Add them to a toolpath using the <kbd class="bg-openbuilds"> <i class="fa fa-plus" aria-hidden="true"></i> Add</kbd> button</p>`
     $('#toolpathtree').append(instructions)
   } // End of if (toolpathsInScene.length > 0)
 

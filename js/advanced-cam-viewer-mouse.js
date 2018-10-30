@@ -5,10 +5,10 @@ var dragcontrols;
 function mouseSelectMode() {
   mouseState = "select"
   scalewindow.style.visibility = "hidden";
-  $(".mouseSelectBtn").addClass('active');
-  $(".mouseMoveBtn").removeClass('active');
-  $(".mouseDelBtn").removeClass('active');
-  $(".mouseScaleBtn").removeClass('active');
+  $(".mouseSelectBtn").addClass('tbtnactive');
+  $(".mouseMoveBtn").removeClass('tbtnactive');
+  $(".mouseDelBtn").removeClass('tbtnactive');
+  $(".mouseScaleBtn").removeClass('tbtnactive');
   if (dragcontrols) {
     dragcontrols.dispose();
   }
@@ -33,10 +33,10 @@ function mouseSelectMode() {
 function mouseMoveMode() {
   mouseState = "move"
   scalewindow.style.visibility = "hidden";
-  $(".mouseSelectBtn").removeClass('active');
-  $(".mouseMoveBtn").addClass('active');
-  $(".mouseDelBtn").removeClass('active');
-  $(".mouseScaleBtn").removeClass('active');
+  $(".mouseSelectBtn").removeClass('tbtnactive');
+  $(".mouseMoveBtn").addClass('tbtnactive');
+  $(".mouseDelBtn").removeClass('tbtnactive');
+  $(".mouseScaleBtn").removeClass('tbtnactive');
   // deselectAllObjects()
   var documents2 = scene.getObjectByName("Documents");
   dragcontrols = new THREE.DragControls(objectsInScene, camera, renderer.domElement);
@@ -47,10 +47,10 @@ function mouseMoveMode() {
 function mouseEraseMode() {
   mouseState = "delete"
   scalewindow.style.visibility = "hidden";
-  $(".mouseSelectBtn").removeClass('active');
-  $(".mouseMoveBtn").removeClass('active');
-  $(".mouseDelBtn").addClass('active');
-  $(".mouseScaleBtn").removeClass('active');
+  $(".mouseSelectBtn").removeClass('tbtnactive');
+  $(".mouseMoveBtn").removeClass('tbtnactive');
+  $(".mouseDelBtn").addClass('tbtnactive');
+  $(".mouseScaleBtn").removeClass('tbtnactive');
   deselectAllObjects()
   $('#renderArea').css('cursor', '');
   if (dragcontrols) {
@@ -65,10 +65,10 @@ function mouseScaleMode() {
   if (dragcontrols) {
     dragcontrols.dispose();
   }
-  $(".mouseSelectBtn").removeClass('active');
-  $(".mouseMoveBtn").removeClass('active');
-  $(".mouseDelBtn").removeClass('active');
-  $(".mouseScaleBtn").addClass('active');
+  $(".mouseSelectBtn").removeClass('tbtnactive');
+  $(".mouseMoveBtn").removeClass('tbtnactive');
+  $(".mouseDelBtn").removeClass('tbtnactive');
+  $(".mouseScaleBtn").addClass('tbtnactive');
   deselectAllObjects()
   helpoverlay.innerHTML = "<kbd>Left Mouse Click</kbd> = Select Entity to scale"
 };

@@ -55,7 +55,7 @@ $(document).ready(function() {
     </style>`
 
 
-    template += `<ul class="tabs-expand-sm" data-role="tabs">`
+    template += `<ul data-role="tabs" data-expand="true">`
     for (i = 0; i < data.children.length; i++) {
       template += `<li>
                       <a href="#` + data.children[i].name + `">
