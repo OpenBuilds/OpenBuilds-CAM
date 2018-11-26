@@ -432,7 +432,7 @@ $(document).ready(function() {
           <ul class="step-list">
 
             <li id="installDriversOnSettingspage">
-              <h6 class="fg-grayBlue">Install Drivers<br><small>Used to Connect to and control you machine. If you already have it installed, please run the driver, or</small></h6>
+              <h6 class="fg-grayBlue">Install CONTROL<br><small>Used to Connect to and control you machine. If you already have it installed, please run the application, or</small></h6>
               <hr class="bg-grayBlue">
               <div>
               <nav data-role="ribbonmenu">
@@ -445,25 +445,25 @@ $(document).ready(function() {
                 <div class="content-holder">
                   <div class="section" id="tab-win2">
                     <div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-                      <a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows Driver (EXE)</a>
+                      <a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows CONTROL (EXE)</a>
                       <a href="#" class="info omdavailversion">v1.0.0</a>
                     </div><br>
                   </div>
                   <div class="section" id="tab-mac2">
                     <div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-                      <a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> OSX Driver (DMG)</a>
+                      <a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> OSX CONTROL (DMG)</a>
                       <a href="#" class="info omdavailversion">v1.0.0</a>
                     </div><br>
                   </div>
                   <div class="section" id="tab-linux2">
                     <div>
                       <div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-                        <a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux Driver (DEB)</a>
+                        <a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux CONTROL (DEB)</a>
                         <a href="#" class="info omdavailversion">v1.0.0</a>
                       </div>
 
                         <div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-                          <a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux Driver (AppImage)</a>
+                          <a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux CONTROL (AppImage)</a>
                           <a href="#" class="info omdavailversion">v1.0.0</a>
                         </div>
                     </div>

@@ -14,7 +14,7 @@ function checkIfDriverIsInstalled() {
     timeout: 1000,
     error: function() {
       noDriver()
-      // console.log("Failed to retrieve OpenBuilds Machine Driver version information from the API at " + evt.target.url);
+      // console.log("Failed to retrieve OpenBuilds CONTROL version information from the API at " + evt.target.url);
     },
     success: function(msg) {
       if (!alreadyDetected) {
@@ -68,7 +68,7 @@ function hasDriver(version) {
   $("#DriverDetected").show();
   alreadyDetected = true;
   $('#installDriversOnSettingspage').hide();
-  $('#detectedVersion').html("<i class='fas fa-check fa-fw fg-green'></i>1. Detected OpenBuilds Machine Driver: " + version)
+  $('#detectedVersion').html("<i class='fas fa-check fa-fw fg-green'></i>1. Detected OpenBuilds CONTROL: " + version)
 }
 
 function noDriver() {
@@ -77,8 +77,8 @@ function noDriver() {
   $("#DriverDetected").hide();
   $("#noDriverDetected").show();
   $('#installDriversOnSettingspage').show();
-  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting the OpenBuilds Machine Driver")
-  $('#installDriverMessage').html('Connecting to a machine, requires that you have the OpenBuilds Machine Driver installed.')
+  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting OpenBuilds CONTROL")
+  $('#installDriverMessage').html('Connecting to a machine, requires that you have the OpenBuilds CONTROL installed.')
 }
 
 function oldDriver(version, availVersion) {
@@ -87,8 +87,8 @@ function oldDriver(version, availVersion) {
   $("#DriverDetected").hide();
   $("#noDriverDetected").show();
   $('#installDriversOnSettingspage').show();
-  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. You are running an outdated version of the OpenBuilds Machine Driver v." + version + ". Please update to v" + availVersion)
-  $('#installDriverMessage').html('Connecting to a machine, requires that you have the latest OpenBuilds Machine Driver installed. <br>You are running version <code>' + version + "</code> - Please update to version <code>" + availVersion + "</code> or newer...")
+  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. You are running an outdated version of the OpenBuilds CONTROL v." + version + ". Please update to v" + availVersion)
+  $('#installDriverMessage').html('Connecting to a machine, requires that you have the latest OpenBuilds CONTROL installed. <br>You are running version <code>' + version + "</code> - Please update to version <code>" + availVersion + "</code> or newer...")
   $('#installDriverHelp').hide();
 }
 // Loop to check if we can use Machine Integration
@@ -209,7 +209,7 @@ function sendGcodeToMyMachine() {
       contentType: false
     }).done(function(data) {
       // console.log(data);
-      var message = `GCODE Successfully sent to OpenBuilds Machine Driver! Continue from the OpenBuilds Machine Driver window`
+      var message = `GCODE Successfully sent to OpenBuilds CONTROL! Continue from the OpenBuilds CONTROL window`
       Metro.toast.create(message, null, 4000);
     });
   };
