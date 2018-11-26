@@ -451,7 +451,7 @@ $(document).ready(function() {
                   </div>
                   <div class="section" id="tab-mac2">
                     <div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-                      <a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> OSX CONTROL (DMG)</a>
+                      <a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> MacOS CONTROL (DMG)</a>
                       <a href="#" class="info omdavailversion">v1.0.0</a>
                     </div><br>
                   </div>
