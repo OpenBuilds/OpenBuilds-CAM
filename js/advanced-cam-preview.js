@@ -1,7 +1,6 @@
 var runningPreviews = 0;
 
 function toolpathPreview(i) {
-  runningPreviews++
   $('#toolpathtree').hide();
   $('#toolpathactivity').show()
   trashGcode();
@@ -18,6 +17,7 @@ function toolpathPreview(i) {
   $("#previewToolpathBtn").html("<i class='fa fa-spinner fa-spin '></i> Calculating, please wait");
   $("#previewToolpathBtn").prop('disabled', true);
   setTimeout(function() {
+    runningPreviews++
     toolpathPreviewExec(i);
   }, 200);
 }
@@ -54,7 +54,11 @@ function toolpathPreviewExec(i) {
   }
 
   if (operation == "... Select Operation ...") {
-    // do nothing
+    // Do Nothing
+    console.log("NO OPERATION")
+    $('#toolpathtree').show();
+    $('#toolpathactivity').hide()
+    toolpathErrorToast();
   } else if (operation == "Laser: Vector (no path offset)") { //  operation,  index,  offset,           StepOver,   zstep,  zdepth,   zstart,   leadinval,      tabdepth,   tabspace,   tabwidth,   union
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, StepOver, 1, 1, 0, false, false, false, false, union);
   } else if (operation == "Laser: Vector (path inside)") {
@@ -147,7 +151,7 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
     }
   }
   if (errorcount > 0) {
-    // toolpathErrorToast();
+    toolpathErrorToast();
   }
   if (toolpath.children.length < 1) {
     toolpathErrorToast();
