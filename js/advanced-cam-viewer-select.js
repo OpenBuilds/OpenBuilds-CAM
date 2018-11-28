@@ -116,7 +116,7 @@ function mouseDown(event) {
               obj = intersection.object;
             if (obj.name && obj.name != "bullseye" && obj.name != "XY" && obj.name != "GridHelper" && obj.userData.type != "toolpath") {
               // printLog('Clicked on : ' + obj.name, successcolor, "viewer")
-              if (!event.ctrlKey) {
+              if (!event.ctrlKey && !event.altKey) {
                 for (i = 0; i < objectsInScene.length; i++) {
                   var object = objectsInScene[i]
                   object.traverse(function(child) {
@@ -137,7 +137,7 @@ function mouseDown(event) {
           } else { // if nothing intersected we clicked empty space and clear the selection if ctrl is not down
             // Deselecting only if not ctrl.
             // console.log(e.ctrlKey)
-            if (!event.ctrlKey) {
+            if (!event.ctrlKey && !event.altKey) {
               for (i = 0; i < objectsInScene.length; i++) {
                 var obj = objectsInScene[i]
                 obj.traverse(function(child) {
@@ -177,7 +177,7 @@ function mouseDown(event) {
               storeUndo(true);
               printLog('Clicked on : ' + obj.name, successcolor, "viewer")
               console.log(obj.userData.link)
-              if (event.ctrlKey) {
+              if (event.ctrlKey || event.altKey) {
                 idx = obj.userData.link.split('link')[1].split('_');
                 i = parseInt(idx[0]);
                 j = parseInt(idx[1]);
@@ -325,7 +325,7 @@ function mouseMove(event) {
         // convert to threejs position
         worldendcoords = mouseToWorldCoord(event)
         // clear selection in case marquee is shrinking
-        if (!event.ctrlKey) {
+        if (!event.ctrlKey && !event.altKey) {
           for (i = 0; i < objectsInScene.length; i++) {
             var obj = objectsInScene[i]
             obj.traverse(function(child) {
@@ -346,7 +346,7 @@ function mouseMove(event) {
               center.x = child.geometry.boundingSphere.center.x + (child.parent.position.x) + (child.position.x)
               center.y = child.geometry.boundingSphere.center.y + (child.parent.position.y) + (child.position.y)
               if (XinSelectRange(center.x) && YinSelectRange(center.y)) {
-                if (event.ctrlKey) {
+                if (event.ctrlKey || event.altKey) {
                   child.userData.selected = !child.userData.lastSelected;
                 } else {
                   child.userData.selected = true;
@@ -418,7 +418,7 @@ function mouseMove(event) {
           }
           // console.log(obj)
           hoverShapesinScene.length = 0;
-          if (mouseState == "scale" || (mouseState == "move" && !event.ctrlKey) || (mouseState == "delete" && event.ctrlKey)) {
+          if (mouseState == "scale" || (mouseState == "move" && !event.ctrlKey && !event.altKey) || (mouseState == "delete" && event.ctrlKey) || (mouseState == "delete" && event.altKey)) {
             obj = obj.parent
             obj.traverse(function(child) {
               if (child.type == "Line") {
