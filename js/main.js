@@ -82,22 +82,32 @@ errorHandlerJS = function() {
 
 // Function to execute when opening file (triggered by fileOpen.addEventListener('change', readFile, false); )
 function readFile(evt) {
-  $('#documentstree').hide();
-  $('#documentactivity').show();
-  setTimeout(function() {
-    console.group("New FileOpen Event:");
-    console.log(evt);
-    console.groupEnd();
-    // Close the menu
-    $("#drop1").dropdown("toggle");
 
-    // Files
-    var files = evt.target.files || evt.dataTransfer.files;
 
-    for (var i = 0; i < files.length; i++) {
+  // setTimeout(function() {
+  console.group("New FileOpen Event:");
+  console.log(evt);
+  console.groupEnd();
+  // Close the menu
+  $("#drop1").dropdown("toggle");
+
+  // Files
+  var files = evt.target.files || evt.dataTransfer.files;
+
+  if (files.length > 0) {
+    $('#documentstree').hide();
+    $('#documentactivity').show();
+  }
+
+  for (var i = 0; i < files.length; i++) {
+    if (files[i].name.match(/.obc$/i) || files[i].name.match(/.obc$/i)) {
+      loadWorkspace(files[i])
+    } else {
+
       loadFile(files[i]);
     }
-  }, 0)
+  }
+  // }, 0)
 }
 
 // drag/drop
@@ -107,17 +117,19 @@ function initDragDrop() {
   var onDragLeave = function(e) {
     e.stopPropagation();
     e.preventDefault();
-    $('#draganddrop').hide();
   };
 
   var onDragOver = function(e) {
     e.stopPropagation();
     e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
     $('#draganddrop').show();
   };
 
   var onDrop = function(e) {
-    onDragLeave(e);
+    e.preventDefault();
+    $('#draganddrop').hide();
+    console.log(e)
     readFile(e);
   };
 

@@ -173,7 +173,7 @@ function exportWorkspace() {
   var blob = new Blob([data], {
     type: "text/plain"
   });
-  invokeSaveAsDialog(blob, 'workspace-' + date.yyyymmdd() + '.json');
+  invokeSaveAsDialog(blob, 'workspace-' + date.yyyymmdd() + '.obc');
   // console.log(JSON.stringify(obspace));
 }
 
@@ -196,10 +196,11 @@ function loadWorkspace(f) {
   // Filereader
   if (f) {
     var r = new FileReader();
-    if (f.name.match(/.json/i)) {
+    if (f.name.match(/.json/i) || f.name.match(/.obc/i)) {
       r.readAsText(f);
       r.onload = function(event) {
         parseLoadWorkspace(this.result)
+        console.log(this.result)
       };
     } else {
       // Not usable

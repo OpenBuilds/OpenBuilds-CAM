@@ -24,6 +24,7 @@
 	<link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
 	<link rel="stylesheet" href="lib/metro4/css/metro-all.css" />
+	<!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css"> -->
 	<link type="text/css" rel="stylesheet" media="all" href="css/sidebarmenu.css" />
 	<link rel="manifest" href="/manifest.json">
 </head>
@@ -51,6 +52,28 @@
 							<div class="content-holder">
 								<div class="section" id="section-workspace">
 									<div class="group">
+										<div>
+											<button class="ribbon-button dropdown-toggle">
+												 <span class="icon">
+														 <span class="far fa-folder-open fg-amber"></span>
+												 </span>
+												 <span class="caption">&nbsp;&nbsp;&nbsp;File...&nbsp;&nbsp;&nbsp;</span>
+										  </button>
+											<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
+												<li class="btn-file"><a href="#"></span><span class="far fa-folder-open fg-amber fa-fw"></span> Open Drawing File (.DXF, .SVG, Image, Gerber, Excellon)</a><input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt"
+													  multiple /></li>
+												<li class="divider"></li>
+												<li class="" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();"><a href="#"> <span class="far fa-file fa-fw"></span> New Workspace</a></li>
+												<li class="btn-file"><a href="#"><i class="far fa-folder-open fa-fw"></i> Open Workspace (.JSON, .OBC)</a><input type="file" id="workspaceImport" accept=".json,.obc" multiple style="height: 26px;" /></li>
+												<li class="" onclick="exportWorkspace();"><a href="#"><span class="fas fa-download fa-fw"></span> Save Workspace (Export .OBC file)</a></li>
+												<li class="divider"></li>
+												<li><a href="#" onclick="helloWorld();"><i class="fas fa-cog fa-fw"></i> Open "Hello World" example</a></li>
+												<li><a href="#" onclick="Metro.dialog.open('#partslibModal')"><i class="fas fa-sitemap fa-fw"></i> Import from Parts Library</a></li>
+											</ul>
+										</div>
+										<span class="title">File</span>
+									</div>
+									<!-- <div class="group">
 										<div class="ribbon-split-button">
 											<div class="ribbon-main btn-file" title="Open a drawing">
 												<span class="icon">
@@ -64,11 +87,10 @@
 												<li class="divider"></li>
 												<li><a href="#" onclick="helloWorld();">Open "Hello World" example</a></li>
 												<li><a href="#" onclick="Metro.dialog.open('#partslibModal')">Import from Parts Library</a></li>
-												<!-- <li><a href="#" onclick="Metro.dialog.open('#gearGenModal')">Create using Involute Gearset Generator</a></li> -->
 											</ul>
 										</div>
 										<span class="title">File</span>
-									</div>
+									</div> -->
 									<div class="group">
 										<div class="ribbon-group">
 											<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeText ');">
@@ -96,7 +118,7 @@
 										</div>
 										<span class="title">Insert</span>
 									</div>
-									<div class="group">
+									<!-- <div class="group">
 										<div class="ribbon-group">
 											<button class="ribbon-icon-button" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
 				                    <span class="icon">
@@ -121,7 +143,7 @@
 				                  </button>
 										</div>
 										<span class="title">Workspace</span>
-									</div>
+									</div> -->
 									<div class="group">
 										<div class="ribbon-group">
 											<button class="ribbon-icon-button" onclick="resetView();">
@@ -558,6 +580,7 @@
 
 <!-- METRO -->
 <script type="text/javascript" src="lib/metro4/js/metro.min.js"></script>
+<!-- <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script> -->
 
 <!-- Helpers -->
 <script type="text/javascript" src="js/helpers.js"></script>
