@@ -136,13 +136,17 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
 
         // Find longest segment
         // console.log("Vertices before optimise: ", child.geometry.vertices)
-        var bestSegment = indexOfMax(child.geometry.vertices)
-        // console.log('longest section' + bestSegment)
-        var clone = child.geometry.vertices.slice(0);
-        clone.splice(-1, 1) // remove the last point (as its the "go back to first point"-point which will just be a duplicate point after rotation)
-        var optimisedVertices = clone.rotateRight(bestSegment)
-        optimisedVertices.push(optimisedVertices[0]) // add back the "go back to first point"-point - from the new first point
-        // console.log("Vertices after optimise: ", optimisedVertices)
+        if (child.geometry.vertices.length > 2) {
+          var bestSegment = indexOfMax(child.geometry.vertices)
+          // console.log('longest section' + bestSegment)
+          var clone = child.geometry.vertices.slice(0);
+          clone.splice(-1, 1) // remove the last point (as its the "go back to first point"-point which will just be a duplicate point after rotation)
+          var optimisedVertices = clone.rotateRight(bestSegment)
+          optimisedVertices.push(optimisedVertices[0]) // add back the "go back to first point"-point - from the new first point
+          // console.log("Vertices after optimise: ", optimisedVertices)
+        } else {
+          var optimisedVertices = child.geometry.vertices.slice(0)
+        }
 
         for (i = 0; i < optimisedVertices.length; i++) {
 
@@ -180,6 +184,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           // console.log(i, xpos, ypos, zpos)
           // First Move To
           if (i == 0) {
+            console.log("First Point", xpos, ypos, zpos, optimisedVertices[i]);
             // first point in line where we start lasering/milling
 
             // calc g0 rate
@@ -255,6 +260,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             isAtClearanceHeight = false;
 
           } else {
+            console.log("Subsequent Point", xpos, ypos, zpos, optimisedVertices[i]);
             // we are in a non-first line so this is normal moving
             // if the tool is not on, we need to turn it on
             if (!isToolOn) {
