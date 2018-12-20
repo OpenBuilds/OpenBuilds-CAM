@@ -12,7 +12,7 @@ function typeofOperation(newval, objectseq) {
     laserOutsideMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "Laser: Vector (raster fill) (Beta)") {
-    laserOutsideMode(objectseq);
+    laserRasterMode(objectseq);
     updateCamUserData(objectseq);
   } else if (newval == "Drill: Peck (Centered)") {
     drillPeckMode(objectseq);
@@ -265,7 +265,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc  inputpocket inputplasma inputdragknife inputlaser inputdrill">
+      <tr class="inputcnc  inputpocket inputplasma inputdragknife inputlaser inputlaserraster inputdrill">
         <td>Z Safe Height</td>
         <td>
           <div class="input-addon">
@@ -285,7 +285,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputlaser">
+      <tr class="inputlaser inputlaserraster">
         <td>Laser: Power</td>
         <td>
           <div class="input-addon">
@@ -295,7 +295,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputlaser">
+      <tr class="inputlaser inputlaserraster">
         <td>Laser: Kerf</td>
         <td>
           <div class="input-addon">
@@ -325,7 +325,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc inputpocket inputdragknife inputlaser inputplasma">
+      <tr class="inputcnc inputpocket inputdragknife inputlaser inputlaserraster inputplasma">
         <td>Feedrate: Cut</td>
         <td>
           <div class="input-addon">
@@ -365,7 +365,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc inputpocket inputplasma inputdragknife inputlaser">
+      <tr class="inputcnc inputpocket inputplasma inputdragknife inputlaser inputlaserraster">
         <td colspan="2">
           <div>
             <input type="checkbox" data-role="switch" data-caption="Advanced Settings" id="advanced` + i + `" objectseq="` + i + `" >
@@ -438,6 +438,9 @@ function setupJob(i) {
                   </select>
                 </div>
               </td>
+            </tr>
+            <tr class="inputlaserraster">
+              <td colspan="2"><p class="text-small">No Advanced Settings available for this type of cut</p></td>
             </tr>
             <tr class="inputplasma inputcnc inputpocket inputdragknife inputlaser inputlasernooffset">
               <td>Geometry: Merge</td>
@@ -532,6 +535,7 @@ function noMode(i) {
   $('.inputplasma').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
 }
 
 function laserMode(i) {
@@ -542,6 +546,7 @@ function laserMode(i) {
   $(".inputlasernooffset").hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
   $('.inputlaser').show();
 };
 
@@ -552,6 +557,7 @@ function laserInsideMode(i) {
   $('.inputplasma').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
   $('.inputlaser').show();
 };
 
@@ -562,7 +568,18 @@ function laserOutsideMode(i) {
   $('.inputplasma').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
   $('.inputlaser').show();
+};
+
+function laserRasterMode(i) {
+  $('.inputcnc').hide();
+  $('.inputpocket').hide();
+  $('.inputdragknife').hide();
+  $('.inputplasma').hide();
+  $('.inputdrill').hide();
+  $('.inputdrillpeck').hide();
+  $('.inputlaserraster').show();
 };
 
 function drillMode(i) {
@@ -572,8 +589,8 @@ function drillMode(i) {
   $('.inputplasma').hide();
   $('.inputcnc').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
   $('.inputdrill').show();
-
 }
 
 function drillPeckMode(i) {
@@ -583,6 +600,7 @@ function drillPeckMode(i) {
   $('.inputplasma').hide();
   $('.inputcnc').hide();
   $('.inputdrill').show();
+  $('.inputlaserraster').hide();
   $('.inputdrillpeck').show();
 
 }
@@ -594,6 +612,7 @@ function cncInsideMode(i) {
   $('.inputplasma').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
   $('.inputcnc').show();
 };
 
@@ -604,6 +623,7 @@ function cncOutsideMode(i) {
   $('.inputplasma').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
   $('.inputcnc').show();
 };
 
@@ -615,6 +635,7 @@ function cncNoOffsetMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputtooldia').hide();
+  $('.inputlaserraster').hide();
   $('.inputcnc').show();
 }
 
@@ -625,6 +646,7 @@ function cncPocketMode(i) {
   $('.inputcnc').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
   $('.inputpocket').show();
   // force open Advanced and force Union by default
   setTimeout(function() {
@@ -641,6 +663,7 @@ function plasmaMode(i) {
   $('.inputdragknife').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
   $('.inputplasma').show();
 };
 
@@ -652,5 +675,6 @@ function dragKnifeMode(i) {
   $('.inputplasma').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
   $('.inputdragknife').show();
 };

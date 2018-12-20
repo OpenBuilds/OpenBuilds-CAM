@@ -16,10 +16,10 @@ function fillPath(config) {
   var lineDistance = config.offset * 200;
   var angle = 0;
   if (!geometryInside.length || !geometryInside[0].length) {
-    // console.log("Invalid Geometry", geometry)
+    console.log("Invalid Geometry", geometry)
     return [];
   } else {
-    // console.log("Valid Geometry", geometry)
+    console.log("Valid Geometry", geometry)
   }
   let bounds = clipperBounds(geometryInside);
   let cx = (bounds.minX + bounds.maxX) / 2;
