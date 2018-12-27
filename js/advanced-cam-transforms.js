@@ -232,6 +232,10 @@ function scaleObj() {
   scalewindow.style.visibility = "hidden";
   $('#scaleWidth').unbind('keyup');
   $('#scaleHeight').unbind('keyup');
+  // reset View and clear Hovers
+  hoverShapesinScene.length = 0;
+  resetView();
+  clearSceneFlag = true;
 }
 
 function moveObj() {
@@ -260,6 +264,9 @@ function moveObj() {
   $('#top').unbind('keyup');
   $('#ycenter').unbind('keyup');
   $('#bottom').unbind('keyup');
+  hoverShapesinScene.length = 0;
+  resetView();
+  clearSceneFlag = true;
 }
 
 function rotateObj(dir) {
@@ -309,4 +316,7 @@ function rotateObj(dir) {
   object.translateY(ycenter)
   changePositionToGeoTranslate();
   scalewindow.style.visibility = "hidden";
+  hoverShapesinScene.length = 0;
+  resetView();
+  clearSceneFlag = true;
 }
