@@ -375,6 +375,18 @@ function setupJob(i) {
             <tr>
               <th style="width: 150px;"></th><th style="width: 210px;"></th>
             </tr>
+            <tr class="inputplasma inputcnc inputpocket inputdragknife inputlaser inputlasernooffset">
+              <td>Geometry: Merge</td>
+              <td>
+                <div class="input-addon">
+                  <span class="input-addon-label-left active-border"><i class="fas fa-compress fa-fw"></i></span>
+                  <select class="cam-form-field cam-form-field-right active-border" id="tunion` + i + `" objectseq="` + i + `" style="width: 180px; padding: 0px;">
+                    <option selected>No</option>
+                    <option>Yes</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
             <tr class="inputcnc inputpocket">
               <td>Plunge: Ramp In<br><div class="text-small">[beta] Experimental!</div></td>
               <td>
@@ -441,18 +453,6 @@ function setupJob(i) {
             </tr>
             <tr class="inputlaserraster">
               <td colspan="2"><p class="text-small">No Advanced Settings available for this type of cut</p></td>
-            </tr>
-            <tr class="inputplasma inputcnc inputpocket inputdragknife inputlaser inputlasernooffset">
-              <td>Geometry: Merge</td>
-              <td>
-                <div class="input-addon">
-                  <span class="input-addon-label-left active-border"><i class="fas fa-compress fa-fw"></i></span>
-                  <select class="cam-form-field cam-form-field-right active-border" id="tunion` + i + `" objectseq="` + i + `" style="width: 180px; padding: 0px;">
-                    <option selected>No</option>
-                    <option>Yes</option>
-                  </select>
-                </div>
-              </td>
             </tr>
           </table>
           </div>
