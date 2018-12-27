@@ -181,27 +181,4 @@
 01 Apr 2018:  UI Improvements
 06 Mar 2018:  Improved Document Tree
 06 Mar 2018:  Launched on github-pages
-06 Mar 2018:  Go-Live of old old
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+06 Mar 2018:  Start of Project
