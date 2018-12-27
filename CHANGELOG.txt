@@ -1,4 +1,4 @@
-CAM Changelog
+27 Dec 2018:  Added Changelog
 27 Dec 2018:  Moved Merge Geometry form entry higher up on form
 27 Dec 2018:  Fixed delete/backspace behavior on cam modal
 27 Dec 2018:  Fixed transform hover-artifacts
