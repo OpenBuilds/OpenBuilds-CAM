@@ -1,5 +1,6 @@
 $(document).keydown(function(e) {
-  if (e.which == 46) { // Press delete to delete whatever is already selected
+  // console.log(e)
+  if (e.which == 46 || e.which == 8) { // Press delete to delete whatever is already selected (8=backspace = the delete key on a Mac keyboard (smh) )
     // console.log('del');
     if (mouseState != "scale") {
       storeUndo(true);
