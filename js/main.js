@@ -352,44 +352,16 @@ function getForksCount() {
 
 function getChangelog() {
   $("#changelog").empty()
-  var template2 = ``
-  $.get("https://api.github.com/repos/openbuilds/cam/commits?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
-    // console.log(data)
-    Object.keys(data).forEach(function(key) {
-      var date = new Date(data[key].commit.author.date)
-      var author = data[key].commit.author.name
-      var avatar = data[key].author.avatar_url
-      var authorurl = data[key].author.html_url
-      var committer = data[key].commit.committer.name
-      var url = data[key].html_url
-      var message = data[key].commit.message
-
-      template2 += `
-      <div class="card">
-        <div class="card-header">
-            <div class="avatar">
-                <img src="` + avatar + `" />
-            </div>
-            <div class="name"><a href="` + authorurl + `">` + author + `</a></div>
-            <div class="date">` + formatDate(date) + `</div>
-        </div>
-        <div class="card-content p-2">
-             <i class="fab fa-github"></i> commit: <a href="` + url + `" target="_new"> ` + message + `</a>
-        </div>
-
-      </div>
-      `
-    });
-    // for (var key in data) {
-    // }
-    template2 += `<li class="list-group-item">
-      <a href="https://github.com/OpenBuilds/cam/commits/master" target="_new"><h6>Click here to view older updates</h6></a>
-      </li>`
-    template2 += `<ul>`
-    $("#changelog").append(template2)
-    if (!Metro.dialog.isOpen('#settingsmodal')) {
-      // $('#splashModal').modal('show');
-      Metro.dialog.open('#splashModal')
+  var template2 = `<ul>`
+  $.get("https://raw.githubusercontent.com/openbuilds/cam/master/CHANGELOG.txt", function(data) {
+    var lines = data.split('\n');
+    for (var line = 0; line < lines.length; line++) {
+      template2 += '<li>' + lines[line] + '</li>'
     }
+    template2 += `</ul>`
+    $("#changelog").html(template2);
   });
+  if (!Metro.dialog.isOpen('#settingsmodal')) {
+    Metro.dialog.open('#splashModal')
+  }
 }
