@@ -301,7 +301,7 @@
 							<button class="button small dark outline bg-white drop-shadow" id="selectNone"><span class="far fa-square"></span> None</button>
 							<button class="button small dark outline bg-white drop-shadow" id="selectInv"><span class="fas fa-check"></span> Invert</button>
 						</div>
-						<div class="window-content p-2" style="overflow-y:scroll;">
+						<div class="window-content p-1" style="overflow-y:scroll;">
 							<!-- Documents Here -->
 							<div class="pt-2" id="documentactivity" style="display: none;">
 								<center>
@@ -339,7 +339,7 @@
 							<button class="button small dark outline drop-shadow" title="Clear GCODE" id="gcodetrashbtn2" onclick="trashGcode();"><span id="trashicon" class="fa fa-trash fg-gray icon"></span></button>
 						</div>
 
-						<div class="window-content p-2" style="overflow-y:auto;">
+						<div class="window-content p-1" style="overflow-y:scroll;">
 							<div class="pt-2" id="toolpathactivity" style="display: none;">
 								<center>
 									<h5>Please Wait </h5>
@@ -357,40 +357,41 @@
 							<span class="icon fas fa-tasks"></span>
 							<span class="title">Connection</span>
 						</div>
-						<div class="window-content p-2" id="connectiontree" style="overflow-y:auto;">
+						<div class="window-content p-1" id="connectiontree" style="overflow-y:scroll;">
 
-							<div class="row">
-								<div class="cell">
+
+							<div class="row" style="margin-left: 1px; margin-right: 1px;">
+								<div class="cell p-0">
 									<div id="noDriverDetected" style="display:none;">
 										<nav data-role="ribbonmenu">
 											<ul class="tabs-holder">
-												<li><a href="#tab-win"><i class="fab fa-windows"></i> Windows</a></li>
-												<li><a href="#tab-mac"><i class="fab fa-apple"></i> Mac</a></li>
-												<li><a href="#tab-linux"><i class="fab fa-linux"></i> Linux</a></li>
+												<li><a href="#tab-win"><i class="fab fa-windows"></i>&nbsp;Windows</a></li>
+												<li><a href="#tab-mac"><i class="fab fa-apple"></i>&nbsp;Mac</a></li>
+												<li><a href="#tab-linux"><i class="fab fa-linux"></i>&nbsp;Linux</a></li>
 											</ul>
 
 											<div class="content-holder">
 												<div class="section" id="tab-win">
 													<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-														<a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows CONTROL (EXE)</a>
+														<a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows (EXE)</a>
 														<a href="#" class="info omdavailversion">v1.0.0</a>
 													</div><br>
 												</div>
 												<div class="section" id="tab-mac">
 													<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-														<a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> MacOS CONTROL (DMG)</a>
+														<a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> MacOS (DMG)</a>
 														<a href="#" class="info omdavailversion">v1.0.0</a>
 													</div><br>
 												</div>
 												<div class="section" id="tab-linux">
 													<div>
 														<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-															<a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux CONTROL (DEB)</a>
+															<a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux (DEB)</a>
 															<a href="#" class="info omdavailversion">v1.0.0</a>
 														</div>
 														<p>
 															<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-																<a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux CONTROL (AppImage)</a>
+																<a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux (AppImage)</a>
 																<a href="#" class="info omdavailversion">v1.0.0</a>
 															</div>
 													</div>

@@ -1,3 +1,4 @@
+27 Dec 2018:  Fixed glitchy window bug
 27 Dec 2018:  Added Changelog
 27 Dec 2018:  Moved Merge Geometry form entry higher up on form
 27 Dec 2018:  Fixed delete/backspace behavior on cam modal
@@ -15,7 +16,7 @@
 30 Oct 2018:  Implemented sidebar menu to switch between tools (Select, Move, Transform, Delete)
 30 Oct 2018:  Improved error handling for unsupported DXF Entities
 08 Oct 2018:  Fixed Firefox specific bugs: Mouse Hover, FileOpen and Built-in CAD events
-08 Oct 2018:  Fixed hover-select bug 
+08 Oct 2018:  Fixed hover-select bug
 08 Oct 2018:  Fixed Rasterfill Z height bug
 05 Oct 2018:  Add option to specify number of segments per circle in built-in CAD
 03 Oct 2018:  Updated Readme
@@ -59,7 +60,7 @@
 01 Aug 2018:  CSS Changes to match OpenBuilds.com
 01 Aug 2018:  Pause animation loop when window is unfocussed to spare CPU cycle
 01 Aug 2018:  Updated HelloWorld workspace
-31 Jul 2018:  Updated machine profiles: LEadmachine55, Leadmachine1010, 
+31 Jul 2018:  Updated machine profiles: LEadmachine55, Leadmachine1010,
 31 Jul 2018:  Added HelloWorld workspace demo
 31 Jul 2018:  Show settings modal on Start
 31 Jul 2018:  Added Beta notice
@@ -127,7 +128,7 @@
 13 May 2018:  Experimental Tabs
 10 May 2018:  Improvements to toolpath calculation
 09 May 2018:  Improvements to toolpath - better jobtime
-03 May 2018:  Removed individuals from About 
+03 May 2018:  Removed individuals from About
 02 May 2018:  Added Changelog menu
 02 May 2018:  Added keybings for select all/none
 02 May 2018:  Improved loading of recoverable workspace
@@ -163,7 +164,7 @@
 11 Apr 2018:  JSON Workspace Import
 11 Apr 2018:  Added Move
 10 Apr 2018:  Fixed Selection Marquee, added Union
-09 Apr 2018:  Improved InflatePath 
+09 Apr 2018:  Improved InflatePath
 05 Apr 2018:  Cleanup Sidebar
 05 Apr 2018:  Added Navbar
 04 Apr 2018:  OpenBuilds Theme
