@@ -1,0 +1,207 @@
+CAM Changelog
+27 Dec 2018:  Moved Merge Geometry form entry higher up on form
+27 Dec 2018:  Fixed delete/backspace behavior on cam modal
+27 Dec 2018:  Fixed transform hover-artifacts
+27 Dec 2018:  Fixed MacOS Delete keybinding
+20 Dec 2018:  Don't show Merge Geometry option on Raster Fill operations, invalid use case
+10 Dec 2018:  Fixed bug with Laser Fill Gcode
+05 Dec 2018:  New consolidated File menu for workspace, save, open, etc
+03 Dec 2018:  New HelloWorld workspace as per demo video
+28 Nov 2018:  Fixed Option/Ctrl keybinding for MacOS
+26 Nov 2018:  Renamed references to host software as OpenBuilds CONTROL
+26 Nov 2018:  Fix for handling empty operations
+21 Nov 2018:  Update Leadmachine CAM profile
+30 Oct 2018:  Update UI to have rows/columns resizable - Metro Splitter
+30 Oct 2018:  Implemented sidebar menu to switch between tools (Select, Move, Transform, Delete)
+30 Oct 2018:  Improved error handling for unsupported DXF Entities
+08 Oct 2018:  Fixed Firefox specific bugs: Mouse Hover, FileOpen and Built-in CAD events
+08 Oct 2018:  Fixed hover-select bug 
+08 Oct 2018:  Fixed Rasterfill Z height bug
+05 Oct 2018:  Add option to specify number of segments per circle in built-in CAD
+03 Oct 2018:  Updated Readme
+27 Sep 2018:  Fixed document-tree bug
+24 Sep 2018:  Revamped the Toolpaths menu
+24 Sep 2018:  Moved SIM button
+24 Sep 2018:  Fixed select-multiple bug
+24 Sep 2018:  Improved Document tree to allow selection of Layers
+21 Sep 2018:  Improved Document tree to allow checkbox selection
+21 Sep 2018:  Fixed bug in circular-array-rotation geometry optimiser
+20 Sep 2018:  Implemented hover-mesh functionality to highlight what is being hovered over more clearly
+20 Sep 2018:  Added CenterDrill Operation
+19 Sep 2018:  Added scrollbar to Cam Modal
+19 Sep 2018:  Added Excellon Drill File support
+19 Sep 2018:  Added Gerber x274 File support
+19 Sep 2018:  Improved DragMove functionality
+17 Sep 2018:  Added No-Offset milling Operation
+17 Sep 2018:  Updated Sphinx working envelope
+17 Sep 2018:  Enhanced settings dialog to populate toolon/tooloff commands from tool type selection
+17 Sep 2018:  Fix Laser Power calculation
+17 Sep 2018:  Removed old Bootstrap code
+17 Sep 2018:  Fixed bug where undo's broke CircleGeometry
+05 Sep 2018:  Fixed Circle Geometry bug
+05 Sep 2018:  Removed 'find-longest-segment' optimisation
+05 Sep 2018:  Fixed moveup/movedown tooltip typos
+04 Sep 2018:  Fixed OpenBuilds Machine Driver download for non-windows OS
+04 Sep 2018:  Removed Download button image
+04 Sep 2018:  Fixed Keybinding bug for undo/redo
+22 Aug 2018:  Added Basic experimental Ramp Plunge
+20 Aug 2018:  Updated OSX/Linux Machine Drivers
+14 Aug 2018:  Fixed MacOS bugs with OrbitControls
+10 Aug 2018:  Added OSX/Linux Machine Drivers
+10 Aug 2018:  Added visual cues to Parser and Toolpath engine to alert user when busy
+09 Aug 2018:  CSS Updates
+08 Aug 2018:  Auto Detect driver updates
+08 Aug 2018:  Inproved Machine Driver integration
+02 Aug 2018:  Improved error reporting for Gcode Generation
+02 Aug 2018:  Added delete button to Document Tree entities
+01 Aug 2018:  Improved Machine Driver integration
+01 Aug 2018:  Simplied Driver Integration detection code
+01 Aug 2018:  CSS Changes to match OpenBuilds.com
+01 Aug 2018:  Pause animation loop when window is unfocussed to spare CPU cycle
+01 Aug 2018:  Updated HelloWorld workspace
+31 Jul 2018:  Updated machine profiles: LEadmachine55, Leadmachine1010, 
+31 Jul 2018:  Added HelloWorld workspace demo
+31 Jul 2018:  Show settings modal on Start
+31 Jul 2018:  Added Beta notice
+31 Jul 2018:  Improved add toolpath button to add to existing toolpath
+31 Jul 2018:  Put download link to OpenBuilds Machine Driver on Settings modal
+31 Jul 2018:  Styled the Recover Workspace modal
+31 Jul 2018:  Fixed click-to-erase
+31 Jul 2018:  Updated to Metro 4.2.16
+29 Jul 2018:  Work on Gear Generator (unfinished)
+27 Jul 2018:  Work on Parametric Apps (unfinished)
+27 Jul 2018:  Updated Font-Awesome
+26 Jul 2018:  Added git-auth API
+26 Jul 2018:  Fix for Send Gcode button
+26 Jul 2018:  Improved Machine Driver integration
+26 Jul 2018:  Fix for Websocket Scanner
+26 Jul 2018:  Implemented 1-2-3 Setup Wizard
+26 Jul 2018:  Fixed dialog loading bug
+26 Jul 2018:  Set machine/controller type button from LocalStorage (persistent)
+26 Jul 2018:  Updated MetroUI
+26 Jul 2018:  Added Machine Library
+26 Jul 2018:  Cleanup
+25 Jul 2018:  Go-live of new Metro based theme
+25 Jul 2018:  Cleanup settings Dialog
+25 Jul 2018:  Migrate from Bootstrap to Metro
+19 Jul 2018:  Force G21 gcode
+03 Jul 2018:  Beta of LAN scan (http)
+29 Jun 2018:  API for sending Gcode to Driver
+18 Jun 2018:  Fixed uppercase bug
+15 Jun 2018:  Fix for z-moves
+15 Jun 2018:  Added Parts Library
+15 Jun 2018:  Improved CAM modal
+15 Jun 2018:  Fixed Google Fonts url
+15 Jun 2018:  Fixed Pocket Operation bug (Merge)
+15 Jun 2018:  Improved CSS
+13 Jun 2018:  Added Text Widget
+01 Jun 2018:  Cleanup
+31 May 2018:  Experimental work on Trochoidal
+30 May 2018:  Z-Depth fixes
+30 May 2018:  Improved Laser Fill overruns
+29 May 2018:  Added Laser Fill
+29 May 2018:  Added Fork buttons
+29 May 2018:  Updated Grid font
+29 May 2018:  Updated Rotation window icon
+29 May 2018:  Removed AwesomeCursor Jquery Plugin
+29 May 2018:  Improved Tool Handles
+28 May 2018:  Fixed table
+28 May 2018:  Added Scaling tool
+28 May 2018:  Cleanup
+28 May 2018:  Fix for Tabs on last segment
+28 May 2018:  Added automatic Bitmap Tracing
+22 May 2018:  CSS Improvements
+18 May 2018:  Fixed Skybox from extending beyong cameras view distance
+18 May 2018:  Improved Tabs preview
+18 May 2018:  Cosmetic Updates
+17 May 2018:  Optimised G0 moves
+16 May 2018:  Font Awesome 5 upgrade
+16 May 2018:  New SVG Library
+16 May 2018:  Fixed optimisation routine in Gcode optimiser
+14 May 2018:  Fixed Typos
+14 May 2018:  Improved Pocket Operation with new mesh preview
+14 May 2018:  Added tabs preview mesh
+14 May 2018:  Improved Tabs: More tabs on long sections
+14 May 2018:  Fixed Gcode export bugs
+13 May 2018:  Fixed Pocketing issue - was adding too many finishing passes
+13 May 2018:  Experimental Tabs
+10 May 2018:  Improvements to toolpath calculation
+09 May 2018:  Improvements to toolpath - better jobtime
+03 May 2018:  Removed individuals from About 
+02 May 2018:  Added Changelog menu
+02 May 2018:  Added keybings for select all/none
+02 May 2018:  Improved loading of recoverable workspace
+02 May 2018:  Added About menu
+01 May 2018:  Error page for Mobile browsers
+27 Apr 2018:  Started work on mesh-based toolpath preview
+27 Apr 2018:  Save workspace on exit
+27 Apr 2018:  Sim Indicator constrains
+27 Apr 2018:  Enhanced Simulator
+26 Apr 2018:  Lots of improvements to Preview, Toolpaths, and UI (14 commits)
+25 Apr 2018:  Lots of improvements to UI, Toolpath generator and Viewer
+24 Apr 2018:  Fixes for POV Raycasting
+24 Apr 2018:  Improved undo/redo
+23 Apr 2018:  UI enhancements
+19 Apr 2018:  Fixed maximum zoom and skydome bug
+19 Apr 2018:  Implemented Internal CAD
+19 Apr 2018:  Fixes to Gcode generator (z-safe bug)
+18 Apr 2018:  Implemented Simulator
+18 Apr 2018:  Optimised Pockets
+18 Apr 2018:  Settings Modal
+18 Apr 2018:  Show/Hide toolpaths
+18 Apr 2018:  Removed Sidebar
+17 Apr 2018:  Optimise Pockets
+17 Apr 2018:  Added View Extents button
+17 Apr 2018:  Improved DragControls to make it more suitable to CAD
+17 Apr 2018:  UI Improvements
+17 Apr 2018:  Fixed LocalStorage of last used cam parameters
+16 Apr 2018:  Fixes for Pocket Z depth
+14 Apr 2018:  Pocket Preview
+13 Apr 2018:  Improvements to toolpath generator
+12 Apr 2018:  Internal CAD
+12 Apr 2018:  Added tool width preview
+11 Apr 2018:  JSON Workspace Import
+11 Apr 2018:  Added Move
+10 Apr 2018:  Fixed Selection Marquee, added Union
+09 Apr 2018:  Improved InflatePath 
+05 Apr 2018:  Cleanup Sidebar
+05 Apr 2018:  Added Navbar
+04 Apr 2018:  OpenBuilds Theme
+04 Apr 2018:  Added and Improved Skybox
+04 Apr 2018:  Graphpaper style grid
+04 Apr 2018:  Light Theme
+04 Apr 2018:  Improved Selection Marquee
+04 Apr 2018:  Changed Mouse Button behaviour
+04 Apr 2018:  UI Improvements
+03 Apr 2018:  UI Improvements
+03 Apr 2018:  Improved Raycaster
+02 Apr 2018:  Improved Raycaster
+02 Apr 2018:  UI Improvements
+02 Apr 2018:  Bootstrap 4 Update
+01 Apr 2018:  UI Improvements
+06 Mar 2018:  Improved Document Tree
+06 Mar 2018:  Launched on github-pages
+06 Mar 2018:  Go-Live of old old
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
