@@ -1,3 +1,4 @@
+28 Dec 2018:  Fixed keybinding bug on Internal CAD modals
 27 Dec 2018:  Fixed glitchy window bug
 27 Dec 2018:  Added Changelog
 27 Dec 2018:  Moved Merge Geometry form entry higher up on form
