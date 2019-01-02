@@ -90,9 +90,9 @@ $(document).ready(function() {
     <div class="dialog-title" id="statusTitle">Add shape: Circle</div>
     <div class="dialog-content">
     <form>
-      <input type="number" class="form-control" id="circleRadius" value="10" data-role="input" data-append="mm" data-prepend="Radius">
+      <input type="number" class="form-control" id="circleRadius" value="10" data-role="input" data-append="mm" data-prepend="Radius" step="0.001">
       <br>
-      <input type="number" class="form-control" id="circleSegments" value="32" data-role="input"  data-prepend="Segments">
+      <input type="number" class="form-control" id="circleSegments" value="32" data-role="input"  data-prepend="Segments" step="0.001">
       <small>Segments determines the smoothness of the circle, as circles are processed as Polylines</small>
     </form>
     </div>
@@ -106,9 +106,9 @@ $(document).ready(function() {
 		<div class="dialog-title" id="statusTitle">Add shape: Rectangle</div>
 		<div class="dialog-content">
     <form>
-      <input type="number" class="form-control" id="rectX" value="100" data-role="input" data-append="mm" data-prepend="Width">
+      <input type="number" class="form-control" id="rectX" value="100" data-role="input" data-append="mm" data-prepend="Width" step="0.001">
       <br>
-      <input type="number" class="form-control" id="rectY" value="50" data-role="input" data-append="mm" data-prepend="Height">
+      <input type="number" class="form-control" id="rectY" value="50" data-role="input" data-append="mm" data-prepend="Height" step="0.001">
     </form>
 		</div>
 		<div class="dialog-actions" id="statusFooter">

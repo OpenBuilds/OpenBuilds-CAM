@@ -542,21 +542,21 @@ $(document).ready(function() {
                 <div class="row mb-2">
                     <label class="cell-sm-6">X-Axis Length</label>
                     <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizexmax" value="200" data-append="mm">
+                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizexmax" value="200" data-append="mm" step="0.001">
                     </div>
                 </div>
 
                 <div class="row mb-2">
                     <label class="cell-sm-6">Y-Axis Length</label>
                     <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizeymax" value="200" data-append="mm">
+                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizeymax" value="200" data-append="mm" step="0.001">
                     </div>
                 </div>
 
                 <div class="row mb-2">
                     <label class="cell-sm-6">Z-Axis Length</label>
                     <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizezmax" value="100" data-append="mm">
+                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizezmax" value="100" data-append="mm" step="0.001">
                     </div>
                 </div>
 
@@ -570,7 +570,7 @@ $(document).ready(function() {
                 <div class="row mb-2">
                     <label class="cell-sm-6">Power/Speed Scale</label>
                     <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="scommandscale" value="1" data-prepend="0 to">
+                      <input type="number" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="scommandscale" value="1" data-prepend="0 to" step="0.001">
                     </div>
                 </div>
 
