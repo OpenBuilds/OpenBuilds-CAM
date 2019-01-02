@@ -3,11 +3,10 @@
     Based on code from:  John Lauer, Todd Fleming, Nicholas Raynaud and others
 */
 
-// todo select and then Move
-
 //todo: tabs: constrain tabwidth > tooldia+saneminimum
 // constrain tab tooldia  > 0  (0= will loop forever)
-// todo mill no offset op
+
+var repair = false; // needs a lot more math thinking - just playing
 
 var inflateGrp, fileParentGroup, svgPath, y, shape, lines, line;
 var options = {};
@@ -24,11 +23,16 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
   var inflateGrpZ = new THREE.Group();
   var prettyGrp = new THREE.Group();
   var clipperPaths = getClipperPaths(config.toolpath)
+  if (repair) {
+    clipperPaths = repairClipperPath(clipperPaths);
+  }
+  // console.log('Original Toolpath: ', JSON.stringify(clipperPaths))
   if (config.union == "Yes") {
     // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
     var newClipperPaths = simplifyPolygons(clipperPaths);
     if (newClipperPaths.length < 1) {
       console.error("Clipper Simplification Failed!:");
+      toolpathErrorToast(`Toolpath Error: Clipper Simplification Failed!  for toolpath "` + config.toolpath.name + `" -  this indicates some problem with the geometry coming from the original document"`, 'bg-red');
     }
     var inflatedPaths = getInflatePath(newClipperPaths, config.offset);
     // console.log(inflatedPaths);
@@ -68,9 +72,11 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
   } else {
     var newClipperPaths = clipperPaths;
     for (j = 0; j < newClipperPaths.length; j++) {
-      var pathobj = [];
-      pathobj.push(newClipperPaths[j])
-      var inflatedPaths = getInflatePath(pathobj, config.offset);
+      var inflatedPaths = getInflatePath([newClipperPaths[j]], config.offset);
+      if (inflatedPaths.length < 1) {
+        console.error("Clipper Inflate Failed!:");
+        toolpathErrorToast(`Toolpath Error: Clipper Simplification Failed!  for toolpath "` + config.toolpath.name + `" -  this indicates some problem with the geometry coming from the original document"`, 'bg-red');
+      }
       // plasma lead-in
       if (config.leadinval > 0) {
         var leadInPaths = getInflatePath(pathobj, config.offset * 3);
@@ -418,7 +424,7 @@ polarPoint = function(r, theta) {
 };
 
 simplifyPolygons = function(paths) {
-  console.log('Simplifying: ', paths);
+  // console.log('Simplifying: ', paths);
   var scale = 10000;
   ClipperLib.JS.ScaleUpPaths(paths, scale);
   var newClipperPaths = ClipperLib.Clipper.SimplifyPolygons(paths, ClipperLib.PolyFillType.pftEvenOdd);
