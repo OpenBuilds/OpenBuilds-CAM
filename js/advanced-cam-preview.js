@@ -58,7 +58,7 @@ function toolpathPreviewExec(i) {
     console.log("NO OPERATION")
     $('#toolpathtree').show();
     $('#toolpathactivity').hide()
-    toolpathErrorToast();
+    toolpathErrorToast(`Toolpath Error: You did not select a valid "Type of Cut"  for toolpath "` + toolpathsInScene[i].name + `" - Please  <i class="fas fa-sliders-h"></i> Edit the toolpath and configure it"`, 'bg-red');
   } else if (operation == "Laser: Vector (no path offset)") { //  operation,  index,  offset,           StepOver,   zstep,  zdepth,   zstart,   leadinval,      tabdepth,   tabspace,   tabwidth,   union
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, StepOver, 1, 1, 0, false, false, false, false, union);
   } else if (operation == "Laser: Vector (path inside)") {
@@ -123,6 +123,7 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
   }
   if (operation == "inflate") {
     var toolpath = inflatePath(config, toolpathsInScene[index], offset, zstep, zdepth, zstart, leadinval, tabdepth, union);
+    // console.log(toolpath)
   }
   if (operation == "pocket") {
     var toolpath = pocketPath(config, toolpathsInScene[index], offset, StepOver, zstep, zdepth, zstart, union);
@@ -141,31 +142,42 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
   if (operation == "drill") {
     var toolpath = drill(config);
   }
-  toolpath.userData.type = "toolpath";
-  // lets check if we has success, if not, raise an error message
-  var errorcount = 0;
-  for (i = 0; i < toolpath.children.length; i++) {
-    var checkpath = toolpath.children[i]
-    if (checkpath.children.length < 1) {
-      errorcount++
-    }
-  }
-  if (errorcount > 0) {
-    toolpathErrorToast();
-  }
-  if (toolpath.children.length < 1) {
-    toolpathErrorToast();
-  }
-  runningPreviews--
 
+  if (toolpath) {
+    toolpath.userData.type = "toolpath";
+    // lets check if we has success, if not, raise an error message
+    var errorcount = 0;
+    for (i = 0; i < toolpath.children.length; i++) {
+      var checkpath = toolpath.children[i]
+      if (checkpath.children.length < 1) {
+        errorcount++
+      }
+    }
+    if (errorcount > 0) {
+      toolpathErrorToast('Toolpath Warning: Please check the Toolpath result, we encountered some processing errors with either your file, or the parameters you entered', 'bg-amber');
+    }
+    if (toolpath.children.length < 1) {
+      toolpathErrorToast('Toolpath Warning: Please check the Toolpath result, we encountered some processing errors with either your file, or the parameters you entered', 'bg-amber');
+    }
+    runningPreviews--
+
+    if (runningPreviews == 0) {
+      $('#toolpathactivity').hide()
+      $('#toolpathtree').fadeIn();
+    }
+    return toolpath
+  }
   if (runningPreviews == 0) {
     $('#toolpathactivity').hide()
     $('#toolpathtree').fadeIn();
   }
-  return toolpath
 }
 
-function toolpathErrorToast() {
-  var message = `Toolpath Warning: We encountered some errors while processing the toolpath: Some elements may have been skipped. Either the file you are using has some issues, or the Toolpath settings you provided is wrong / won't work with the particular file / operation.`
-  Metro.toast.create(message, null, 10000, 'bg-amber');
+function toolpathErrorToast(data, background) {
+  if (data) {
+    var message = data;
+  } else {
+    var message = `Toolpath Warning: ` + data + ` We encountered some errors while processing the toolpath: Some elements may have been skipped. Either the file you are using has some issues, or the Toolpath settings you provided is wrong / won't work with the particular file / operation.`
+  }
+  Metro.toast.create(message, null, 10000, background);
 }

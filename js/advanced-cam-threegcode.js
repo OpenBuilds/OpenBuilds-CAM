@@ -20,7 +20,7 @@ var toolpathColor = 0x666600;
 var minimumToolDiaForPreview = 0.04;
 
 inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zstart, leadinval, tabdepth, union) {
-  console.log(config)
+  // console.log(config)
   var inflateGrpZ = new THREE.Group();
   var prettyGrp = new THREE.Group();
   var clipperPaths = getClipperPaths(config.toolpath)
@@ -29,8 +29,6 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
     var newClipperPaths = simplifyPolygons(clipperPaths);
     if (newClipperPaths.length < 1) {
       console.error("Clipper Simplification Failed!:");
-    } else {
-      // var newClipperPaths = clipperPaths;
     }
     var inflatedPaths = getInflatePath(newClipperPaths, config.offset);
     // console.log(inflatedPaths);
