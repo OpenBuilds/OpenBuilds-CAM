@@ -250,7 +250,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><img class="fa-fw" src="images/endmilldia.svg" width="16px" height="16px"></img></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="6.35" id="ttooldia` + i + `"  objectseq="` + i + `" min="0" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="6.35" id="ttooldia` + i + `"  objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
@@ -260,7 +260,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><img class="fa-fw" src="images/endmilldia.svg" width="16px" height="16px"></img></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="40" id="tstepover` + i + `"  objectseq="` + i + `" min="0" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="40" id="tstepover` + i + `"  objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">%</span>
           </div>
         </td>
@@ -270,7 +270,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-arrows-alt-v fa-fw"></i></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="10" id="tclearanceHeight` + i + `"  objectseq="` + i + `" min="1" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="10" id="tclearanceHeight` + i + `"  objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
@@ -280,7 +280,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><img class="fa-fw" src="images/dragoffset.svg" width="16px" height="16px"></img></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0.1" id="tdragoffset` + i + `"  objectseq="` + i + `" step="0.1" min="0" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0.1" id="tdragoffset` + i + `"  objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
@@ -290,7 +290,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-tachometer-alt fa-fw"></i></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="100" id="tpwr` + i + `" objectseq="` + i + `" min="1" max="100" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="100" id="tpwr` + i + `" objectseq="` + i + `" min="1" max="100" step="any">
             <span class="input-addon-label-right active-border">%</span>
           </div>
         </td>
@@ -300,7 +300,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><img class="fa-fw" src="images/kerf.svg" width="16px" height="16px"></img></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0.1" id="tspotsize` + i + `" objectseq="` + i + `" min="0.1" max="5" step="0.1" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0.1" id="tspotsize` + i + `" objectseq="` + i + `" min="0.1" max="5" step="any">
             <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
@@ -310,7 +310,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-sort-amount-down fa-fw"></i></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" id="tzstep` + i + `" value="1" objectseq="` + i + `" min="0" step="1" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" id="tzstep` + i + `" value="1" objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
@@ -320,7 +320,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-level-down-alt fa-fw"></i></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" id="tzdepth` + i + `" value="6" objectseq="` + i + `" min="0" step="1" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" id="tzdepth` + i + `" value="6" objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
@@ -330,7 +330,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-exchange-alt fa-fw"></i></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="1000" id="tspeed` + i + `" objectseq="` + i + `" min="0" step="1" step="0.001" >
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="1000" id="tspeed` + i + `" objectseq="` + i + `" min="0" step="any" >
             <span class="input-addon-label-right active-border">mm/min</span>
           </div>
         </td>
@@ -340,7 +340,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-exchange-alt fa-fw" data-fa-transform="rotate-90" ></i></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="300" id="tplungespeed` + i + `" objectseq="` + i + `" min="0" step="1" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="300" id="tplungespeed` + i + `" objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">mm/min</span>
           </div>
         </td>
@@ -350,7 +350,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><img class="fa-fw" src="images/kerf.svg" width="16px" height="16px"></img></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="1.2" id="tplasmakerf` + i + `" objectseq="` + i + `" min="0" step="1" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="1.2" id="tplasmakerf` + i + `" objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
@@ -360,7 +360,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-arrows-alt-v fa-fw"></i></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="1.5" id="tplasmazheight` + i + `" objectseq="` + i + `" min="0" step="1" step="0.001">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="1.5" id="tplasmazheight` + i + `" objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
@@ -404,7 +404,7 @@ function setupJob(i) {
               <td>
                 <div class="input-addon">
                   <span class="input-addon-label-left active-border"><i class="fas fa-indent fa-fw" data-fa-transform="rotate-90" ></i></span>
-                  <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0" id="tstartHeight` + i + `"  objectseq="` + i + `" min="1" step="0.001">
+                  <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0" id="tstartHeight` + i + `"  objectseq="` + i + `" min="1" step="any">
                   <span class="input-addon-label-right active-border">mm</span>
                 </div>
               </td>
@@ -414,7 +414,7 @@ function setupJob(i) {
               <td>
                 <div class="input-addon">
                   <span class="input-addon-label-left active-border"><i class="fas fa-text-height fa-fw"></i></span>
-                    <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0" id="tabdepth` + i + `" objectseq="` + i + `" step="1" step="0.001">
+                    <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0" id="tabdepth` + i + `" objectseq="` + i + `" step="any">
                   <span class="input-addon-label-right active-border">mm</span>
                 </div>
               </td>
@@ -424,7 +424,7 @@ function setupJob(i) {
               <td>
                 <div class="input-addon">
                   <span class="input-addon-label-left active-border"><i class="fas fa-text-width fa-fw"></i></span>
-                  <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="6" id="tabWidth` + i + `" objectseq="` + i + `" min="0" step="1" step="0.001">
+                  <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="6" id="tabWidth` + i + `" objectseq="` + i + `" min="0" step="any">
                   <span class="input-addon-label-right active-border">mm</span>
                 </div>
               </td>
@@ -434,7 +434,7 @@ function setupJob(i) {
               <td>
                 <div class="input-addon">
                   <span class="input-addon-label-left active-border"><i class="fas fa-ruler-horizontal fa-fw"></i></span>
-                  <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="50" id="tabSpace` + i + `" objectseq="` + i + `" min="0" step="1" step="0.001">
+                  <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="50" id="tabSpace` + i + `" objectseq="` + i + `" min="0" step="any">
                   <span class="input-addon-label-right active-border">mm</span>
                 </div>
               </td>

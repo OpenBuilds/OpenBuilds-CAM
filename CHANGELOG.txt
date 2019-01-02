@@ -1,3 +1,5 @@
+02 Jan 2019:  Enhanced toolpath error messages to be more descriptive
+02 Jan 2019:  Fixed Firefox step=any bug for input=number
 28 Dec 2018:  Fixed keybinding bug on Internal CAD modals
 27 Dec 2018:  Fixed glitchy window bug
 27 Dec 2018:  Added Changelog
