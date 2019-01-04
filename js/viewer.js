@@ -251,6 +251,19 @@ function setBullseyePosition(x, y, z) {
 
 function init3D() {
 
+  // events
+  $('#view-docs').change(function() {
+    clearSceneFlag = true;
+  });
+
+  $('#view-toolpath').change(function() {
+    clearSceneFlag = true;
+  });
+
+  $('#view-gcode').change(function() {
+    clearSceneFlag = true;
+  });
+
   // ThreeJS Render/Control/Camera
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 20000);
@@ -350,41 +363,46 @@ function animate() {
         scene.remove(scene.children[1])
       }
 
-      var documents = new THREE.Group();
-      documents.name = "Documents";
-      for (i = 0; i < objectsInScene.length; i++) {
-        documents.add(objectsInScene[i])
+
+      if ($("#view-docs").is(":checked")) {
+        var documents = new THREE.Group();
+        documents.name = "Documents";
+        for (i = 0; i < objectsInScene.length; i++) {
+          documents.add(objectsInScene[i])
+        }
+        scene.add(documents)
       }
-      scene.add(documents)
 
-      var toolpaths = new THREE.Group();
-      toolpaths.name = "Toolpaths";
-      for (i = 0; i < toolpathsInScene.length; i++) {
+      if ($("#view-toolpath").is(":checked")) {
+        var toolpaths = new THREE.Group();
+        toolpaths.name = "Toolpaths";
+        for (i = 0; i < toolpathsInScene.length; i++) {
 
-        if (toolpathsInScene[i].userData.visible) {
-          if (toolpathsInScene[i].userData.inflated) {
-            if (toolpathsInScene[i].userData.inflated.userData.pretty) {
-              if (toolpathsInScene[i].userData.inflated.userData.pretty.children.length > 0) {
-                toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
+          if (toolpathsInScene[i].userData.visible) {
+            if (toolpathsInScene[i].userData.inflated) {
+              if (toolpathsInScene[i].userData.inflated.userData.pretty) {
+                if (toolpathsInScene[i].userData.inflated.userData.pretty.children.length > 0) {
+                  toolpaths.add(toolpathsInScene[i].userData.inflated.userData.pretty);
+                } else {
+                  toolpaths.add(toolpathsInScene[i].userData.inflated);
+                }
               } else {
                 toolpaths.add(toolpathsInScene[i].userData.inflated);
               }
-            } else {
-              toolpaths.add(toolpathsInScene[i].userData.inflated);
-            }
-          };
+            };
+          }
         }
+        scene.add(toolpaths)
       }
-      scene.add(toolpaths)
 
-      if (fancysim == true) {
-        scene.add(simgcodeobj)
-      } else {
+      if ($("#view-gcode").is(":checked")) {
         if (object) {
           scene.add(object)
         }
-
       }
+
+
+
 
       var hovers = new THREE.Group();
       hovers.name = "Hover";

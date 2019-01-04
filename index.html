@@ -253,6 +253,9 @@
 
 							</div>
 							<div id="selection" style="visibility: hidden;"></div>
+							<!--  -->
+
+							<!--  -->
 						</div>
 
 						<div id="scalewindow" style="visibility: hidden;" data-role="draggable" data-drag-element=".drag-element">
@@ -270,8 +273,8 @@
 							</div>
 						</div>
 
-						<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;">
-						</div>
+						<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;"></div>
+
 					</div>
 					<div id="helpoverlay">
 						<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
@@ -281,6 +284,13 @@
 						<button id="runSimBtn" title="Run simulation" class="button dark drop-shadow" onclick="sim(0)" disabled><i class="fas fa-fighter-jet"></i> Simulate</button>&nbsp;
 						<button id="stopSimBtn" style="display: none;" title="Stop Sim" class="button dark drop-shadow" onclick="simstop()"><i class="fas fa-stop"></i> Stop Sim</button>&nbsp;
 						<button id="resetViewBtn" title="Stop Sim" class="button dark drop-shadow" onclick="resetView(object)"><i class="fas fa-stop"></i> Reset View</button>&nbsp;
+						<div class="text-left drop-shadow" style="z-index: 200; width: 110px; display: block; position: absolute; bottom:0px; right:10px; background: rgba(240, 240, 240, 0.85);">
+							<div data-role="collapse" data-collapsed="false" data-toggle-element="#collapse_toggle_1">
+								<input type="checkbox" data-role="checkbox" data-caption="Documents" checked data-style="2" id="view-docs">
+								<input type="checkbox" data-role="checkbox" data-caption="Toolpaths" checked data-style="2" id="view-toolpath">
+								<input type="checkbox" data-role="checkbox" data-caption="GCODE" checked data-style="2" id="view-gcode">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
