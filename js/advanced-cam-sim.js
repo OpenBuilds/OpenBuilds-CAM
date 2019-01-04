@@ -1,6 +1,6 @@
 var timefactor = 1,
-  simstopped = true,
-  var simgcodeobj;
+  simstopped = true;
+var simgcodeobj;
 
 function enableSim() {
   $('#runSimBtn').prop('disabled', false)
