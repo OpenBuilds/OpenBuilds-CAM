@@ -40,7 +40,7 @@ function trochoid_point(ang, a, b) {
  * - Increment for each turn as specified
  */
 function trochoid_move(startpoint, endpoint, cutz, radius, increment, type) {
-  var gcode = ""
+  var gcode = "; none \n";
   var a = increment / (2.0 * Math.PI); // Trochoid step parameter
   var ainc = Math.log10(radius) * 5.0; // Step INCREMENT (segments in the circle) are logarithmic based on the radius to reduce small steps // radius in mm * 5 deg
 
@@ -61,7 +61,7 @@ function trochoid_move(startpoint, endpoint, cutz, radius, increment, type) {
   // // Go to the trochoid entry-point and move to cutting deph
   var trochoidalpoint = trochoid_point(toRadians(0), a, radius)
   var rotated = rotateVector([trochoidalpoint[0], trochoidalpoint[1]], rot)
-  gcode += "G0 X" + (startpoint[0] + rotated[0]) + " Y" + (startpoint[1] + rotated[1]) + "\n"
+  gcode += "G0 X" + (startpoint[0] + rotated[0]) + " Y" + (startpoint[1] + rotated[1]) + "; start \n"
 
   // // Calculate each next point of the trochoid until we traversed the whole path to the endpoint
 
@@ -74,24 +74,22 @@ function trochoid_move(startpoint, endpoint, cutz, radius, increment, type) {
       console.log("GOTCHA at", i, toDegrees(n), startpoint, endpoint)
       // return;
     } else {
-      gcode += type + " X" + (startpoint[0] + rotated[0]) + " Y" + (startpoint[1] + rotated[1]) + "\n"
-
+      gcode += type + " X" + (startpoint[0] + rotated[0]) + " Y" + (startpoint[1] + rotated[1]) + "; line \n "
     }
   }
   return gcode;
 }
 
 // sample move
-var g = "G21\nG90\n";
+var g = "G21 ; mm\nG90 ; absolute\n";
 // trochoid_move(startpoint, endpoint, cutz, radius, increment
-g += trochoid_move([0.00, 0.00], [10.00, 0.00], -1.0, 5.0, 2.0, "G1")
-g += trochoid_move([10.00, 0.00], [20.00, 0.00], -1.0, 5.0, 2.0, "G0")
-g += trochoid_move([20.00, 0.00], [30.00, 10.00], -1.0, 5.0, 2.0, "G1")
-g += trochoid_move([30.00, 10.00], [50.00, 10.00], -1.0, 5.0, 2.0, "G0")
-g += trochoid_move([50.00, 10.00], [60.00, 0.00], -1.0, 5.0, 2.0, "G1")
-g += trochoid_move([60.00, 0.00], [70.00, 0.00], -1.0, 5.0, 2.0, "G0")
-g += trochoid_move([70.00, 0.00], [80.00, 0.00], -1.0, 5.0, 2.0, "G1")
-g += trochoid_move([80.00, 0.00], [100.00, 0.00], -1.0, 5.0, 2.0, "G0")
+g += trochoid_move([0.00, 0.00], [100.00, 0.00], -1.0, 5.0, 2.0, "G0")
+g += trochoid_move([100.00, 0.00], [100.00, 100.00], -1.0, 5.0, 2.0, "G1")
+g += trochoid_move([100.00, 100.00], [0.00, 100.00], -1.0, 5.0, 2.0, "G0")
+g += trochoid_move([0.00, 100.00], [0.00, 0.00], -1.0, 5.0, 2.0, "G1")
+// g += trochoid_move([60.00, 0.00], [70.00, 0.00], -1.0, 5.0, 2.0, "G0")
+// g += trochoid_move([70.00, 0.00], [80.00, 0.00], -1.0, 5.0, 2.0, "G1")
+// g += trochoid_move([80.00, 0.00], [100.00, 0.00], -1.0, 5.0, 2.0, "G0")
 // g += "G1 X100 Y0 \n"
 // g += "G1 X100 Y10  \n"
 // g += "G1 X0 Y10 \n"
