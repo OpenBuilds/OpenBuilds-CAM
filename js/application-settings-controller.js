@@ -322,8 +322,8 @@ function selectMachine(type) {
     var zaxis = 0
     $('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro510") {
-    var xaxis = 300
-    var yaxis = 800
+    var xaxis = 800
+    var yaxis = 300
     var zaxis = 0
     $('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro1010") {
