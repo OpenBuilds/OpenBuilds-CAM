@@ -35,6 +35,10 @@ $(document).ready(function() {
     $('#file').val(null);
   });
 
+  $('#workspaceImport').bind('click', function() {
+    $('#workspaceImport').val(null);
+  });
+
   // File -> Save
   $('#save').on('click', function() {
     saveFile();
