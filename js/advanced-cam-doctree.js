@@ -128,7 +128,7 @@ function filldoctree() {
         } else {
           var layer = 'layer1'
         }
-        $('#doc' + i + 'layer' + layer).append(template);
+        $("#doc" + i + "layer" + layer).append(template);
       }
     };
 
