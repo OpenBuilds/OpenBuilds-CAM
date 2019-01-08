@@ -19,7 +19,7 @@ var toolpathColor = 0x666600;
 var minimumToolDiaForPreview = 0.04;
 
 inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zstart, leadinval, tabdepth, union) {
-  // console.log(config)
+  console.log(config)
   var inflateGrpZ = new THREE.Group();
   var prettyGrp = new THREE.Group();
   var clipperPaths = getClipperPaths(config.toolpath)
@@ -34,7 +34,11 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
       console.error("Clipper Simplification Failed!:");
       toolpathErrorToast(`Toolpath Error: Clipper Simplification Failed!  for toolpath "` + config.toolpath.name + `" -  this indicates some problem with the geometry coming from the original document"`, 'bg-red');
     }
-    var inflatedPaths = getInflatePath(newClipperPaths, config.offset);
+    if (config.offset != 0) {
+      var inflatedPaths = getInflatePath(newClipperPaths, config.offset);
+    } else {
+      var inflatedPaths = newClipperPaths;
+    }
     // console.log(inflatedPaths);
     if (config.leadinval > 0) { // plasma lead-in
       var leadInPaths = getInflatePath(newClipperPaths, config.offset * 3);
@@ -72,7 +76,12 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
   } else {
     var newClipperPaths = clipperPaths;
     for (j = 0; j < newClipperPaths.length; j++) {
-      var inflatedPaths = getInflatePath([newClipperPaths[j]], config.offset);
+      if (config.offset != 0) {
+        var inflatedPaths = getInflatePath([newClipperPaths[j]], config.offset);
+      } else {
+        var inflatedPaths = [newClipperPaths[j]];
+      }
+
       if (inflatedPaths.length < 1) {
         console.error("Clipper Inflate Failed!:");
         toolpathErrorToast(`Toolpath Error: Clipper Simplification Failed!  for toolpath "` + config.toolpath.name + `" -  this indicates some problem with the geometry coming from the original document"`, 'bg-red');

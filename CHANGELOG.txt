@@ -1,3 +1,4 @@
+08 Jan 2019:  Fixed Load Workspace Input bug
 08 Jan 2019:  Added HelloWorld Submenu and Laser specific Hello World
 07 Jan 2019:  Updated profiles for Acro machines
 04 Jan 2019:  Added View Checkboxes (bottom right corner of 3D viewer)
