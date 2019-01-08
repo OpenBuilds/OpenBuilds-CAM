@@ -1,3 +1,5 @@
+08 Jan 2019:  Added HelloWorld Submenu and Laser specific Hello World
+07 Jan 2019:  Updated profiles for Acro machines
 04 Jan 2019:  Added View Checkboxes (bottom right corner of 3D viewer)
 02 Jan 2019:  Enhanced toolpath error messages to be more descriptive
 02 Jan 2019:  Fixed Firefox step=any bug for input=number
