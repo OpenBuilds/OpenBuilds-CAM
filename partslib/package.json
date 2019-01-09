@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "directory-tree": "^2.1.0",
-    "dxf": "^3.1.4"    
+    "dxf": "^3.1.4"
   },
   "devDependencies": {},
   "scripts": {

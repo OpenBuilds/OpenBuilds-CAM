@@ -3,6 +3,49 @@
   "name": "DXF",
   "children": [
     {
+      "path": "DXF\\ANIMALS",
+      "name": "ANIMALS",
+      "children": [
+        {
+          "path": "DXF\\ANIMALS\\ELEPHANT.dxf",
+          "name": "ELEPHANT.dxf",
+          "size": 79350,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
+          "path": "DXF\\ANIMALS\\GEMSBOK.dxf",
+          "name": "GEMSBOK.dxf",
+          "size": 308907,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
+          "path": "DXF\\ANIMALS\\GREAT DANE.dxf",
+          "name": "GREAT DANE.dxf",
+          "size": 34496,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
+          "path": "DXF\\ANIMALS\\KUDU.dxf",
+          "name": "KUDU.dxf",
+          "size": 188721,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
+          "path": "DXF\\ANIMALS\\SPRINGBOK.dxf",
+          "name": "SPRINGBOK.dxf",
+          "size": 226961,
+          "extension": ".dxf",
+          "type": "file"
+        }
+      ],
+      "size": 838435,
+      "type": "directory"
+    },
+    {
       "path": "DXF\\ENGINEERING",
       "name": "ENGINEERING",
       "children": [
@@ -46,13 +89,35 @@
       "type": "directory"
     },
     {
-      "path": "DXF\\MISC",
-      "name": "MISC",
-      "children": [],
-      "size": 0,
+      "path": "DXF\\SIGNAGE",
+      "name": "SIGNAGE",
+      "children": [
+        {
+          "path": "DXF\\SIGNAGE\\BATHROOM - LADIES.dxf",
+          "name": "BATHROOM - LADIES.dxf",
+          "size": 14242,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
+          "path": "DXF\\SIGNAGE\\BATHROOM - MENS.dxf",
+          "name": "BATHROOM - MENS.dxf",
+          "size": 13479,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
+          "path": "DXF\\SIGNAGE\\BATHROOM - WHEELCHAIR.dxf",
+          "name": "BATHROOM - WHEELCHAIR.dxf",
+          "size": 17588,
+          "extension": ".dxf",
+          "type": "file"
+        }
+      ],
+      "size": 45309,
       "type": "directory"
     }
   ],
-  "size": 166098,
+  "size": 1049842,
   "type": "directory"
 }
