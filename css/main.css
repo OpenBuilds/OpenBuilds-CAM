@@ -87,7 +87,7 @@
   width: 80px;
   margin: 2px 0;
   padding: 5px 2px;
-  text-align: right;
+  /* text-align: right; */
   background-color:rgba(255, 255, 255, 1);
   outline: none;
   border-color: #ddd;
@@ -820,4 +820,16 @@ d-grid {border: none; padding: 20px;}
 }
 .bg-openbuilds {
   background-color: rgb(74, 78, 81) !important;
+}
+
+.camOptgroup {
+    background-color: #eee;
+    color: black;
+    font-size: 12px;
+}
+
+.camOption {
+    background-color: white;
+    color: black;
+    font-size: 16px;
 }

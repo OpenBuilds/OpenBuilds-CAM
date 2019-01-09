@@ -64,7 +64,16 @@ function addJob(id) {
     obj.traverse(function(child) {
       if (child.userData.selected) {
         var copy = child.clone()
-        // console.log(copy, child)
+        console.log("copy:", copy)
+        if (copy.geometry.vertices.length < 3) {
+          copy.userData.closed = false
+        } else if (copy.geometry.vertices.length > 2) {
+          var d = distanceFormula(copy.geometry.vertices[0].x, copy.geometry.vertices[copy.geometry.vertices.length - 1].x, copy.geometry.vertices[0].y, copy.geometry.vertices[copy.geometry.vertices.length - 1].y)
+          console.log(d)
+          if (d < 0.1) {
+            copy.userData.closed = true
+          }
+        }
         copy.position.copy(obj.position);
         toolpath.add(copy);
       }

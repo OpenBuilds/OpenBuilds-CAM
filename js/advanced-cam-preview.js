@@ -4,7 +4,6 @@ function toolpathPreview(i) {
   $('#toolpathtree').hide();
   $('#toolpathactivity').show()
   trashGcode();
-  // $('#gcodesavebtn1').prop('disabled', true);
   $('#gcodesavebtn2').addClass('disabled');
   $('#gcodetrashbtn2').addClass('disabled');
   $('#gcodeexporticon').removeClass('fg-grayBlue').addClass('fg-gray');
@@ -53,12 +52,17 @@ function toolpathPreviewExec(i) {
     tabwidth = 1
   }
 
-  if (operation == "... Select Operation ...") {
+  if (!operation) {
+    $('#toolpathtree').show();
+    $('#toolpathactivity').hide()
+    runningPreviews--
+  } else if (operation == "... Select Operation ...") {
     // Do Nothing
     console.log("NO OPERATION")
     $('#toolpathtree').show();
     $('#toolpathactivity').hide()
     toolpathErrorToast(`Toolpath Error: You did not select a valid "Type of Cut"  for toolpath "` + toolpathsInScene[i].name + `" - Please  <i class="fas fa-sliders-h"></i> Edit the toolpath and configure it"`, 'bg-red');
+    runningPreviews--
   } else if (operation == "Laser: Vector (no path offset)") { //  operation,  index,  offset,           StepOver,   zstep,  zdepth,   zstart,   leadinval,      tabdepth,   tabspace,   tabwidth,   union
     toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, StepOver, 1, 1, 0, false, false, false, false, union);
   } else if (operation == "Laser: Vector (path inside)") {
@@ -93,10 +97,6 @@ function toolpathPreviewExec(i) {
     toolpathsInScene[i].userData.inflated = getToolpath("drill", i, (ToolDia / 2), 0, 0, ZDepth, 0, false, false, false, false, union);
   }
 
-  // Drill options
-  // <option>Drill: Peck (Centered)</option>
-  // <option</option>
-  // $('#statusmodal').modal('hide');
   Metro.dialog.close('#statusmodal')
   fillTree()
   clearSceneFlag = true;

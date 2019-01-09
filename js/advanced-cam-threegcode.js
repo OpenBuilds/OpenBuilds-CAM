@@ -88,7 +88,7 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
       }
       // plasma lead-in
       if (config.leadinval > 0) {
-        var leadInPaths = getInflatePath(pathobj, config.offset * 3);
+        var leadInPaths = getInflatePath([newClipperPaths[j]], config.offset * 3);
       }
       for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
         if (i > config.zdepth) {

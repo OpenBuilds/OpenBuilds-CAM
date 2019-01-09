@@ -201,45 +201,56 @@ function setupJob(i) {
   // $('#statusBody').html('' );
   var template2 = `
     Configure the operation for the toolpath
-    <table>
+    <div id="toolpathWarnings"></div>
+    <table style="width: 100%;">
       <tr>
-        <th style="width: 150px;"></th><th style="width: 210px;"></th>
+        <th style="width: 150px;"></th><th></th>
       </tr>
       <tr>
         <td>Name:</td>
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="far fa-edit fa-fw"></i></span>
-            <input data-role="input" autofocus type="text" class="cam-form-field cam-form-field-right active-border" value="` + toolpathsInScene[i].name + `" id="tOpName` + i + `"  objectseq="` + i + `" min="0" style="width: 180px; text-align: center;">
+            <input data-role="input" autofocus type="text" class="cam-form-field cam-form-field-right active-border" value="` + toolpathsInScene[i].name + `" id="tOpName` + i + `"  objectseq="` + i + `" min="0" style="text-align: center;">
           </div>
         </td>
       </tr>
       <tr>
-        <th style="width: 150px;"></th><th style="width: 210px;"></th>
+        <th style="width: 150px;"></th><th></th>
       </tr>
       <tr>
         <td>Type of cut: </td>
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i></span>
-            <select class="cam-form-field cam-form-field-right active-border" id="toperation` + i + `" objectseq="` + i + `" style="width: 180px; padding: 0px;">
+            <select class="cam-form-field cam-form-field-right active-border camOperationSelect" id="toperation` + i + `" objectseq="` + i + `" style="width: 265px; padding: 0px;">
               <option>... Select Operation ...</option>
-              <option>Drill: Peck (Centered)</option>
-              <option>Drill: Continuous (Centered)</option>
-              <option>CNC: Vector (no offset)</option>
-              <option>CNC: Vector (path inside)</option>
-              <option>CNC: Vector (path outside)</option>
-              <option>CNC: Pocket</option>
-              <option>Laser: Vector (no path offset)</option>
-              <option>Laser: Vector (path inside)</option>
-              <option>Laser: Vector (path outside)</option>
-              <option>Laser: Vector (raster fill) (Beta)</option>
-              <!--option>CNC: V-Engrave</option-->
-              <option>Plasma: Vector (path outside)</option>
-              <option>Plasma: Vector (path inside)</option>
-              <option>Plasma: Vector (no path offset)</option>
-              <option>Plasma: Mark</option>
-              <option>Drag Knife: Cutout</option>
+              <optgroup label="Drilling Operations" class="camOptgroup">
+                <option class="camOption">Drill: Peck (Centered)</option>
+                <option class="camOption">Drill: Continuous (Centered)</option>
+              </optgroup>
+              <optgroup label="Milling/Routing Operations" class="camOptgroup">
+                <option class="camOption">CNC: Vector (no offset)</option>
+                <option class="camOption">CNC: Vector (path inside)</option>
+                <option class="camOption">CNC: Vector (path outside)</option>
+                <option class="camOption">CNC: Pocket</option>
+              </optgroup>
+              <optgroup label="Laser Operations" class="camOptgroup">
+                <option class="camOption">Laser: Vector (no path offset)</option>
+                <option class="camOption">Laser: Vector (path inside)</option>
+                <option class="camOption">Laser: Vector (path outside)</option>
+                <option class="camOption">Laser: Vector (raster fill) (Beta)</option>
+              <!--option class="camOption">CNC: V-Engrave</option-->
+              </optgroup>
+              <optgroup label="Plasma Operations" class="camOptgroup">
+                <option class="camOption">Plasma: Vector (path outside)</option>
+                <option class="camOption">Plasma: Vector (path inside)</option>
+                <option class="camOption">Plasma: Vector (no path offset)</option>
+                <option class="camOption">Plasma: Mark</option>
+              </optgroup>
+              <optgroup label="Other" class="camOptgroup">
+                <option class="camOption">Drag Knife: Cutout</option>
+              </optgroup>
             </select>
           </div>
         </td>
@@ -373,7 +384,7 @@ function setupJob(i) {
           <div data-role="collapse" data-collapsed="true" data-toggle-element="#advanced` + i + `" id="collapsediv` + i + `">
           <table>
             <tr>
-              <th style="width: 150px;"></th><th style="width: 210px;"></th>
+              <th style="width: 150px;"></th><th ></th>
             </tr>
             <tr class="inputplasma inputcnc inputpocket inputdragknife inputlaser inputlasernooffset">
               <td>Geometry: Merge</td>
@@ -465,6 +476,23 @@ function setupJob(i) {
   $("#tOpName" + i).focus()
   Metro.init();
 
+  var closedVectors = 0
+  var openVectors = 0
+  for (j = 0; j < toolpathsInScene[i].children.length; j++) {
+    if (toolpathsInScene[i].children[j].userData.closed) {
+      closedVectors++
+    } else {
+      openVectors++
+    }
+  }
+
+  console.log("This operation contains " + openVectors + " Open Vectors, and " + closedVectors + " Closed Vectors")
+  if (openVectors > 0) {
+    var template3 = '<div class="remark"><span class="text-small">This toolpath contains ' + openVectors + ' open vector(s), and ' + closedVectors + ' closed vector(s)</span>'
+    template3 += '<br><span class="text-small fg-red">NB: You cannot use Offset operations on Open Vectors, you can try to use "No Offset" operations, or repair the file first</span>'
+    template3 += '</div>'
+    $('#toolpathWarnings').html(template3)
+  }
   if (toolpathsInScene[i].userData.camOperation) {
     $('#toperation' + i).val(toolpathsInScene[i].userData.camOperation).prop('selected', true)
     $('#ttooldia' + i).val(toolpathsInScene[i].userData.camToolDia);
@@ -637,6 +665,7 @@ function cncNoOffsetMode(i) {
   $('.inputtooldia').hide();
   $('.inputlaserraster').hide();
   $('.inputcnc').show();
+
 }
 
 function cncPocketMode(i) {
