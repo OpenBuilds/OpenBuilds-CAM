@@ -1,5 +1,5 @@
 function helloWorld() {
-  $.get("./workspace/helloworld.json", function(data) {
+  $.get("./workspace/helloworld.json?date=" + new Date().getTime(), function(data) {
     console.log(data)
     parseLoadWorkspace(data)
     printLog('HelloWorld Opened', msgcolor, "file");
@@ -14,7 +14,7 @@ function helloWorld() {
 }
 
 function helloWorldLaser() {
-  $.get("./workspace/helloworldlaser.json", function(data) {
+  $.get("./workspace/helloworldlaser.json?date=" + new Date().getTime(), function(data) {
     console.log(data)
     parseLoadWorkspace(data)
     printLog('HelloWorld-Laser Opened', msgcolor, "file");
