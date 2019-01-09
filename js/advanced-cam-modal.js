@@ -479,10 +479,14 @@ function setupJob(i) {
   var closedVectors = 0
   var openVectors = 0
   for (j = 0; j < toolpathsInScene[i].children.length; j++) {
-    if (toolpathsInScene[i].children[j].userData.closed) {
+    if (toolpathsInScene[i].children[j].userData.closed == undefined) { // this is for imports of old Workspaces before the closed logic.
       closedVectors++
-    } else {
-      openVectors++
+    } else { // New documents
+      if (toolpathsInScene[i].children[j].userData.closed) {
+        closedVectors++
+      } else {
+        openVectors++
+      }
     }
   }
 
