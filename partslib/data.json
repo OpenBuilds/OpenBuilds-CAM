@@ -7,9 +7,37 @@
       "name": "ANIMALS",
       "children": [
         {
+          "path": "DXF\\ANIMALS\\BUTTERFLY.dxf",
+          "name": "BUTTERFLY.dxf",
+          "size": 152026,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
+          "path": "DXF\\ANIMALS\\CROCODILE.dxf",
+          "name": "CROCODILE.dxf",
+          "size": 137384,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
           "path": "DXF\\ANIMALS\\ELEPHANT.dxf",
           "name": "ELEPHANT.dxf",
           "size": 79350,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
+          "path": "DXF\\ANIMALS\\FISH.dxf",
+          "name": "FISH.dxf",
+          "size": 33074,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
+          "path": "DXF\\ANIMALS\\GECKO.dxf",
+          "name": "GECKO.dxf",
+          "size": 248626,
           "extension": ".dxf",
           "type": "file"
         },
@@ -28,9 +56,23 @@
           "type": "file"
         },
         {
+          "path": "DXF\\ANIMALS\\HORSE.dxf",
+          "name": "HORSE.dxf",
+          "size": 71338,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
           "path": "DXF\\ANIMALS\\KUDU.dxf",
           "name": "KUDU.dxf",
           "size": 188721,
+          "extension": ".dxf",
+          "type": "file"
+        },
+        {
+          "path": "DXF\\ANIMALS\\LION.dxf",
+          "name": "LION.dxf",
+          "size": 93489,
           "extension": ".dxf",
           "type": "file"
         },
@@ -42,7 +84,7 @@
           "type": "file"
         }
       ],
-      "size": 838435,
+      "size": 1574372,
       "type": "directory"
     },
     {
@@ -89,6 +131,21 @@
       "type": "directory"
     },
     {
+      "path": "DXF\\HOLIDAYS",
+      "name": "HOLIDAYS",
+      "children": [
+        {
+          "path": "DXF\\HOLIDAYS\\HALLOWEEN - WITCH.dxf",
+          "name": "HALLOWEEN - WITCH.dxf",
+          "size": 76908,
+          "extension": ".dxf",
+          "type": "file"
+        }
+      ],
+      "size": 76908,
+      "type": "directory"
+    },
+    {
       "path": "DXF\\SIGNAGE",
       "name": "SIGNAGE",
       "children": [
@@ -118,6 +175,6 @@
       "type": "directory"
     }
   ],
-  "size": 1049842,
+  "size": 1862687,
   "type": "directory"
 }
