@@ -29,7 +29,7 @@ function makeGcode() {
 
     setTimeout(function() {
       for (j = 0; j < toolpathsInScene.length; j++) {
-        console.log(toolpathsInScene[j].userData.visible)
+        // console.log(toolpathsInScene[j].userData.visible)
         if (toolpathsInScene[j].userData.visible) {
 
           // todo: Settings params
@@ -184,7 +184,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           // console.log(i, xpos, ypos, zpos)
           // First Move To
           if (i == 0) {
-            console.log("First Point", xpos, ypos, zpos, optimisedVertices[i]);
+            // console.log("First Point", xpos, ypos, zpos, optimisedVertices[i]);
             // first point in line where we start lasering/milling
 
             // calc g0 rate
@@ -202,7 +202,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             }
 
             if (lastxyz.x == xpos.toFixed(4) && lastxyz.y == ypos.toFixed(4)) {
-              console.log("No need to plunge, can stay at z " + lastxyz.z)
+              // console.log("No need to plunge, can stay at z " + lastxyz.z)
             } else {
               // move to clearance height, at first points XY pos
               if (!isAtClearanceHeight) {
@@ -219,10 +219,10 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             // then G1 plunge into material
 
             if (!rampplunge) {
-              console.log("Direct Plunge")
+              // console.log("Direct Plunge")
               g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
             } else {
-              console.log("Ramp Plunge")
+              // console.log("Ramp Plunge")
               // console.log(xpos, xpos2, ypos, ypos2)
               var d = distanceFormula(xpos, xpos2, ypos, ypos2)
               if (d > (toolDia * 5)) {
@@ -260,12 +260,12 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             isAtClearanceHeight = false;
 
           } else {
-            console.log("Subsequent Point", xpos, ypos, zpos, optimisedVertices[i]);
+            // console.log("Subsequent Point", xpos, ypos, zpos, optimisedVertices[i]);
             // we are in a non-first line so this is normal moving
             // if the tool is not on, we need to turn it on
             if (!isToolOn) {
               if (PlasmaIHS == "Yes") {
-                console.log("PlasmaIHS")
+                // console.log("PlasmaIHS")
                 g += IHScommand + "\n";
               }
               if (toolon) {
@@ -328,7 +328,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
     g += "; retracting back to z-safe";
     g += "\n" + g0 + " Z" + clearanceHeight + "\n"; // Position Before Plunge!
   }
-  console.log("Generated gcode. length:", g.length);
+  // console.log("Generated gcode. length:", g.length);
   return g;
 };
 

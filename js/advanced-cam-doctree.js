@@ -142,6 +142,7 @@ function filldoctree() {
 
 // runs in threejs animate() loop: Sets colors and checkboxes of items based on userdata.selected=true/false
 function animateTree() {
+  // console.log('running animatetree')
   var tree = $('#doctree').data('treeview');
   selectCount = 0;
   for (i = 0; i < objectsInScene.length; i++) {

@@ -336,7 +336,6 @@ function init3D() {
 function animate() {
   if (!pauseAnimation) {
     camera.updateMatrixWorld();
-    animateTree();
     simAnimate();
 
     // half-hide toolpaths in delete/move mode
@@ -359,6 +358,7 @@ function animate() {
 
 
     if (clearSceneFlag) {
+      animateTree();
       while (scene.children.length > 1) {
         scene.remove(scene.children[1])
       }
@@ -564,7 +564,7 @@ function makeSprite(scene, rendererType, vals) {
 
 // Global Function to keep three fullscreen
 $(window).on('resize', function() {
-  console.log("Window Resize")
+  // console.log("Window Resize")
   //renderer.setSize(element.width(), element.height());
 
   sceneWidth = document.getElementById("renderArea").offsetWidth;

@@ -63,7 +63,7 @@ function loadLastClosedOnPageload() {
             caption: "<i class=\"far fa-fw fa-file\"></i>Start with a New workspace",
             cls: "js-dialog-close success",
             onclick: function() {
-              console.log("Starting wtih a clean workspace")
+              // console.log("Starting wtih a clean workspace")
             }
           }
         ]

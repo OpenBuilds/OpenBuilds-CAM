@@ -36,7 +36,8 @@ localParams = [
   ['scommandscale', true],
   ['ihsgcode', false],
   ['firmwaretype', true],
-  ['machinetype', true]
+  ['machinetype', true],
+  ['performanceLimit', false]
 ];
 
 
@@ -64,6 +65,8 @@ function saveSettingsLocal() {
     }
     if (paramName == 'scommandnewline') {
       var val = $('#' + paramName).is(":checked");
+    } else if (paramName == 'performanceLimit') {
+      var val = $('#' + paramName).is(":checked");
     } else {
       var val = $('#' + paramName).val(); // Read the value from form
     }
@@ -76,7 +79,7 @@ function saveSettingsLocal() {
 };
 
 function loadSettingsLocal() {
-  console.log("Loading settings from LocalStorage")
+  // console.log("Loading settings from LocalStorage")
   for (i = 0; i < localParams.length; i++) {
     var localParam = localParams[i];
     var paramName = localParam[0];
@@ -92,7 +95,10 @@ function loadSettingsLocal() {
       }
       if (paramName == 'scommandnewline') {
         $('#' + paramName).prop('checked', parseBoolean(val));
-        console.log('#' + paramName + " is set to " + val)
+        // console.log('#' + paramName + " is set to " + val)
+      } else if (paramName == 'performanceLimit') {
+        $('#' + paramName).prop('checked', parseBoolean(val));
+        // console.log('#' + paramName + " is set to " + val)
       } else {
         $('#' + paramName).val(val); // Set the value to Form from Storage
       }
@@ -113,7 +119,7 @@ function backupSettingsLocal() {
 
 function checkSettingsLocal() {
   var anyissues = false;
-  printLog('<b>Checking for configuration :</b><p>', msgcolor, "settings");
+  // printLog('<b>Checking for configuration :</b><p>', msgcolor, "settings");
   for (i = 0; i < localParams.length; i++) {
     var localParam = localParams[i];
     var paramName = localParam[0];
@@ -121,19 +127,19 @@ function checkSettingsLocal() {
     var val = $('#' + localParams[i]).val(); // Read the value from form
 
     if (!val && paramRequired) {
-      printLog('Missing required setting: ' + paramName, errorcolor, "settings");
+      // printLog('Missing required setting: ' + paramName, errorcolor, "settings");
       anyissues = true;
 
     } else if (!val && !paramRequired) {
-      printLog('Missing optional setting: ' + paramName, warncolor, "settings");
+      // printLog('Missing optional setting: ' + paramName, warncolor, "settings");
     } else {
-      printLog('Found setting: ' + paramName + " : " + val, msgcolor, "settings");
+      // printLog('Found setting: ' + paramName + " : " + val, msgcolor, "settings");
     }
   }
 
 
   if (anyissues) {
-    console.log(`<b>MISSING CONFIG: You need to configure your setup. </b>. Click Edit, <a href='#' onclick='Metro.dialog.open('#settingsmodal');'><kbd>Settings <i class="fa fa-cogs"></i></kbd></a> on the top menu bar, and work through all the options`, errorcolor, "settings");
+    // console.log(`<b>MISSING CONFIG: You need to configure your setup. </b>. Click Edit, <a href='#' onclick='Metro.dialog.open('#settingsmodal');'><kbd>Settings <i class="fa fa-cogs"></i></kbd></a> on the top menu bar, and work through all the options`, errorcolor, "settings");
     // $("#settingsmodal").modal("show");
     setTimeout(function() {
       Metro.dialog.open('#settingsmodal');
@@ -150,7 +156,7 @@ function checkSettingsLocal() {
 };
 
 function restoreSettingsLocal(evt) {
-  console.log('Inside Restore');
+  // console.log('Inside Restore');
   var input, file, fr;
 
   console.log('event ', evt)
@@ -168,7 +174,7 @@ function loadSettings(e) {
       saveSetting(property, o[property]);
     } else {
       // I'm not sure this can happen... I want to log this if it does!
-      console.log("Found a property " + property + " which does not belong to itself.");
+      // console.log("Found a property " + property + " which does not belong to itself.");
     }
   }
   loadSettingsLocal();
@@ -251,7 +257,7 @@ function setBoardButton(type) {
 var controller = ""
 
 function selectToolhead() {
-  console.log('selecttool')
+  // console.log('selecttool')
   var toolArr = $("#toolheadSelect").val()
   if (toolArr) {
     $('#startgcode').val("")
@@ -261,22 +267,22 @@ function selectToolhead() {
     for (i = 0; i < toolArr.length; i++) {
       var type = toolArr[i]
       if (type == 'spindleonoff') {
-        console.log('Add Spindle')
+        // console.log('Add Spindle')
         startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
         endcode += "M5 S0; Spindle Off\n"
       }
       if (type == 'laserm3') {
-        console.log('Add Laser Constant')
+        // console.log('Add Laser Constant')
         startcode += "M3; Constant Power Laser On\n"
         endcode += "M5; Laser Off\n"
       }
       if (type == 'laserm4') {
-        console.log('Add Laser Dynamic')
+        // console.log('Add Laser Dynamic')
         startcode += "M4; Dynamic Power Laser On\n"
         endcode += "M5; Laser Off\n"
       }
       if (type == 'misting') {
-        console.log('Add Misting')
+        // console.log('Add Misting')
         startcode += "M8; Coolant On\n"
         endcode += "M9; Coolant Off\n"
       }
@@ -616,6 +622,26 @@ $(document).ready(function() {
                     </div>
                 </div>
 
+              </div>
+            </li>
+
+            <li>
+              <h6 class="fg-grayBlue">Advanced<br><small>Change application behaviour to suit your specific needs</small></h6>
+              <hr class="bg-grayBlue">
+              <div>
+
+                <div class="row mb-2">
+                    <label class="cell-sm-6">Disable Tool-Width Preview<br>
+                    <span class="text-small">
+                      This can speed up toolpath calculations, but will
+                      disable the toolpath-width preview: You'll only see
+                      the centerline of the toolpath, not the width of the
+                      cut.  Helps slow PCs work better
+                    </span></label>
+                    <div class="cell-sm-6">
+                        <input data-role="checkbox" type="checkbox" id="performanceLimit" value="option1">
+                    </div>
+                </div>
               </div>
             </li>
 

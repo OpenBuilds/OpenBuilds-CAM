@@ -19,7 +19,7 @@ var toolpathColor = 0x666600;
 var minimumToolDiaForPreview = 0.04;
 
 inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zstart, leadinval, tabdepth, union) {
-  console.log(config)
+  // console.log(config)
   var inflateGrpZ = new THREE.Group();
   var prettyGrp = new THREE.Group();
   var clipperPaths = getClipperPaths(config.toolpath)
@@ -71,7 +71,9 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
       inflateGrp.name = 'inflateGrp' + i;
       inflateGrp.userData.material = inflateGrp.material;
       inflateGrpZ.add(inflateGrp);
-      prettyGrp.add(drawings.pretty)
+      if (drawings.pretty) {
+        prettyGrp.add(drawings.pretty)
+      }
     }
   } else {
     var newClipperPaths = clipperPaths;
@@ -117,7 +119,9 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
         inflateGrp.name = 'inflateGrp' + i;
         inflateGrp.userData.material = inflateGrp.material;
         inflateGrpZ.add(inflateGrp);
-        prettyGrp.add(drawings.pretty)
+        if (drawings.pretty) {
+          prettyGrp.add(drawings.pretty)
+        }
       }
     }
   }
@@ -135,7 +139,7 @@ pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zde
     var clipperPaths = getClipperPaths(config.toolpath)
     // console.log("clipperPaths:", clipperPaths);
     if (config.union == "Yes") {
-      console.log("Union")
+      // console.log("Union")
       // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
       var newClipperPaths = simplifyPolygons(clipperPaths);
       // console.log(newClipperPaths)
@@ -159,7 +163,7 @@ pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zde
           inflateValUsed = cutwidth * i;
         }
         if (inflateValUsed < config.offset) {
-          console.log("Should skip " + i)
+          // console.log("Should skip " + i)
         }
         // console.log(i, inflateValUsed, config.offset)
         if (inflateValUsed > 0) {
@@ -196,7 +200,9 @@ pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zde
               inflateGrp.name = 'inflateGrp';
               inflateGrp.position = config.toolpath.position;
               pocketGrp.add(inflateGrp);
-              prettyGrp.add(drawings.pretty)
+              if (drawings.pretty) {
+                prettyGrp.add(drawings.pretty)
+              }
             }
           } else {
             // console.log('Pocket already done after ' + i + ' iterations');
@@ -272,7 +278,9 @@ pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zde
                 inflateGrp.name = 'inflateGrp';
                 inflateGrp.position = config.toolpath.position;
                 pocketGrp.add(inflateGrp);
-                prettyGrp.add(drawings.pretty)
+                if (drawings.pretty) {
+                  prettyGrp.add(drawings.pretty)
+                }
               }
             } else {
               // console.log('Pocket already done after ' + i + ' iterations');
@@ -827,49 +835,63 @@ drawClipperPathsWithTool = function(config) {
     if (config.toolDia > minimumToolDiaForPreview || config.toolDia < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
       // generate once use again
       // for each z
-      var lineMesh = this.getMeshLineFromClipperPath({
-        width: config.toolDia,
-        clipperPath: clipperPaths,
-        isSolid: true,
-        opacity: 0.2,
-        isShowOutline: true,
-        color: config.prettyGrpColor,
-        caps: "round"
-      });
-      lineMesh.position.z = config.z;
-      prettyGrp.add(lineMesh)
-      var lineMesh = this.getMeshLineFromClipperPath({
-        width: config.toolDia,
-        clipperPath: clipperTabsPaths,
-        isSolid: true,
-        opacity: 0.4,
-        isShowOutline: true,
-        color: 0x00ff00,
-        caps: "negative"
-      });
-      lineMesh.position.z = config.z;
-      prettyGrp.add(lineMesh)
+      if (!$('#performanceLimit').is(":checked")) {
+        var lineMesh = this.getMeshLineFromClipperPath({
+          width: config.toolDia,
+          clipperPath: clipperPaths,
+          isSolid: true,
+          opacity: 0.2,
+          isShowOutline: true,
+          color: config.prettyGrpColor,
+          caps: "round"
+        });
+        lineMesh.position.z = config.z;
+        prettyGrp.add(lineMesh)
+        var lineMesh = this.getMeshLineFromClipperPath({
+          width: config.toolDia,
+          clipperPath: clipperTabsPaths,
+          isSolid: true,
+          opacity: 0.4,
+          isShowOutline: true,
+          color: 0x00ff00,
+          caps: "negative"
+        });
+        lineMesh.position.z = config.z;
+        prettyGrp.add(lineMesh)
+      }
     }
   } else {
     if (config.toolDia > minimumToolDiaForPreview || config.toolDia < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
       // generate once use again for each z
-      var lineMesh = this.getMeshLineFromClipperPath({
-        width: config.toolDia,
-        clipperPath: config.paths,
-        isSolid: true,
-        opacity: 0.2,
-        isShowOutline: true,
-        color: config.prettyGrpColor,
-        caps: "round"
-      });
-      lineMesh.position.z = config.z;
-      prettyGrp.add(lineMesh)
+      if (!$('#performanceLimit').is(":checked")) {
+        var lineMesh = this.getMeshLineFromClipperPath({
+          width: config.toolDia,
+          clipperPath: config.paths,
+          isSolid: true,
+          opacity: 0.2,
+          isShowOutline: true,
+          color: config.prettyGrpColor,
+          caps: "round"
+        });
+        lineMesh.position.z = config.z;
+        prettyGrp.add(lineMesh)
+      }
     }
   }
-  var grp = {
-    lines: group,
-    pretty: prettyGrp
+
+
+  if (!$('#performanceLimit').is(":checked")) {
+    var grp = {
+      lines: group,
+      pretty: prettyGrp
+    }
+  } else {
+    var grp = {
+      lines: group,
+      pretty: false
+    }
   }
+
   return grp;
 };
 

@@ -20,7 +20,7 @@ function usePartsLib(file, path) {
 }
 
 $(document).ready(function() {
-  console.log("Loading PartsLib")
+  // console.log("Loading PartsLib")
   $.get("./partslib/data.json", function(data) {
 
     var template = `
