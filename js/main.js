@@ -358,7 +358,7 @@ function getChangelog() {
 
   $("#changelog").empty()
   var template2 = `<ul>`
-  $.get("https://raw.githubusercontent.com/openbuilds/cam/master/CHANGELOG.txt", function(data) {
+  $.get("https://raw.githubusercontent.com/openbuilds/cam/master/CHANGELOG.txt" + new Date().getTime(), function(data) {
     var lines = data.split('\n');
 
     for (var line = 0; line < lines.length - 1; line++) {
