@@ -486,9 +486,17 @@
 		</div>
 
 		<div class="dialog" data-overlay-click-close="true" data-role="dialog" id="splashModal" data-width="600" data-to-top="true">
-			<div class="dialog-title">Changelog</div>
 			<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-				<div id="changelog"></div>
+
+				<div data-role="accordion" data-show-active="true" data-one-frame="true">
+				</div>
+				<div class="frame">
+					<div class="heading"><i class="fas fa-fw fa-history"></i> Changelog</div>
+					<div class="content">
+						<div id="changelog" class="text-small"></div>
+					</div>
+				</div>
+
 			</div>
 			<div class="dialog-actions">
 				<button class="button js-dialog-close alert" onclick="localStorage.setItem('hideChangelog', true);">Never show</button>

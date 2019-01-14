@@ -355,16 +355,19 @@ function getForksCount() {
 }
 
 function getChangelog() {
+
   $("#changelog").empty()
   var template2 = `<ul>`
   $.get("https://raw.githubusercontent.com/openbuilds/cam/master/CHANGELOG.txt", function(data) {
     var lines = data.split('\n');
-    for (var line = 0; line < lines.length; line++) {
+
+    for (var line = 0; line < lines.length - 1; line++) {
       template2 += '<li>' + lines[line] + '</li>'
     }
     template2 += `</ul>`
     $("#changelog").html(template2);
   });
+
   if (!Metro.dialog.isOpen('#settingsmodal')) {
     Metro.dialog.open('#splashModal')
   }
