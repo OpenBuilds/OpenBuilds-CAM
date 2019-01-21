@@ -1,3 +1,4 @@
+21 Jan 2019:  Added comment with endmill diameter to GCODE Output
 11 Jan 2019:  Added a "Disable Tool-Width Preview checkbox" to the Settings modal
 10 Jan 2019:  Added more artwork to the Parts Library
 09 Jan 2019:  Added more artwork to the Parts Library
