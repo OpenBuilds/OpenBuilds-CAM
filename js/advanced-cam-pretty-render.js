@@ -10,7 +10,6 @@ function getMeshLineFromClipperPath(opts) {
   var isShowOutline = 'isShowOutline' in opts ? opts.isShowOutline : false;
   var retGrp = new THREE.Group();
   var cap = opts.caps;
-  // console.log("getMeshLineFromClipperPath", opts.caps);
   var localInflateBy = width / 2;
 
   // loop thru all paths and draw a mesh stroke
@@ -296,8 +295,8 @@ function getUnionOfClipperPaths(subj_paths, clip_paths, cap) {
   // console.log(subj_paths, clip_paths, cap)
   var cpr = new ClipperLib.Clipper();
   var scale = 100000;
-  subj_paths = ClipperLib.JS.Clean(subj_paths, cleandelta * scale);
-  clip_paths = ClipperLib.JS.Clean(clip_paths, cleandelta * scale);
+  // subj_paths = ClipperLib.JS.Clean(subj_paths, cleandelta * scale);
+  // clip_paths = ClipperLib.JS.Clean(clip_paths, cleandelta * scale);
   ClipperLib.JS.ScaleUpPaths(subj_paths, scale);
   ClipperLib.JS.ScaleUpPaths(clip_paths, scale);
   cpr.AddPaths(subj_paths, ClipperLib.PolyType.ptSubject, true);
@@ -325,8 +324,8 @@ function getUnionOfClipperPaths(subj_paths, clip_paths, cap) {
 function getDiffOfClipperPaths(subj_paths, clip_paths, cap) {
   var cpr = new ClipperLib.Clipper();
   var scale = 100000;
-  subj_paths = ClipperLib.JS.Clean(subj_paths, cleandelta * scale);
-  clip_paths = ClipperLib.JS.Clean(clip_paths, cleandelta * scale);
+  // subj_paths = ClipperLib.JS.Clean(subj_paths, cleandelta * scale);
+  // clip_paths = ClipperLib.JS.Clean(clip_paths, cleandelta * scale);
   ClipperLib.JS.ScaleUpPaths(subj_paths, scale);
   ClipperLib.JS.ScaleUpPaths(clip_paths, scale);
   cpr.AddPaths(subj_paths, ClipperLib.PolyType.ptSubject, true);

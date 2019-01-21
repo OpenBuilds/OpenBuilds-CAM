@@ -84,19 +84,6 @@ function loadLastClosedOnPageload() {
 var undoStore = [];
 var redoStore = [];
 
-var setUndoRedoBtn = setInterval(function() {
-  if (undoStore.length > 0) {
-    $("#undoBtn").prop('disabled', false);
-  } else {
-    $("#undoBtn").prop('disabled', true);
-  }
-  if (redoStore.length > 0) {
-    $("#redoBtn").prop('disabled', false);
-  } else {
-    $("#redoBtn").prop('disabled', true);
-  }
-}, 200);
-
 // Undo/Redo Functions
 function undo() {
   if (undoStore.length > 0) {
