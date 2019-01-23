@@ -5,7 +5,7 @@ function helloWorld() {
     fillTree();
     setTimeout(function() {
       makeGcode();
-    }, 100)
+    }, 2000)
   });
 }
 
@@ -14,7 +14,7 @@ function helloWorldLaser() {
     parseLoadWorkspace(data)
     resetView();
     fillTree();
-    setTimeout(function() {}, 100)
+    setTimeout(function() {}, 2000)
     makeGcode();
   });
 }
