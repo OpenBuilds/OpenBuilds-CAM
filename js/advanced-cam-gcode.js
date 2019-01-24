@@ -37,14 +37,28 @@ function makeGcode() {
           var toolon = "";
           var tooloff = "";
           // toolpath settings is applied to the parent Toolpath.  Each child in the "toolpath" is processed with the same settings
-          var Feedrate = toolpathsInScene[j].userData.camFeedrate
-          var Plungerate = toolpathsInScene[j].userData.camPlungerate
-          var LaserPower = toolpathsInScene[j].userData.camLaserPower
-          var ZClearance = toolpathsInScene[j].userData.camZClearance
-          var PlasmaIHS = toolpathsInScene[j].userData.camPlasmaIHS
+          var Feedrate = toolpathsInScene[j].userData.camFeedrate;
+          var Plungerate = toolpathsInScene[j].userData.camPlungerate;
+          var LaserPower = toolpathsInScene[j].userData.camLaserPower;
+          var ZClearance = toolpathsInScene[j].userData.camZClearance;
+          var PlasmaIHS = toolpathsInScene[j].userData.camPlasmaIHS;
           var rampplunge = toolpathsInScene[j].userData.tRampPlunge == "Yes" ? true : false;
+          var Passes = toolpathsInScene[j].userData.camPasses;
 
-          toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
+          if (parseInt(Passes) && toolpathsInScene[j].userData.camOperation.indexOf('Laser') == 0) {
+            var g = ""
+            var gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
+            for (k = 0; k < Passes; k++) {
+              g += '; Pass ' + k + "\n"
+              g += gcode
+            }
+            toolpathsInScene[j].userData.gcode = g;
+          } else {
+            toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
+          }
+
+
+
           $("#savetpgcode").removeClass("disabled");
           $("#exportGcodeMenu").removeClass("disabled");
 

@@ -98,6 +98,9 @@ function initAdvancedCAM() {
     } else if (id.indexOf('tstartHeight') == 0) {
       $('#svgZStart').text(newval + 'mm');
       updateCamUserData(objectseq);
+    } else if (id.indexOf('tPasses') == 0) {
+      // $('#svgZStart').text(newval + 'mm');
+      updateCamUserData(objectseq);
     } else if (id.indexOf('tdragoffset') == 0) {
       $('#dragKnifeRadius').text(newval + 'mm');
       updateCamUserData(objectseq);
@@ -158,6 +161,7 @@ function updateCamUserData(i) {
   toolpathsInScene[i].userData.camStepover = $('#tstepover' + i).val();
   toolpathsInScene[i].userData.camZClearance = $('#tclearanceHeight' + i).val();
   toolpathsInScene[i].userData.camZStart = $('#tstartHeight' + i).val();
+  toolpathsInScene[i].userData.camPasses = $('#tPasses' + i).val();
   toolpathsInScene[i].userData.camDragOffset = $('#tdragoffset' + i).val();
   toolpathsInScene[i].userData.camLaserPower = $('#tpwr' + i).val();
   toolpathsInScene[i].userData.camZStep = $('#tzstep' + i).val();
@@ -386,6 +390,16 @@ function setupJob(i) {
             <tr>
               <th style="width: 150px;"></th><th ></th>
             </tr>
+            <tr class="inputlaser inputlaserraster">
+              <td>Muliple passes:</td>
+              <td>
+                <div class="input-addon">
+                  <span class="input-addon-label-left active-border"><i class="fas fa-sort-amount-down fa-fw"></i></span>
+                  <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="1" id="tPasses` + i + `"  objectseq="` + i + `" min="1" step="any">
+                  <span class="input-addon-label-right active-border">x</span>
+                </div>
+              </td>
+            </tr>
             <tr class="inputplasma inputcnc inputpocket inputdragknife inputlaser inputlasernooffset">
               <td>Geometry: Merge</td>
               <td>
@@ -462,9 +476,6 @@ function setupJob(i) {
                 </div>
               </td>
             </tr>
-            <tr class="inputlaserraster">
-              <td colspan="2"><p class="text-small">No Advanced Settings available for this type of cut</p></td>
-            </tr>
           </table>
           </div>
         </td>
@@ -498,6 +509,7 @@ function setupJob(i) {
     $('#toolpathWarnings').html(template3)
   }
   if (toolpathsInScene[i].userData.camOperation) {
+    $('#tPasses' + i).val(toolpathsInScene[i].userData.camPasses);
     $('#toperation' + i).val(toolpathsInScene[i].userData.camOperation).prop('selected', true)
     $('#ttooldia' + i).val(toolpathsInScene[i].userData.camToolDia);
     $('#tstepover' + i).val(toolpathsInScene[i].userData.camStepover);

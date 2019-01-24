@@ -283,8 +283,11 @@ function init3D() {
     renderer = new THREE.WebGLRenderer({
       autoClearColor: true,
       antialias: false,
-      preserveDrawingBuffer: true
+      preserveDrawingBuffer: true,
+      alpha: true
     });
+    renderer.setClearColor(0x000000, 0); // the default
+
 
   } else if (canvas) {
     printLog('<h5><i class="fa fa-search fa-fw" aria-hidden="true"></i>No WebGL Support found!</h5><b>CRITICAL ERROR:</b><br> this appplication may not work optimally on this device! <br>Try another device with WebGL support</p><br><u>Try the following:</u><br><ul><li>In the Chrome address bar, type: <b>chrome://flags</b> [Enter]</li><li>Enable the <b>Override software Rendering</b></li><li>Restart Chrome and try again</li></ul>Sorry! :(<hr><p>', errorcolor);
