@@ -140,6 +140,9 @@ function initAdvancedCAM() {
     } else if (id.indexOf('advanced') == 0) {
       // $('#svgUnion').text(newval);
       updateCamUserData(objectseq);
+    } else if (id.indexOf('tpwr') == 0) {
+      // $('#svgUnion').text(newval);
+      updateCamUserData(objectseq);
     }
   });
 
