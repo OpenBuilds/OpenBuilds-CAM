@@ -217,6 +217,14 @@ function selectBoard(type) {
     var tplrapidcommand = `G0`;
     var tplmovecommand = `G1`;
 
+  } else if (type == "blackbox") {
+    template = `<img src="images/brd/` + type + `.png"/>  Spark Concepts xPro`
+    var tplscommand = `S`;
+    var tplsscale = `1000`;
+    var tplsnewline = false;
+    var tplrapidcommand = `G0`;
+    var tplmovecommand = `G1`;
+
   } else if (type == "smoothie") {
     template = `<img src="images/brd/` + type + `.png"/>  Smoothieboard`
     var tplscommand = `S`;
@@ -245,6 +253,8 @@ function setBoardButton(type) {
     template = `<img src="images/brd/` + type + `.png"/>  Generic GRBL`
   } else if (type == "xpro") {
     template = `<img src="images/brd/` + type + `.png"/>  Spark Concepts xPro`
+  } else if (type == "blackbox") {
+    template = `<img src="images/brd/` + type + `.png"/>  OpenBuilds BlackBox 4X`
   } else if (type == "smoothie") {
     template = `<img src="images/brd/` + type + `.png"/>  Smoothieboard`
   } else {
@@ -485,6 +495,7 @@ $(document).ready(function() {
               <div>
                 <a style="width: 100%;" class="button dropdown-toggle secondary outline" id="context_toggle"><img src="images/brd/grbl.png"/> Select Controller</a>
                 <ul class="d-menu border bd-gray" data-role="dropdown" data-toggle-element="#context_toggle">
+                <li onclick="selectBoard('blackbox');"><a href="#"><img src="images/brd/blackbox.png"/>  OpenBuilds BlackBox 4X</a></li>
                   <li onclick="selectBoard('xpro');"><a href="#"><img src="images/brd/xpro.png"/>  Spark Concepts xPro</a></li>
                   <li onclick="selectBoard('smoothie');"><a href="#"><img src="images/brd/smoothie.png"/>  Smoothieboard</a></li>
                   <li class="divider"></li>
