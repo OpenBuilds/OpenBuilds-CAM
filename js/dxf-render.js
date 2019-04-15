@@ -25,14 +25,14 @@ function drawDXF(file, fileName) {
 
   parser2 = new window.DxfParser();
   dxf2 = parser2.parseSync(file);
-
+  console.log(dxf2)
   var fileLayers = [];
 
   var errorcount = 0
 
   for (i = 0; i < dxf2.entities.length; i++) {
     fileLayers.push(dxf2.entities[i].layer)
-    // console.log('drawEntity - DXF: ' + i)
+    console.log('drawEntity - DXF: ' + i, dxf2.entities[i])
     var dxfentity = drawEntity(i, dxf2.entities[i]);
     if (dxfentity) {
       fileObject.add(dxfentity);
@@ -43,7 +43,7 @@ function drawDXF(file, fileName) {
   };
 
   if (errorcount > 0) {
-    var message = fileName + " contained some unsupported entities. These were ignored."
+    var message = fileName + " contained " + errorcount + " unsupported entities. These were ignored."
     Metro.toast.create(message, null, 6000, 'bg-amber');
   }
 
