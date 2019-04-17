@@ -39,6 +39,12 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
     } else {
       var inflatedPaths = newClipperPaths;
     }
+    if (config.offset > 0) {
+      // reverse here
+      for (i = 0; i < inflatedPaths.length; i++) {
+        inflatedPaths[i].reverse();
+      }
+    }
     // console.log(inflatedPaths);
     if (config.leadinval > 0) { // plasma lead-in
       var leadInPaths = getInflatePath(newClipperPaths, config.offset * 3);
@@ -83,7 +89,12 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
       } else {
         var inflatedPaths = [newClipperPaths[j]];
       }
-
+      if (config.offset > 0) {
+        // reverse here
+        for (i = 0; i < inflatedPaths.length; i++) {
+          inflatedPaths[i].reverse();
+        }
+      }
       if (inflatedPaths.length < 1) {
         console.error("Clipper Inflate Failed!:");
         toolpathErrorToast(`Toolpath Error: Clipper Simplification Failed!  for toolpath "` + config.toolpath.name + `" -  this indicates some problem with the geometry coming from the original document"`, 'bg-red');
