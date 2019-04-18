@@ -44,6 +44,7 @@ function toolpathPreviewExec(i) {
   var ZStep = toolpathsInScene[i].userData.camZStep
   var SpotSize = toolpathsInScene[i].userData.camSpotSize
   var union = toolpathsInScene[i].userData.camUnion
+  var direction = toolpathsInScene[i].userData.camDirection
   var StepOver = toolpathsInScene[i].userData.camStepover
   var tabdepth = -(parseFloat(toolpathsInScene[i].userData.camZDepth) - parseFloat(toolpathsInScene[i].userData.camTabDepth));
   var tabspace = parseFloat(toolpathsInScene[i].userData.camTabSpace);
@@ -64,37 +65,37 @@ function toolpathPreviewExec(i) {
     toolpathErrorToast(`Toolpath Error: You did not select a valid "Type of Cut"  for toolpath "` + toolpathsInScene[i].name + `" - Please  <i class="fas fa-sliders-h"></i> Edit the toolpath and configure it"`, 'bg-red');
     runningPreviews--
   } else if (operation == "Laser: Vector (no path offset)") { //  operation,  index,  offset,           StepOver,   zstep,  zdepth,   zstart,   leadinval,      tabdepth,   tabspace,   tabwidth,   union
-    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, StepOver, 1, 1, 0, false, false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, StepOver, 1, 1, 0, false, false, false, false, union, direction);
   } else if (operation == "Laser: Vector (path inside)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union, direction);
   } else if (operation == "Laser: Vector (path outside)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, (SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, (SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union, direction);
   } else if (operation == "Laser: Vector (raster fill) (Beta)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("fill", i, (SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("fill", i, (SpotSize / 2), 0, 1, 1, 0, false, false, false, false, union, direction);
   } else if (operation == "CNC: Vector (no offset)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, 0, ZStep, ZDepth, ZStart, false, tabdepth, tabspace, tabwidth, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, 0, ZStep, ZDepth, ZStart, false, tabdepth, tabspace, tabwidth, union, direction);
   } else if (operation == "CNC: Vector (path inside)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(ToolDia / 2), 0, ZStep, ZDepth, ZStart, false, tabdepth, tabspace, tabwidth, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(ToolDia / 2), 0, ZStep, ZDepth, ZStart, false, tabdepth, tabspace, tabwidth, union, direction);
   } else if (operation == "CNC: Vector (path outside)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, (ToolDia / 2), 0, ZStep, ZDepth, ZStart, false, tabdepth, tabspace, tabwidth, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, (ToolDia / 2), 0, ZStep, ZDepth, ZStart, false, tabdepth, tabspace, tabwidth, union, direction);
   } else if (operation == "CNC: Pocket") {
-    toolpathsInScene[i].userData.inflated = getToolpath("pocket", i, (ToolDia / 2), StepOver, ZStep, ZDepth, ZStart, false, false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("pocket", i, (ToolDia / 2), StepOver, ZStep, ZDepth, ZStart, false, false, false, false, union, direction);
   } else if (operation == "CNC: V-Engrave") {
     // no op yet
   } else if (operation == "Plasma: Vector (path outside)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, (PlasmaKerf / 2), 0, 1, 1, 0, (PlasmaKerf / 2), false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, (PlasmaKerf / 2), 0, 1, 1, 0, (PlasmaKerf / 2), false, false, false, union, direction);
   } else if (operation == "Plasma: Vector (path inside)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(PlasmaKerf / 2), 0, 1, 1, 0, (PlasmaKerf / 2), false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, -(PlasmaKerf / 2), 0, 1, 1, 0, (PlasmaKerf / 2), false, false, false, union, direction);
   } else if (operation == "Plasma: Mark") {
-    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, 0, 1, 1, 0, false, false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, 0, 1, 1, 0, false, false, false, false, union, direction);
   } else if (operation == "Plasma: Vector (no path offset)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, 0, 1, 1, 0, false, false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, 0, 1, 1, 0, false, false, false, false, union, direction);
   } else if (operation == "Drag Knife: Cutout") {
-    toolpathsInScene[i].userData.inflated = getToolpath("dragknife", i, DragOffset, 0, 1, 1, 0, false, false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("dragknife", i, DragOffset, 0, 1, 1, 0, false, false, false, false, union, direction);
   } else if (operation == "Drill: Peck (Centered)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("peckdrill", i, (ToolDia / 2), 0, ZStep, ZDepth, 0, false, false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("peckdrill", i, (ToolDia / 2), 0, ZStep, ZDepth, 0, false, false, false, false, union, direction);
   } else if (operation == "Drill: Continuous (Centered)") {
-    toolpathsInScene[i].userData.inflated = getToolpath("drill", i, (ToolDia / 2), 0, 0, ZDepth, 0, false, false, false, false, union);
+    toolpathsInScene[i].userData.inflated = getToolpath("drill", i, (ToolDia / 2), 0, 0, ZDepth, 0, false, false, false, false, union, direction);
   }
 
   Metro.dialog.close('#statusmodal')
@@ -102,7 +103,7 @@ function toolpathPreviewExec(i) {
   clearSceneFlag = true;
 }
 
-function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, leadinval, tabdepth, tabspace, tabwidth, union) {
+function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, leadinval, tabdepth, tabspace, tabwidth, union, direction) {
   var depth = zdepth - zstart;
   if (zstep > depth) {
     console.log("Could not generate " + operation + " toolpath for " + toolpathsInScene[index].name + ":  You cannot have Cut Depth: Per Pass, larger than Cut Depth: Final")
@@ -119,6 +120,7 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
     tabspace: parseFloat(tabspace, 2),
     tabwidth: parseFloat(tabwidth, 2),
     union: union,
+    direction: direction,
     stepover: parseFloat(StepOver, 2)
   }
   if (operation == "inflate") {

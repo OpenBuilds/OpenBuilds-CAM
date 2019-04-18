@@ -57,9 +57,11 @@ function typeofOperation(newval, objectseq) {
 
 function initAdvancedCAM() {
   $('#statusBody2').on('keyup change', 'input, select', function() {
+    // console.log('Action')
     var inputVal = $(this).val();
     var newval = inputVal
     var id = $(this).attr('id');
+    // console.log(id)
     var objectseq = $(this).attr('objectseq');
     // console.log('Value for ' +id+ ' changed to ' +newval+ ' for object ' +objectseq );
     if (id.indexOf('tzstep') == 0) {
@@ -115,6 +117,9 @@ function initAdvancedCAM() {
       updateCamUserData(objectseq);
     } else if (id.indexOf('tplasmaihs') == 0) {
       $('#svgPlasmaIHS').text(newval);
+      updateCamUserData(objectseq);
+    } else if (id.indexOf('tdirection') == 0) {
+      // $('#svgPlasmaIHS').text(newval);
       updateCamUserData(objectseq);
     } else if (id.indexOf('tunion') == 0) {
       // $('#svgPlasmaIHS').text(newval);
@@ -175,6 +180,7 @@ function updateCamUserData(i) {
   toolpathsInScene[i].userData.camPlasmaZHeight = $('#tplasmazheight' + i).val();
   toolpathsInScene[i].userData.camPlasmaIHS = $('#tplasmaihs' + i).val();
   toolpathsInScene[i].userData.camUnion = $('#tunion' + i).val();
+  toolpathsInScene[i].userData.camDirection = $('#tdirection' + i).val();
   toolpathsInScene[i].userData.camSpotSize = $('#tspotsize' + i).val();
   toolpathsInScene[i].userData.camTabDepth = $('#tabdepth' + i).val();
   toolpathsInScene[i].userData.camTabWidth = $('#tabWidth' + i).val();
@@ -403,6 +409,18 @@ function setupJob(i) {
                 </div>
               </td>
             </tr>
+            <tr class="inputcnc inputpocket">
+              <td>Cutting Direction:</td>
+              <td>
+                <div class="input-addon">
+                  <span class="input-addon-label-left active-border"><i class="fas fa-compress fa-fw"></i></span>
+                  <select class="cam-form-field cam-form-field-right active-border" id="tdirection` + i + `" objectseq="` + i + `" style="width: 180px; padding: 0px;">
+                    <option selected>Climb</option>
+                    <option>Conventional</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
             <tr class="inputplasma inputcnc inputpocket inputdragknife inputlaser inputlasernooffset">
               <td>Geometry: Merge</td>
               <td>
@@ -537,6 +555,7 @@ function setupJob(i) {
     }
     $('#tplasmaihs' + i).val(toolpathsInScene[i].userData.camPlasmaIHS).prop('selected', true);
     $('#tunion' + i).val(toolpathsInScene[i].userData.camUnion).prop('selected', true);
+    $('#tdirection' + i).val(toolpathsInScene[i].userData.camDirection).prop('selected', true);
     $('#tOpName' + i).val(toolpathsInScene[i].name);
     $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
     $('#advanced' + i).prop('checked', toolpathsInScene[i].userData.advanced);

@@ -39,10 +39,18 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
     } else {
       var inflatedPaths = newClipperPaths;
     }
-    if (config.offset > 0) {
+    if (config.direction == "Climb") {
       // reverse here
-      for (i = 0; i < inflatedPaths.length; i++) {
-        inflatedPaths[i].reverse();
+      if (config.offset > 0) {
+        for (i = 0; i < inflatedPaths.length; i++) {
+          inflatedPaths[i].reverse();
+        }
+      }
+    } else if (config.direction == "Conventional") {
+      if (config.offset < 0) {
+        for (i = 0; i < inflatedPaths.length; i++) {
+          inflatedPaths[i].reverse();
+        }
       }
     }
     // console.log(inflatedPaths);
@@ -89,10 +97,18 @@ inflatePath = function(config) { //}, infobject, inflateVal, zstep, zdepth, zsta
       } else {
         var inflatedPaths = [newClipperPaths[j]];
       }
-      if (config.offset > 0) {
+      if (config.direction == "Climb") {
         // reverse here
-        for (i = 0; i < inflatedPaths.length; i++) {
-          inflatedPaths[i].reverse();
+        if (config.offset > 0) {
+          for (i = 0; i < inflatedPaths.length; i++) {
+            inflatedPaths[i].reverse();
+          }
+        }
+      } else if (config.direction == "Conventional") {
+        if (config.offset < 0) {
+          for (i = 0; i < inflatedPaths.length; i++) {
+            inflatedPaths[i].reverse();
+          }
         }
       }
       if (inflatedPaths.length < 1) {
