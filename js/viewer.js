@@ -430,7 +430,7 @@ function animate() {
 
 
 function viewExtents(objecttosee) {
-  //console.log("viewExtents. object.userData:", this.object.userData);
+  // console.log("viewExtents. object.userData:", objecttosee.userData, objecttosee);
   // console.log("controls:", controls);
   //wakeAnimate();
 
@@ -439,73 +439,74 @@ function viewExtents(objecttosee) {
   // get its bounding box
   if (objecttosee) {
     var helper = new THREE.BoxHelper(objecttosee);
-    helper.update();
-    var box3 = new THREE.Box3();
-    box3.setFromObject(helper);
-    var minx = box3.min.x;
-    var miny = box3.min.y;
-    var maxx = box3.max.x;
-    var maxy = box3.max.y;
-    var minz = box3.min.z;
-    var maxz = box3.max.z;
+    if (helper) {
+      helper.update();
+      var box3 = new THREE.Box3();
+      box3.setFromObject(helper);
+      var minx = box3.min.x;
+      var miny = box3.min.y;
+      var maxx = box3.max.x;
+      var maxy = box3.max.y;
+      var minz = box3.min.z;
+      var maxz = box3.max.z;
 
 
-    controls.reset();
+      controls.reset();
 
-    var lenx = maxx - minx;
-    var leny = maxy - miny;
-    var lenz = maxz - minz;
-    var centerx = minx + (lenx / 2);
-    var centery = miny + (leny / 2);
-    var centerz = minz + (lenz / 2);
+      var lenx = maxx - minx;
+      var leny = maxy - miny;
+      var lenz = maxz - minz;
+      var centerx = minx + (lenx / 2);
+      var centery = miny + (leny / 2);
+      var centerz = minz + (lenz / 2);
 
 
-    // console.log("lenx:", lenx, "leny:", leny, "lenz:", lenz);
-    var maxlen = Math.max(lenx, leny, lenz);
-    var dist = 2 * maxlen;
-    // center camera on gcode objects center pos, but twice the maxlen
-    controls.object.position.x = centerx;
-    controls.object.position.y = centery;
-    controls.object.position.z = centerz + dist;
-    controls.target.x = centerx;
-    controls.target.y = centery;
-    controls.target.z = centerz;
-    // console.log("maxlen:", maxlen, "dist:", dist);
-    var fov = 2.2 * Math.atan(maxlen / (2 * dist)) * (180 / Math.PI);
-    // console.log("new fov:", fov, " old fov:", controls.object.fov);
-    if (isNaN(fov)) {
-      console.log("giving up on viewing extents because fov could not be calculated");
-      return;
-    } else {
-      controls.object.fov = fov;
-      var L = dist;
-      var camera = controls.object;
-      var vector = controls.target.clone();
-      var l = (new THREE.Vector3()).subVectors(camera.position, vector).length();
-      var up = camera.up.clone();
-      var quaternion = new THREE.Quaternion();
+      // console.log("lenx:", lenx, "leny:", leny, "lenz:", lenz);
+      var maxlen = Math.max(lenx, leny, lenz);
+      var dist = 2 * maxlen;
+      // center camera on gcode objects center pos, but twice the maxlen
+      controls.object.position.x = centerx;
+      controls.object.position.y = centery;
+      controls.object.position.z = centerz + dist;
+      controls.target.x = centerx;
+      controls.target.y = centery;
+      controls.target.z = centerz;
+      // console.log("maxlen:", maxlen, "dist:", dist);
+      var fov = 2.2 * Math.atan(maxlen / (2 * dist)) * (180 / Math.PI);
+      // console.log("new fov:", fov, " old fov:", controls.object.fov);
+      if (isNaN(fov)) {
+        console.log("giving up on viewing extents because fov could not be calculated");
+        return;
+      } else {
+        controls.object.fov = fov;
+        var L = dist;
+        var camera = controls.object;
+        var vector = controls.target.clone();
+        var l = (new THREE.Vector3()).subVectors(camera.position, vector).length();
+        var up = camera.up.clone();
+        var quaternion = new THREE.Quaternion();
 
-      // Zoom correction
-      camera.translateZ(L - l);
-      // console.log("up:", up);
-      up.y = 1;
-      up.x = 0;
-      up.z = 0;
-      quaternion.setFromAxisAngle(up, 0);
-      //camera.position.applyQuaternion(quaternion);
-      up.y = 0;
-      up.x = 1;
-      up.z = 0;
-      quaternion.setFromAxisAngle(up, 0);
-      camera.position.applyQuaternion(quaternion);
-      up.y = 0;
-      up.x = 0;
-      up.z = 1;
-      quaternion.setFromAxisAngle(up, 0);
-      camera.lookAt(vector);
-      controls.object.updateProjectionMatrix();
+        // Zoom correction
+        camera.translateZ(L - l);
+        // console.log("up:", up);
+        up.y = 1;
+        up.x = 0;
+        up.z = 0;
+        quaternion.setFromAxisAngle(up, 0);
+        //camera.position.applyQuaternion(quaternion);
+        up.y = 0;
+        up.x = 1;
+        up.z = 0;
+        quaternion.setFromAxisAngle(up, 0);
+        camera.position.applyQuaternion(quaternion);
+        up.y = 0;
+        up.x = 0;
+        up.z = 1;
+        quaternion.setFromAxisAngle(up, 0);
+        camera.lookAt(vector);
+        controls.object.updateProjectionMatrix();
+      }
     }
-
   }
 };
 

@@ -234,7 +234,7 @@ function loadFile(f) {
       }
       r.readAsDataURL(f);
 
-    } else if (f.name.match(/.gtl$/i) || f.name.match(/.gbl$/i) || f.name.match(/.gbr$/i)) {
+    } else if (f.name.match(/.gtl$/i) || f.name.match(/.gbl$/i) || f.name.match(/.gbr$/i) || f.name.match(/.GTL$/i) || f.name.match(/.GBL$/i) || f.name.match(/.GBR$/i)) {
       // console.log(f.name + " is a DXF file");
       // console.log('Reader: ', r)
       r.readAsText(f);
@@ -244,7 +244,7 @@ function loadFile(f) {
         printLog('Gerber Opened');
         resetView();
       };
-    } else if (f.name.match(/.txt$/i)) { // Excellon Drill File
+    } else if (f.name.match(/.txt$/i) || f.name.match(/.TXT$/i)) { // Excellon Drill File
       r.readAsText(f);
       r.onload = function(e) {
         var gerbdata = r.result;

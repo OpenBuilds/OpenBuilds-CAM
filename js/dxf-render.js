@@ -33,7 +33,7 @@ function drawDXF(file, fileName) {
   for (i = 0; i < dxf2.entities.length; i++) {
     fileLayers.push(dxf2.entities[i].layer)
     console.log('drawEntity - DXF: ' + i, dxf2.entities[i])
-    var dxfentity = drawEntity(i, dxf2.entities[i]);
+    var dxfentity = drawEntity(i, dxf2.entities[i], dxf2);
     if (dxfentity) {
       fileObject.add(dxfentity);
     } else {

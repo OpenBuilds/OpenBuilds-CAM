@@ -472,7 +472,7 @@ function mouseMove(event) {
 };
 
 function shapeFromLine(object, color, opacity) {
-  if (object.geometry.vertices.length > 2) {
+  if (object.geometry.vertices && object.geometry.vertices.length > 2) {
     var newShape = new THREE.Shape();
     newShape.moveTo(object.geometry.vertices[0].x, object.geometry.vertices[0].y)
     for (k = i; k < object.geometry.vertices.length; k++) {
