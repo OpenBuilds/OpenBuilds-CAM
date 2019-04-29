@@ -43,42 +43,6 @@ function saveOnClose() {
   localStorage.setItem("lastWorkspace", data)
 }
 
-function loadLastClosedOnPageload() {
-  var lastWorkspace = localStorage.getItem('lastWorkspace');
-  if (lastWorkspace) {
-    if (Object.size(JSON.parse(lastWorkspace).objects) > 0 || Object.size(JSON.parse(lastWorkspace).toolpaths) > 0) {
-
-      Metro.dialog.create({
-        width: 500,
-        title: "Found a recoverable workspace.",
-        content: "<div>Would you like to recover the previously used workspace, or would you like to start with a clean New workspace?</div>",
-        actions: [{
-            caption: "<i class=\"far fa-fw fa-save\"></i>Recover last used Workspace",
-            cls: "js-dialog-close success",
-            onclick: function() {
-              parseLoadWorkspace(lastWorkspace)
-            }
-          },
-          {
-            caption: "<i class=\"far fa-fw fa-file\"></i>Start with a New workspace",
-            cls: "js-dialog-close success",
-            onclick: function() {
-              // console.log("Starting wtih a clean workspace")
-            }
-          }
-        ]
-      });
-
-      // var x = confirm("Found a recoverable workspace.  Would you like to load it, or start with a clean workspace?");
-      // if (x) {
-      //   parseLoadWorkspace(lastWorkspace)
-      //   return true;
-      // } else {
-      //   return false;
-      // }
-    }
-  }
-}
 
 // Undo/Redo Variables
 var undoStore = [];
