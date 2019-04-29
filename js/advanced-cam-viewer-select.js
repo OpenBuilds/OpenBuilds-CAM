@@ -63,6 +63,11 @@ function listeners() {
       });
     }
   });
+
+  $('#selectDel').on('click', function() {
+    storeUndo(true);
+    deleteSelectedObjects();
+  });
 }
 
 function delta(num1, num2) {
