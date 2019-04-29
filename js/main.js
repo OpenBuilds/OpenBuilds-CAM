@@ -70,8 +70,7 @@ $(document).ready(function() {
   var hasWorkspace = false
   $.get("https://mymachine.openbuilds.com:3001/workspace").done(function(data) {
     if (isJson(data)) {
-
-
+      hasWorkspace = true;
       Metro.dialog.create({
         width: 500,
         title: "Import workspace.",
@@ -81,7 +80,6 @@ $(document).ready(function() {
             cls: "js-dialog-close success",
             onclick: function() {
               parseLoadWorkspace(data)
-              hasWorkspace = true;
             }
           },
           {
