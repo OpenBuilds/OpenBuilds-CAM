@@ -162,10 +162,10 @@ function exportWorkspace() {
         }
       },
       {
-        caption: "Disagree",
+        caption: "Cancel",
         cls: "js-dialog-close",
         onclick: function() {
-          alert("You clicked Disagree action");
+          //
         }
       }
     ]
