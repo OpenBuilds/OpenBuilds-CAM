@@ -66,6 +66,13 @@ $(document).ready(function() {
 
   getForksCount();
 
+  // lets see if there's any Workspaces on CONTROL
+  $.get("https://mymachine.openbuilds.com:3001/workspace").done(function(data) {
+    if (isJson(data)) {
+      parseLoadWorkspace(data)
+    }
+  });
+
 }); // End of document.ready
 
 // Error handling
@@ -401,4 +408,22 @@ function getChangelog() {
   if (!Metro.dialog.isOpen('#settingsmodal')) {
     Metro.dialog.open('#splashModal')
   }
+}
+
+function isJson(item) {
+  item = typeof item !== "string" ?
+    JSON.stringify(item) :
+    item;
+
+  try {
+    item = JSON.parse(item);
+  } catch (e) {
+    return false;
+  }
+
+  if (typeof item === "object" && item !== null) {
+    return true;
+  }
+
+  return false;
 }
