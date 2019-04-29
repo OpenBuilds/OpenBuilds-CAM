@@ -1,4 +1,4 @@
-29 Apr 2019:  Added Delete Selection button #49
+29 Apr 2019:  Added Delete Selection button #49, Added Workspace and Gcode naming #51
 25 Apr 2019:  Added Splines, Insert to DXF Parser
 17 Apr 2019:  Fixed cut direction for Outside Cuts
 25 Feb 2019:  Added OpenBuilds BlackBox 4X Profile

@@ -276,12 +276,42 @@ function loadFile(f) {
 }
 
 function saveFile() {
+  Metro.dialog.create({
+    title: "Save GCODE",
+    content: `<div class="form-group">
+           <label>Filename:</label>
+           <input type="text" id="gcodeFilename" placeholder="` + 'file-' + date.yyyymmdd() + '.gcode' + `" value="` + 'file-' + date.yyyymmdd() + '.gcode' + `"/>
+           <small class="text-muted">What would you like to name the gcode export?</small>
+       </div>
+    `,
+    actions: [{
+        caption: "<span class='fas fa-download fa-fw'></span> Save",
+        cls: "js-dialog-close primary",
+        onclick: function() {
+          saveFileGcode($('#gcodeFilename').val());
+        }
+      },
+      {
+        caption: "Disagree",
+        cls: "js-dialog-close",
+        onclick: function() {
+          alert("You clicked Disagree action");
+        }
+      }
+    ]
+  });
+
+}
+
+function saveFileGcode(filename) {
+  if (!filename.endsWith('.gcode')) {
+    filename = filename += '.obc'
+  }
   var textToWrite = prepgcodefile();
   var blob = new Blob([textToWrite], {
     type: "text/plain"
   });
-  invokeSaveAsDialog(blob, 'file.gcode');
-
+  invokeSaveAsDialog(blob, filename);
 }
 
 /**

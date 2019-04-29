@@ -144,7 +144,41 @@ function storeRedo() {
 
 
 // Workspace Export Functions
+
 function exportWorkspace() {
+  Metro.dialog.create({
+    title: "Save Workspace (Export .OBC file)",
+    content: `<div class="form-group">
+           <label>Filename:</label>
+           <input type="text" id="workspaceFilename" placeholder="` + 'workspace-' + date.yyyymmdd() + '.obc' + `" value="` + 'workspace-' + date.yyyymmdd() + '.obc' + `"/>
+           <small class="text-muted">What would you like to name the workspace export?</small>
+       </div>
+    `,
+    actions: [{
+        caption: "<span class='fas fa-download fa-fw'></span> Save",
+        cls: "js-dialog-close primary",
+        onclick: function() {
+          saveExportWorkspace($('#workspaceFilename').val());
+        }
+      },
+      {
+        caption: "Disagree",
+        cls: "js-dialog-close",
+        onclick: function() {
+          alert("You clicked Disagree action");
+        }
+      }
+    ]
+  });
+}
+
+function saveExportWorkspace(filename) {
+
+  // no .obc extenstion
+  if (!filename.endsWith('.obc')) {
+    filename = filename += '.obc'
+  }
+
   var obspace = {
     objects: {},
     toolpaths: {}
@@ -160,7 +194,7 @@ function exportWorkspace() {
   var blob = new Blob([data], {
     type: "text/plain"
   });
-  invokeSaveAsDialog(blob, 'workspace-' + date.yyyymmdd() + '.obc');
+  invokeSaveAsDialog(blob, filename);
   // console.log(JSON.stringify(obspace));
 }
 
@@ -189,6 +223,7 @@ function loadWorkspace(f) {
         parseLoadWorkspace(this.result)
         console.log(this.result)
       };
+      $('.workspaceTitle').html(' - ' + f.name)
     } else {
       // Not usable
     }
