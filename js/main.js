@@ -84,7 +84,7 @@ $(document).ready(function() {
             caption: "<i class=\"far fa-fw fa-file\"></i>Cancel",
             cls: "js-dialog-close",
             onclick: function() {
-              // console.log("Starting wtih a clean workspace")
+              loadLastClosedOnPageload()
             }
           }
         ]
