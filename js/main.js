@@ -64,10 +64,8 @@ $(document).ready(function() {
 
   getForksCount();
 
+
   // lets see if there's any Workspaces on CONTROL
-
-
-  var hasWorkspace = false
   $.get("https://mymachine.openbuilds.com:3001/workspace").done(function(data) {
     if (isJson(data)) {
       hasWorkspace = true;
@@ -91,38 +89,15 @@ $(document).ready(function() {
           }
         ]
       });
+    } else {
+      loadLastClosedOnPageload()
     }
+  }).fail(function() {
+    loadLastClosedOnPageload()
   });
 
-  if (!hasWorkspace) { // If we didnt load a workspace from CONTROL, then instead offer old workspace
-    var lastWorkspace = localStorage.getItem('lastWorkspace');
-    if (lastWorkspace) {
-      if (Object.size(JSON.parse(lastWorkspace).objects) > 0 || Object.size(JSON.parse(lastWorkspace).toolpaths) > 0) {
 
-        Metro.dialog.create({
-          width: 500,
-          title: "Found a recoverable workspace.",
-          content: "<div>Would you like to recover the previously used workspace, or would you like to start with a clean New workspace?</div>",
-          actions: [{
-              caption: "<i class=\"far fa-fw fa-save\"></i>Recover last used Workspace",
-              cls: "js-dialog-close success",
-              onclick: function() {
-                parseLoadWorkspace(lastWorkspace)
-              }
-            },
-            {
-              caption: "<i class=\"far fa-fw fa-file\"></i>Start with a New workspace",
-              cls: "js-dialog-close success",
-              onclick: function() {
-                // console.log("Starting wtih a clean workspace")
-              }
-            }
-          ]
-        });
 
-      }
-    }
-  }
 
 
 
