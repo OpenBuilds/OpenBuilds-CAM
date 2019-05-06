@@ -415,7 +415,7 @@ function printLog(text, color, logclass) {
 function getForksCount() {
   $("#forksCount").empty()
   var template2 = ``
-  $.get("https://api.github.com/repos/OpenBuilds/cam/forks?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
+  $.get("https://api.github.com/repos/OpenBuilds/OpenBuilds-CAM/forks?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c", function(data) {
     // console.log(data)
     $("#forksCount").html(" " + data.length + " ");
   });
@@ -425,7 +425,7 @@ function getChangelog() {
 
   $("#changelog").empty()
   var template2 = `<ul>`
-  $.get("https://raw.githubusercontent.com/openbuilds/cam/master/CHANGELOG.txt?date=" + new Date().getTime(), function(data) {
+  $.get("https://raw.githubusercontent.com/openbuilds/OpenBuilds-CAM/master/CHANGELOG.txt?date=" + new Date().getTime(), function(data) {
     var lines = data.split('\n');
 
     for (var line = 0; line < lines.length - 1; line++) {
