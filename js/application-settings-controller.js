@@ -35,6 +35,8 @@ localParams = [
   ['scommand', true],
   ['scommandscale', true],
   ['ihsgcode', false],
+  ['penupval', false],
+  ['pendownval', false],
   ['firmwaretype', true],
   ['machinetype', true],
   ['performanceLimit', false]
@@ -296,6 +298,13 @@ function selectToolhead() {
         startcode += "M8; Coolant On\n"
         endcode += "M9; Coolant Off\n"
       }
+      if (type == 'plotter') {
+        // console.log('Add Plotter')
+        startcode += "; Plotter Mode Active\n"
+        endcode += "; Plotter Mode Complete\n"
+        $('#penupval').val('255')
+        $('#pendownval').val('0')
+      }
     }
     $('#startgcode').val(startcode)
     $('#endgcode').val(endcode)
@@ -544,7 +553,8 @@ $(document).ready(function() {
 
                       <option data-template="<span class='icon fas fas fa-tag' data-fa-transform='rotate-225'></span> $1" value="spindleonoff">Turn Spindle on and Off (M3/M5)</option>
                       <option data-template="<span class='icon fas fa-circle'></span> $1" value="laserm3">Turn Laser on and Off: Constant Power (M3/M5)</option>
-                      <option selected data-template="<span class='icon fas fa-adjust'></span> $1" value="laserm4">Turn Laser on and Off: Dynamic  Power (M4/M5)</option>
+                      <option data-template="<span class='icon fas fa-adjust'></span> $1" value="laserm4">Turn Laser on and Off: Dynamic  Power (M4/M5)</option>
+                      <option data-template="<span class='icon fas fa-edit'></span> $1" value="plotter">Plotter Pen Up/Down (M3S<min> / M3S<max>)</option>
                       <option data-template="<span class='icon fas fa-tint'></span> $1" value="misting">Enable Misting/Cooling: (M8/M9)</option>
 
                 </select>
@@ -626,13 +636,6 @@ $(document).ready(function() {
                     </div>
                 </div>
 
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Initial Height Sensing G-Code</label>
-                    <div class="cell-sm-6">
-                      <textarea id="ihsgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
-                    </div>
-                </div>
-
               </div>
             </li>
 
@@ -642,17 +645,41 @@ $(document).ready(function() {
               <div>
 
                 <div class="row mb-2">
-                    <label class="cell-sm-6">Disable Tool-Width Preview<br>
+                    <label class="cell-sm-6">Plasma: Initial Height Sensing G-Code</label>
+                    <div class="cell-sm-6">
+                      <textarea id="ihsgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <label class="cell-sm-6">Plotter: Pen-Up S Value</label>
+                    <div class="cell-sm-6">
+                      <textarea id="penupval" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="255"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <label class="cell-sm-6">Plotter: Pen-Down S Value</label>
+                    <div class="cell-sm-6">
+                      <textarea id="pendownval" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="0"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-0">
+                    <label class="cell-sm-6">Performance: Disable Tool-Width Preview<br>
                     <span class="text-small">
                       This can speed up toolpath calculations, but will
                       disable the toolpath-width preview: You'll only see
                       the centerline of the toolpath, not the width of the
                       cut.  Helps slow PCs work better
-                    </span></label>
+                    </span>
+                    </label>
                     <div class="cell-sm-6">
                         <input data-role="checkbox" type="checkbox" id="performanceLimit" value="option1">
                     </div>
                 </div>
+
+
               </div>
             </li>
 

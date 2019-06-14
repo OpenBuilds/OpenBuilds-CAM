@@ -50,6 +50,9 @@ function typeofOperation(newval, objectseq) {
   } else if (newval == "Drag Knife: Cutout") {
     dragKnifeMode(objectseq);
     updateCamUserData(objectseq);
+  } else if (newval == "Pen Plotter") {
+    plotterMode(objectseq);
+    updateCamUserData(objectseq);
   }
 
 
@@ -148,7 +151,14 @@ function initAdvancedCAM() {
     } else if (id.indexOf('tpwr') == 0) {
       // $('#svgUnion').text(newval);
       updateCamUserData(objectseq);
+    } else if (id.indexOf('tpendown') == 0) {
+      // $('#svgUnion').text(newval);
+      updateCamUserData(objectseq);
+    } else if (id.indexOf('tpenup') == 0) {
+      // $('#svgUnion').text(newval);
+      updateCamUserData(objectseq);
     }
+
   });
 
   $('#statusBody2').on('keyup change', 'select', function() {
@@ -186,6 +196,8 @@ function updateCamUserData(i) {
   toolpathsInScene[i].userData.camTabWidth = $('#tabWidth' + i).val();
   toolpathsInScene[i].userData.camTabSpace = $('#tabSpace' + i).val();
   toolpathsInScene[i].userData.tRampPlunge = $('#tRampPlunge' + i).val();
+  toolpathsInScene[i].userData.camPenUp = $('#tpenup' + i).val();
+  toolpathsInScene[i].userData.camPenDown = $('#tpendown' + i).val();
   toolpathsInScene[i].userData.advanced = $('#advanced' + i).is(":checked");; // Marlin, Stepcraft, Mach3, LinuxCNC
   toolpathsInScene[i].name = $('#tOpName' + i).val();
   $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
@@ -263,6 +275,7 @@ function setupJob(i) {
               </optgroup>
               <optgroup label="Other" class="camOptgroup">
                 <option class="camOption">Drag Knife: Cutout</option>
+                <option class="camOption">Pen Plotter</option>
               </optgroup>
             </select>
           </div>
@@ -349,8 +362,8 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc inputpocket inputdragknife inputlaser inputlaserraster inputplasma">
-        <td>Feedrate: Cut</td>
+      <tr class="inputcnc inputpocket inputdragknife inputlaser inputlaserraster inputplasma inputplotter">
+        <td>Feedrate (X/Y)</td>
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-exchange-alt fa-fw"></i></span>
@@ -386,6 +399,27 @@ function setupJob(i) {
             <span class="input-addon-label-left active-border"><i class="fas fa-arrows-alt-v fa-fw"></i></span>
             <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="1.5" id="tplasmazheight` + i + `" objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">mm</span>
+          </div>
+        </td>
+      </tr>
+      <tr class="inputplotter">
+        <td>Plotter: Pen Up</td>
+        <td>
+          <div class="input-addon">
+            <span class="input-addon-label-left active-border"><i class="far fa-edit fa-fw"></i></span>
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="255" id="tpenup` + i + `" objectseq="` + i + `" min="0" step="any">
+            <span class="input-addon-label-right active-border">M3Sxxx</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="inputplotter">
+        <td>Plotter: Pen Down</td>
+        <td>
+          <div class="input-addon">
+            <span class="input-addon-label-left active-border"><i class="fas fa-edit fa-fw"></i></span>
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0" id="tpendown` + i + `" objectseq="` + i + `" min="0" step="any">
+            <span class="input-addon-label-right active-border">M3Sxxx</span>
           </div>
         </td>
       </tr>
@@ -548,6 +582,8 @@ function setupJob(i) {
     $('#tabdepth' + i).val(toolpathsInScene[i].userData.camTabDepth);
     $('#tabWidth' + i).val(toolpathsInScene[i].userData.camTabWidth);
     $('#tabSpace' + i).val(toolpathsInScene[i].userData.camTabSpace);
+    $('#tpenup' + i).val(toolpathsInScene[i].userData.camPenUp);
+    $('#tpendown' + i).val(toolpathsInScene[i].userData.camPenDown);
     if (toolpathsInScene[i].userData.tRampPlunge) {
       $('#tRampPlunge' + i).val(toolpathsInScene[i].userData.tRampPlunge).prop('selected', true);
     } else {
@@ -601,6 +637,7 @@ function noMode(i) {
   $('.inputplasma').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputplotter').hide();
   $('.inputlaserraster').hide();
 }
 
@@ -613,6 +650,7 @@ function laserMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputlaser').show();
 };
 
@@ -624,6 +662,7 @@ function laserInsideMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputlaser').show();
 };
 
@@ -635,6 +674,7 @@ function laserOutsideMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputlaser').show();
 };
 
@@ -645,6 +685,7 @@ function laserRasterMode(i) {
   $('.inputplasma').hide();
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
+  $('.inputplotter').hide();
   $('.inputlaserraster').show();
 };
 
@@ -656,6 +697,7 @@ function drillMode(i) {
   $('.inputcnc').hide();
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputdrill').show();
 }
 
@@ -667,6 +709,7 @@ function drillPeckMode(i) {
   $('.inputcnc').hide();
   $('.inputdrill').show();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputdrillpeck').show();
 
 }
@@ -679,6 +722,7 @@ function cncInsideMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputcnc').show();
 };
 
@@ -690,6 +734,7 @@ function cncOutsideMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputcnc').show();
 };
 
@@ -702,6 +747,7 @@ function cncNoOffsetMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputtooldia').hide();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputcnc').show();
 
 }
@@ -714,6 +760,7 @@ function cncPocketMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputpocket').show();
   // force open Advanced and force Union by default
   setTimeout(function() {
@@ -731,6 +778,7 @@ function plasmaMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputplasma').show();
 };
 
@@ -743,5 +791,18 @@ function dragKnifeMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
+  $('.inputplotter').hide();
   $('.inputdragknife').show();
+};
+
+function plotterMode(i) {
+  $('.inputcnc').hide();
+  $('.inputpocket').hide();
+  $('.inputlaser').hide();
+  $('.inputplasma').hide();
+  $('.inputdrill').hide();
+  $('.inputdrillpeck').hide();
+  $('.inputlaserraster').hide();
+  $('.inputdragknife').hide();
+  $('.inputplotter').show();
 };

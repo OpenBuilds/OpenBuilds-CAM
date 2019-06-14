@@ -49,6 +49,8 @@ function toolpathPreviewExec(i) {
   var tabdepth = -(parseFloat(toolpathsInScene[i].userData.camZDepth) - parseFloat(toolpathsInScene[i].userData.camTabDepth));
   var tabspace = parseFloat(toolpathsInScene[i].userData.camTabSpace);
   var tabwidth = parseFloat(toolpathsInScene[i].userData.camTabWidth);
+  var penupval = parseFloat(toolpathsInScene[i].userData.camPenUp);
+  var pendownval = parseFloat(toolpathsInScene[i].userData.camPenDown);
   if (tabwidth < 1) { // set a sane minimum, tab can't be smaller than tooldia
     tabwidth = 1
   }
@@ -96,6 +98,8 @@ function toolpathPreviewExec(i) {
     toolpathsInScene[i].userData.inflated = getToolpath("peckdrill", i, (ToolDia / 2), 0, ZStep, ZDepth, 0, false, false, false, false, union, direction);
   } else if (operation == "Drill: Continuous (Centered)") {
     toolpathsInScene[i].userData.inflated = getToolpath("drill", i, (ToolDia / 2), 0, 0, ZDepth, 0, false, false, false, false, union, direction);
+  } else if (operation == "Pen Plotter") {
+    toolpathsInScene[i].userData.inflated = getToolpath("inflate", i, 0, 0, 1, 1, 0, false, false, false, false, union, direction);
   }
 
   Metro.dialog.close('#statusmodal')
@@ -143,6 +147,11 @@ function getToolpath(operation, index, offset, StepOver, zstep, zdepth, zstart, 
 
   if (operation == "drill") {
     var toolpath = drill(config);
+  }
+
+  if (operation == "plotter") {
+    // var toolpath =
+    console.log("MAKE PLOTTER PATH", index)
   }
 
   if (toolpath) {

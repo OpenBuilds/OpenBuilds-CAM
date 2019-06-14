@@ -45,6 +45,17 @@ function makeGcode() {
           var rampplunge = toolpathsInScene[j].userData.tRampPlunge == "Yes" ? true : false;
           var Passes = toolpathsInScene[j].userData.camPasses;
 
+          if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
+            toolon = "M3S" + toolpathsInScene[j].userData.camPenDown;
+            tooloff = "M3S" + toolpathsInScene[j].userData.camPenUp;
+            ZClearance = 0;
+          }
+
+          if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') == 0) {
+            toolon = "M3S1000";
+            tooloff = "M5";
+          }
+
           if (parseInt(Passes) && toolpathsInScene[j].userData.camOperation.indexOf('Laser') == 0) {
             var g = ""
             var gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
@@ -114,7 +125,9 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
   // empty string to store gcode
   var g = "";
   g += "; Operation " + index + ": " + toolpathsInScene[index].userData.camOperation + "\n";
-  g += "; Tool Diameter: " + toolpathsInScene[index].userData.camToolDia + "\n";
+  if (!toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
+    g += "; Tool Diameter: " + toolpathsInScene[index].userData.camToolDia + "\n";
+  }
 
   // Optimise gcode, send commands only when changed
   var isToolOn = false;
@@ -284,7 +297,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
               }
               if (toolon) {
                 g += toolon
-                g += '\n'
+                g += '; Tool On\n'
               } else {
                 // Nothing - most of the firmwares use G0 = move, G1 = cut and doesnt need a toolon/tooloff command
               };
@@ -332,7 +345,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
         // tool off
         if (tooloff) {
           g += tooloff
-          g += '\n'
+          g += '; Tool Off\n'
         }
       } // end inflatepate/pocket/entity
       // move to clearance height, at first points XY pos
