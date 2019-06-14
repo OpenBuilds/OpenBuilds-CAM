@@ -1,3 +1,4 @@
+14 Jun 2019:  Added Beta of Servo based Pen Plotter CAM
 29 Apr 2019:  Added Delete Selection button #49, Added Workspace and Gcode naming #51, Added .OBC file support via CONTROL
 25 Apr 2019:  Added Splines, Insert to DXF Parser
 17 Apr 2019:  Fixed cut direction for Outside Cuts
