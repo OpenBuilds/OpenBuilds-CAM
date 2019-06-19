@@ -35,8 +35,6 @@ localParams = [
   ['scommand', true],
   ['scommandscale', true],
   ['ihsgcode', false],
-  ['penupval', false],
-  ['pendownval', false],
   ['firmwaretype', true],
   ['machinetype', true],
   ['performanceLimit', false]
@@ -302,8 +300,6 @@ function selectToolhead() {
         // console.log('Add Plotter')
         startcode += "; Plotter Mode Active\n"
         endcode += "; Plotter Mode Complete\n"
-        $('#penupval').val('255')
-        $('#pendownval').val('0')
       }
     }
     $('#startgcode').val(startcode)
@@ -648,20 +644,6 @@ $(document).ready(function() {
                     <label class="cell-sm-6">Plasma: Initial Height Sensing G-Code</label>
                     <div class="cell-sm-6">
                       <textarea id="ihsgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="G0 + clearanceHeight + \nG32.2 Z-30 F100\nG10 P2 L1 Z0"></textarea>
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Plotter: Pen-Up S Value</label>
-                    <div class="cell-sm-6">
-                      <textarea id="penupval" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="255"></textarea>
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Plotter: Pen-Down S Value</label>
-                    <div class="cell-sm-6">
-                      <textarea id="pendownval" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="0"></textarea>
                     </div>
                 </div>
 
