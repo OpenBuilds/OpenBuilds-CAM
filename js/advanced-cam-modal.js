@@ -50,7 +50,13 @@ function typeofOperation(newval, objectseq) {
   } else if (newval == "Drag Knife: Cutout") {
     dragKnifeMode(objectseq);
     updateCamUserData(objectseq);
-  } else if (newval == "Pen Plotter") {
+  } else if (newval == "Pen Plotter: (no offset)") {
+    plotterMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Pen Plotter: (path inside)") {
+    plotterMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Pen Plotter: (path outside)") {
     plotterMode(objectseq);
     updateCamUserData(objectseq);
   }
@@ -275,14 +281,16 @@ function setupJob(i) {
               </optgroup>
               <optgroup label="Other" class="camOptgroup">
                 <option class="camOption">Drag Knife: Cutout</option>
-                <option class="camOption">Pen Plotter</option>
+                <option class="camOption">Pen Plotter: (no offset)</option>
+                <option class="camOption">Pen Plotter: (path inside)</option>
+                <option class="camOption">Pen Plotter: (path outside)</option>
               </optgroup>
             </select>
           </div>
         </td>
 
       </tr>
-      <tr class="inputcnc inputpocket inputtooldia inputdrill">
+      <tr class="inputcnc inputpocket inputtooldia inputdrill inputplotter">
         <td>Endmill Diameter</td>
         <td>
           <div class="input-addon">
