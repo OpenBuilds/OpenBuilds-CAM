@@ -6,33 +6,46 @@ if(typeof window == "undefined"){ // Only run as worker
   var toolpathColor = 0x666600;
 
   self.addEventListener('message', function(e) {
-    console.log("New message received by worker", e.data.data.length)
+    // console.log("New message received by worker", e.data.data.length)
     importScripts("/lib/clipperjs/clipper_unminified.js");
     importScripts("/lib/threejs/three.min.js");
-
     var toolpaths = JSON.parse(e.data.data);
-    getToolpaths(toolpaths)
-    console.log(toolpaths)
 
-    self.postMessage(JSON.stringify(getToolpaths(toolpaths)));
+    var toolpathsarray = getToolpaths(toolpaths)
+
+    console.log(toolpathsarray)
+
+    // return when finished
+    var toolpathsjson = {
+    };
+    for (j = 0; j < toolpathsarray.length; j++) {
+      toolpathsjson[j] = toolpathsarray[j].toJSON();
+    }
+    var data = JSON.stringify(toolpathsjson)
+    self.postMessage(data);
   }, false);
 
 
 function getToolpaths(toolpaths) {
+  var newToolpathsInScene = []
   // Process Them
-  var pretties = []
   console.log("Processing " + toolpaths.length + " toolpaths")
   var loader = new THREE.ObjectLoader();
-  for (i=0; i<toolpaths.length; i++) {
-    var toolpath = loader.parse(toolpaths[i]);
+  for (q=0; q<toolpaths.length; q++) {
+    var toolpath = loader.parse(toolpaths[q]);
     config = {
       toolpath: toolpath,
       repair: false,
       union: toolpath.userData.camUnion,
       offset: toolpath.userData.camToolDia / 2,
-      zstart: toolpath.userData.camZStart,
-      zstep: toolpath.userData.camZStep,
-      zdepth: toolpath.userData.camZDepth
+      stepover: parseFloat(toolpath.userData.camStepover, 2),
+      zstart: parseFloat(toolpath.userData.camZStart, 2),
+      zstep: parseFloat(toolpath.userData.camZStep, 2),
+      zdepth: parseFloat(toolpath.userData.camZDepth, 2),
+      tabdepth: parseFloat(toolpath.userData.camTabDepth, 2),
+      tabspace: parseFloat(toolpath.userData.camTabSpace, 2),
+      tabwidth: parseFloat(toolpath.userData.camTabWidth, 2),
+      direction: toolpath.userData.camDirection,
     };
     var operation = toolpath.userData.camOperation;
 
@@ -42,27 +55,32 @@ function getToolpaths(toolpaths) {
       console.log("No operation");
     } else if (operation == "Laser: Vector (no path offset)") {
       console.log("Laser: Vector (no path offset)");
+      config.offset = 0;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (path inside)") {
       console.log("Laser: Vector (path inside)");
+      config.offset = config.offset * -1;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (path outside)") {
       console.log("Laser: Vector (path outside)");
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (raster fill) (Beta)") {
       console.log("Laser: Vector (raster fill) (Beta)");
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+
     } else if (operation == "CNC: Vector (no offset)") {
       console.log("CNC: Vector (no offset)");
+      config.offset = 0;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "CNC: Vector (path inside)") {
       console.log("CNC: Vector (path inside)");
+      config.offset = config.offset * -1;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "CNC: Vector (path outside)") {
       console.log("CNC: Vector (path outside)");
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "CNC: Pocket") {
       console.log("CNC: Pocket");
+      toolpath.userData.inflated = pocketPath(config)
     } else if (operation == "CNC: V-Engrave") {
       console.log("CNC: V-Engrave");
       // no op yet
@@ -71,12 +89,14 @@ function getToolpaths(toolpaths) {
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Plasma: Vector (path inside)") {
       console.log("Plasma: Vector (path inside)");
+      config.offset = config.offset * -1;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Plasma: Mark") {
       console.log("Plasma: Mark");
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Plasma: Vector (no path offset)") {
       console.log("Plasma: Vector (no path offset)");
+      config.offset = 0;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Drag Knife: Cutout") {
       console.log("Drag Knife: Cutout");
@@ -89,89 +109,169 @@ function getToolpaths(toolpaths) {
 
     } else if (operation == "Pen Plotter: (no offset)") {
       console.log("Pen Plotter: (no offset)");
+      config.offset = 0;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Pen Plotter: (path inside)") {
       console.log();
+      config.offset = config.offset * -1;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Pen Plotter: (path outside)") {
       console.log("Pen Plotter: (path outside)");
       toolpath.userData.inflated  = workerInflateToolpath(config)
     }
-    console.log("Finished " + i+ " of " +toolpaths.length)
-    pretties.push(toolpath);
+    // console.log("Finished " + q+ " of " +toolpaths.length)
+    newToolpathsInScene.push(toolpath)
   }
-  console.log('Finished all the toolpaths')
-  return pretties
+  // console.log('Finished all the toolpaths')
+  return newToolpathsInScene
 }
 
 
   function workerInflateToolpath(config) {
+    // console.log(config)
     var inflateGrpZ = new THREE.Group();
     var prettyGrp = new THREE.Group();
     var clipperPaths = workerGetClipperPaths(config.toolpath)
     if (config.repair) {
       clipperPaths = repairClipperPath(clipperPaths);
     }
+    // console.log('Original Toolpath: ', JSON.stringify(clipperPaths))
     if (config.union == "Yes") {
-      clipperPaths = workerSimplifyPolygons(clipperPaths);
-    }
-    if (config.offset != 0) {
-      var inflatedPaths = workerGetInflatePath(clipperPaths, config.offset);
-    } else {
-      var inflatedPaths = clipperPaths;
-    }
-    if (config.direction == "Climb") {
-      // reverse here
-      if (config.offset > 0) {
-        for (k = 0; k < inflatedPaths.length; k++) {
-          inflatedPaths[k].reverse();
-        }
+      // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
+      var newClipperPaths = workerSimplifyPolygons(clipperPaths);
+      if (newClipperPaths.length < 1) {
+        console.error("Clipper Simplification Failed!:");
       }
-    } else if (config.direction == "Conventional") {
-      if (config.offset < 0) {
-        for (k = 0; k < inflatedPaths.length; k++) {
-          inflatedPaths[k].reverse();
-        }
-      }
-    }
-
-    for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
-      if (i > config.zdepth) {
-        var zval = -config.zdepth;
+      if (config.offset != 0) {
+        var inflatedPaths = workerGetInflatePath(newClipperPaths, config.offset);
       } else {
-        var zval = -i
+        var inflatedPaths = newClipperPaths;
       }
-      var drawClipperPathsconfig = {
-        paths: inflatedPaths,
-        color: toolpathColor,
-        opacity: 0.8,
-        z: zval,
-        isClosed: true,
-        name: 'inflateGrp',
-        leadInPaths: false,
-        tabdepth: config.tabdepth,
-        tabspace: config.tabspace,
-        tabwidth: config.tabwidth,
-        toolDia: config.offset * 2,
-        drawPretty: true,
-        prettyGrpColor: (config.offset < 0) ? insideCutsColor : outsideCutsColor
+      if (config.direction == "Climb") {
+        // reverse here
+        if (config.offset > 0) {
+          for (i = 0; i < inflatedPaths.length; i++) {
+            inflatedPaths[i].reverse();
+          }
+        }
+      } else if (config.direction == "Conventional") {
+        if (config.offset < 0) {
+          for (i = 0; i < inflatedPaths.length; i++) {
+            inflatedPaths[i].reverse();
+          }
+        }
       }
-      var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
-      inflateGrp = drawings.lines;
-      inflateGrp.name = 'inflateGrp' + i;
-      inflateGrp.userData.material = inflateGrp.material;
-      inflateGrpZ.add(inflateGrp);
-      if (drawings.pretty) {
-        prettyGrp.add(drawings.pretty)
+      // console.log(inflatedPaths);
+      if (config.leadinval > 0) { // plasma lead-in
+        var leadInPaths = workerGetInflatePath(newClipperPaths, config.offset * 3);
+      }
+      for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
+        if (i > config.zdepth) {
+          var zval = -config.zdepth;
+        } else {
+          var zval = -i
+        }
+        // console.log(i * config.zstep > config.zdepth, i * config.zstep, i, zval)
+        // console.log(i, config.zstart, config.zstep, config.zdepth, zval);
+        var drawClipperPathsconfig = {
+          paths: inflatedPaths,
+          color: toolpathColor,
+          opacity: 0.8,
+          z: zval,
+          isClosed: true,
+          name: 'inflateGrp',
+          leadInPaths: leadInPaths,
+          tabdepth: config.tabdepth,
+          tabspace: config.tabspace,
+          tabwidth: config.tabwidth,
+          toolDia: config.offset * 2,
+          drawPretty: true,
+          prettyGrpColor: (config.offset < 0) ? insideCutsColor : outsideCutsColor
+        }
+        var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
+        inflateGrp = drawings.lines;
+        inflateGrp.name = 'inflateGrp' + i;
+        inflateGrp.userData.material = inflateGrp.material;
+        inflateGrpZ.add(inflateGrp);
+        if (drawings.pretty) {
+          prettyGrp.add(drawings.pretty)
+          prettyGrp.updateMatrixWorld()
+        }
+      }
+    } else {
+      var newClipperPaths = clipperPaths;
+      for (j = 0; j < newClipperPaths.length; j++) {
+        if (config.offset != 0) {
+          var inflatedPaths = workerGetInflatePath([newClipperPaths[j]], config.offset);
+        } else {
+          var inflatedPaths = [newClipperPaths[j]];
+        }
+        if (config.direction == "Climb") {
+          // reverse here
+          if (config.offset > 0) {
+            for (i = 0; i < inflatedPaths.length; i++) {
+              inflatedPaths[i].reverse();
+            }
+          }
+        } else if (config.direction == "Conventional") {
+          if (config.offset < 0) {
+            for (i = 0; i < inflatedPaths.length; i++) {
+              inflatedPaths[i].reverse();
+            }
+          }
+        }
+        if (inflatedPaths.length < 1) {
+          console.error("Clipper Inflate Failed!:");
+
+        }
+        // plasma lead-in
+        if (config.leadinval > 0) {
+          var leadInPaths = workerGetInflatePath([newClipperPaths[j]], config.offset * 3);
+        }
+        for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
+          if (i > config.zdepth) {
+            var zval = -config.zdepth;
+          } else {
+            var zval = -i
+          }
+          // console.log(i, config.zstart, config.zstep, config.zdepth, zval);
+          var drawClipperPathsconfig = {
+            paths: inflatedPaths,
+            color: toolpathColor,
+            opacity: 0.8,
+            z: zval,
+            isClosed: true,
+            name: 'inflateGrp',
+            leadInPaths: leadInPaths,
+            tabdepth: config.tabdepth,
+            tabspace: config.tabspace,
+            tabwidth: config.tabwidth,
+            toolDia: config.offset * 2,
+            drawPretty: true,
+            prettyGrpColor: (config.offset < 0) ? insideCutsColor : outsideCutsColor
+          }
+          var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
+          inflateGrp = drawings.lines;
+          inflateGrp.name = 'inflateGrp' + i;
+          inflateGrp.userData.material = inflateGrp.material;
+          inflateGrpZ.add(inflateGrp);
+          if (drawings.pretty) {
+            prettyGrp.add(drawings.pretty)
+            prettyGrp.updateMatrixWorld()
+          }
+        }
       }
     }
-    return inflateGrp
+    if (config.offset > minimumToolDiaForPreview || config.offset < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
+      inflateGrpZ.userData.pretty = prettyGrp
+    };
+    inflateGrpZ.userData.toolDia = config.offset * 2
+    return inflateGrpZ;
   }
 
 
 
   function workerSimplifyPolygons(paths) {
-    console.log('Simplifying: ', paths);
     var scale = 10000;
     ClipperLib.JS.ScaleUpPaths(paths, scale);
     var newClipperPaths = ClipperLib.Clipper.SimplifyPolygons(paths, ClipperLib.PolyFillType.pftEvenOdd);
@@ -182,7 +282,6 @@ function getToolpaths(toolpaths) {
 
 
   function workerGetInflatePath(paths, delta, joinType) {
-    console.log('Inflating: ',paths)
     var scale = 10000;
     ClipperLib.JS.Clean(paths, 2);
     ClipperLib.JS.ScaleUpPaths(paths, scale);
@@ -201,7 +300,6 @@ function getToolpaths(toolpaths) {
 
 
   function workerGetClipperPaths(object) {
-    console.log('Get Clipper Paths: ',object)
     object.updateMatrix();
     var grp = object;
     var clipperPaths = [];
@@ -256,8 +354,10 @@ function getToolpaths(toolpaths) {
       opacity: config.opacity,
     });
 
-    if (config.z === undefined || config.z == null)
+    if (config.z === undefined || config.z == null) {
       config.z = 0;
+      // console.log("config.z not defined")
+    }
 
     if (config.isClosed === undefined || config.isClosed == null)
       config.isClosed = true;
@@ -375,7 +475,6 @@ function getToolpaths(toolpaths) {
 
   drawClipperPathsWithTool = function(config) {
     var group = new THREE.Object3D();
-    // console.log(config)
     if (config.leadInPaths) {
       if (config.leadInPaths.length != config.paths.length) {
         console.log("Skipping lead-in: Source vector file is broken, and we could not produce a reliable offset")
@@ -389,8 +488,10 @@ function getToolpaths(toolpaths) {
       opacity: config.opacity,
     });
 
-    if (config.z === undefined || config.z == null || config.z == false)
+    if (config.z === undefined || config.z == null) {
       config.z = 0;
+      // console.log("with tool config.z not defined")
+    }
 
     if (config.isClosed === undefined || config.isClosed == null)
       config.isClosed = true;
@@ -605,7 +706,7 @@ function getToolpaths(toolpaths) {
       if (config.toolDia > minimumToolDiaForPreview || config.toolDia < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
         // generate once use again
         // for each z
-        if (!$('#performanceLimit').is(":checked")) {
+
           var lineMesh = this.getMeshLineFromClipperPath({
             width: config.toolDia,
             clipperPath: clipperPaths,
@@ -616,6 +717,7 @@ function getToolpaths(toolpaths) {
             caps: "round"
           });
           lineMesh.position.z = config.z;
+          lineMesh.name = "LineMesh1"
           prettyGrp.add(lineMesh)
           var lineMesh = this.getMeshLineFromClipperPath({
             width: config.toolDia,
@@ -627,8 +729,17 @@ function getToolpaths(toolpaths) {
             caps: "negative"
           });
           lineMesh.position.z = config.z;
+          lineMesh.name = "LineMesh2"
+          for (r= 0; r < lineMesh.children.length; r++) {
+            for (s=0; s> lineMesh.children[r].children.length; s++) {
+              lineMesh.children[r].children[s].geometry.translate(lineMesh.position.x, lineMesh.position.y, lineMesh.position.z)
+            }
+          }
+          lineMesh.position.x = 0;
+          lineMesh.position.y = 0;
+          lineMesh.position.z = 0;
           prettyGrp.add(lineMesh)
-        }
+
       }
     } else {
       if (config.toolDia > minimumToolDiaForPreview || config.toolDia < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
@@ -644,17 +755,16 @@ function getToolpaths(toolpaths) {
             caps: "round"
           });
           lineMesh.position.z = config.z;
+          lineMesh.name = "LineMesh3"
           prettyGrp.add(lineMesh)
 
       }
     }
 
-
-
-      var grp = {
-        lines: group,
-        pretty: prettyGrp
-      }
+    var grp = {
+      lines: group,
+      pretty: prettyGrp
+    }
 
 
     return grp;
@@ -1083,6 +1193,316 @@ function getToolpaths(toolpaths) {
     }
     return group;
   }
+
+  pocketPath = function(config) { //}, infobject, inflateVal, stepOver, zstep, zdepth, zstart, union) {
+    var pocketGrp = new THREE.Group();
+    var prettyGrp = new THREE.Group();
+    if (config.offset != 0) {
+      var clipperPaths = workerGetClipperPaths(config.toolpath)
+      // console.log("clipperPaths:", clipperPaths);
+      if (config.union == "Yes") {
+        // console.log("Union")
+        // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
+        var newClipperPaths =workerSimplifyPolygons(clipperPaths);
+        // console.log(newClipperPaths)
+        if (newClipperPaths.length < 1) {
+          console.error("Clipper Simplification Failed!:");
+        }
+        // calc Stepover
+        var cutwidth = ((config.offset * 2) * (config.stepover / 100)) //mm per cut
+        // todo for newClipperPaths.length (Split each clipperpath into own pocket)
+        // for (k = 1; k < newClipperPaths.length; k++) {
+        // var pathobj = [];
+        // pathobj.push(newClipperPaths[k])
+        // console.log("processing " + newClipperPaths[k])
+        for (i = 0; i < 1000; i++) { // Rather 1000 than a while loop, just in case, break when it no longer has data to work with
+          if (i == 0) {
+            inflateValUsed = config.offset; // at outer perimeter we offset just half tool else cut is bigger than sketch
+          }
+          if (inflateValUsed < config.offset) {
+            inflateValUsed = config.offset
+          } else {
+            inflateValUsed = cutwidth * i;
+          }
+          if (inflateValUsed < config.offset) {
+            // console.log("Should skip " + i)
+          }
+          // console.log(i, inflateValUsed, config.offset)
+          if (inflateValUsed > 0) {
+            // console.log(i, inflateValUsed, inflateVal, cutwidth, (cutwidth * i), (inflateVal * 2))
+            var inflatedPaths = workerGetInflatePath(newClipperPaths, -inflateValUsed);
+            if (inflatedPaths.length > 0) {
+              // Duplicate each loop, down into Z.  We go full depth before next loop.
+              for (j = config.zdepth; j > config.zstart; j -= config.zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
+                // console.log(j)
+
+                if (j > config.zdepth) {
+                  var zval = -config.zdepth;
+                } else {
+                  var zval = -j
+                }
+                // get the inflated/deflated path
+                var drawClipperPathsconfig = {
+                  paths: inflatedPaths,
+                  color: toolpathColor,
+                  opacity: 0.4,
+                  z: zval,
+                  isClosed: true,
+                  name: 'inflatedGroup',
+                  leadInPaths: false,
+                  tabdepth: false,
+                  tabspace: false,
+                  tabwidth: false,
+                  toolDia: config.offset * 2,
+                  drawPretty: true,
+                  prettyGrpColor: pocketColor
+                }
+                var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
+                inflateGrp = drawings.lines;
+                inflateGrp.name = 'inflateGrp';
+                inflateGrp.position = config.toolpath.position;
+                pocketGrp.add(inflateGrp);
+                if (drawings.pretty) {
+                  prettyGrp.add(drawings.pretty)
+                  prettyGrp.updateMatrixWorld()
+                }
+              }
+            } else {
+              // console.log('Pocket already done after ' + i + ' iterations');
+              break;
+            }
+          }
+        }
+        // }
+        // get the inflated/deflated path then inside each loop, Duplicate each loop, down into Z.  We go full depth before next loop.
+        if (config.offset > 1 || config.offset < -1) {
+          pocketGrp.userData.pretty = prettyGrp;
+        }
+        pocketGrp.children = pocketGrp.children.reverse(); // Inside Out! Breakthrough!
+        return pocketGrp;
+      } else {
+        console.log("Union")
+        // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
+        var newClipperPaths =workerSimplifyPolygons(clipperPaths);
+        // console.log(newClipperPaths)
+        if (newClipperPaths.length < 1) {
+          console.error("Clipper Simplification Failed!:");
+        }
+        // calc Stepover
+        var cutwidth = ((config.offset * 2) * (config.stepover / 100)) //mm per cut
+        // todo for newClipperPaths.length (Split each clipperpath into own pocket)
+        for (k = 0; k < newClipperPaths.length; k++) {
+          var pathobj = [];
+          pathobj.push(newClipperPaths[k])
+          // console.log("processing " + newClipperPaths[k])
+          for (i = 0; i < 1000; i++) { // Rather 1000 than a while loop, just in case, break when it no longer has data to work with
+            if (i == 0) {
+              inflateValUsed = config.offset; // at outer perimeter we offset just half tool else cut is bigger than sketch
+            }
+            if (inflateValUsed < config.offset) {
+              inflateValUsed = config.offset
+            } else {
+              inflateValUsed = cutwidth * i;
+            }
+            if (inflateValUsed < config.offset) {
+              console.log("Should skip " + i)
+            }
+            // console.log(i, inflateValUsed, config.offset)
+            if (inflateValUsed > 0) {
+              // console.log(i, inflateValUsed, inflateVal, cutwidth, (cutwidth * i), (inflateVal * 2))
+              var inflatedPaths = getInflatePath(pathobj, -inflateValUsed);
+              if (inflatedPaths.length > 0) {
+                // Duplicate each loop, down into Z.  We go full depth before next loop.
+                for (j = config.zdepth; j > config.zstart; j -= config.zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
+                  // console.log(j)
+                  if (j * config.zstep < config.zdepth) {
+                    var zval = -j
+                  } else {
+                    var zval = -config.zdepth;
+                  }
+                  // get the inflated/deflated path
+                  var drawClipperPathsconfig = {
+                    paths: inflatedPaths,
+                    color: toolpathColor,
+                    opacity: 0.4,
+                    z: zval,
+                    isClosed: true,
+                    name: 'inflatedGroup',
+                    leadInPaths: false,
+                    tabdepth: false,
+                    tabspace: false,
+                    tabwidth: false,
+                    toolDia: config.offset * 2,
+                    drawPretty: true,
+                    prettyGrpColor: pocketColor
+                  }
+                  var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
+                  inflateGrp = drawings.lines;
+                  inflateGrp.name = 'inflateGrp';
+                  inflateGrp.position = config.toolpath.position;
+                  pocketGrp.add(inflateGrp);
+                  if (drawings.pretty) {
+                    prettyGrp.add(drawings.pretty)
+                    prettyGrp.updateMatrixWorld()
+                  }
+                }
+              } else {
+                // console.log('Pocket already done after ' + i + ' iterations');
+                break;
+              }
+            }
+          }
+        }
+        // get the inflated/deflated path then inside each loop, Duplicate each loop, down into Z.  We go full depth before next loop.
+        if (config.offset > 1 || config.offset < -1) {
+          pocketGrp.userData.pretty = prettyGrp;
+        }
+        pocketGrp.children = pocketGrp.children.reverse(); // Inside Out! Breakthrough!
+        pocketGrp.userData.toolDia = config.offset * 2
+        return pocketGrp;
+      } // end no union
+    }
+  };
+
+  dragknifePath = function(config) { //}, infobject, inflateVal, zstep, zdepth) {
+    var dragknifeGrp = new THREE.Group();
+    // console.log("user wants to create Drag Knife Path. val:", inflateVal);
+    var clipperPaths = workerGetClipperPaths(config.toolpath)
+    // console.log("clipperPaths:", clipperPaths);
+    // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
+    var newClipperPaths =workerSimplifyPolygons(clipperPaths);
+
+    if (newClipperPaths.length < 1) {
+      console.error("Clipper Simplification Failed!:");
+    }
+
+    for (j = 0; j < config.zdepth; j += config.zstep) {
+      if (j * config.zstep < config.zdepth) {
+        var zval = -j
+      } else {
+        var zval = -config.zdepth;
+      }
+      var polygons = newClipperPaths;
+      polygons = polygons.map(function(poly) {
+        // return addCornerActions(poly, Math.pow(2, 20) * 5, 20 / 180 * Math.PI);
+        return addCornerActions(poly, config.offset, 20 / 180 * Math.PI);
+      });
+      var drawClipperPathsconfig = {
+        paths: polygons,
+        color: toolpathColor,
+        opacity: 0.8,
+        z: zval,
+        isClosed: true,
+        name: 'inflatedGroup',
+        leadInPaths: false,
+        tabdepth: false,
+        tabspace: false,
+        tabwidth: false,
+        toolDia: config.offset * 2,
+      }
+      inflateGrp = drawClipperPaths(drawClipperPathsconfig);
+      if (inflateGrp.children.length) {
+        inflateGrp.name = 'dragknifeGrp';
+        inflateGrp.position = config.toolpath.position;
+        // dragknifeGrp.userData.color = dragknifeGrp.material.color.getHex();
+        dragknifeGrp.add(inflateGrp)
+      } else {
+        console.log('Dragknife Operation Failed')
+        break;
+      }
+    }
+    dragknifeGrp.userData.toolDia = config.offset * 2
+    return dragknifeGrp
+  };
+
+  addCornerActions = function(clipperPolyline, clipperRadius, toleranceAngleRadians) {
+    console.log("clipperPolyline Starting :  ", clipperPolyline);
+    if (clipperRadius == 0 || clipperPolyline.length == 0)
+      return clipperPolyline;
+    var result = [];
+    result.push(clipperPolyline[0]);
+    //previous point is not always at i-1, because repeated points in the polygon are skipped
+    // var previousPoint = clipperPolyline[0];
+    var previousPoint = new Point(clipperPolyline[0].X, clipperPolyline[0].Y, 0); //clipperPolyline[i - 1];
+    for (var i = 1; i < clipperPolyline.length - 1; i++) {
+      previousPoint = new Point(clipperPolyline[i - 1].X, clipperPolyline[i - 1].Y, 0); //clipperPolyline[i - 1];
+      var point = new Point(clipperPolyline[i].X, clipperPolyline[i].Y, 0); //clipperPolyline[i];
+      if (previousPoint.sqDistance(point) == 0)
+        continue;
+      // you don't want to play with atan2() if a point is repeated
+      var incomingVector = point.sub(previousPoint);
+      var nextPoint = new Point(clipperPolyline[i + 1].X, clipperPolyline[i + 1].Y, 0) //clipperPolyline[i + 1];
+      var angle = point.angle(previousPoint, nextPoint);
+      var overshoot = point.add(incomingVector.normalized().scale(clipperRadius));
+      result.push(overshoot);
+      if (Math.abs(angle) > toleranceAngleRadians) {
+
+        var arcPoints = 100 / (2 * Math.PI) * Math.abs(angle);
+        var incomingAngle = incomingVector.atan2();
+        for (var j = 0; j <= arcPoints; j++) {
+          var a = incomingAngle + angle / arcPoints * j;
+          var pt = point.add(polarPoint(clipperRadius, a));
+          result.push(pt);
+        }
+      }
+      previousPoint = point;
+    }
+    if (clipperPolyline.length > 1)
+      result.push(clipperPolyline[clipperPolyline.length - 1]);
+    return result;
+  }
+
+  function Point(X, Y, Z) {
+    this.X = X;
+    this.Y = Y;
+    this.Z = Z === undefined ? 0 : Z;
+  }
+
+  Point.prototype = {
+    sqDistance: function(p) {
+      var d = p == null ? this : this.sub(p);
+      return d.X * d.X + d.Y * d.Y + d.Z * d.Z;
+    },
+    sub: function(p) {
+      //  console.log("sub.x: ", this.x, " p.x ", p.x)
+      return new Point(this.X - p.X, this.Y - p.Y, this.Z - p.Z);
+    },
+    angle: function(fromPoint, toPoint) {
+      var toPoint2 = new Point(toPoint.X, toPoint.Y, toPoint.Z);
+      var v1 = this.sub(fromPoint);
+      var v2 = toPoint2.sub(this);
+      var dot = v1.X * v2.X + v1.Y * v2.Y;
+      var cross = v1.X * v2.Y - v1.Y * v2.X;
+      var res = Math.atan2(cross, dot);
+      var twoPi = 2 * Math.PI;
+      if (res < -twoPi)
+        return res + twoPi;
+      if (res > twoPi)
+        return res - twoPi;
+      return res;
+    },
+    normalized: function() {
+      // console.log("normalized.distance: ", this.distance())
+      return this.scale(1 / this.distance());
+      console.log("normalized: ", this.scale(1 / this.distance()))
+    },
+    scale: function(val) {
+      return new Point(this.X * val, this.Y * val, this.Z * val);
+    },
+    distance: function(p) {
+      return Math.sqrt(this.sqDistance(p));
+    },
+    add: function(p) {
+      return new Point(this.X + p.X, this.Y + p.Y, this.Z + p.Z);
+    },
+    atan2: function() {
+      return Math.atan2(this.Y, this.Y);
+    },
+  };
+
+  polarPoint = function(r, theta) {
+    return new Point(r * Math.cos(theta), r * Math.sin(theta));
+  };
 
 // End if in Worker
 }
