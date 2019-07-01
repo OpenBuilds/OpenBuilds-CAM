@@ -13,8 +13,17 @@ function trashGcode() {
   $('#trashicon').removeClass('fg-red').addClass('fg-gray');
 }
 
-
 function makeGcode() {
+  if (toolpathWorkersBusy()) {
+    // console.log('not yet... rescheduling')
+    setTimeout(function(){makeGcode()}, 500);
+  } else {
+    makeGcodeExec()
+  }
+}
+
+
+function makeGcodeExec() {
 
   if (toolpathsInScene.length > 0) {
 
@@ -90,7 +99,7 @@ function makeGcode() {
 
       // openGCodeFromText()
       parseGcodeInWebWorker()
-      
+
     }, 100);
 
   } else {
@@ -149,13 +158,19 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
         // Find longest segment
         // console.log("Vertices before optimise: ", child.geometry.vertices)
         if (child.geometry.vertices.length > 2) {
-          var bestSegment = indexOfMax(child.geometry.vertices)
-          // console.log('longest section' + bestSegment)
-          var clone = child.geometry.vertices.slice(0);
-          clone.splice(-1, 1) // remove the last point (as its the "go back to first point"-point which will just be a duplicate point after rotation)
-          var optimisedVertices = clone.rotateRight(bestSegment)
-          optimisedVertices.push(optimisedVertices[0]) // add back the "go back to first point"-point - from the new first point
-          // console.log("Vertices after optimise: ", optimisedVertices)
+          if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') != 0) {
+            var bestSegment = indexOfMax(child.geometry.vertices)
+            // console.log('longest section' + bestSegment)
+            var clone = child.geometry.vertices.slice(0);
+            clone.splice(-1, 1) // remove the last point (as its the "go back to first point"-point which will just be a duplicate point after rotation)
+            var optimisedVertices = clone.rotateRight(bestSegment)
+            optimisedVertices.push(optimisedVertices[0]) // add back the "go back to first point"-point - from the new first point
+            // console.log("Vertices after optimise: ", optimisedVertices)
+          } else {
+          var optimisedVertices = child.geometry.vertices.slice(0)
+          }
+
+
         } else {
           var optimisedVertices = child.geometry.vertices.slice(0)
         }

@@ -378,30 +378,16 @@ function mouseMove(event) {
       // }
     }
   } else { // just hovering - lets color
-    // console.log(event)
-    // var isModalOpen = $('#statusmodal').is(':visible'); // dont raycast if modal is over the viewer
     var isModalOpen = Metro.dialog.isOpen('#statusmodal') // dont raycast if modal is over the viewer
     if (!isModalOpen) { // the first 390px = sidebar - we dont want to catch the mouse there..
       mouseVector.x = (event.offsetX / renderer.domElement.width) * 2 - 1;
       mouseVector.y = -(event.offsetY / renderer.domElement.height) * 2 + 1;
       camera.updateProjectionMatrix();
       raycaster.setFromCamera(mouseVector, camera);
-      // focus the scope of the intersecting to ONLY documents. Otherwise if there is existing toolpaths, we intersect
-      // upwards of 10k objects and slows the filter down immensely
-      // scene.remove(arrow);
-      // var dir = new THREE.Vector3(raycaster.ray.direction.x, raycaster.ray.direction.y, raycaster.ray.direction.z);
-      // //normalize the direction vector (convert to vector of length 1)
-      // dir.normalize();
-      // var origin = new THREE.Vector3(raycaster.ray.origin.x, raycaster.ray.origin.y, raycaster.ray.origin.z);
-      // arrow = new THREE.ArrowHelper(dir, origin, 1000, 0xff0000, 5, 5);
-      // scene.add(arrow);
       var documents = scene.getObjectByName("Documents");
-      // console.log(documents)
       if (documents) {
         var intersects = raycaster.intersectObjects(documents.children, true)
-        // console.log(intersects)
         if (intersects.length > 0) {
-          // clear all hover colors
           for (i = 0; i < objectsInScene.length; i++) {
             var obj = objectsInScene[i];
             obj.traverse(function(child) {
@@ -421,7 +407,6 @@ function mouseMove(event) {
           } else if (mouseState = "scale") {
             $('#renderArea').css('cursor', 'pointer');
           }
-          // console.log(obj)
           hoverShapesinScene.length = 0;
           if (mouseState == "scale" || (mouseState == "move" && !event.ctrlKey && !event.altKey) || (mouseState == "delete" && event.ctrlKey) || (mouseState == "delete" && event.altKey)) {
             obj = obj.parent
@@ -456,7 +441,6 @@ function mouseMove(event) {
             });
             clearSceneFlag = true;
           }
-
         } else { // hovering over nothing
           $('#renderArea').css('cursor', '');
           hoverShapesinScene.length = 0;
@@ -470,7 +454,6 @@ function mouseMove(event) {
             });
           }
         }
-        // console.log(hoverShapesinScene)
       } // end raycast hover event
     } // end !ismodalopen
   } // end just hovering

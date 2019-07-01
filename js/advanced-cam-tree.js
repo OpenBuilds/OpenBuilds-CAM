@@ -84,9 +84,11 @@ function fillTree() {
 
         toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="tool-button alert" onclick="storeUndo(); toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
             <button data-tooltip="tooltip" data-placement="bottom" title="Configure toolpath" class="tool-button primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
+            <span class="tally alert" style="display: none; margin-top: 6px;" id="toolpathSpinner`+i+`"><i class="fas fa-spinner fa-pulse"></i><small> calculating...</small></span>
                     </div>
                     </td>
                     </tr>
+
                   </table>
                 </td>
                 </tr>

@@ -263,17 +263,22 @@ function parseLoadWorkspace(json, resetView) {
     var object = loader.parse(newWorkspace.objects[key]);
     objectsInScene.push(object)
   }
-  fillTree();
+  // fillTree();
   $('#documentstree').show();
   $('#documentactivity').hide();
   for (var key in newWorkspace.toolpaths) {
     var object = loader.parse(newWorkspace.toolpaths[key]);
     toolpathsInScene.push(object)
   }
-
-  for (i = 0; i < toolpathsInScene.length; i++) {
-    toolpathPreview(i);
+  fillTree();
+  if (resetView) {
+    resetView();
   }
+  setTimeout(function() {
+    for (i = 0; i < toolpathsInScene.length; i++) {
+      toolpathPreview(i);
+    }
+  }, 200);
   if (resetView) {
     resetView();
   }

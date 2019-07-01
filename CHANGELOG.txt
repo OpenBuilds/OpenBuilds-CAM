@@ -1,3 +1,4 @@
+01 Jul 2019:  Moved Toolpath Calculation to WebWorkers
 24 Jun 2019:  Moved Gcode Preview to WebWorker
 14 Jun 2019:  Added Beta of Servo based Pen Plotter CAM
 29 Apr 2019:  Added Delete Selection button #49, Added Workspace and Gcode naming #51, Added .OBC file support via CONTROL

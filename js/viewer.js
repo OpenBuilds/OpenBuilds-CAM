@@ -282,7 +282,7 @@ function init3D() {
     printLog('WebGL Support found! success: this application will work optimally on this device!');
     renderer = new THREE.WebGLRenderer({
       autoClearColor: true,
-      antialias: false,
+      antialias: true,
       preserveDrawingBuffer: true,
       alpha: true
     });

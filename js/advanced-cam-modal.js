@@ -325,7 +325,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><img class="fa-fw" src="images/dragoffset.svg" width="16px" height="16px"></img></span>
-            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0.1" id="tdragoffset` + i + `"  objectseq="` + i + `" min="0" step="any">
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="1" id="tdragoffset` + i + `"  objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>

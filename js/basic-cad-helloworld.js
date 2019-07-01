@@ -1,20 +1,38 @@
 function helloWorld() {
-  $.get("./workspace/helloworld.json?date=" + new Date().getTime(), function(data) {
+  $.get("./workspace/helloworld.obc?date=" + new Date().getTime(), function(data) {
     parseLoadWorkspace(data)
     resetView();
     fillTree();
     setTimeout(function() {
       makeGcode();
-    }, 2000)
+    }, 500)
   });
 }
 
 function helloWorldLaser() {
-  $.get("./workspace/helloworldlaser.json?date=" + new Date().getTime(), function(data) {
+  $.get("./workspace/helloworldlaser.obc?date=" + new Date().getTime(), function(data) {
     parseLoadWorkspace(data)
     resetView();
     fillTree();
-    setTimeout(function() {}, 2000)
-    makeGcode();
+    setTimeout(function() {makeGcode();}, 500)
+
+  });
+}
+
+function helloWorldDragKnife() {
+  $.get("./workspace/helloworlddragknife.obc?date=" + new Date().getTime(), function(data) {
+    parseLoadWorkspace(data)
+    resetView();
+    fillTree();
+    setTimeout(function() {makeGcode();}, 500)
+  });
+}
+
+function helloWorldPlasma() {
+  $.get("./workspace/helloworldplasma.obc?date=" + new Date().getTime(), function(data) {
+    parseLoadWorkspace(data)
+    resetView();
+    fillTree();
+    setTimeout(function() {makeGcode();}, 500)
   });
 }
