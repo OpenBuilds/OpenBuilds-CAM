@@ -48,7 +48,8 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
       zstart: parseFloat(toolpath.userData.camZStart, 2),
       zstep: parseFloat(toolpath.userData.camZStep, 2),
       zdepth: parseFloat(toolpath.userData.camZDepth, 2),
-      tabdepth: parseFloat(toolpath.userData.camTabDepth, 2),
+      // tabdepth: parseFloat(toolpath.userData.camTabDepth, 2) * -1,
+      tabdepth: -(parseFloat(toolpath.userData.camZDepth) - parseFloat(toolpath.userData.camTabDepth)),
       tabspace: parseFloat(toolpath.userData.camTabSpace, 2),
       tabwidth: parseFloat(toolpath.userData.camTabWidth, 2),
       direction: toolpath.userData.camDirection,
@@ -130,14 +131,20 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
       toolpath.userData.inflated  = workerDrill(config)
     } else if (operation == "Pen Plotter: (no offset)") {
       console.log("Pen Plotter: (no offset)");
+      config.zstep = 0.1
+      config.zdepth = 0.1
       config.offset = 0;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Pen Plotter: (path inside)") {
       console.log();
+      config.zstep = 0.1
+      config.zdepth = 0.1
       config.offset = config.offset * -1;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Pen Plotter: (path outside)") {
       console.log("Pen Plotter: (path outside)");
+      config.zstep = 0.1
+      config.zdepth = 0.1
       toolpath.userData.inflated  = workerInflateToolpath(config)
     }
     // console.log("Finished " + q+ " of " +toolpaths.length)
@@ -503,6 +510,7 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
   };
 
   drawClipperPathsWithTool = function(config) {
+    console.log(JSON.stringify(config));
     var group = new THREE.Object3D();
     if (config.leadInPaths) {
       if (config.leadInPaths.length != config.paths.length) {
@@ -567,6 +575,7 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
                 var d = distanceFormula(config.paths[i][j].X, config.paths[i][0].X, config.paths[i][j].Y, config.paths[i][0].Y)
               }
               if (d >= (config.toolDia + config.tabwidth)) {
+                console.log('long enough')
                 var numTabs = Math.round(d / (config.tabspace + config.tabwidth));
                 // if we have a line distance of 100
                 // and 3 tabs (width 10) in that line per numTabs
@@ -730,11 +739,10 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
     if (!config.performanceLimit) {
       var prettyGrp = new THREE.Group();
       var prettyGrpColor = config.prettyGrpColor;
-      if (config.z < config.tabdepth) {
+      if (config.z < config.tabdepth) { //draw with tabs
         if (config.toolDia > minimumToolDiaForPreview || config.toolDia < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
           // generate once use again
           // for each z
-
             var lineMesh = this.getMeshLineFromClipperPath({
               width: config.toolDia,
               clipperPath: clipperPaths,
@@ -745,31 +753,30 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
               caps: "round"
             });
             lineMesh.position.z = config.z;
-            lineMesh.name = "LineMesh1"
             prettyGrp.add(lineMesh)
             var lineMesh = this.getMeshLineFromClipperPath({
               width: config.toolDia,
               clipperPath: clipperTabsPaths,
               isSolid: true,
-              opacity: 0.4,
+              opacity: 1,
               isShowOutline: true,
               color: 0x00ff00,
               caps: "negative"
             });
             lineMesh.position.z = config.z;
             lineMesh.name = "LineMesh2"
-            for (r= 0; r < lineMesh.children.length; r++) {
-              for (s=0; s> lineMesh.children[r].children.length; s++) {
-                lineMesh.children[r].children[s].geometry.translate(lineMesh.position.x, lineMesh.position.y, lineMesh.position.z)
-              }
-            }
-            lineMesh.position.x = 0;
-            lineMesh.position.y = 0;
-            lineMesh.position.z = 0;
+            // for (r= 0; r < lineMesh.children.length; r++) {
+            //   for (s=0; s> lineMesh.children[r].children.length; s++) {
+            //     lineMesh.children[r].children[s].geometry.translate(lineMesh.position.x, lineMesh.position.y, lineMesh.position.z)
+            //   }
+            // }
+            // lineMesh.position.x = 0;
+            // lineMesh.position.y = 0;
+            // lineMesh.position.z = 0;
             prettyGrp.add(lineMesh)
           // end if High Performance
         }
-      } else { // just draw lines
+      } else { // without tabs
         if (config.toolDia > minimumToolDiaForPreview || config.toolDia < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
           // generate once use again for each z
           // if High Performance is available

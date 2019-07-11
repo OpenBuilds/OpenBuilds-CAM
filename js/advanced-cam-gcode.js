@@ -55,8 +55,8 @@ function makeGcodeExec() {
           var Passes = toolpathsInScene[j].userData.camPasses;
 
           if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
-            toolon = "M3S" + toolpathsInScene[j].userData.camPenDown;
-            tooloff = "M3S" + toolpathsInScene[j].userData.camPenUp;
+            toolon = "M3S" + toolpathsInScene[j].userData.camPenDown + "\nG4 P0.5";
+            tooloff = "M3S" + toolpathsInScene[j].userData.camPenUp + "\nG4 P0.5";
             ZClearance = 0;
           }
 
@@ -316,7 +316,12 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
               }
             }
 
-            if (sOnSeperateLine) {
+            if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
+              g += g1 + feedrate;
+              g += " X" + xpos.toFixed(4);
+              g += " Y" + ypos.toFixed(4);
+              g += " Z" + zpos.toFixed(4) + "\n";
+            } else if (sOnSeperateLine) {
               g += s + laserPwr + "\n";
               g += g1 + feedrate;
               g += " X" + xpos.toFixed(4);
