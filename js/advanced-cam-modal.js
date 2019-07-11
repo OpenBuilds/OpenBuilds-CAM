@@ -41,9 +41,6 @@ function typeofOperation(newval, objectseq) {
   } else if (newval == "Plasma: Vector (path inside)") {
     plasmaMode(objectseq);
     updateCamUserData(objectseq);
-  } else if (newval == "Plasma: Mark") {
-    plasmaMode(objectseq);
-    updateCamUserData(objectseq);
   } else if (newval == "Plasma: Vector (no path offset)") {
     plasmaMode(objectseq);
     updateCamUserData(objectseq);
@@ -116,6 +113,9 @@ function initAdvancedCAM() {
       $('#dragKnifeRadius').text(newval + 'mm');
       updateCamUserData(objectseq);
     } else if (id.indexOf('tspotsize') == 0) {
+      $('#svgToolDia-4').text(newval + 'mm');
+      updateCamUserData(objectseq);
+    } else if (id.indexOf('tfillAngle') == 0) {
       $('#svgToolDia-4').text(newval + 'mm');
       updateCamUserData(objectseq);
     } else if (id.indexOf('tplasmakerf') == 0) {
@@ -198,6 +198,7 @@ function updateCamUserData(i) {
   toolpathsInScene[i].userData.camUnion = $('#tunion' + i).val();
   toolpathsInScene[i].userData.camDirection = $('#tdirection' + i).val();
   toolpathsInScene[i].userData.camSpotSize = $('#tspotsize' + i).val();
+  toolpathsInScene[i].userData.camFillAngle = $('#tfillAngle' + i).val();
   toolpathsInScene[i].userData.camTabDepth = $('#tabdepth' + i).val();
   toolpathsInScene[i].userData.camTabWidth = $('#tabWidth' + i).val();
   toolpathsInScene[i].userData.camTabSpace = $('#tabSpace' + i).val();
@@ -277,7 +278,6 @@ function setupJob(i) {
                 <option class="camOption">Plasma: Vector (path outside)</option>
                 <option class="camOption">Plasma: Vector (path inside)</option>
                 <option class="camOption">Plasma: Vector (no path offset)</option>
-                <option class="camOption">Plasma: Mark</option>
               </optgroup>
               <optgroup label="Other" class="camOptgroup">
                 <option class="camOption">Drag Knife: Cutout</option>
@@ -347,6 +347,16 @@ function setupJob(i) {
             <span class="input-addon-label-left active-border"><img class="fa-fw" src="images/kerf.svg" width="16px" height="16px"></img></span>
             <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0.1" id="tspotsize` + i + `" objectseq="` + i + `" min="0.1" max="5" step="any">
             <span class="input-addon-label-right active-border">mm</span>
+          </div>
+        </td>
+      </tr>
+      <tr class="inputlaserraster">
+        <td>Fill: Angle</td>
+        <td>
+          <div class="input-addon">
+            <span class="input-addon-label-left active-border"><img class="fa-fw" src="images/protractor.svg" width="16px" height="16px"></img></span>
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0" id="tfillAngle` + i + `" objectseq="` + i + `" min="0.1" max="5" step="any">
+            <span class="input-addon-label-right active-border">deg</span>
           </div>
         </td>
       </tr>
@@ -580,6 +590,7 @@ function setupJob(i) {
     $('#tstartHeight' + i).val(toolpathsInScene[i].userData.camZStart);
     $('#tdragoffset' + i).val(toolpathsInScene[i].userData.camDragOffset);
     $('#tspotsize' + i).val(toolpathsInScene[i].userData.camSpotSize);
+    $('#tfillAngle' + i).val(toolpathsInScene[i].userData.camFillAngle);
     $('#tpwr' + i).val(toolpathsInScene[i].userData.camLaserPower);
     $('#tzstep' + i).val(toolpathsInScene[i].userData.camZStep);
     $('#tzdepth' + i).val(toolpathsInScene[i].userData.camZDepth);
@@ -625,6 +636,7 @@ function setupJob(i) {
       $('#tclearanceHeight' + i).val(lastused.camZClearance);
       $('#tdragoffset' + i).val(lastused.camDragOffset);
       $('#tspotsize' + i).val(lastused.camSpotSize);
+      $('#tfillAngle' + i).val(lastused.camFillAngle);
       $('#tpwr' + i).val(lastused.camLaserPower);
       $('#tzstep' + i).val(lastused.camZStep);
       $('#tzdepth' + i).val(lastused.camZDepth);
@@ -632,7 +644,19 @@ function setupJob(i) {
       $('#tplungespeed' + i).val(lastused.camPlungerate);
       $('#tplasmakerf' + i).val(lastused.camPlasmaKerf);
       $('#tplasmazheight' + i).val(lastused.camPlasmaZHeight);
-      // $('#tRampPlunge' + i).val(lastused.tRampPlunge);
+      $('#tstartHeight' + i).val(lastused.camZStart);
+      $('#tPasses' + i).val(lastused.camPasses);
+      $('#tplasmaihs' + i).val(lastused.camPlasmaIHS);
+      $('#tunion' + i).val(lastused.camUnion);
+      $('#tdirection' + i).val(lastused.camDirection);
+      $('#tspotsize' + i).val(lastused.camSpotSize);
+      $('#tfillAngle' + i).val(lastused.camFillAngle);
+      $('#tabdepth' + i).val(lastused.camTabDepth);
+      $('#tabWidth' + i).val(lastused.camTabWidth);
+      $('#tabSpace' + i).val(lastused.camTabSpace);
+      $('#tRampPlunge' + i).val(lastused.tRampPlunge);
+      $('#tpenup' + i).val(lastused.camPenUp);
+      $('#tpendown' + i).val(lastused.camPenDown);
     }
   };
 }

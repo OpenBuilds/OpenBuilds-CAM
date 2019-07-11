@@ -1,4 +1,4 @@
-11 Jul 2019:  Fixed Tab Height bug, added improvements to Pen Plotter operations
+11 Jul 2019:  Fixed Tab Height bug, added improvements to Pen Plotter operations, added Angle setting to Laser Raster
 01 Jul 2019:  Moved Toolpath Calculation to WebWorkers
 24 Jun 2019:  Moved Gcode Preview to WebWorker
 14 Jun 2019:  Added Beta of Servo based Pen Plotter CAM

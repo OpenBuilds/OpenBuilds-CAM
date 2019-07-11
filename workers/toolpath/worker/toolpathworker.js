@@ -68,19 +68,26 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
       console.log("No operation");
     } else if (operation == "Laser: Vector (no path offset)") {
       console.log("Laser: Vector (no path offset)");
+      config.zstep = 0.1
+      config.zdepth = 0.1
       config.offset = 0;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (path inside)") {
       console.log("Laser: Vector (path inside)");
+      config.zstep = 0.1
+      config.zdepth = 0.1
       config.offset = (toolpath.userData.camSpotSize / 2) * -1;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (path outside)") {
+      config.zstep = 0.1
+      config.zdepth = 0.1
       config.offset = (toolpath.userData.camSpotSize / 2)
       console.log("Laser: Vector (path outside)");
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (raster fill) (Beta)") {
       config.offset = (toolpath.userData.camSpotSize / 2)
       console.log("Laser: Vector (raster fill) (Beta)");
+      config.angle = toolpath.userData.camFillAngle || 0;
       toolpath.userData.inflated = fillPath(config);
     } else if (operation == "CNC: Vector (no offset)") {
       console.log("CNC: Vector (no offset)");
@@ -101,22 +108,23 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
       // no op yet
     } else if (operation == "Plasma: Vector (path outside)") {
       console.log("Plasma: Vector (path outside)");
+      config.zstep = 0.1
+      config.zdepth = 0.1
       config.offset = (toolpath.userData.camPlasmaKerf / 2)
       config.leadinval = toolpath.userData.camPlasmaKerf
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Plasma: Vector (path inside)") {
       console.log("Plasma: Vector (path inside)");
       // config.offset = config.offset * -1;
+      config.zstep = 0.1
+      config.zdepth = 0.1
       config.offset = (toolpath.userData.camPlasmaKerf / 2) * -1
-      config.leadinval = toolpath.userData.camPlasmaKerf
-      toolpath.userData.inflated  = workerInflateToolpath(config)
-    } else if (operation == "Plasma: Mark") {
-      console.log("Plasma: Mark");
-      config.offset = 0
       config.leadinval = toolpath.userData.camPlasmaKerf
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Plasma: Vector (no path offset)") {
       console.log("Plasma: Vector (no path offset)");
+      config.zstep = 0.1
+      config.zdepth = 0.1
       config.offset = 0;
       toolpath.userData.inflated  = workerInflateToolpath(config)
     } else if (operation == "Drag Knife: Cutout") {
@@ -510,7 +518,7 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
   };
 
   drawClipperPathsWithTool = function(config) {
-    console.log(JSON.stringify(config));
+    // console.log(JSON.stringify(config));
     var group = new THREE.Object3D();
     if (config.leadInPaths) {
       if (config.leadInPaths.length != config.paths.length) {
@@ -1560,12 +1568,13 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
   var fillColor = 0x006666;
 
   function fillPath(config) {
+    console.log(config)
     var geometry = workerGetClipperPaths(config.toolpath)
     var geometryInside = workerGetInflatePath(geometry, -config.offset);
     var scale = 100;
     ClipperLib.JS.ScaleUpPaths(geometryInside, scale);
     var lineDistance = config.offset * 200;
-    var angle = 0;
+    var angle = config.angle;
     if (!geometryInside.length || !geometryInside[0].length) {
       // console.log("Invalid Geometry", geometry)
       return [];
