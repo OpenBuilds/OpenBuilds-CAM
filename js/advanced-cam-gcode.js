@@ -270,7 +270,11 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
                   var zdelta = zpos - 0;
                 }
                 // console.log(zdelta)
-                g += "\n" + g0 + " Z" + lastxyz.z + "\n"; // G0 to Z0 then Plunge!
+                if (lastxyz.z) {
+                  g += "\n" + g0 + " Z" + lastxyz.z + "\n"; // G0 to Z0 then Plunge!
+                } else {
+                  g += "\n" + g0 + " Z" + 0 + "\n"; // G0 to Z0 then Plunge!
+                }
                 g += g1 + " F" + plungeSpeed;
                 g += " X" + npt[0].toFixed(4) + " Y" + npt[1].toFixed(4) + " Z" + (zpos - (zdelta / 2)).toFixed(4) + "\n"; // Move to XY position
                 g += g1 + " F" + plungeSpeed;

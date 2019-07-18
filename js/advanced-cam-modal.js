@@ -291,7 +291,7 @@ function setupJob(i) {
 
       </tr>
       <tr class="inputcnc inputpocket inputtooldia inputdrill inputplotter">
-        <td>Endmill Diameter</td>
+        <td>Endmill / Pen Diameter</td>
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><img class="fa-fw" src="images/endmilldia.svg" width="16px" height="16px"></img></span>
