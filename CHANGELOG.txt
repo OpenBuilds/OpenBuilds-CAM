@@ -1,3 +1,4 @@
+23 Jul 2019:  Added Pen Plotter: Lines Fill operation type
 18 Jul 2019:  Fixed bug with Ramp Plunges
 11 Jul 2019:  Fixed Tab Height bug, added improvements to Pen Plotter operations, added Angle setting to Laser Raster
 01 Jul 2019:  Moved Toolpath Calculation to WebWorkers
