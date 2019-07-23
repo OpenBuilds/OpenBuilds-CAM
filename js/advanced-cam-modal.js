@@ -56,6 +56,9 @@ function typeofOperation(newval, objectseq) {
   } else if (newval == "Pen Plotter: (path outside)") {
     plotterMode(objectseq);
     updateCamUserData(objectseq);
+  } else if (newval == "Pen Plotter: (lines fill)") {
+    penRasterMode(objectseq);
+    updateCamUserData(objectseq);
   }
 
 
@@ -284,6 +287,7 @@ function setupJob(i) {
                 <option class="camOption">Pen Plotter: (no offset)</option>
                 <option class="camOption">Pen Plotter: (path inside)</option>
                 <option class="camOption">Pen Plotter: (path outside)</option>
+                <option class="camOption">Pen Plotter: (lines fill)</option>
               </optgroup>
             </select>
           </div>
@@ -340,8 +344,8 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputlaser inputlaserraster">
-        <td>Laser: Kerf</td>
+      <tr class="inputlaser inputlaserraster inputpenraster">
+        <td>Laser: Kerf / Line Spacing</td>
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><img class="fa-fw" src="images/kerf.svg" width="16px" height="16px"></img></span>
@@ -350,7 +354,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputlaserraster">
+      <tr class="inputlaserraster inputpenraster">
         <td>Fill: Angle</td>
         <td>
           <div class="input-addon">
@@ -380,7 +384,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc inputpocket inputdragknife inputlaser inputlaserraster inputplasma inputplotter">
+      <tr class="inputcnc inputpocket inputdragknife inputlaser inputlaserraster inputplasma inputplotter inputpenraster">
         <td>Feedrate (X/Y)</td>
         <td>
           <div class="input-addon">
@@ -420,7 +424,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputplotter">
+      <tr class="inputplotter inputpenraster">
         <td>Plotter: Pen Up</td>
         <td>
           <div class="input-addon">
@@ -431,7 +435,7 @@ function setupJob(i) {
         </td>
       </tr>
 
-      <tr class="inputplotter">
+      <tr class="inputplotter inputpenraster">
         <td>Plotter: Pen Down</td>
         <td>
           <div class="input-addon">
@@ -670,6 +674,7 @@ function noMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputlaserraster').hide();
 }
 
@@ -683,6 +688,7 @@ function laserMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputlaser').show();
 };
 
@@ -695,6 +701,7 @@ function laserInsideMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputlaser').show();
 };
 
@@ -707,6 +714,7 @@ function laserOutsideMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputlaser').show();
 };
 
@@ -718,6 +726,7 @@ function laserRasterMode(i) {
   $('.inputdrill').hide();
   $('.inputdrillpeck').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputlaserraster').show();
 };
 
@@ -730,6 +739,7 @@ function drillMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputdrill').show();
 }
 
@@ -742,6 +752,7 @@ function drillPeckMode(i) {
   $('.inputdrill').show();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputdrillpeck').show();
 
 }
@@ -755,6 +766,7 @@ function cncInsideMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputcnc').show();
 };
 
@@ -767,6 +779,7 @@ function cncOutsideMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputcnc').show();
 };
 
@@ -780,6 +793,7 @@ function cncNoOffsetMode(i) {
   $('.inputtooldia').hide();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputcnc').show();
 
 }
@@ -793,6 +807,7 @@ function cncPocketMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputpocket').show();
   // force open Advanced and force Union by default
   setTimeout(function() {
@@ -811,6 +826,7 @@ function plasmaMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputplasma').show();
 };
 
@@ -824,6 +840,7 @@ function dragKnifeMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
   $('.inputplotter').hide();
+  $('.inputpenraster').hide();
   $('.inputdragknife').show();
 };
 
@@ -836,5 +853,18 @@ function plotterMode(i) {
   $('.inputdrillpeck').hide();
   $('.inputlaserraster').hide();
   $('.inputdragknife').hide();
+  $('.inputpenraster').hide();
   $('.inputplotter').show();
+};
+
+function penRasterMode(i) {
+  $('.inputcnc').hide();
+  $('.inputpocket').hide();
+  $('.inputdragknife').hide();
+  $('.inputplasma').hide();
+  $('.inputdrill').hide();
+  $('.inputdrillpeck').hide();
+  $('.inputplotter').hide();
+  $('.inputlaserraster').hide();
+  $('.inputpenraster').show();
 };

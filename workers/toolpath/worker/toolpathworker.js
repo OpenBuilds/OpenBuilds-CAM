@@ -27,6 +27,7 @@ if(typeof window == "undefined"){ // Only run as worker
 
 function getToolpaths(toolpath, jobindex, performanceLimit) {
   // Process Them
+  // console.log(toolpath)
   var loader = new THREE.ObjectLoader();
 
     var data = {
@@ -63,7 +64,7 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
     }
     self.postMessage(data);
     if (!operation) {
-      // No Op
+      console.log("Invalid Operation")
     } else if (operation == "... Select Operation ...") {
       console.log("No operation");
     } else if (operation == "Laser: Vector (no path offset)") {
@@ -154,6 +155,11 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
       config.zstep = 0.1
       config.zdepth = 0.1
       toolpath.userData.inflated  = workerInflateToolpath(config)
+    } else if (operation == "Pen Plotter: (lines fill)") {
+      console.log("Pen Plotter: (lines fill)");
+      config.offset = (toolpath.userData.camSpotSize / 2)
+      config.angle = toolpath.userData.camFillAngle || 0;
+      toolpath.userData.inflated = fillPath(config);
     }
     // console.log("Finished " + q+ " of " +toolpaths.length)
     var data = {
