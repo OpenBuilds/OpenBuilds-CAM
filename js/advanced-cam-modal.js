@@ -651,14 +651,14 @@ function setupJob(i) {
       $('#tstartHeight' + i).val(lastused.camZStart);
       $('#tPasses' + i).val(lastused.camPasses);
       $('#tplasmaihs' + i).val(lastused.camPlasmaIHS);
-      $('#tunion' + i).val(lastused.camUnion);
+      // $('#tunion' + i).val(lastused.camUnion);
       $('#tdirection' + i).val(lastused.camDirection);
       $('#tspotsize' + i).val(lastused.camSpotSize);
       $('#tfillAngle' + i).val(lastused.camFillAngle);
-      $('#tabdepth' + i).val(lastused.camTabDepth);
-      $('#tabWidth' + i).val(lastused.camTabWidth);
-      $('#tabSpace' + i).val(lastused.camTabSpace);
-      $('#tRampPlunge' + i).val(lastused.tRampPlunge);
+      //$('#tabdepth' + i).val(lastused.camTabDepth);
+      //$('#tabWidth' + i).val(lastused.camTabWidth);
+      //$('#tabSpace' + i).val(lastused.camTabSpace);
+      //$('#tRampPlunge' + i).val(lastused.tRampPlunge);
       $('#tpenup' + i).val(lastused.camPenUp);
       $('#tpendown' + i).val(lastused.camPenDown);
     }
