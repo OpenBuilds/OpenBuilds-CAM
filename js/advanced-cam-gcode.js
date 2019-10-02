@@ -16,7 +16,9 @@ function trashGcode() {
 function makeGcode() {
   if (toolpathWorkersBusy()) {
     // console.log('not yet... rescheduling')
-    setTimeout(function(){makeGcode()}, 500);
+    setTimeout(function() {
+      makeGcode()
+    }, 500);
   } else {
     makeGcodeExec()
   }
@@ -157,8 +159,17 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
 
         // Find longest segment
         // console.log("Vertices before optimise: ", child.geometry.vertices)
+
+        if (child.geometry.vertices.length > 2 && child.geometry.vertices[0].X === child.geometry.vertices[child.geometry.vertices.length - 1].X && child.geometry.vertices[0].Y === child.geometry.vertices[child.geometry.vertices.length - 1].Y) {
+          child.userData.closed = true;
+        } else {
+          child.userData.closed = false;
+        }
+
+        console.log(child.userData)
+
         if (child.geometry.vertices.length > 2) {
-          if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') != 0) {
+          if (!child.userData.closed && toolpathsInScene[j].userData.camOperation.indexOf('Plasma') != 0) {
             var bestSegment = indexOfMax(child.geometry.vertices)
             // console.log('longest section' + bestSegment)
             var clone = child.geometry.vertices.slice(0);
@@ -167,9 +178,8 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             optimisedVertices.push(optimisedVertices[0]) // add back the "go back to first point"-point - from the new first point
             // console.log("Vertices after optimise: ", optimisedVertices)
           } else {
-          var optimisedVertices = child.geometry.vertices.slice(0)
+            var optimisedVertices = child.geometry.vertices.slice(0)
           }
-
 
         } else {
           var optimisedVertices = child.geometry.vertices.slice(0)
@@ -389,5 +399,6 @@ function prepgcodefile() {
   if (endgcode) {
     g += endgcode;
   }
+
   return g;
 }

@@ -72,6 +72,8 @@ function addJob(id) {
           console.log(d)
           if (d < 0.1) {
             copy.userData.closed = true
+          } else {
+            copy.userData.closed = false
           }
         }
         copy.position.copy(obj.position);

@@ -1,4 +1,4 @@
-if(typeof window == "undefined"){ // Only run as worker
+if (typeof window == "undefined") { // Only run as worker
   var minimumToolDiaForPreview = 0.04;
   var insideCutsColor = 0x660000;
   var outsideCutsColor = 0x000066;
@@ -25,10 +25,10 @@ if(typeof window == "undefined"){ // Only run as worker
   }, false);
 
 
-function getToolpaths(toolpath, jobindex, performanceLimit) {
-  // Process Them
-  // console.log(toolpath)
-  var loader = new THREE.ObjectLoader();
+  function getToolpaths(toolpath, jobindex, performanceLimit) {
+    // Process Them
+    // console.log(toolpath)
+    var loader = new THREE.ObjectLoader();
 
     var data = {
       toolpaths: false,
@@ -54,7 +54,7 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
       tabspace: parseFloat(toolpath.userData.camTabSpace, 2),
       tabwidth: parseFloat(toolpath.userData.camTabWidth, 2),
       direction: toolpath.userData.camDirection,
-      performanceLimit: performanceLimit
+      performanceLimit: performanceLimit,
     };
     var operation = toolpath.userData.camOperation;
     var data = {
@@ -72,19 +72,19 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
       config.zstep = 0.1
       config.zdepth = 0.1
       config.offset = 0;
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (path inside)") {
       console.log("Laser: Vector (path inside)");
       config.zstep = 0.1
       config.zdepth = 0.1
       config.offset = (toolpath.userData.camSpotSize / 2) * -1;
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (path outside)") {
       config.zstep = 0.1
       config.zdepth = 0.1
       config.offset = (toolpath.userData.camSpotSize / 2)
       console.log("Laser: Vector (path outside)");
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (raster fill) (Beta)") {
       config.offset = (toolpath.userData.camSpotSize / 2)
       console.log("Laser: Vector (raster fill) (Beta)");
@@ -93,14 +93,14 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
     } else if (operation == "CNC: Vector (no offset)") {
       console.log("CNC: Vector (no offset)");
       config.offset = 0;
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "CNC: Vector (path inside)") {
       console.log("CNC: Vector (path inside)");
       config.offset = config.offset * -1;
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "CNC: Vector (path outside)") {
       console.log("CNC: Vector (path outside)");
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "CNC: Pocket") {
       console.log("CNC: Pocket");
       toolpath.userData.inflated = workerPocketPath(config)
@@ -113,7 +113,7 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
       config.zdepth = 0.1
       config.offset = (toolpath.userData.camPlasmaKerf / 2)
       config.leadinval = toolpath.userData.camPlasmaKerf
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Plasma: Vector (path inside)") {
       console.log("Plasma: Vector (path inside)");
       // config.offset = config.offset * -1;
@@ -121,40 +121,40 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
       config.zdepth = 0.1
       config.offset = (toolpath.userData.camPlasmaKerf / 2) * -1
       config.leadinval = toolpath.userData.camPlasmaKerf
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Plasma: Vector (no path offset)") {
       console.log("Plasma: Vector (no path offset)");
       config.zstep = 0.1
       config.zdepth = 0.1
       config.offset = 0;
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Drag Knife: Cutout") {
       console.log("Drag Knife: Cutout");
       config.offset = toolpath.userData.camDragOffset;
-      toolpath.userData.inflated  = workerDragknifePath(config)
+      toolpath.userData.inflated = workerDragknifePath(config)
     } else if (operation == "Drill: Peck (Centered)") {
       console.log("Drill: Peck (Centered)");
-      toolpath.userData.inflated  = workerDrill(config)
+      toolpath.userData.inflated = workerDrill(config)
     } else if (operation == "Drill: Continuous (Centered)") {
       console.log("Drill: Continuous (Centered)");
-      toolpath.userData.inflated  = workerDrill(config)
+      toolpath.userData.inflated = workerDrill(config)
     } else if (operation == "Pen Plotter: (no offset)") {
       console.log("Pen Plotter: (no offset)");
       config.zstep = 0.1
       config.zdepth = 0.1
       config.offset = 0;
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Pen Plotter: (path inside)") {
       console.log();
       config.zstep = 0.1
       config.zdepth = 0.1
       config.offset = config.offset * -1;
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Pen Plotter: (path outside)") {
       console.log("Pen Plotter: (path outside)");
       config.zstep = 0.1
       config.zdepth = 0.1
-      toolpath.userData.inflated  = workerInflateToolpath(config)
+      toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Pen Plotter: (lines fill)") {
       console.log("Pen Plotter: (lines fill)");
       config.offset = (toolpath.userData.camSpotSize / 2)
@@ -170,13 +170,13 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
     self.postMessage(data);
 
 
-  // console.log('Finished all the toolpaths')
-  return toolpath
-}
+    // console.log('Finished all the toolpaths')
+    return toolpath
+  }
 
 
   function workerInflateToolpath(config) {
-    // console.log(config)
+    console.log(config)
     var inflateGrpZ = new THREE.Group();
     var prettyGrp = new THREE.Group();
     var clipperPaths = workerGetClipperPaths(config.toolpath)
@@ -722,7 +722,9 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
         }
       } // end for loop j < paths[i].length
       // close it by connecting last point to 1st point
-      if (config.isClosed) {
+
+      // pathIsClosed(clipperPath)
+      if (pathIsClosed(config.paths[i][0])) {
         lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][0].X, config.paths[i][0].Y, config.z));
         clipperArr.push({
           X: config.paths[i][0].X,
@@ -757,67 +759,67 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
         if (config.toolDia > minimumToolDiaForPreview || config.toolDia < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
           // generate once use again
           // for each z
-            var lineMesh = this.getMeshLineFromClipperPath({
-              width: config.toolDia,
-              clipperPath: clipperPaths,
-              isSolid: true,
-              opacity: 0.2,
-              isShowOutline: true,
-              color: config.prettyGrpColor,
-              caps: "round"
-            });
-            lineMesh.position.z = config.z;
-            prettyGrp.add(lineMesh)
-            var lineMesh = this.getMeshLineFromClipperPath({
-              width: config.toolDia,
-              clipperPath: clipperTabsPaths,
-              isSolid: true,
-              opacity: 1,
-              isShowOutline: true,
-              color: 0x00ff00,
-              caps: "negative"
-            });
-            lineMesh.position.z = config.z;
-            lineMesh.name = "LineMesh2"
-            // for (r= 0; r < lineMesh.children.length; r++) {
-            //   for (s=0; s> lineMesh.children[r].children.length; s++) {
-            //     lineMesh.children[r].children[s].geometry.translate(lineMesh.position.x, lineMesh.position.y, lineMesh.position.z)
-            //   }
-            // }
-            // lineMesh.position.x = 0;
-            // lineMesh.position.y = 0;
-            // lineMesh.position.z = 0;
-            prettyGrp.add(lineMesh)
+          var lineMesh = this.getMeshLineFromClipperPath({
+            width: config.toolDia,
+            clipperPath: clipperPaths,
+            isSolid: true,
+            opacity: 0.2,
+            isShowOutline: true,
+            color: config.prettyGrpColor,
+            caps: "round"
+          });
+          lineMesh.position.z = config.z;
+          prettyGrp.add(lineMesh)
+          var lineMesh = this.getMeshLineFromClipperPath({
+            width: config.toolDia,
+            clipperPath: clipperTabsPaths,
+            isSolid: true,
+            opacity: 1,
+            isShowOutline: true,
+            color: 0x00ff00,
+            caps: "negative"
+          });
+          lineMesh.position.z = config.z;
+          lineMesh.name = "LineMesh2"
+          // for (r= 0; r < lineMesh.children.length; r++) {
+          //   for (s=0; s> lineMesh.children[r].children.length; s++) {
+          //     lineMesh.children[r].children[s].geometry.translate(lineMesh.position.x, lineMesh.position.y, lineMesh.position.z)
+          //   }
+          // }
+          // lineMesh.position.x = 0;
+          // lineMesh.position.y = 0;
+          // lineMesh.position.z = 0;
+          prettyGrp.add(lineMesh)
           // end if High Performance
         }
       } else { // without tabs
         if (config.toolDia > minimumToolDiaForPreview || config.toolDia < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
           // generate once use again for each z
           // if High Performance is available
-            var lineMesh = this.getMeshLineFromClipperPath({
-              width: config.toolDia,
-              clipperPath: config.paths,
-              isSolid: true,
-              opacity: 0.2,
-              isShowOutline: true,
-              color: config.prettyGrpColor,
-              caps: "round"
-            });
-            lineMesh.position.z = config.z;
-            lineMesh.name = "LineMesh3"
-            prettyGrp.add(lineMesh)
+          var lineMesh = this.getMeshLineFromClipperPath({
+            width: config.toolDia,
+            clipperPath: config.paths,
+            isSolid: true,
+            opacity: 0.2,
+            isShowOutline: true,
+            color: config.prettyGrpColor,
+            caps: "round"
+          });
+          lineMesh.position.z = config.z;
+          lineMesh.name = "LineMesh3"
+          prettyGrp.add(lineMesh)
         }
       }
       var grp = {
         lines: group,
         pretty: prettyGrp
       }
-    // End if High Performance
+      // End if High Performance
     } else {
-        var grp = {
-          lines: group,
-          pretty: false
-        }
+      var grp = {
+        lines: group,
+        pretty: false
+      }
     }
 
     return grp;
@@ -1258,7 +1260,7 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
         // console.log("Union")
         // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
         console.time('workerSimplifyPolygons')
-        var newClipperPaths =workerSimplifyPolygons(clipperPaths);
+        var newClipperPaths = workerSimplifyPolygons(clipperPaths);
         console.timeEnd('workerSimplifyPolygons')
         // console.log(newClipperPaths)
         if (newClipperPaths.length < 1) {
@@ -1317,9 +1319,9 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
                   drawPretty: true,
                   prettyGrpColor: pocketColor
                 }
-                console.time('drawRender z' +zval)
+                console.time('drawRender z' + zval)
                 var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
-                console.timeEnd('drawRender z' +zval)
+                console.timeEnd('drawRender z' + zval)
                 inflateGrp = drawings.lines;
                 inflateGrp.name = 'inflateGrp';
                 inflateGrp.position = config.toolpath.position;
@@ -1345,7 +1347,7 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
       } else {
         console.log("Not Union")
         // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
-        var newClipperPaths =workerSimplifyPolygons(clipperPaths);
+        var newClipperPaths = workerSimplifyPolygons(clipperPaths);
         // console.log(newClipperPaths)
         if (newClipperPaths.length < 1) {
           console.error("Clipper Simplification Failed!:");
@@ -1411,7 +1413,7 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
                   }
                 }
               } else {
-                 console.log('Pocket already done after ' + i + ' iterations');
+                console.log('Pocket already done after ' + i + ' iterations');
                 break;
               }
             }
@@ -1434,7 +1436,7 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
     var clipperPaths = workerGetClipperPaths(config.toolpath)
     // console.log("clipperPaths:", clipperPaths);
     // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
-    var newClipperPaths =workerSimplifyPolygons(clipperPaths);
+    var newClipperPaths = workerSimplifyPolygons(clipperPaths);
 
     if (newClipperPaths.length < 1) {
       console.error("Clipper Simplification Failed!:");
@@ -2058,5 +2060,5 @@ function getToolpaths(toolpath, jobindex, performanceLimit) {
 
 
 
-// End if in Worker
+  // End if in Worker
 }
