@@ -1,3 +1,4 @@
+07 Oct 2019:  Added support for Open Ended Vectors with more than 2 points to GCODE generator due to bug
 02 Oct 2019:  Added support for Open Ended Vectors with more than 2 points to GCODE generator
 31 Jul 2019:  Updated Settings -> Machine Profile dropdown Menu
 23 Jul 2019:  Added Pen Plotter: Lines Fill operation type

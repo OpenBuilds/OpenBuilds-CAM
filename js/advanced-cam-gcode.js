@@ -166,7 +166,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           child.userData.closed = false;
         }
 
-        console.log(child.userData)
+        // console.log(child.userData)
 
         if (child.geometry.vertices.length > 2) {
           if (!child.userData.closed && toolpathsInScene[j].userData.camOperation.indexOf('Plasma') != 0) {

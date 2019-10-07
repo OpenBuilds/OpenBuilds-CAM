@@ -723,14 +723,15 @@ if (typeof window == "undefined") { // Only run as worker
       } // end for loop j < paths[i].length
       // close it by connecting last point to 1st point
 
-      // pathIsClosed(clipperPath)
-      if (pathIsClosed(config.paths[i][0])) {
-        lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][0].X, config.paths[i][0].Y, config.z));
-        clipperArr.push({
-          X: config.paths[i][0].X,
-          Y: config.paths[i][0].Y
-        });
-      }
+      // TODO: Handle Open Paths here by not adding point
+
+      lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][0].X, config.paths[i][0].Y, config.z));
+      clipperArr.push({
+        X: config.paths[i][0].X,
+        Y: config.paths[i][0].Y
+      });
+
+
       if (config.leadInPaths) {
         if (config.leadInPaths.length == config.paths.length) {
           lineUnionGeo.vertices.push(new THREE.Vector3(config.leadInPaths[i][0].X, config.leadInPaths[i][0].Y, config.z));
@@ -1885,11 +1886,13 @@ if (typeof window == "undefined") { // Only run as worker
   }
 
   function pathIsClosed(clipperPath) {
-    // console.log("inside pathIsClosed")
-    return (
-      clipperPath.length >= 2 &&
-      clipperPath[0].X === clipperPath[clipperPath.length - 1].X &&
-      clipperPath[0].Y === clipperPath[clipperPath.length - 1].Y);
+    console.log("inside pathIsClosed", clipperPath.length >= 2 && clipperPath[0].X === clipperPath[clipperPath.length - 1].X && clipperPath[0].Y === clipperPath[clipperPath.length - 1].Y)
+    if (clipperPath.length >= 2 && clipperPath[0].X === clipperPath[clipperPath.length - 1].X && clipperPath[0].Y === clipperPath[clipperPath.length - 1].Y) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
 
   // Does the line from p1 to p2 cross outside of bounds?
