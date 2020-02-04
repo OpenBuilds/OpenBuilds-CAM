@@ -2,6 +2,7 @@ var DriverCheckinterval;
 var alreadyDetected = false;
 var availableDriverVersion = 'v0.0.0'
 var installedDriver = 'not detected'
+var gitPAtoken = `db820b37c42153bfc58bc636cb483b22a8426df7`
 
 function checkIfDriverIsInstalled() {
   // if (!alreadyDetected) {
@@ -26,7 +27,12 @@ function checkIfDriverIsInstalled() {
         setTimeout(function() {
           // console.log('checking for update')
           // printLog("<span class='fg-green'>Checking for Updates</span>")
-          $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c").done(function(release) {
+          $.getJSON("https://api.github.com/repos/OpenBuilds/OpenBuilds-CONTROL/releases/latest", {
+            crossDomain: true,
+            headers: {
+              'Authorization': gitPAtoken
+            }
+          }).done(function(release) {
             var availVersion = release.name.substr(1)
             var currentVersion = instance.version
             // hasDriver(instance.version)
@@ -106,7 +112,12 @@ setInterval(function() {
 }, 1000);
 
 function downloadDrivers(os) {
-  $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c").done(function(release) {
+  $.getJSON("https://api.github.com/repos/OpenBuilds/OpenBuilds-CONTROL/releases/latest", {
+    crossDomain: true,
+    headers: {
+      'Authorization': gitPAtoken
+    }
+  }).done(function(release) {
     console.log(release)
     var asset = release.assets[0];
     var downloadCount = 0;
@@ -149,7 +160,12 @@ function downloadDrivers(os) {
 }
 
 function getAvailableDriverVersion() {
-  $.getJSON("https://api.github.com/repos/OpenBuilds/SW-Machine-Drivers/releases/latest?client_id=fbbb80debc1197222169&client_secret=7dc6e463422e933448f9a3a4150c8d2bbdd0f87c").done(function(release) {
+  $.getJSON("https://api.github.com/repos/OpenBuilds/OpenBuilds-CONTROL/releases/latest", {
+    crossDomain: true,
+    headers: {
+      'Authorization': gitPAtoken
+    }
+  }).done(function(release) {
     $('.omdavailversion').html(release.name)
     availableDriverVersion = release.name
   });
