@@ -2,7 +2,6 @@ var DriverCheckinterval;
 var alreadyDetected = false;
 var availableDriverVersion = 'v0.0.0'
 var installedDriver = 'not detected'
-var gitPAtoken = `db820b37c42153bfc58bc636cb483b22a8426df7`
 
 function checkIfDriverIsInstalled() {
   // if (!alreadyDetected) {
@@ -28,10 +27,7 @@ function checkIfDriverIsInstalled() {
           // console.log('checking for update')
           // printLog("<span class='fg-green'>Checking for Updates</span>")
           $.getJSON("https://api.github.com/repos/OpenBuilds/OpenBuilds-CONTROL/releases/latest", {
-            crossDomain: true,
-            headers: {
-              'Authorization': gitPAtoken
-            }
+            crossDomain: true
           }).done(function(release) {
             var availVersion = release.name.substr(1)
             var currentVersion = instance.version
@@ -113,10 +109,7 @@ setInterval(function() {
 
 function downloadDrivers(os) {
   $.getJSON("https://api.github.com/repos/OpenBuilds/OpenBuilds-CONTROL/releases/latest", {
-    crossDomain: true,
-    headers: {
-      'Authorization': gitPAtoken
-    }
+    crossDomain: true
   }).done(function(release) {
     console.log(release)
     var asset = release.assets[0];
@@ -161,10 +154,7 @@ function downloadDrivers(os) {
 
 function getAvailableDriverVersion() {
   $.getJSON("https://api.github.com/repos/OpenBuilds/OpenBuilds-CONTROL/releases/latest", {
-    crossDomain: true,
-    headers: {
-      'Authorization': gitPAtoken
-    }
+    crossDomain: true
   }).done(function(release) {
     $('.omdavailversion').html(release.name)
     availableDriverVersion = release.name
