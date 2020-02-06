@@ -1,3 +1,4 @@
+06 Feb 2020:  Added LEAD1010 with Laser profile
 04 Feb 2020:  Fixed update check to comply with Github deprecations: https://developer.github.com/changes/2019-11-05-deprecated-passwords-and-authorizations-api/
 07 Oct 2019:  Added support for Open Ended Vectors with more than 2 points to GCODE generator due to bug
 02 Oct 2019:  Added support for Open Ended Vectors with more than 2 points to GCODE generator
