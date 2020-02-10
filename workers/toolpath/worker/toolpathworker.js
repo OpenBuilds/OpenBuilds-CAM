@@ -144,6 +144,8 @@ if (typeof window == "undefined") { // Only run as worker
       config.zdepth = 0.1
       config.offset = 0;
       toolpath.userData.inflated = workerInflateToolpath(config)
+      //console.log("back from worker: ", JSON.stringify(toolpath.userData.inflated))
+
     } else if (operation == "Pen Plotter: (path inside)") {
       console.log();
       config.zstep = 0.1
@@ -221,6 +223,7 @@ if (typeof window == "undefined") { // Only run as worker
         }
         // console.log(i * config.zstep > config.zdepth, i * config.zstep, i, zval)
         // console.log(i, config.zstart, config.zstep, config.zdepth, zval);
+        console.log("BEFORE DRAWING: ", inflatedPaths)
         var drawClipperPathsconfig = {
           performanceLimit: config.performanceLimit,
           paths: inflatedPaths,
@@ -239,6 +242,7 @@ if (typeof window == "undefined") { // Only run as worker
         }
         var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
         inflateGrp = drawings.lines;
+        console.log("AFTER DRAWING: ", JSON.stringify(inflateGrp));
         inflateGrp.name = 'inflateGrp' + i;
         inflateGrp.userData.material = inflateGrp.material;
         inflateGrpZ.add(inflateGrp);
@@ -247,7 +251,8 @@ if (typeof window == "undefined") { // Only run as worker
           prettyGrp.updateMatrixWorld()
         }
       }
-    } else {
+      // end config.union = "Yes"
+    } else { // begin config.union="No"
       var newClipperPaths = clipperPaths;
       for (j = 0; j < newClipperPaths.length; j++) {
         if (config.offset != 0) {
@@ -284,6 +289,7 @@ if (typeof window == "undefined") { // Only run as worker
             var zval = -i
           }
           // console.log(i, config.zstart, config.zstep, config.zdepth, zval);
+          console.log("BEFORE DRAWING: ", inflatedPaths)
           var drawClipperPathsconfig = {
             performanceLimit: config.performanceLimit,
             paths: inflatedPaths,
@@ -302,6 +308,7 @@ if (typeof window == "undefined") { // Only run as worker
           }
           var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
           inflateGrp = drawings.lines;
+          console.log("AFTER DRAWING: ", JSON.stringify(inflateGrp));
           inflateGrp.name = 'inflateGrp' + i;
           inflateGrp.userData.material = inflateGrp.material;
           inflateGrpZ.add(inflateGrp);
@@ -311,7 +318,7 @@ if (typeof window == "undefined") { // Only run as worker
           }
         }
       }
-    }
+    } // end config.union="No"
     if (config.offset > minimumToolDiaForPreview || config.offset < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
       inflateGrpZ.userData.pretty = prettyGrp
     };
@@ -724,12 +731,14 @@ if (typeof window == "undefined") { // Only run as worker
       // close it by connecting last point to 1st point
 
       // TODO: Handle Open Paths here by not adding point
+      if (!config.isClosed) {
+        lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][0].X, config.paths[i][0].Y, config.z));
+        clipperArr.push({
+          X: config.paths[i][0].X,
+          Y: config.paths[i][0].Y
+        });
+      }
 
-      lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][0].X, config.paths[i][0].Y, config.z));
-      clipperArr.push({
-        X: config.paths[i][0].X,
-        Y: config.paths[i][0].Y
-      });
 
 
       if (config.leadInPaths) {

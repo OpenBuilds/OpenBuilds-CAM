@@ -153,6 +153,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
       }
       // console.log(toolpathGrp);
       if (child.type == "Line") {
+        //console.log(child)
         var xpos_offset = child.position.x;
         var ypos_offset = child.position.y;
         // let's create gcode for all points in line
@@ -161,8 +162,10 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
         // console.log("Vertices before optimise: ", child.geometry.vertices)
 
         if (child.geometry.vertices.length > 2 && child.geometry.vertices[0].X === child.geometry.vertices[child.geometry.vertices.length - 1].X && child.geometry.vertices[0].Y === child.geometry.vertices[child.geometry.vertices.length - 1].Y) {
+          //console.log("Setting Closed: ", child)
           child.userData.closed = true;
         } else {
+          //console.log("Setting NonClosed: ", child)
           child.userData.closed = false;
         }
 
@@ -191,6 +194,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           // Convert to World Coordinates
 
           if (i == 0) {
+            g += "; Starting " + child.name + ": Closed?:" + child.userData.closed;
             var localPt2 = optimisedVertices[i + 1]; // The next point - used for ramp plunges
             var worldPt2 = toolpathGrp.localToWorld(localPt2.clone()); // The next point - used for ramp plunges
             var xpos2 = worldPt2.x // The next point - used for ramp plunges
