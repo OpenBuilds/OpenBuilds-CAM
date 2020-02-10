@@ -730,7 +730,8 @@ if (typeof window == "undefined") { // Only run as worker
       } // end for loop j < paths[i].length
       // close it by connecting last point to 1st point
 
-      // TODO: Handle Open Paths here by not adding point
+      // Handle Open Paths here by not adding point if config.isClosed
+      console.log("config.isClosed", config.isClosed, config.paths)
       if (!config.isClosed) {
         lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][0].X, config.paths[i][0].Y, config.z));
         clipperArr.push({
@@ -738,7 +739,6 @@ if (typeof window == "undefined") { // Only run as worker
           Y: config.paths[i][0].Y
         });
       }
-
 
 
       if (config.leadInPaths) {
@@ -755,6 +755,7 @@ if (typeof window == "undefined") { // Only run as worker
       if (config.name) {
         lineUnion.name = config.name;
       }
+      console.log(lineUnionGeo)
       group.add(lineUnion);
       clipperPaths.push(clipperArr);
       clipperTabsPaths.push(clipperTabsArr);
@@ -1655,8 +1656,9 @@ if (typeof window == "undefined") { // Only run as worker
 
 
     let currentPath = paths[0];
-    if (pathIsClosed(currentPath))
+    if (pathIsClosed(currentPath)) {
       currentPath.push(currentPath[0]);
+    }
     let currentPoint = currentPath[currentPath.length - 1];
     paths[0] = [];
 
@@ -1683,8 +1685,10 @@ if (typeof window == "undefined") { // Only run as worker
             return false;
         }
         if (pathIsClosed(path)) {
-          for (let pointIndex = 0; pointIndex < path.length; ++pointIndex)
+          for (let pointIndex = 0; pointIndex < path.length; ++pointIndex) {
             check(pointIndex);
+          }
+
         } else if (path.length) {
           check(0);
           if (check(path.length - 1))
@@ -1724,6 +1728,7 @@ if (typeof window == "undefined") { // Only run as worker
       camPaths.push(path)
     }
 
+
     // return camPaths;
 
     var scale = 100;
@@ -1735,7 +1740,7 @@ if (typeof window == "undefined") { // Only run as worker
       color: toolpathColor,
       opacity: 1,
       z: 0,
-      isClosed: false,
+      isClosed: true,
       name: 'inflateGrp',
       leadInPaths: false,
       tabdepth: false,
@@ -1746,6 +1751,7 @@ if (typeof window == "undefined") { // Only run as worker
       prettyGrpColor: fillColor
     }
     var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
+    // console.log(JSON.stringify(drawings));
     return drawings;
   }
 
@@ -1895,7 +1901,7 @@ if (typeof window == "undefined") { // Only run as worker
   }
 
   function pathIsClosed(clipperPath) {
-    console.log("inside pathIsClosed", clipperPath.length >= 2 && clipperPath[0].X === clipperPath[clipperPath.length - 1].X && clipperPath[0].Y === clipperPath[clipperPath.length - 1].Y)
+    // console.log("inside pathIsClosed", clipperPath, clipperPath.length >= 2 && clipperPath[0].X === clipperPath[clipperPath.length - 1].X && clipperPath[0].Y === clipperPath[clipperPath.length - 1].Y)
     if (clipperPath.length >= 2 && clipperPath[0].X === clipperPath[clipperPath.length - 1].X && clipperPath[0].Y === clipperPath[clipperPath.length - 1].Y) {
       return true;
     } else {
