@@ -144,8 +144,6 @@ if (typeof window == "undefined") { // Only run as worker
       config.zdepth = 0.1
       config.offset = 0;
       toolpath.userData.inflated = workerInflateToolpath(config)
-      //console.log("back from worker: ", JSON.stringify(toolpath.userData.inflated))
-
     } else if (operation == "Pen Plotter: (path inside)") {
       console.log();
       config.zstep = 0.1
@@ -223,14 +221,13 @@ if (typeof window == "undefined") { // Only run as worker
         }
         // console.log(i * config.zstep > config.zdepth, i * config.zstep, i, zval)
         // console.log(i, config.zstart, config.zstep, config.zdepth, zval);
-        console.log("BEFORE DRAWING: ", inflatedPaths)
+
         var drawClipperPathsconfig = {
           performanceLimit: config.performanceLimit,
           paths: inflatedPaths,
           color: toolpathColor,
           opacity: 1,
           z: zval,
-          isClosed: true,
           name: 'inflateGrp',
           leadInPaths: leadInPaths,
           tabdepth: config.tabdepth,
@@ -242,7 +239,7 @@ if (typeof window == "undefined") { // Only run as worker
         }
         var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
         inflateGrp = drawings.lines;
-        console.log("AFTER DRAWING: ", JSON.stringify(inflateGrp));
+
         inflateGrp.name = 'inflateGrp' + i;
         inflateGrp.userData.material = inflateGrp.material;
         inflateGrpZ.add(inflateGrp);
@@ -289,14 +286,12 @@ if (typeof window == "undefined") { // Only run as worker
             var zval = -i
           }
           // console.log(i, config.zstart, config.zstep, config.zdepth, zval);
-          console.log("BEFORE DRAWING: ", inflatedPaths)
           var drawClipperPathsconfig = {
             performanceLimit: config.performanceLimit,
             paths: inflatedPaths,
             color: toolpathColor,
             opacity: 1,
             z: zval,
-            isClosed: true,
             name: 'inflateGrp',
             leadInPaths: leadInPaths,
             tabdepth: config.tabdepth,
@@ -308,7 +303,6 @@ if (typeof window == "undefined") { // Only run as worker
           }
           var drawings = drawClipperPathsWithTool(drawClipperPathsconfig);
           inflateGrp = drawings.lines;
-          console.log("AFTER DRAWING: ", JSON.stringify(inflateGrp));
           inflateGrp.name = 'inflateGrp' + i;
           inflateGrp.userData.material = inflateGrp.material;
           inflateGrpZ.add(inflateGrp);
@@ -416,9 +410,6 @@ if (typeof window == "undefined") { // Only run as worker
       // console.log("config.z not defined")
     }
 
-    if (config.isClosed === undefined || config.isClosed == null)
-      config.isClosed = true;
-
     var group = new THREE.Object3D();
 
 
@@ -511,8 +502,8 @@ if (typeof window == "undefined") { // Only run as worker
           z: config.z
         }
       }
-      // close it by connecting last point to 1st point
-      if (config.isClosed) {
+      // close it by connecting last point to 1st point - if its not an open ended vector
+      if (config.paths[i].length > 2) {
         lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][0].X, config.paths[i][0].Y, config.z));
       }
       if (config.leadInPaths) {
@@ -550,9 +541,6 @@ if (typeof window == "undefined") { // Only run as worker
       config.z = 0;
       // console.log("with tool config.z not defined")
     }
-
-    if (config.isClosed === undefined || config.isClosed == null)
-      config.isClosed = true;
 
     if (config.name) group.name = config.name;
 
@@ -730,16 +718,14 @@ if (typeof window == "undefined") { // Only run as worker
       } // end for loop j < paths[i].length
       // close it by connecting last point to 1st point
 
-      // Handle Open Paths here by not adding point if config.isClosed
-      console.log("config.isClosed", config.isClosed, config.paths)
-      if (!config.isClosed) {
+      // Handle open ended single line here by not adding point
+      if (config.paths[i].length > 2) {
         lineUnionGeo.vertices.push(new THREE.Vector3(config.paths[i][0].X, config.paths[i][0].Y, config.z));
         clipperArr.push({
           X: config.paths[i][0].X,
           Y: config.paths[i][0].Y
         });
       }
-
 
       if (config.leadInPaths) {
         if (config.leadInPaths.length == config.paths.length) {
@@ -914,7 +900,6 @@ if (typeof window == "undefined") { // Only run as worker
           color: color,
           opacity: opacity + 0.2,
           z: 0,
-          isClosed: false,
           name: false,
           leadInPaths: false,
           tabdepth: false,
@@ -1320,7 +1305,6 @@ if (typeof window == "undefined") { // Only run as worker
                   color: toolpathColor,
                   opacity: 1,
                   z: zval,
-                  isClosed: true,
                   name: 'inflatedGroup',
                   leadInPaths: false,
                   tabdepth: false,
@@ -1403,7 +1387,6 @@ if (typeof window == "undefined") { // Only run as worker
                     color: toolpathColor,
                     opacity: 1,
                     z: zval,
-                    isClosed: true,
                     name: 'inflatedGroup',
                     leadInPaths: false,
                     tabdepth: false,
@@ -1465,7 +1448,6 @@ if (typeof window == "undefined") { // Only run as worker
       color: toolpathColor,
       opacity: 1,
       z: zval,
-      isClosed: true,
       name: 'inflatedGroup',
       leadInPaths: false,
       tabdepth: false,
@@ -1740,7 +1722,6 @@ if (typeof window == "undefined") { // Only run as worker
       color: toolpathColor,
       opacity: 1,
       z: 0,
-      isClosed: true,
       name: 'inflateGrp',
       leadInPaths: false,
       tabdepth: false,
