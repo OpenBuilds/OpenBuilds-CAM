@@ -194,7 +194,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           // Convert to World Coordinates
 
           if (i == 0) {
-            g += "; Starting " + child.name + ": Closed?:" + child.userData.closed;
+            g += "; Starting " + child.name + ": Closed?:" + child.userData.closed + "\n'";
             var localPt2 = optimisedVertices[i + 1]; // The next point - used for ramp plunges
             var worldPt2 = toolpathGrp.localToWorld(localPt2.clone()); // The next point - used for ramp plunges
             var xpos2 = worldPt2.x // The next point - used for ramp plunges
