@@ -7,10 +7,13 @@ function addText() {
   var string = $("#texttorender").val()
   // console.log('font-family: ', font[0], " size: ", fontsize, " String: " + string)
 
-  var textasSVG = getText(font[0], "regular", string, fontsize)
-  // var textasSVG = getText("Allan", "regular", "Go", 10)
-  setTimeout(function() {
-    var svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50 50\" width=\"150px\"> <path fill=\"#F7931E\" stroke=\"#000\" d=\"" + textasSVG._result + "\"/>  </svg>"
+  // var textasSVG = getText(font[0], "regular", string, fontsize)
+  //
+  // Then, use it:
+  //
+  getText(font[0], "regular", string, fontsize).then(function(textasSVG) {
+    // console.log(textasSVG)
+    var svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50 50\" width=\"150px\"> <path fill=\"#F7931E\" stroke=\"#000\" d=\"" + textasSVG + "\"/>  </svg>"
     // console.log(svg)
     return lwsvgparser.loadFromString(svg).then(function(element) {
         return lwsvgparser.parse().then(function(tags) {
@@ -19,7 +22,6 @@ function addText() {
             version: "1.00"
           };
           drawFile("Text: " + string + " (" + font[0] + ")", tags, true);
-          // $("#addShapeText").modal("hide");
           resetView();
         });
       })
@@ -30,7 +32,31 @@ function addText() {
       });
 
     printLog('SVG Opened', msgcolor, "file");
-  }, 2000);
+  })
+
+
+  // console.log(textasSVG)
+  // setTimeout(function() {
+  //   var svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50 50\" width=\"150px\"> <path fill=\"#F7931E\" stroke=\"#000\" d=\"" + textasSVG._result + "\"/>  </svg>"
+  //   // console.log(svg)
+  //   return lwsvgparser.loadFromString(svg).then(function(element) {
+  //       return lwsvgparser.parse().then(function(tags) {
+  //         lwsvgparser.editor = {
+  //           name: "Opentype.js",
+  //           version: "1.00"
+  //         };
+  //         drawFile("Text: " + string + " (" + font[0] + ")", tags, true);
+  //         resetView();
+  //       });
+  //     })
+  //     .catch(function(error) {
+  //       console.error('error:', error);
+  //       // $("#addShapeText").modal("hide");
+  //       resetView();
+  //     });
+  //
+  //   printLog('SVG Opened', msgcolor, "file");
+  // }, 2000);
 }
 
 
@@ -113,10 +139,22 @@ function searchFontInList(fontList, fontFamily) {
 }
 
 function getText(fontFamily, fontVariant, text, fontSize) {
-  return getFontList().then(function(fontList) {
-    return getTextFromData(searchFontInList(fontList, fontFamily), fontVariant, text, fontSize);
-  })
+  return new Promise(function(resolve, reject) {
+    /*stuff using username, password*/
+    return getFontList().then(function(fontList) {
+      return getTextFromData(searchFontInList(fontList, fontFamily), fontVariant, text, fontSize);
+    }).then(function(data) {
+      // console.log(data)
+      resolve(data);
+    })
+  });
 }
+
+// function getText(fontFamily, fontVariant, text, fontSize) {
+//   return getFontList().then(function(fontList) {
+//     return getTextFromData(searchFontInList(fontList, fontFamily), fontVariant, text, fontSize);
+//   })
+// }
 
 $(document).ready(function() {
   var modal = `

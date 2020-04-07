@@ -814,7 +814,9 @@ function cncPocketMode(i) {
     $('#advanced' + i).prop('checked', true);
     $('#collapsediv' + i).data("collapse")['expand']()
   }, 200);
-  $('#tunion' + i).val("Yes").prop('selected', true);
+  if (!toolpathsInScene[i].userData.camOperation) { // only force if not set already (ie suggested default)
+    $('#tunion' + i).val("Yes").prop('selected', true);
+  }
 };
 
 function plasmaMode(i) {
