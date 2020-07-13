@@ -1,3 +1,4 @@
+13 Jul 2019:  Changed built-in text tool size from selection to input for custom text sizes
 10 Feb 2020:  Fixed double-back moves back with Open Ended vectors on no-offset operations, Fixed bug in Laser Rasterfill
 06 Feb 2020:  Added LEAD1010 with Laser profile
 04 Feb 2020:  Fixed update check to comply with Github deprecations: https://developer.github.com/changes/2019-11-05-deprecated-passwords-and-authorizations-api/

@@ -183,13 +183,7 @@ $(document).ready(function() {
             <td>
               <div class="input-addon">
                 <span class="input-addon-label-left active-border"><i class="fas fa-text-height"></i></span>
-                <select class="cam-form-field cam-form-field-right  active-border" id="fontsize">
-                  <option value="20" selected>20</option>
-                  <option value="30">30</option>
-                  <option value="40">40</option>
-                  <option value="50">50</option>
-                  <option value="70">70</option>
-                </select>
+                <input type="number" class="cam-form-field cam-form-field-right  active-border" id="fontsize" value="20" />
               </div>
             </td>
           </tr>
