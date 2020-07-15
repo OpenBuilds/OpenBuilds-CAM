@@ -54,12 +54,18 @@ function svgtraverse(tag, callback) {
 };
 
 function drawFile(name, tag, flip) {
-  // console.log(lwsvgparser)
-  // console.log(file)
   var editor = lwsvgparser.editor.name
   var version = parseFloat(lwsvgparser.editor.version)
+  console.log(lwsvgparser)
+  if (lwsvgparser.tags.attrs["inkscape:version"] != undefined) {
+    editor = "inkscape"
+    version = parseFloat(lwsvgparser.tags.attrs["inkscape:version"])
+  }
+  console.log(editor, version)
   if (editor == "inkscape") {
-    if (version > 0.91) {
+    if (version > 1.0) {
+      resol = 96;
+    } else if (version > 0.91) {
       resol = 90;
     } else {
       resol = 96;
