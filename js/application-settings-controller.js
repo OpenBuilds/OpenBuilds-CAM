@@ -402,6 +402,11 @@ function selectMachine(type) {
     var yaxis = 330
     var zaxis = 51
     $('#toolheadSelect').data('select').val('spindleonoff')
+  } else if (type == "leadmachine1515") {
+    var xaxis = 1170
+    var yaxis = 1250
+    var zaxis = 90
+    $('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "leadmachine1010") {
     var xaxis = 730
     var yaxis = 810
@@ -463,6 +468,8 @@ function setMachineButton(type) {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds C-Beam Machine`
   } else if (type == "cbeamxl") {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds C-Beam XL`
+  } else if (type == "leadmachine1515") {
+    template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds LEAD 1515`
   } else if (type == "leadmachine1010") {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds LEAD 1010`
   } else if (type == "leadmachine1010laser") {
@@ -584,6 +591,8 @@ $(document).ready(function() {
                       <ul class="ribbon-dropdown" data-role="dropdown">
                         <li onclick="selectMachine('leadmachine1010');"><a href="#"><img src="images/mch/leadmachine1010.png" width="16px"/>OpenBuilds LEAD 1010</a></li>
                         <li onclick="selectMachine('leadmachine1010laser');"><a href="#"><img src="images/mch/leadmachine1010laser.png" width="16px"/>OpenBuilds LEAD 1010 with Laser Module</a></li>
+                        <li onclick="selectMachine('leadmachine1515');"><a href="#"><img src="images/mch/leadmachine1515.png" width="16px"/>OpenBuilds LEAD 1515</a></li>
+
                       </ul>
                     </li>
                     <li><a href="#" onclick="selectMachine('minimill');"><img src="images/mch/minimill.png" width="16px"/>  OpenBuilds MiniMill</a></li>
