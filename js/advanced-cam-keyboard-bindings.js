@@ -1,10 +1,14 @@
 $(document).keydown(function(e) {
-  var isModalOpen1 = Metro.dialog.isOpen('#statusmodal')
-  var isModalOpen2 = Metro.dialog.isOpen('#addShapeText')
-  var isModalOpen3 = Metro.dialog.isOpen('#addShapeCircle')
-  var isModalOpen4 = Metro.dialog.isOpen('#addShapeRect')
 
-  if (!isModalOpen1 && !isModalOpen2 && !isModalOpen3 && !isModalOpen4) {
+  var modalsOpen = false;
+
+  if (Metro.dialog.isOpen('#statusmodal') || Metro.dialog.isOpen('#addShapeText') || Metro.dialog.isOpen('#addShapeCircle') || Metro.dialog.isOpen('#addShapeRect') || Metro.dialog.isOpen('#partslibModal') || Metro.dialog.isOpen('#settingsmodal')) {
+    modalsOpen = true;
+  }
+
+
+
+  if (!modalsOpen) {
     // console.log(e)
     if (e.which == 46 || e.which == 8) { // Press delete to delete whatever is already selected (8=backspace = the delete key on a Mac keyboard (smh) )
       // console.log('del');
