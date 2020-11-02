@@ -720,7 +720,7 @@ $(document).ready(function() {
                 <div class="row mb-2">
                     <label class="cell-sm-6">Plasma: Initial Height Sensing G-Code</label>
                     <div class="cell-sm-6">
-                      <textarea id="ihsgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="G0 + clearanceHeight + \nG38.2 Z-30 F100\nG10 L20 P1 Z0"></textarea>
+                      <textarea id="ihsgcode" data-role="textarea" contenteditable="true" data-auto-size="true" data-clear-button="false" placeholder="G0 + clearanceHeight + \nG38.2 Z-30 F100\nG10 L20 P1 Z0"></textarea>
                     </div>
                 </div>
 
