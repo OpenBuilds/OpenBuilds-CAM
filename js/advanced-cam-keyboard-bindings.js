@@ -6,6 +6,8 @@ $(document).keydown(function(e) {
     modalsOpen = true;
   }
 
+  console.log(modalsOpen)
+
 
 
   if (!modalsOpen) {
