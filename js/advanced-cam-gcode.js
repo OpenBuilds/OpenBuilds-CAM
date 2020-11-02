@@ -138,7 +138,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
   var sOnSeperateLine = $("#scommandnewline").is(":checked"); // Marlin, Stepcraft, Mach3, LinuxCNC
   var s = $("#scommand").val(); // or Stepcraft:  M10 Qxxx, or LinuxCNC/Mach3: M67 E(PWMSigNo) Qxxx \n G1 Move \n M68 E(PWMSigNo) Q0
   var sScale = $("#scommandscale").val()
-  var IHScommand = document.getElementById('ihsgcode').value; // or "G0 " + clearanceHeight + "\nG32.2 Z-30 F100\nG10 P2 L1 Z0" // Plasma IHS
+  var IHScommand = document.getElementById('ihsgcode').value; // or "G0 " + clearanceHeight + "\nG38.2 Z-30 F100\nG10 P2 L1 Z0" // Plasma IHS
 
   if (!toolpathGrp) {
     var message = `Toolpath Error: One or more of your toolpaths is not configured.  You need to configure the toolpaths, before generating GCODE`
