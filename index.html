@@ -313,7 +313,7 @@
 
 						<div id="renderDocuments" class="window drop-shadow">
 							<div class="window-caption bg-openbuilds">
-								<span class="icon far fa-file-alt"></span>
+								<i class="icon far fa-file-alt"></i>
 								<span class="title">Documents <span class="workspaceTitle"></span></span>
 							</div>
 							<div id="selectoverlay" class="text-center">
@@ -345,7 +345,7 @@
 						</div>
 						<div class="window drop-shadow mt-2">
 							<div class="window-caption bg-openbuilds">
-								<span class="icon fas fa-tasks"></span>
+								<i class="icon fas fa-tasks"></i>
 								<span class="title">Toolpaths</span>
 								<div class="buttons">
 									<!-- <button type="button " id="generatetpgcode2" class="button small bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button> -->
@@ -358,6 +358,7 @@
 								</ul>
 								<button class="button small dark outline drop-shadow" title="Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes icon"></span>Generate GCODE</button>
 								<button class="button small dark outline drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span id="gcodeexporticon" class="fa fa-save icon fg-gray"></span></button>
+								<button class="button small dark outline drop-shadow" title="Preview GCODE" id="gcodeviewbtn2" onclick="previewFile();"><span id="gcodepreviewicon" class="fa fa-eye icon fg-gray"></span></button>
 								<button class="button small dark outline drop-shadow" title="Clear GCODE" id="gcodetrashbtn2" onclick="trashGcode();"><span id="trashicon" class="fa fa-trash fg-gray icon"></span></button>
 							</div>
 
@@ -376,7 +377,7 @@
 
 						<div class="window mt-2 drop-shadow">
 							<div class="window-caption bg-openbuilds">
-								<span class="icon fas fa-tasks"></span>
+								<i class="icon fas fa-tasks"></i>
 								<span class="title">Connection</span>
 							</div>
 							<div class="window-content p-1" id="connectiontree" style="overflow-y:scroll;">
@@ -468,7 +469,7 @@
 		<div oncontextmenu="return false;" id="viewerContext"></div> -->
 			<!-- avoiding popup when right mouse is clicked -->
 
-			<div class="dialog" data-overlay-click-close="true" data-role="dialog" id="statusmodal" data-to-top="true" data-width="510">
+			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="statusmodal" data-to-top="true" data-width="540">
 				<div class="dialog-title" id="statusTitle">Status title </div>
 				<div class="dialog-content">
 					<div id="statusBody"></div>
@@ -480,7 +481,7 @@
 				</div>
 			</div>
 
-			<div class="dialog" data-overlay-click-close="true" data-role="dialog" id="partslibModal" data-width="800" data-to-top="true">
+			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="partslibModal" data-width="800" data-to-top="true">
 				<div class="dialog-title">Parts Library</div>
 				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
 					<div id="partslibrary"></div>
@@ -490,16 +491,10 @@
 				</div>
 			</div>
 
-			<div class="dialog" data-overlay-click-close="true" data-role="dialog" id="splashModal" data-width="600" data-to-top="true">
+			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="splashModal" data-width="800" data-to-top="true">
+				<div class="dialog-title"><i class="fas fa-fw fa-history"></i> Changelog</div>
 				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-					<div data-role="accordion" data-show-active="true" data-one-frame="true">
-					</div>
-					<div class="frame">
-						<div class="heading"><i class="fas fa-fw fa-history"></i> Changelog</div>
-						<div class="content">
-							<div id="changelog" class="text-small"></div>
-						</div>
-					</div>
+					<div id="changelog" class="text-small"></div>
 				</div>
 				<div class="dialog-actions">
 					<button class="button js-dialog-close alert" onclick="localStorage.setItem('hideChangelog', true);">Never show</button>

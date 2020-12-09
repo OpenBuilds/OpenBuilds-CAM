@@ -1,16 +1,8 @@
 $(document).keydown(function(e) {
+  var element = e.target.nodeName.toLowerCase();
 
-  var modalsOpen = false;
+  if ((element != 'input' && element != 'textarea') || $(e.target).attr("readonly") || (e.target.getAttribute("type") === "checkbox")) {
 
-  if (Metro.dialog.isOpen('#statusmodal') || Metro.dialog.isOpen('#addShapeText') || Metro.dialog.isOpen('#addShapeCircle') || Metro.dialog.isOpen('#addShapeRect') || Metro.dialog.isOpen('#partslibModal') || Metro.dialog.isOpen('#settingsmodal')) {
-    modalsOpen = true;
-  }
-
-  console.log(modalsOpen)
-
-
-
-  if (!modalsOpen) {
     // console.log(e)
     if (e.which == 46 || e.which == 8) { // Press delete to delete whatever is already selected (8=backspace = the delete key on a Mac keyboard (smh) )
       // console.log('del');
@@ -44,6 +36,9 @@ $(document).keydown(function(e) {
         return false;
       };
     };
+
   }
+
+
 
 });

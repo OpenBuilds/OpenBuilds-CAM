@@ -10,6 +10,7 @@ function trashGcode() {
   $('#gcodesavebtn2').addClass('disabled');
   $('#gcodetrashbtn2').addClass('disabled');
   $('#gcodeexporticon').removeClass('fg-grayBlue').addClass('fg-gray');
+  $('#gcodepreviewicon').removeClass('fg-grayBlue').addClass('fg-gray');
   $('#trashicon').removeClass('fg-red').addClass('fg-gray');
 }
 
@@ -63,7 +64,7 @@ function makeGcodeExec() {
           }
 
           if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') == 0) {
-            toolon = "M3S1000";
+            toolon = "M3S" + $("#scommandscale").val();
             tooloff = "M5";
           }
 
@@ -121,8 +122,16 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
   // empty string to store gcode
   var g = "";
   g += "; Operation " + index + ": " + toolpathsInScene[index].userData.camOperation + "\n";
-  if (!toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
-    g += "; Tool Diameter: " + toolpathsInScene[index].userData.camToolDia + "\n";
+  if (toolpathsInScene[j].userData.camOperation.indexOf('CNC') == 0 || toolpathsInScene[j].userData.camOperation.indexOf('Drill') == 0) {
+    g += "; Endmill Diameter: " + toolpathsInScene[index].userData.camToolDia + "\n";
+  } else if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') == 0) {
+    g += "; Plasma Kerf: " + toolpathsInScene[index].userData.camPlasmaKerf + "\n";
+  } else if (toolpathsInScene[j].userData.camOperation.indexOf('Laser') == 0) {
+    g += "; Laser Spot Diameter: " + toolpathsInScene[index].userData.camSpotSize + "\n";
+  } else if (toolpathsInScene[j].userData.camOperation.indexOf('Drag') == 0) {
+    g += "; Drag Knife Swivel Offset: " + toolpathsInScene[index].userData.camDragOffset + "\n";
+  } else if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
+    g += "; Pen Diameter: " + toolpathsInScene[index].userData.camToolDia + "\n";
   }
 
   // Optimise gcode, send commands only when changed
@@ -194,7 +203,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           // Convert to World Coordinates
 
           if (i == 0) {
-            g += "; Starting " + child.name + ": Closed?:" + child.userData.closed + "\n";
+            //g += "; Starting " + child.name + ": Closed?:" + child.userData.closed + "\n";
             var localPt2 = optimisedVertices[i + 1]; // The next point - used for ramp plunges
             var worldPt2 = toolpathGrp.localToWorld(localPt2.clone()); // The next point - used for ramp plunges
             var xpos2 = worldPt2.x // The next point - used for ramp plunges
@@ -247,15 +256,56 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             } else {
               // move to clearance height, at first points XY pos
               if (!isAtClearanceHeight) {
-                g += "\n" + g0 + " Z" + clearanceHeight + "\n"; // Position Before Plunge!
+                g += "\n" + g0 + " Z" + clearanceHeight + "; move to z-safe height\n"; // Position Before Plunge!
               }
               g += g0 + seekrate;
               g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + "\n"; // Move to XY position
 
-              // then plunge at G0 to Z0 (No need to go slow, air)
-              g += "\n" + g0 + " Z0\n"; // G0 to Z0 then Plunge!
+              if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') == 0) {
+                // then plunge at G0 to Z0 (No need to go slow, air)
+                //g += "\n" + g0 + " Z0\n"; // G0 to Z0 then Plunge!
 
+                // if the tool is not on, we need to turn it on
+                if (!isToolOn) {
+                  if (PlasmaIHS == "Yes") {
+                    // console.log("PlasmaIHS")
+                    g += IHScommand + "\n";
+                  }
+
+                  g += "\n" + g0 + " Z" + toolpathsInScene[j].userData.camPlasmaPierceHeight + "; Move to Pierce Height\n"; // Move to Pierce Height
+
+                  if (toolon) {
+                    g += toolon
+                    g += '; Tool On\n'
+                  } else {
+                    // Nothing - most of the firmwares use G0 = move, G1 = cut and doesnt need a toolon/tooloff command
+                  };
+                  isToolOn = true;
+
+                  if (toolpathsInScene[j].userData.camPlasmaPierceDelay != 0) {
+                    g += "G4 P" + toolpathsInScene[j].userData.camPlasmaPierceDelay + "; Pierce Delay\n"
+                  }
+
+                }
+
+
+              } else if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
+                if (!isToolOn) {
+                  if (toolon) {
+                    g += toolon
+                    g += '; Tool On\n'
+                  } else {
+                    // Nothing - most of the firmwares use G0 = move, G1 = cut and doesnt need a toolon/tooloff command
+                  };
+                  isToolOn = true;
+                }
+              } else {
+                // then plunge at G0 to Z0 (No need to go slow, air)
+                g += "\n" + g0 + " Z0\n"; // G0 to Z0 then Plunge!
+              }
             }
+
+
 
             // then G1 plunge into material
 
@@ -307,20 +357,6 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           } else {
             // console.log("Subsequent Point", xpos, ypos, zpos, optimisedVertices[i]);
             // we are in a non-first line so this is normal moving
-            // if the tool is not on, we need to turn it on
-            if (!isToolOn) {
-              if (PlasmaIHS == "Yes") {
-                // console.log("PlasmaIHS")
-                g += IHScommand + "\n";
-              }
-              if (toolon) {
-                g += toolon
-                g += '; Tool On\n'
-              } else {
-                // Nothing - most of the firmwares use G0 = move, G1 = cut and doesnt need a toolon/tooloff command
-              };
-              isToolOn = true;
-            }
 
             // do g1 @ feedrate move
             var feedrate;

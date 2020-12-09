@@ -317,7 +317,7 @@ function saveFile() {
     title: "Save GCODE",
     content: `<div class="form-group">
            <label>Filename:</label>
-           <input type="text" id="gcodeFilename" placeholder="` + 'file-' + date.yyyymmdd() + '.gcode' + `" value="` + 'file-' + date.yyyymmdd() + '.gcode' + `"/>
+           <input type="text" id="gcodeFilename" contenteditable="true" placeholder="` + 'file-' + date.yyyymmdd() + '.gcode' + `" value="` + 'file-' + date.yyyymmdd() + '.gcode' + `"/>
            <small class="text-muted">What would you like to name the gcode export?</small>
        </div>
     `,
@@ -349,6 +349,36 @@ function saveFileGcode(filename) {
     type: "text/plain"
   });
   invokeSaveAsDialog(blob, filename);
+}
+
+function previewFile() {
+  var textToWrite = prepgcodefile().split("\n");
+
+  var content = `<div style="overflow-y: auto; height: calc(100vh - 430px); ">`
+  for (i = 0; i < textToWrite.length; i++) {
+    content += `<code>` + textToWrite[i] + `</code><br>`
+  }
+  content += `</code></div>`
+
+  Metro.dialog.create({
+    title: "Preview GCODE",
+    content: content,
+    actions: [{
+        caption: "<span class='fas fa-download fa-fw'></span> Save",
+        cls: "js-dialog-close primary",
+        onclick: function() {
+          saveFile();
+        }
+      },
+      {
+        caption: "Cancel",
+        cls: "js-dialog-close",
+        onclick: function() {
+          //
+        }
+      }
+    ]
+  });
 }
 
 /**
@@ -435,9 +465,8 @@ function getChangelog() {
     $("#changelog").html(template2);
   });
 
-  if (!Metro.dialog.isOpen('#settingsmodal')) {
-    Metro.dialog.open('#splashModal')
-  }
+  Metro.dialog.open('#splashModal')
+
 }
 
 function isJson(item) {

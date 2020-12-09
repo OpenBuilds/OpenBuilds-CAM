@@ -159,7 +159,7 @@ function getText(fontFamily, fontVariant, text, fontSize) {
 $(document).ready(function() {
   var modal = `
 
-  <div class="dialog" data-overlay-click-close="true" data-role="dialog" id="addShapeText" data-to-top="true">
+  <div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="addShapeText" data-to-top="true">
     <div class="dialog-title" id="statusTitle">Add Text</div>
     <div class="dialog-content">
     <form>

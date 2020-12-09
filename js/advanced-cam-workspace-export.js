@@ -56,7 +56,7 @@ function loadLastClosedOnPageload() {
             caption: "<i class=\"far fa-fw fa-save\"></i>Recover last used Workspace",
             cls: "js-dialog-close success",
             onclick: function() {
-              parseLoadWorkspace(lastWorkspace)
+              parseLoadWorkspace(lastWorkspace, true)
             }
           },
           {
@@ -248,7 +248,7 @@ function IsJsonString(str) {
 };
 
 // Parse loaded/undo/redo workspace data
-function parseLoadWorkspace(json, resetView) {
+function parseLoadWorkspace(json, resetViewAfter) {
   objectsInScene.length = 0;
   toolpathsInScene.length = 0;
   var loader = new THREE.ObjectLoader();
@@ -271,7 +271,7 @@ function parseLoadWorkspace(json, resetView) {
     toolpathsInScene.push(object)
   }
   fillTree();
-  if (resetView) {
+  if (resetViewAfter) {
     resetView();
   }
   setTimeout(function() {

@@ -281,6 +281,18 @@ function selectToolhead() {
         startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
         endcode += "M5 S0; Spindle Off\n"
       }
+
+      if (type == 'plasma') {
+        $("#ihsgcode").val("; Machine does not support touch-off")
+      }
+
+      if (type == 'plasmaihs') {
+        $("#ihsgcode").val("G38.2 Z-30 F100; Probe\nG10 L20 Z0; Set Z Zero\n")
+      }
+
+
+
+
       if (type == 'laserm3') {
         // console.log('Add Laser Constant')
         startcode += "M3; Constant Power Laser On\n"
@@ -484,7 +496,7 @@ $(document).ready(function() {
   var modal = `
   <!-- Settings Modal -->
 
-  <div class="dialog" data-overlay-click-close="true" data-role="dialog" id="settingsmodal" data-width="730" data-to-top="true">
+  <div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="settingsmodal" data-width="730" data-to-top="true">
     <div class="dialog-title">Application Settings</div>
     <div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
         <form>
@@ -625,6 +637,8 @@ $(document).ready(function() {
                 <select data-filter="false" data-on-change="selectToolhead();" id="toolheadSelect" data-role="select" title="" multiple class="secondary">
 
                       <option data-template="<span class='icon fas fas fa-tag' data-fa-transform='rotate-225'></span> $1" value="spindleonoff">Turn Spindle on and Off (M3/M5)</option>
+                      <option data-template="<span class='icon fas fa-broom' data-fa-transform='rotate--45'></span> $1" value="plasma">Turn Plasma on and Off</option>
+                      <option data-template="<span class='icon fas fa-broom' data-fa-transform='rotate--45'></span> $1" value="plasmaihs">Turn Plasma on and Off: With Touch Off</option>
                       <option data-template="<span class='icon fas fa-circle'></span> $1" value="laserm3">Turn Laser on and Off: Constant Power (M3/M5)</option>
                       <option data-template="<span class='icon fas fa-adjust'></span> $1" value="laserm4">Turn Laser on and Off: Dynamic  Power (M4/M5)</option>
                       <option data-template="<span class='icon fas fa-edit'></span> $1" value="plotter">Plotter Pen Up/Down (M3S<min> / M3S<max>)</option>
@@ -661,7 +675,7 @@ $(document).ready(function() {
                 </div>
 
                 <div class="row mb-2">
-                    <label class="cell-sm-6">Spindle / Laser Command</label>
+                    <label class="cell-sm-6">Spindle / Laser / Plasma Command</label>
                     <div class="cell-sm-6">
                         <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="scommand" value="S" >
                     </div>
@@ -718,7 +732,7 @@ $(document).ready(function() {
               <div>
 
                 <div class="row mb-2">
-                    <label class="cell-sm-6">Plasma: Initial Height Sensing G-Code</label>
+                    <label class="cell-sm-6">Plasma: Touch Off Sequence</label>
                     <div class="cell-sm-6">
                       <textarea id="ihsgcode" data-role="textarea" contenteditable="true" data-auto-size="true" data-clear-button="false" placeholder="G0 + clearanceHeight + \nG38.2 Z-30 F100\nG10 L20 P1 Z0"></textarea>
                     </div>

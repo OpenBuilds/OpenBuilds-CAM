@@ -109,23 +109,26 @@ if (typeof window == "undefined") { // Only run as worker
       // no op yet
     } else if (operation == "Plasma: Vector (path outside)") {
       console.log("Plasma: Vector (path outside)");
-      config.zstep = 0.1
-      config.zdepth = 0.1
+      config.zstart = parseFloat(toolpath.userData.camPlasmaZHeight) * -2
+      config.zstep = parseFloat(toolpath.userData.camPlasmaZHeight)
+      config.zdepth = parseFloat(toolpath.userData.camPlasmaZHeight) * -1
       config.offset = (toolpath.userData.camPlasmaKerf / 2)
-      config.leadinval = toolpath.userData.camPlasmaKerf
+      config.leadinval = toolpath.userData.camPlasmaLeadinDist
       toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Plasma: Vector (path inside)") {
       console.log("Plasma: Vector (path inside)");
       // config.offset = config.offset * -1;
-      config.zstep = 0.1
-      config.zdepth = 0.1
+      config.zstart = parseFloat(toolpath.userData.camPlasmaZHeight) * -2
+      config.zstep = parseFloat(toolpath.userData.camPlasmaZHeight)
+      config.zdepth = parseFloat(toolpath.userData.camPlasmaZHeight) * -1
       config.offset = (toolpath.userData.camPlasmaKerf / 2) * -1
-      config.leadinval = toolpath.userData.camPlasmaKerf
+      config.leadinval = toolpath.userData.camPlasmaLeadinDist * -1
       toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Plasma: Vector (no path offset)") {
       console.log("Plasma: Vector (no path offset)");
-      config.zstep = 0.1
-      config.zdepth = 0.1
+      config.zstart = parseFloat(toolpath.userData.camPlasmaZHeight) * -2
+      config.zstep = parseFloat(toolpath.userData.camPlasmaZHeight)
+      config.zdepth = parseFloat(toolpath.userData.camPlasmaZHeight) * -1
       config.offset = 0;
       toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Drag Knife: Cutout") {
@@ -210,8 +213,8 @@ if (typeof window == "undefined") { // Only run as worker
         }
       }
       // console.log(inflatedPaths);
-      if (config.leadinval > 0) { // plasma lead-in
-        var leadInPaths = workerGetInflatePath(newClipperPaths, config.offset * 3);
+      if (config.leadinval != 0) { // plasma lead-in
+        var leadInPaths = workerGetInflatePath(newClipperPaths, config.leadinval);
       }
       for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
         if (i > config.zdepth) {
@@ -276,8 +279,8 @@ if (typeof window == "undefined") { // Only run as worker
 
         }
         // plasma lead-in
-        if (config.leadinval > 0) {
-          var leadInPaths = workerGetInflatePath([newClipperPaths[j]], config.offset * 3);
+        if (config.leadinval != 0) {
+          var leadInPaths = workerGetInflatePath([newClipperPaths[j]], config.leadinval);
         }
         for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
           if (i > config.zdepth) {

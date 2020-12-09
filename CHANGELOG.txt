@@ -1,5 +1,6 @@
-2 Nov 2020: Update placeholder text for IHS, Metro4 Editable Keybindings exclusion
-9 Sept 2020:  Added profile for LEAD1515
+09 Dec 2020:  Added GCODE Preview, Fixed backspace inside input issue, Updated Metro4, Revamped the Plasma CAM (note changes to IHS - update your profiles if you were using Plasma IHS), Minor cosmetic updates
+02 Nov 2020:  Update placeholder text for IHS
+09 Sep 2020:  Added profile for LEAD1515
 15 Jul 2020:  Added support for Inkscape 1.x's 96DPI to fix #67
 13 Jul 2020:  Changed built-in text tool size from selection to input for custom text sizes
 10 Feb 2020:  Fixed double-back moves back with Open Ended vectors on no-offset operations, Fixed bug in Laser Rasterfill
