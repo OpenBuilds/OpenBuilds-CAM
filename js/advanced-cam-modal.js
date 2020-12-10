@@ -267,7 +267,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i></span>
-            <select class="cam-form-field cam-form-field-right active-border camOperationSelect" id="toperation` + i + `" objectseq="` + i + `" style="width: 265px; padding: 0px;">
+            <select class="cam-form-field cam-form-field-right active-border camOperationSelect" id="toperation` + i + `" objectseq="` + i + `" style="width: 350px; border-left: solid 1px #ccc; padding: 0px; padding-left: 10px;">
               <option>... Select Operation ...</option>
               <optgroup label="Drilling Operations" class="camOptgroup">
                 <option class="camOption">Drill: Peck (Centered)</option>
@@ -470,7 +470,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="far fa-arrow-alt-circle-down fa-fw"></i></span>
-            <select class="cam-form-field cam-form-field-right active-border" id="tplasmaihs` + i + `" objectseq="` + i + `" style="width: 180px; padding: 0px;">
+            <select class="cam-form-field cam-form-field-right active-border" id="tplasmaihs` + i + `" objectseq="` + i + `" style="width: 280px; border-left: solid 1px #ccc; padding: 0px; padding-left: 10px;">
               <option selected>No</option>
               <option>Yes</option>
             </select>
@@ -498,13 +498,16 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-    </table>
+
+      </table>
+
+
     <div>
       <input type="checkbox" data-role="switch" data-caption="Advanced Settings" id="advanced` + i + `" objectseq="` + i + `" >
     </div>
     <div data-role="collapse" data-collapsed="true" data-toggle-element="#advanced` + i + `" id="collapsediv` + i + `">
-    <table class="table striped compact">
 
+    <table class="table striped compact">
       <tr class="inputlaser inputlaserraster">
         <td>Muliple passes:</td>
         <td>
@@ -520,7 +523,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-compress fa-fw"></i></span>
-            <select class="cam-form-field cam-form-field-right active-border" id="tdirection` + i + `" objectseq="` + i + `" style="width: 180px; padding: 0px;">
+            <select class="cam-form-field cam-form-field-right active-border" id="tdirection` + i + `" objectseq="` + i + `" style="width: 280px; border-left: solid 1px #ccc; padding: 0px; padding-left: 10px;">
               <option selected>Climb</option>
               <option>Conventional</option>
             </select>
@@ -532,7 +535,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-compress fa-fw"></i></span>
-            <select class="cam-form-field cam-form-field-right active-border" id="tunion` + i + `" objectseq="` + i + `" style="width: 180px; padding: 0px;">
+            <select class="cam-form-field cam-form-field-right active-border" id="tunion` + i + `" objectseq="` + i + `" style="width: 280px; border-left: solid 1px #ccc; padding: 0px; padding-left: 10px;">
               <option selected>No</option>
               <option>Yes</option>
             </select>
@@ -547,7 +550,7 @@ function setupJob(i) {
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-ruler fa-fw"></i></span>
-            <select class="cam-form-field cam-form-field-right active-border" id="tRampPlunge` + i + `" objectseq="` + i + `" style="width: 180px; padding: 0px;">
+            <select class="cam-form-field cam-form-field-right active-border" id="tRampPlunge` + i + `" objectseq="` + i + `" style="width: 280px; border-left: solid 1px #ccc; padding: 0px; padding-left: 10px;">
               <option selected>No</option>
               <option>Yes</option>
             </select>
