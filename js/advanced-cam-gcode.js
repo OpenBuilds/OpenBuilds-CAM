@@ -188,7 +188,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             clone.splice(-1, 1) // remove the last point (as its the "go back to first point"-point which will just be a duplicate point after rotation)
             var optimisedVertices = clone.rotateRight(bestSegment)
             optimisedVertices.push(optimisedVertices[0]) // add back the "go back to first point"-point - from the new first point
-            // console.log("Vertices after optimise: ", optimisedVertices)
+            console.log("Vertices after optimise: ", optimisedVertices)
           } else {
             var optimisedVertices = child.geometry.vertices.slice(0)
           }
