@@ -1,12 +1,12 @@
 var selectCount = 0;
 
-function treeClick(checkbox) {
-  var type = checkbox.getAttribute("data-type");
-  var checked = checkbox.checked;
-  var object = checkbox.getAttribute("data-object");
-  var child = checkbox.getAttribute("data-child");
-  var layer = checkbox.getAttribute("data-layer");
-  console.log("Event: " + (checked ? "Selected" : "Deselected") + " Object: " + object + ", child: " + child + ", layer: " + layer)
+function treeClick(checkbox, node) {
+  var type = node.getAttribute("data-type");
+  var checked = checkbox
+  var object = node.getAttribute("data-object");
+  var child = node.getAttribute("data-child");
+  var layer = node.getAttribute("data-layer");
+  console.log(checkbox, "Event: " + (checked ? "Selected" : "Deselected") + " Type: " + type + " Object: " + object + ", child: " + child + ", layer: " + layer)
   if (type == "doc") {
     if (checked) {
       var object = objectsInScene[object]
@@ -52,6 +52,7 @@ function treeClick(checkbox) {
       objectsInScene[object].children[child].userData.selected = false;
     }
   }
+  clearSceneFlag = true;
 }
 
 function filldoctree() {
@@ -78,7 +79,7 @@ function filldoctree() {
     };
 
     // Create a New Tree on Viewer, with a Documents Node
-    var template = `<ul data-role="treeview" id="doctree" data-on-node-click="treeClick(this);" data-on-check-click="treeClick(this);">
+    var template = `<ul data-role="treeview" id="doctree" data-on-node-click="treeClick" data-on-check-click="treeClick">
       <li data-icon="<span class='far fa-folder'></span>" data-caption="Documents">
         <ul id="documenttree">
         </ul>
