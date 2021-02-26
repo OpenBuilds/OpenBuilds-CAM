@@ -11,6 +11,7 @@ if (typeof window == "undefined") { // Only run as worker
 
 
     var toolpaths = JSON.parse(e.data.data.toolpath);
+
     var jobindex = e.data.data.index;
     var performanceLimit = e.data.data.performanceLimit;
 
@@ -69,17 +70,20 @@ if (typeof window == "undefined") { // Only run as worker
       console.log("No operation");
     } else if (operation == "Laser: Vector (no path offset)") {
       console.log("Laser: Vector (no path offset)");
+      config.zstart = 0
       config.zstep = 0.1
       config.zdepth = 0.1
       config.offset = 0;
       toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (path inside)") {
       console.log("Laser: Vector (path inside)");
+      config.zstart = 0
       config.zstep = 0.1
       config.zdepth = 0.1
       config.offset = (toolpath.userData.camSpotSize / 2) * -1;
       toolpath.userData.inflated = workerInflateToolpath(config)
     } else if (operation == "Laser: Vector (path outside)") {
+      config.zstart = 0
       config.zstep = 0.1
       config.zdepth = 0.1
       config.offset = (toolpath.userData.camSpotSize / 2)
@@ -172,6 +176,7 @@ if (typeof window == "undefined") { // Only run as worker
     }
     self.postMessage(data);
 
+    console.log(toolpath.userData.inflated.children.length)
 
     // console.log('Finished all the toolpaths')
     return toolpath
