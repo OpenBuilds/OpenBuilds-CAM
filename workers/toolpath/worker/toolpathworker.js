@@ -184,7 +184,7 @@ if (typeof window == "undefined") { // Only run as worker
 
 
   function workerInflateToolpath(config) {
-    console.log(config)
+    //console.log(config)
     var inflateGrpZ = new THREE.Group();
     var prettyGrp = new THREE.Group();
     var clipperPaths = workerGetClipperPaths(config.toolpath)
@@ -220,6 +220,7 @@ if (typeof window == "undefined") { // Only run as worker
       // console.log(inflatedPaths);
       if (config.leadinval != 0) { // plasma lead-in
         var leadInPaths = workerGetInflatePath(newClipperPaths, config.leadinval);
+        //console.log(leadInPaths)
       }
       for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
         if (i > config.zdepth) {
@@ -286,6 +287,7 @@ if (typeof window == "undefined") { // Only run as worker
         // plasma lead-in
         if (config.leadinval != 0) {
           var leadInPaths = workerGetInflatePath([newClipperPaths[j]], config.leadinval);
+          //console.log(leadInPaths[0][0])
         }
         for (i = config.zstart + config.zstep; i < config.zdepth + config.zstep; i += config.zstep) {
           if (i > config.zdepth) {
@@ -562,12 +564,21 @@ if (typeof window == "undefined") { // Only run as worker
       var clipperArr = [];
       var clipperTabsArr = [];
       var lineUnionGeo = new THREE.Geometry();
-      if (config.leadInPaths) {
+      if (config.leadInPaths) { // 2021-03-16 This is where the lead-in starts. Added sorting of leadInPaths array to find closest vector to start of Main Vector
+
         if (config.leadInPaths.length == config.paths.length) {
-          lineUnionGeo.vertices.push(new THREE.Vector3(config.leadInPaths[i][0].X, config.leadInPaths[i][0].Y, config.z));
+          var pointIndex = 0
+          console.log(config.leadInPaths[i][0])
+          config.leadInPaths[i].sort(function(a, b) {
+            return distanceFormula(a.X, config.paths[i][0].X, a.Y, config.paths[i][0].Y) - distanceFormula(b.X, config.paths[i][0].X, b.Y, config.paths[i][0].Y)
+          })
+          console.log(config.leadInPaths[i][0])
+
+
+          lineUnionGeo.vertices.push(new THREE.Vector3(config.leadInPaths[i][pointIndex].X, config.leadInPaths[i][pointIndex].Y, config.z));
           clipperArr.push({
-            X: config.leadInPaths[i][0].X,
-            Y: config.leadInPaths[i][0].Y
+            X: config.leadInPaths[i][pointIndex].X,
+            Y: config.leadInPaths[i][pointIndex].Y
           });
         }
       }
@@ -735,15 +746,15 @@ if (typeof window == "undefined") { // Only run as worker
         });
       }
 
-      if (config.leadInPaths) {
-        if (config.leadInPaths.length == config.paths.length) {
-          lineUnionGeo.vertices.push(new THREE.Vector3(config.leadInPaths[i][0].X, config.leadInPaths[i][0].Y, config.z));
-          clipperArr.push({
-            X: config.leadInPaths[i][0].X,
-            Y: config.leadInPaths[i][0].Y
-          });
-        }
-      }
+      // if (config.leadInPaths) {
+      //   if (config.leadInPaths.length == config.paths.length) {
+      //     lineUnionGeo.vertices.push(new THREE.Vector3(config.leadInPaths[i][0].X, config.leadInPaths[i][0].Y, config.z));
+      //     clipperArr.push({
+      //       X: config.leadInPaths[i][0].X,
+      //       Y: config.leadInPaths[i][0].Y
+      //     });
+      //   }
+      // }
 
       var lineUnion = new THREE.Line(lineUnionGeo, lineUnionMat);
       if (config.name) {

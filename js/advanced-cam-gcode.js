@@ -183,6 +183,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
         if (child.geometry.vertices.length > 2) {
           if (!child.userData.closed && toolpathsInScene[j].userData.camOperation.indexOf('Plasma') != 0) {
             var bestSegment = indexOfMax(child.geometry.vertices)
+            var bestSegment = child.geometry.vertices.slice(0)
             // console.log('longest section' + bestSegment)
             var clone = child.geometry.vertices.slice(0);
             clone.splice(-1, 1) // remove the last point (as its the "go back to first point"-point which will just be a duplicate point after rotation)
