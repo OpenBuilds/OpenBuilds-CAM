@@ -1392,13 +1392,22 @@ if (typeof window == "undefined") { // Only run as worker
               var inflatedPaths = workerGetInflatePath(pathobj, -inflateValUsed);
               if (inflatedPaths.length > 0) {
                 // Duplicate each loop, down into Z.  We go full depth before next loop.
+                // for (j = config.zdepth; j > config.zstart; j -= config.zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
+                //   console.log("Non-union path layer " + j)
+                //   if (j * config.zstep < config.zdepth) {
+                //     var zval = -j
+                //   } else {
+                //     var zval = -config.zdepth;
+                //   }
                 for (j = config.zdepth; j > config.zstart; j -= config.zstep) { // do the layers in reverse, because later, we REVERSE the whole array with pocketGrp.children.reverse() - then its top down.
                   // console.log(j)
-                  if (j * config.zstep < config.zdepth) {
-                    var zval = -j
-                  } else {
+
+                  if (j > config.zdepth) {
                     var zval = -config.zdepth;
+                  } else {
+                    var zval = -j
                   }
+
                   // get the inflated/deflated path
                   var drawClipperPathsconfig = {
                     performanceLimit: config.performanceLimit,

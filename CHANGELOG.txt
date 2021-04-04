@@ -1,3 +1,4 @@
+04 Apr 2021:  Fixed bug with Pocketing Z on unmerged geometry: https://openbuilds.com/threads/large-z-dive-when-cnc-pocketing.17704/
 16 Mar 2021:  Improved Plasma Lead-In Algorithm
 21 Jan 2021:  Updated Laser Hello World
 09 Dec 2020:  Added GCODE Preview, Fixed backspace inside input issue, Updated Metro4, Revamped the Plasma CAM (note changes to IHS - update your profiles if you were using Plasma IHS), Minor cosmetic updates
