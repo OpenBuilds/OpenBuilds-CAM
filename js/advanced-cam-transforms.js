@@ -142,7 +142,7 @@ function showScaleWindow(object) {
         Cancel
       </button>
       <button type="button" class="button success" aria-label="Close" onclick="rotateObj(1)">
-        Counterclockwise
+        Anticlockwise
       </button>
       <button type="button" class="button success" aria-label="Close" onclick="rotateObj(-1)">
         Clockwise

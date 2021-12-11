@@ -2,7 +2,18 @@ function typeofOperation(newval, objectseq) {
   if (newval == "... Select Operation ...") {
     noMode(objectseq);
     updateCamUserData(objectseq);
-
+  } else if (newval == "Laser: Vector (no path offset)") {
+    laserMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Laser: Vector (path inside)") {
+    laserInsideMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Laser: Vector (path outside)") {
+    laserOutsideMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Laser: Vector (raster fill) (Beta)") {
+    laserRasterMode(objectseq);
+    updateCamUserData(objectseq);
   } else if (newval == "Drill: Peck (Centered)") {
     drillPeckMode(objectseq);
     updateCamUserData(objectseq);
@@ -24,7 +35,31 @@ function typeofOperation(newval, objectseq) {
   } else if (newval == "CNC: V-Engrave") {
     cncVEngMode(objectseq);
     updateCamUserData(objectseq);
-  } 
+  } else if (newval == "Plasma: Vector (path outside)") {
+    plasmaMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Plasma: Vector (path inside)") {
+    plasmaMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Plasma: Vector (no path offset)") {
+    plasmaMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Drag Knife: Cutout") {
+    dragKnifeMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Pen Plotter: (no offset)") {
+    plotterMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Pen Plotter: (path inside)") {
+    plotterMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Pen Plotter: (path outside)") {
+    plotterMode(objectseq);
+    updateCamUserData(objectseq);
+  } else if (newval == "Pen Plotter: (lines fill)") {
+    penRasterMode(objectseq);
+    updateCamUserData(objectseq);
+  }
 
 
 }
@@ -244,7 +279,25 @@ function setupJob(i) {
                 <option class="camOption">CNC: Vector (path outside)</option>
                 <option class="camOption">CNC: Pocket</option>
               </optgroup>
-             
+              <optgroup label="Laser Operations" class="camOptgroup">
+                <option class="camOption">Laser: Vector (no path offset)</option>
+                <option class="camOption">Laser: Vector (path inside)</option>
+                <option class="camOption">Laser: Vector (path outside)</option>
+                <option class="camOption">Laser: Vector (raster fill) (Beta)</option>
+              <!--option class="camOption">CNC: V-Engrave</option-->
+              </optgroup>
+              <optgroup label="Plasma Operations" class="camOptgroup">
+                <option class="camOption">Plasma: Vector (path outside)</option>
+                <option class="camOption">Plasma: Vector (path inside)</option>
+                <option class="camOption">Plasma: Vector (no path offset)</option>
+              </optgroup>
+              <optgroup label="Other" class="camOptgroup">
+                <option class="camOption">Drag Knife: Cutout</option>
+                <option class="camOption">Pen Plotter: (no offset)</option>
+                <option class="camOption">Pen Plotter: (path inside)</option>
+                <option class="camOption">Pen Plotter: (path outside)</option>
+                <option class="camOption">Pen Plotter: (lines fill)</option>
+              </optgroup>
             </select>
           </div>
         </td>

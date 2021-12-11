@@ -57,8 +57,12 @@ $(document).ready(function() {
   });
 
   // Changelog
+
   // if (!localStorage.getItem('hideChangelog')) {
- // getForksCount();
+  //   getChangelog();
+  // }
+
+  getForksCount();
 
 
   // lets see if there's any Workspaces on CONTROL
