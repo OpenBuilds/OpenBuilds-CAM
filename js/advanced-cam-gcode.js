@@ -44,42 +44,19 @@ function makeGcodeExec() {
         // console.log(toolpathsInScene[j].userData.visible)
         if (toolpathsInScene[j].userData.visible) {
 
-          // todo: Settings params
-          var rapidSpeed = 1000;
-          var toolon = "";
-          var tooloff = "";
           // toolpath settings is applied to the parent Toolpath.  Each child in the "toolpath" is processed with the same settings
+          
           var Feedrate = toolpathsInScene[j].userData.camFeedrate;
           var Plungerate = toolpathsInScene[j].userData.camPlungerate;
-          var LaserPower = toolpathsInScene[j].userData.camLaserPower;
           var ZClearance = toolpathsInScene[j].userData.camZClearance;
-          var PlasmaIHS = toolpathsInScene[j].userData.camPlasmaIHS;
-          var rampplunge = toolpathsInScene[j].userData.tRampPlunge == "Yes" ? true : false;
-          var Passes = toolpathsInScene[j].userData.camPasses;
+          var rampplunge = toolpathsInScene[j].userData.tRampPlunge == "" ? true : false;
 
-          if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
-            toolon = "M3S" + toolpathsInScene[j].userData.camPenDown + "\nG4 P0.5";
-            tooloff = "M3S" + toolpathsInScene[j].userData.camPenUp + "\nG4 P0.5";
-            ZClearance = 0;
-          }
 
-          if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') == 0) {
-            toolon = "M3S" + $("#scommandscale").val();
-            tooloff = "M5";
-          }
+          var rotatingDiameter=parseFloat($("#projectdiameter").val());  // get diameter if XZA CNC is selected
 
-          if (parseInt(Passes) && toolpathsInScene[j].userData.camOperation.indexOf('Laser') == 0) {
-            var g = ""
-            var gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
-            for (k = 0; k < Passes; k++) {
-              g += '; Pass ' + k + "\n"
-              g += gcode
-            }
-            toolpathsInScene[j].userData.gcode = g;
-          } else {
-            toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
-          }
-
+       
+        toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, ZClearance, rampplunge, rotatingDiameter);
+          
 
 
           $("#savetpgcode").removeClass("disabled");
@@ -111,43 +88,28 @@ function makeGcodeExec() {
   }
 }
 
-function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapidSpeed, toolon, tooloff, clearanceHeight, zoffset, PlasmaIHS, rampplunge) {
-
-  // Calculate Correct S Value
-  //laserPwr // 0-100%
-
-  var laserPwr = laserPwr / 100 * parseInt($('#scommandscale').val());
+function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, clearanceHeight, rampplunge, xAxisDiameter) {
 
 
   // empty string to store gcode
   var g = "";
   g += "; Operation " + index + ": " + toolpathsInScene[index].userData.camOperation + "\n";
-  if (toolpathsInScene[j].userData.camOperation.indexOf('CNC') == 0 || toolpathsInScene[j].userData.camOperation.indexOf('Drill') == 0) {
-    g += "; Endmill Diameter: " + toolpathsInScene[index].userData.camToolDia + "\n";
-  } else if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') == 0) {
-    g += "; Plasma Kerf: " + toolpathsInScene[index].userData.camPlasmaKerf + "\n";
-  } else if (toolpathsInScene[j].userData.camOperation.indexOf('Laser') == 0) {
-    g += "; Laser Spot Diameter: " + toolpathsInScene[index].userData.camSpotSize + "\n";
-  } else if (toolpathsInScene[j].userData.camOperation.indexOf('Drag') == 0) {
-    g += "; Drag Knife Swivel Offset: " + toolpathsInScene[index].userData.camDragOffset + "\n";
-  } else if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
-    g += "; Pen Diameter: " + toolpathsInScene[index].userData.camToolDia + "\n";
+  g += "; Bit Diameter: " + toolpathsInScene[index].userData.camToolDia + "\n";
+  if(xAxisDiameter>0){
+  g += "; Project Diameter: " + xAxisDiameter.toFixed(4) + "\n";  // set diameter for XZA CNC 
   }
+  
+
 
   // Optimise gcode, send commands only when changed
-  var isToolOn = false;
   var isAtClearanceHeight = false;
   var isFeedrateSpecifiedAlready = false;
-  var isSeekrateSpecifiedAlready = false;
   var lastxyz = false;
 
   //todo: settings applet
-  var g0 = $("#g0command").val();
-  var g1 = $("#g1command").val();
-  var sOnSeperateLine = $("#scommandnewline").is(":checked"); // Marlin, Stepcraft, Mach3, LinuxCNC
-  var s = $("#scommand").val(); // or Stepcraft:  M10 Qxxx, or LinuxCNC/Mach3: M67 E(PWMSigNo) Qxxx \n G1 Move \n M68 E(PWMSigNo) Q0
-  var sScale = $("#scommandscale").val()
-  var IHScommand = document.getElementById('ihsgcode').value; // or "G0 " + clearanceHeight + "\nG38.2 Z-30 F100\nG10 P2 L1 Z0" // Plasma IHS
+  var g0 = "G0"; 
+  var g1 = "G1";
+  
 
   if (!toolpathGrp) {
     var message = `Toolpath Error: One or more of your toolpaths is not configured.  You need to configure the toolpaths, before generating GCODE`
@@ -178,25 +140,25 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           child.userData.closed = false;
         }
 
-        // console.log(child.userData)
+     // console.log(child.userData)
 
-        if (child.geometry.vertices.length > 2) {
-          if (!child.userData.closed && toolpathsInScene[j].userData.camOperation.indexOf('Plasma') != 0) {
-            var bestSegment = indexOfMax(child.geometry.vertices)
-            var bestSegment = child.geometry.vertices.slice(0)
-            // console.log('longest section' + bestSegment)
-            var clone = child.geometry.vertices.slice(0);
-            clone.splice(-1, 1) // remove the last point (as its the "go back to first point"-point which will just be a duplicate point after rotation)
-            var optimisedVertices = clone.rotateRight(bestSegment)
-            optimisedVertices.push(optimisedVertices[0]) // add back the "go back to first point"-point - from the new first point
-            console.log("Vertices after optimise: ", optimisedVertices)
-          } else {
-            var optimisedVertices = child.geometry.vertices.slice(0)
-          }
+     if (child.geometry.vertices.length > 2) {
+      if (!child.userData.closed && toolpathsInScene[j].userData.camOperation.indexOf('Plasma') != 0) {
+        var bestSegment = indexOfMax(child.geometry.vertices)
+        var bestSegment = child.geometry.vertices.slice(0)
+        // console.log('longest section' + bestSegment)
+        var clone = child.geometry.vertices.slice(0);
+        clone.splice(-1, 1) // remove the last point (as its the "go back to first point"-point which will just be a duplicate point after rotation)
+        var optimisedVertices = clone.rotateRight(bestSegment)
+        optimisedVertices.push(optimisedVertices[0]) // add back the "go back to first point"-point - from the new first point
+        console.log("Vertices after optimise: ", optimisedVertices)
+      } else {
+        var optimisedVertices = child.geometry.vertices.slice(0)
+      }
 
-        } else {
-          var optimisedVertices = child.geometry.vertices.slice(0)
-        }
+    } else {
+      var optimisedVertices = child.geometry.vertices.slice(0)
+    }   
 
         for (i = 0; i < optimisedVertices.length; i++) {
 
@@ -204,7 +166,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
           // Convert to World Coordinates
 
           if (i == 0) {
-            //g += "; Starting " + child.name + ": Closed?:" + child.userData.closed + "\n";
+                //g += "; Starting " + child.name + ": Closed?:" + child.userData.closed + "\n";
             var localPt2 = optimisedVertices[i + 1]; // The next point - used for ramp plunges
             var worldPt2 = toolpathGrp.localToWorld(localPt2.clone()); // The next point - used for ramp plunges
             var xpos2 = worldPt2.x // The next point - used for ramp plunges
@@ -214,10 +176,9 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
               ypos2 = (ypos2 + ypos_offset);
             }
             var zpos2 = worldPt2.z;
-            if (zoffset) {
-              zpos2 = zpos2 - zoffset;
+ 
             }
-          }
+          
           var localPt = optimisedVertices[i];
           var worldPt = toolpathGrp.localToWorld(localPt.clone());
           var xpos = worldPt.x
@@ -227,84 +188,37 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
             ypos = (ypos + ypos_offset);
           }
           var zpos = worldPt.z;
-          if (zoffset) {
-            zpos = zpos - zoffset;
-          }
-
-
+    
+        
+          
           // console.log(i, xpos, ypos, zpos)
           // First Move To
           if (i == 0) {
             // console.log("First Point", xpos, ypos, zpos, optimisedVertices[i]);
             // first point in line where we start lasering/milling
 
-            // calc g0 rate
-            var seekrate;
-            if (isSeekrateSpecifiedAlready) {
-              seekrate = "";
-            } else {
-              // console.log('Rapid Speed: ', rapidSpeed);
-              if (rapidSpeed) {
-                seekrate = " F" + rapidSpeed;
-                isSeekrateSpecifiedAlready = true;
-              } else {
-                seekrate = "";
-              }
-            }
-
             if (lastxyz.x == xpos.toFixed(4) && lastxyz.y == ypos.toFixed(4)) {
               // console.log("No need to plunge, can stay at z " + lastxyz.z)
             } else {
               // move to clearance height, at first points XY pos
               if (!isAtClearanceHeight) {
-                g += "\n" + g0 + " Z" + clearanceHeight + "; move to z-safe height\n"; // Position Before Plunge!
-              }
-              g += g0 + seekrate;
-              g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + "\n"; // Move to XY position
-
-              if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') == 0) {
-                // then plunge at G0 to Z0 (No need to go slow, air)
-                //g += "\n" + g0 + " Z0\n"; // G0 to Z0 then Plunge!
-
-                // if the tool is not on, we need to turn it on
-                if (!isToolOn) {
-                  if (PlasmaIHS == "Yes") {
-                    // console.log("PlasmaIHS")
-                    g += IHScommand + "\n";
-                  }
-
-                  g += "\n" + g0 + " Z" + toolpathsInScene[j].userData.camPlasmaPierceHeight + "; Move to Pierce Height\n"; // Move to Pierce Height
-
-                  if (toolon) {
-                    g += toolon
-                    g += '; Tool On\n'
-                  } else {
-                    // Nothing - most of the firmwares use G0 = move, G1 = cut and doesnt need a toolon/tooloff command
-                  };
-                  isToolOn = true;
-
-                  if (toolpathsInScene[j].userData.camPlasmaPierceDelay != 0) {
-                    g += "G4 P" + toolpathsInScene[j].userData.camPlasmaPierceDelay + "; Pierce Delay\n"
-                  }
-
+                if (xAxisDiameter>0){
+                var aAxis = ((2*ypos)/(Math.PI*xAxisDiameter)-1)*180+180;
+                var zA = parseFloat(clearanceHeight) + parseFloat(xAxisDiameter)/2;
+                g += "\n" + g0 + " Z" + zA + "; move to z-safe height\n"; // Position Before Plunge!
+                }else{
+                g += "\n" + g0 + " Z" + clearanceHeight + " ; move to z-safe height\n"; // Position Before Plunge!
                 }
-
-
-              } else if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
-                if (!isToolOn) {
-                  if (toolon) {
-                    g += toolon
-                    g += '; Tool On\n'
-                  } else {
-                    // Nothing - most of the firmwares use G0 = move, G1 = cut and doesnt need a toolon/tooloff command
-                  };
-                  isToolOn = true;
-                }
-              } else {
-                // then plunge at G0 to Z0 (No need to go slow, air)
-                g += "\n" + g0 + " Z0\n"; // G0 to Z0 then Plunge!
               }
-            }
+
+              if (xAxisDiameter>0){
+                var zA = parseFloat(clearanceHeight) + parseFloat(xAxisDiameter)/2;
+                var aAxis = ((2*ypos)/(Math.PI*xAxisDiameter)-1)*180+180;
+                g += g0+ " X" + xpos.toFixed(4) + " A" + aAxis.toFixed(4) + "\n"; // Move to XY position
+              }else{
+                g += g0+ " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + "\n"; // Move to XY position
+              }
+          }
 
 
 
@@ -312,7 +226,14 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
 
             if (!rampplunge) {
               // console.log("Direct Plunge")
-              g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
+
+              if (xAxisDiameter>0){
+                var aAxis = ((2*ypos)/(Math.PI*xAxisDiameter)-1)*180+180;
+                var zA = parseFloat(zpos) + parseFloat(xAxisDiameter)/2;5
+                g += g1 + " Z" + zA.toFixed(4) + " F" + plungeSpeed  + "\n"; // Plunge!!!!
+              }else{
+                g += g1 + " Z" + zpos.toFixed(4) +" F" + plungeSpeed  + "\n"; // Plunge!!!!
+              }
             } else {
               // console.log("Ramp Plunge")
               // console.log(xpos, xpos2, ypos, ypos2)
@@ -336,14 +257,35 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
                 }
                 // console.log(zdelta)
                 if (lastxyz.z) {
-                  g += "\n" + g0 + " Z" + lastxyz.z + "\n"; // G0 to Z0 then Plunge!
+                  if (xAxisDiameter>0){
+                    var aAxis = ((2*ypos)/(Math.PI*xAxisDiameter)-1)*180+180;
+                    var lastZ=parseFloat(lastxyz.z)+parseFloat(xAxisDiameter)/2;
+                    g += "\n" + g0 + " Z" + lastZ +" A"+ aAxis.toFixed(4) + "\n"; // G0 to Z0 then Plunge!
+                  }else{
+                    g += "\n" + g0 + " Z" + lastxyz.z + "\n"; // G0 to Z0 then Plunge!
+                  }
+                
+               
                 } else {
-                  g += "\n" + g0 + " Z" + 0 + "\n"; // G0 to Z0 then Plunge!
+                  if (xAxisDiameter>0){
+                    var aAxis = ((2*ypos)/(Math.PI*xAxisDiameter)-1)*180+180;
+                    g += "\n" + g0 + " Z" + parseFloat(xAxisDiameter)/2 +" A"+ aAxis.toFixed(4) + "\n"; // G0 to Z0 then Plunge!
+                  }else{
+                    g += "\n" + g0 + " Z" + 0 + "\n"; // G0 to Z0 then Plunge!  
+                  }
                 }
-                g += g1 + " F" + plungeSpeed;
-                g += " X" + npt[0].toFixed(4) + " Y" + npt[1].toFixed(4) + " Z" + (zpos - (zdelta / 2)).toFixed(4) + "\n"; // Move to XY position
-                g += g1 + " F" + plungeSpeed;
-                g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + " Z" + zpos.toFixed(4) + "\n"; // Move to XY position
+
+                if (xAxisDiameter>0){
+                var aAxisNpt = ((2*npt[1])/(Math.PI*xAxisDiameter)-1)*180+180;
+                var aAxis = ((2*ypos)/(Math.PI*xAxisDiameter)-1)*180+180;
+                var zA1 = parseFloat(zpos - (zdelta / 2)) + parseFloat(xAxisDiameter)/2;
+                var zA2 = parseFloat(zpos) + parseFloat(xAxisDiameter)/2;
+                  g += g1+ " X" + npt[0].toFixed(4) + " A" + aAxisNpt.toFixed(4) + " Z" + zA1.toFixed(4) + " F" + plungeSpeed + "\n"; // Move to XY position
+                  g += g1 + " X" + xpos.toFixed(4) + " A" + aAxis.toFixed(4) + " Z" + zA2.toFixed(4) + " F" + plungeSpeed + "\n"; // Move to XY position
+                }else{
+                  g += g1+ " X" + npt[0].toFixed(4) + " Y" + npt[1].toFixed(4) + " Z" + (zpos - (zdelta / 2)).toFixed(4) + " F" + plungeSpeed + "\n"; // Move to XY position
+                  g += g1 + " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + " Z" + zpos.toFixed(4) + " F" + plungeSpeed + "\n"; // Move to XY position
+              }
               } else {
                 console.error("Ramp Plunge: Too short:" + d)
                 // Too short, either include next segment or something else
@@ -361,34 +303,37 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
 
             // do g1 @ feedrate move
             var feedrate;
-            if (isFeedrateSpecifiedAlready) {} else {
+            if (isFeedrateSpecifiedAlready) {
+              feedrate = "";
+            } else {
               // console.log('Cut Speed: ', cutSpeed);
-              if (cutSpeed) {
-                feedrate = " F" + cutSpeed;
-                isFeedrateSpecifiedAlready = true;
-              } else {
-                feedrate = "";
-              }
+              feedrate = " F" + cutSpeed;
+              isFeedrateSpecifiedAlready = true;
             }
 
-            if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
-              g += g1 + feedrate;
+              // A axis that is rotating arounf the X axis
+             if (xAxisDiameter>0){
+              var aAxis = ((2*ypos)/(Math.PI*xAxisDiameter)-1)*180+180;
+              var zA = parseFloat(zpos) + parseFloat(xAxisDiameter)/2;
+
+              g += g1; 
               g += " X" + xpos.toFixed(4);
-              g += " Y" + ypos.toFixed(4);
-              g += " Z" + zpos.toFixed(4) + "\n";
-            } else if (sOnSeperateLine) {
-              g += s + laserPwr + "\n";
-              g += g1 + feedrate;
-              g += " X" + xpos.toFixed(4);
-              g += " Y" + ypos.toFixed(4);
-              g += " Z" + zpos.toFixed(4) + "\n";
-            } else {
-              g += g1 + feedrate;
+              g += " A" + aAxis.toFixed(4);
+              g += " Z" + zA.toFixed(4);
+              g += feedrate +"\n";
+
+             }else {
+              g += g1; 
               g += " X" + xpos.toFixed(4);
               g += " Y" + ypos.toFixed(4);
               g += " Z" + zpos.toFixed(4);
-              g += " " + s + laserPwr + "\n";
-            }
+              g += feedrate +"\n";
+             }
+
+
+           
+     
+            
             // end move
           }
           lastxyz = {
@@ -400,20 +345,22 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
 
         // make feedrate not have to be specified again on next line if there is one already
         isFeedrateSpecifiedAlready = false;
-        isToolOn = false;
-
-        // tool off
-        if (tooloff) {
-          g += tooloff
-          g += '; Tool Off\n'
-        }
+   
       } // end inflatepate/pocket/entity
       // move to clearance height, at first points XY pos
     });
   }
   if (!isAtClearanceHeight) {
     g += "; retracting back to z-safe";
-    g += "\n" + g0 + " Z" + clearanceHeight + "\n"; // Position Before Plunge!
+    if (xAxisDiameter>0){
+      var aAxis = ((2*lastxyz.y)/(Math.PI*xAxisDiameter)-1)*180+180;
+      var zA = parseFloat(clearanceHeight) + parseFloat(xAxisDiameter)/2;
+      g += "\n" + g0 + " Z" + zA + " A" + aAxis.toFixed(4) + "\n"; // Position Before Plunge!
+    }else{
+      g += "\n" + g0 + " Z" + clearanceHeight + "\n"; // Position Before Plunge!
+    }
+
+    
   }
   // console.log("Generated gcode. length:", g.length);
   return g;
@@ -422,7 +369,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
 function prepgcodefile() {
   var startgcode = document.getElementById('startgcode').value;
   var endgcode = document.getElementById('endgcode').value;
-  var g = "; GCODE Generated by cam.openbuilds.com on " + date.yyyymmdd() + " \nG21 ; mm-mode\n"
+  var g = "; GCODE Generated by Basic CAM on " + date.yyyymmdd() + " \nG21 ; mm-mode\n"
   if (startgcode) {
     g += startgcode;
     g += "\n";
@@ -440,6 +387,6 @@ function prepgcodefile() {
   if (endgcode) {
     g += endgcode;
   }
-
+  g += "\nM2";
   return g;
 }

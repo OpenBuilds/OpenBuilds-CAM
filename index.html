@@ -5,7 +5,7 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>OpenBuilds CAM Gcode Creator - Public Beta</title>
+		<title>BobsCNC BASIC CAM </title>
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<meta name="author" content="" />
@@ -22,6 +22,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
 		<link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
 		<link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
+		<link rel="stylesheet" href="css/my_fonts.css" >
 		<link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
 		<link rel="stylesheet" href="lib/metro4/css/metro-all.css" />
 		<!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css"> -->
@@ -40,14 +41,13 @@
 				<div id="col1">
 					<div class="window drop-shadow" style="height: calc(100% - 10px);">
 						<div class="window-caption bg-openbuilds">
-							<span class="icon mif-cog"></span>
-							<span class="title">OpenBuilds CAM - GCODE Generator - <span class="workspaceTitle">Public Beta</span></span>
+							<span class="title">BobsCNC BASIC CAM<span class="workspaceTitle">  - Beta</span></span>
 						</div>
 						<div class="window-content pt-2" style="overflow-y:hidden; ">
 							<nav data-role="ribbonmenu">
 								<ul class="tabs-holder">
-									<li><a href="#section-workspace">Workspace</a></li>
-									<li><a href="#section-settings">Settings</a></li>
+									<li><a href="#section-workspace">WorkSpace</a></li>
+									
 								</ul>
 								<div class="content-holder">
 									<div class="section" id="section-workspace">
@@ -68,39 +68,12 @@
 													<li class="btn-file"><a href="#"><i class="far fa-folder-open fa-fw"></i> Open Workspace (.JSON, .OBC)</a><input type="file" id="workspaceImport" accept=".json,.obc" multiple style="height: 26px;" /></li>
 													<li class="" onclick="exportWorkspace();"><a href="#"><span class="fas fa-download fa-fw"></span> Save Workspace (Export .OBC file)</a></li>
 													<li class="divider"></li>
-													<!-- <li><a href="#" onclick="helloWorld();"><i class="fas fa-cog fa-fw"></i> Open "Hello World" example</a></li> -->
-													<li>
-														<a href="#" class="dropdown-toggle"><i class="fas fa-cog fa-fw"></i> Open "Hello World" example</a>
-														<ul class="ribbon-dropdown" data-role="dropdown">
-															<li onclick="helloWorld()"><a href="#">CNC Hello World</a></li>
-															<li onclick="helloWorldLaser()"><a href="#">Laser Hello World</a></li>
-															<li onclick="helloWorldDragKnife()"><a href="#">Dragknife Hello World</a></li>
-															<li onclick="helloWorldPlasma()"><a href="#">Plasma Hello World</a></li>
-														</ul>
-													</li>
 													<li><a href="#" onclick="Metro.dialog.open('#partslibModal')"><i class="fas fa-sitemap fa-fw"></i> Import from Parts Library</a></li>
 												</ul>
 											</div>
 											<span class="title">File</span>
 										</div>
-										<!-- <div class="group">
-										<div class="ribbon-split-button">
-											<div class="ribbon-main btn-file" title="Open a drawing">
-												<span class="icon">
-															<span class="far fa-folder-open fg-amber"></span>
-												</span>
-												<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple />
-											</div>
-											<span class="ribbon-split dropdown-toggle">Open<br>Drawing</span>
-											<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" style="text-align: left;">
-												<li><a href="#" onclick="$('#file').trigger('click');">Open File (DXF, SVG, Image, Gerber, Excellon)</a></li>
-												<li class="divider"></li>
-												<li><a href="#" onclick="helloWorld();">Open "Hello World" example</a></li>
-												<li><a href="#" onclick="Metro.dialog.open('#partslibModal')">Import from Parts Library</a></li>
-											</ul>
-										</div>
-										<span class="title">File</span>
-									</div> -->
+						
 										<div class="group">
 											<div class="ribbon-group">
 												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeText ');">
@@ -125,35 +98,52 @@
 													</span>
 													<span class="caption">Rectangle</span>
 												</button>
+												<br>
+											</div><div>
+
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeStar ');">
+													<span class="icon">
+														<span class="far fa-star"></span>
+													</span>
+													<span class="caption">Star</span>
+												</button>
+											    <br>
+
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeEllipse ');">
+													<span class="icon">
+														<span class="icon-ellipse_icon"></span>
+													</span>
+													<span class="caption">Ellipse</span>
+												</button>
+												<br>		
+											
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeTriangle ');">
+													<span class="icon">
+														<span  class="icon-triangle_icon"></span>
+													</span>
+													<span class="caption">Triangle</span>
+												</button>
+												<br>
+												
+											</div><div>
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeLine ');">
+													<span class="icon">
+														<span class="fas fa-slash"></span>
+													</span>
+													<span class="caption">Line</span>
+												</button>
+												<br>
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeGrid ');">
+													<span class="icon">
+														<span class="icon-grid_icon"></span>
+													</span>
+													<span class="caption">Grid</span>
+												</button>
 											</div>
-											<span class="title">Insert</span>
+											
+											<span class="title">Insert Shape</span>
 										</div>
-										<!-- <div class="group">
-										<div class="ribbon-group">
-											<button class="ribbon-icon-button" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
-				                    <span class="icon">
-				                      <span class="far fa-file"></span>
-				                    </span>
-				                    <span class="caption">New</span>
-				                  </button>
-											<br>
-											<div class="ribbon-icon-button btn-file" title="Import Workspace">
-												<span class="icon">
-															<i class="far fa-folder-open"></i>
-														</span>
-												<input type="file" id="workspaceImport" accept=".json" multiple style="height: 26px;" />
-												<span class="caption pl-1"> Import</span>
-											</div>
-											<br>
-											<button class="ribbon-icon-button" onclick="exportWorkspace();">
-				                    <span class="icon">
-				                      <span class="fas fa-download"></span>
-				                    </span>
-				                    <span class="caption">Export</span>
-				                  </button>
-										</div>
-										<span class="title">Workspace</span>
-									</div> -->
+									
 										<div class="group">
 											<div class="ribbon-group">
 												<button class="ribbon-icon-button" onclick="resetView();">
@@ -172,27 +162,10 @@
 											</div>
 											<span class="title">Zoom</span>
 										</div>
+										
+									
 										<div class="group">
-											<div class="ribbon-group">
-												<button class="ribbon-icon-button" onclick="undo()">
-													<span class="icon">
-														<span class="fas fa-undo"></span>
-													</span>
-													<span class="caption">Undo</span>
-												</button>
-												<br>
-												<button class="ribbon-icon-button" onclick="redo()">
-													<span class="icon">
-														<span class="fas fa-redo"></span>
-													</span>
-													<span class="caption">Redo</span>
-												</button>
-											</div>
-											<span class="title">Undo/Redo</span>
-										</div>
-									</div>
-									<div class="section" id="section-settings">
-										<div class="group">
+											<div class="ribbon-group"></div>
 											<button class="ribbon-button" onclick="alreadyDetected = false; checkIfDriverIsInstalled(); Metro.dialog.open('#settingsmodal');">
 												<span class="icon">
 													<span class="fa fa-fw fa-cogs"></span>
@@ -200,41 +173,28 @@
 												<span class="caption">Settings</span>
 											</button>
 											<div class="ribbon-group">
-												<button class="ribbon-icon-button" onclick="getChangelog()">
-													<span class="icon">
-														<span class="fa fa-fw fa-list"></span>
-													</span>
-													<span class="caption">Changelog</span>
-												</button>
-												<br>
-												<button class="ribbon-icon-button" onclick="window.open('https://github.com/openbuilds/OpenBuilds-CAM/fork', '_blank').focus();">
-													<span class="icon">
-														<span class="fas fa-code-branch"></span>
-													</span>
-													<span class="caption">Fork <span id="forksCount" class="tally success"> 0 </span></span>
-												</button>
+											
 											</div>
 											<span class="title">App</span>
 										</div>
-										<div class="group">
-											<div class="ribbon-group">
-												<button class="ribbon-icon-button" onclick="undo()">
-													<span class="icon">
-														<span class="fas fa-undo"></span>
-													</span>
-													<span class="caption">Undo</span>
-												</button>
-												<br>
-												<button class="ribbon-icon-button" onclick="redo()">
-													<span class="icon">
-														<span class="fas fa-redo"></span>
-													</span>
-													<span class="caption">Redo</span>
-												</button>
-											</div>
-											<span class="title">Undo/Redo</span>
-										</div>
+										
+									
+									
+									<div id="wrapX" class="group" hidden>
+										<div class="ribbon-group"></div>
+											<span class="caption">Project Diameter:</span>
+											<input type="number" data-size="150" id="projectdiameter" value="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
+											<span></span>
+											<span class="caption">Project Length:</span>
+											<input type="number" data-size="150" id="projectlength" value="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
+											
+										<div class="ribbon-group"></div>	
+									<span class="title">Wrap X Axis</span>
+
+
 									</div>
+									<div class="group"></div>
+								</div>
 
 								</div>
 							</nav>
@@ -423,18 +383,18 @@
 											</nav>
 
 
-											<p class="text-secondary" id="installDriverMessage">Connecting to a machine, requires that you have the OpenBuilds CONTROL installed.</p>
+											<p class="text-secondary" id="installDriverMessage">Connecting to a machine, requires that you have the Basic CONTROL installed.</p>
 											<p class="text-small" id="installDriverHelp">If you have not installed it yet, you can download it above, or if you have the latest version installed already, please start it.<br> If you still see this message, we are
 												experiencing a problem detecting your driver<br> You can also export
 												GCODE and send it to your machine</p>
 
 										</div>
 
-										<div id="DriverDetected" style="display:none;">
+										<div id="DriverDetected" style="display:none;">Basic
 
 											<button class="image-button success" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" disabled style="width: 100%">
 												<span class="icon"><span class="fas fa-play"></span></span>
-												<span class="caption">Transfer GCODE to OpenBuilds CONTROL</span>
+												<span class="caption">Transfer GCODE to Basic CONTROL</span>
 											</button>
 											<p class="text-small" id="detectedVersion"></p>
 											<p class="text-small" id="validDocuments"><i class='fas fa-times fa-fw fg-red'></i>2. No Documents yet</p>
@@ -490,7 +450,7 @@
 					<button class="button js-dialog-close">Close</button>
 				</div>
 			</div>
-
+		<!--
 			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="splashModal" data-width="800" data-to-top="true">
 				<div class="dialog-title"><i class="fas fa-fw fa-history"></i> Changelog</div>
 				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
@@ -501,95 +461,9 @@
 					<button class="button js-dialog-close primary">Close</button>
 				</div>
 			</div>
+		-->
 
 
-			<!-- <div class="dialog" data-overlay-click-close="true" data-role="dialog" id="gearGenModal" data-width="600" data-to-top="true">
-			<div class="dialog-title">Gear Generator</div>
-			<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-				<div id="viewer" style="display: none;"></div>
-				<form data-role="validator" id="gearGen">
-					<div class="row border-bottom bd-gray">
-						<label class="cell-sm-2">Gear Type:</label>
-						<div class="cell-sm-10">
-							<input name="geartype" type="radio" data-role="radio" data-caption="Gearset: External" value="external" checked onchange="gearType($(this).val())">
-							<input name="geartype" type="radio" data-role="radio" data-caption="Gearset: Rack and Pinion" value="rack" onchange="gearType($(this).val())">
-							<input name="geartype" type="radio" data-role="radio" data-caption="Gearset: Internal" value="internal" onchange="gearType($(this).val())">
-							<input name="geartype" type="radio" data-role="radio" data-caption="Single Gear" value="single" onchange="gearType($(this).val())">
-						</div>
-					</div>
-
-
-					<div class="row">
-						<label class="cell-sm-4"></label>
-						<div class="cell-sm-4 ">
-							<center><small id="gear1title">Gear 1</small></center>
-						</div>
-						<div class="cell-sm-4">
-							<center><small id="gear2title">Gear 2</small></center>
-						</div>
-					</div>
-					<div class="row">
-						<label class="cell-sm-4">toothCount<br><small>(Number of teeth per gear)</small></label>
-						<div class="cell-sm-4 pt-2">
-							<input id="toothCount1" data-role="input" type="number" value="45" data-append="x" data-clear-button="false" step="any">
-						</div>
-						<div class="cell-sm-4 pt-2">
-							<input id="toothCount2" data-role="input" type="number" value="50" data-append="x" data-clear-button="false" step="any">
-						</div>
-					</div>
-					<div class="row border-bottom bd-gray">
-						<label class="cell-sm-4">centerHoleDiameter<br><small>(0 for no hole)</small></label>
-						<div class="cell-sm-4 pt-2">
-							<input id="centerHoleDiameter1" data-role="input" type="number" value="20" data-append="mm" data-clear-button="false" min="0" max="200"  step="any">
-						</div>
-						<div class="cell-sm-4 pt-2">
-							<input id="centerHoleDiameter2" data-role="input" type="number" value="20" data-append="mm" data-clear-button="false" min="0" max="200"  step="any">
-						</div>
-					</div>
-					<div class="row border-bottom bd-gray">
-						<label class="cell-sm-8">circularPitch<br><small>(the circumference of the pitch circle divided by the number of teeth)</small></label>
-						<div class="cell-sm-4 pt-2">
-							<input id="circularPitch" data-role="input" type="number" value="8" data-clear-button="false" step="any">
-						</div>
-					</div>
-					<div class="row border-bottom bd-gray">
-						<label class="cell-sm-8">pressureAngle<br><small>(common values are 14.5, 20 and 25 degrees)</small></label>
-						<div class="cell-sm-4 pt-2">
-							<input id="pressureAngle" data-role="input" type="number" value="20" data-append="deg" data-clear-button="false" step="any">
-						</div>
-					</div>
-					<div>
-						<input type="checkbox" data-role="switch" data-caption="Advanced Settings" id="advancedGear">
-					</div>
-					<div data-role="collapse" data-collapsed="true" data-toggle-element="#advancedGear">
-						<div class="row border-bottom bd-gray">
-							<label class="cell-sm-8">profileShift<br><small>(indicates what portion of gear one's addendum height should be shifted to gear two. E.g., a value of 0.1 means the adddendum of gear two is increased by a factor of 1.1 while the height of the addendum of gear one is reduced to 0.9 of its normal height.)</small></label>
-							<div class="cell-sm-4 pt-2">
-								<input id="profileShift" data-role="input" type="number" value="0" data-clear-button="false" step="any">
-							</div>
-						</div>
-						<div class="row border-bottom bd-gray">
-							<label class="cell-sm-8">resolution<br><small>Number of segments per 360 degree of rotation (only used for circles and arcs); 90 is plenty</small></label>
-							<div class="cell-sm-4 pt-2">
-								<input id="resolution" data-role="input" type="number" value="30" data-clear-button="false" step="any">
-							</div>
-						</div>
-						<div class="row border-bottom bd-gray">
-							<label class="cell-sm-8">stepsPerToothAngle<br><small>Rotation steps per tooth angle when assembling the tooth profile (3 = draft, 10 = good quality). Increasing the value will result in smoother profiles at the cost of significantly higher calcucation time. Increase in small increments and check the result by zooming in.</small></label>
-							<div class="cell-sm-4 pt-2">
-								<input id="stepsPerToothAngle" data-role="input" type="number" value="3" data-clear-button="false" step="any">
-							</div>
-						</div>
-					</div>
-				</form>
-				<br>
-			</div>
-			<div class="dialog-actions">
-				<button class="button js-dialog-close">Close</button>
-				<button class="button success js-dialog-close" onclick="createGear();">Create Gears</button>
-			</div>
-		</div>
-	</div> -->
 
 	</body>
 
@@ -660,6 +534,7 @@
 	<script type="text/javascript" src="js/advanced-cam-transforms.js"></script>
 	<script type="text/javascript" src="js/advanced-cam-drill.js"></script>
 	<script type="text/javascript" src="js/advanced-cam-booleans.js"></script>
+	<script type="text/javascript" src="js/project-viewer.js"></script>
 
 	<!-- DXF Library -->
 	<script type="text/javascript" src="lib/dxf/dxf-parser.js"></script>

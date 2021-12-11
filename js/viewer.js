@@ -154,6 +154,28 @@ function redrawGrid() {
     sizeymax = 200;
   };
 
+
+  // Change postion of grid if rotating axis is selected
+  if(!document.getElementById("wrapX").hidden){
+    var RoundedYMax= Math.round(sizeymax*Math.PI/10);
+    if ( !RoundedYMax % 2 == 0) {
+      sizeymax=(RoundedYMax+1)*10/2;
+      sizeymax
+    }else{
+      sizeymax=RoundedYMax*10/2;
+    }
+  
+
+    var yOffset=-Math.floor(sizeymax/2);
+    var yFactor=2;
+  }else{
+    var yOffset=0;
+    var yFactor=1
+  }
+
+
+
+
   var grid = new THREE.Group();
 
   var axesgrp = new THREE.Object3D();
@@ -169,7 +191,7 @@ function redrawGrid() {
   });
   var ylbl = this.makeSprite(this.scene, "webgl", {
     x: 0,
-    y: parseInt(sizeymax) + 5,
+    y: parseInt(sizeymax/yFactor) + 5,
     z: 0,
     text: "Y",
     color: "#006600"
@@ -184,7 +206,9 @@ function redrawGrid() {
 
   axesgrp.add(xlbl);
   axesgrp.add(ylbl);
-  //axesgrp.add(zlbl); Laser don't have Z - but CNCs do
+ // axesgrp.add(zlbl);
+
+
 
   var materialX = new THREE.LineBasicMaterial({
     color: 0xcc0000
@@ -196,8 +220,8 @@ function redrawGrid() {
 
   var geometryX = new THREE.Geometry();
   geometryX.vertices.push(
-    new THREE.Vector3(-0.1, 0, 0),
-    new THREE.Vector3(-0.1, (sizeymax), 0)
+    new THREE.Vector3(-0.1, yOffset, 0),
+    new THREE.Vector3(-0.1, (sizeymax/yFactor), 0)
   );
 
   var geometryY = new THREE.Geometry();
@@ -213,8 +237,11 @@ function redrawGrid() {
 
   grid.add(axesgrp);
 
+
+
+
   helper = new THREE.GridHelper(sizexmax, sizeymax, 10, 0x888888);
-  helper.position.y = 0;
+  helper.position.y = yOffset;
   helper.position.x = 0;
   helper.position.z = 0;
   helper.material.opacity = 0.15;
@@ -223,7 +250,7 @@ function redrawGrid() {
   helper.name = "GridHelper10mm"
   grid.add(helper);
   helper = new THREE.GridHelper(sizexmax, sizeymax, 100, 0x666666);
-  helper.position.y = 0;
+  helper.position.y = yOffset;
   helper.position.x = 0;
   helper.position.z = 0;
   helper.material.opacity = 0.15;
@@ -235,6 +262,9 @@ function redrawGrid() {
   gridsystem.add(grid);
   gridsystem.add(drawRuler());
 }
+
+
+
 
 function setBullseyePosition(x, y, z) {
   //console.log('Set Position: ', x, y, z)
