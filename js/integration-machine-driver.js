@@ -70,7 +70,7 @@ function hasDriver(version) {
   $("#DriverDetected").show();
   alreadyDetected = true;
   $('#installDriversOnSettingspage').hide();
-  $('#detectedVersion').html("<i class='fas fa-check fa-fw fg-green'></i>1. Detected OpenBuilds CONTROL: " + version)
+  $('#detectedVersion').html("<i class='fas fa-check fa-fw fg-green'></i>1. Detected Basic CONTROL: " + version)
 }
 
 function noDriver() {
@@ -79,8 +79,8 @@ function noDriver() {
   $("#DriverDetected").hide();
   $("#noDriverDetected").show();
   $('#installDriversOnSettingspage').show();
-  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting OpenBuilds CONTROL")
-  $('#installDriverMessage').html('Connecting to a machine, requires that you have the OpenBuilds CONTROL installed.')
+  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting Basic CONTROL")
+  $('#installDriverMessage').html('Connecting to a machine, requires that you have the Basic CONTROL installed.')
 }
 
 function oldDriver(version, availVersion) {
@@ -89,8 +89,8 @@ function oldDriver(version, availVersion) {
   $("#DriverDetected").hide();
   $("#noDriverDetected").show();
   $('#installDriversOnSettingspage').show();
-  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. You are running an outdated version of the OpenBuilds CONTROL v." + version + ". Please update to v" + availVersion)
-  $('#installDriverMessage').html('Connecting to a machine, requires that you have the latest OpenBuilds CONTROL installed. <br>You are running version <code>' + version + "</code> - Please update to version <code>" + availVersion + "</code> or newer...")
+  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. You are running an outdated version of the Basic CONTROL v." + version + ". Please update to v" + availVersion)
+  $('#installDriverMessage').html('Connecting to a machine, requires that you have the latest Basic CONTROL installed. <br>You are running version <code>' + version + "</code> - Please update to version <code>" + availVersion + "</code> or newer...")
   $('#installDriverHelp').hide();
 }
 // Loop to check if we can use Machine Integration
@@ -215,7 +215,7 @@ function sendGcodeToMyMachine() {
       contentType: false
     }).done(function(data) {
       // console.log(data);
-      var message = `GCODE Successfully sent to OpenBuilds CONTROL! Continue from the OpenBuilds CONTROL window`
+      var message = `GCODE Successfully sent to Basic CONTROL! Continue from the Basic CONTROL window`
       Metro.toast.create(message, null, 4000);
     });
   };
