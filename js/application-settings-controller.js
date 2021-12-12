@@ -52,6 +52,7 @@ function saveSettingsLocal() {
       var oldval = loadSetting(paramName);
       if (oldval != newval) {
         redrawGrid()
+        resetView()
       }
     }
     if (paramName == 'scommandnewline') {

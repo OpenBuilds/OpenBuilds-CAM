@@ -159,21 +159,16 @@ function redrawGrid() {
   if(!document.getElementById("wrapX").hidden){
     var RoundedYMax= Math.round(sizeymax*Math.PI/10);
     if ( !RoundedYMax % 2 == 0) {
-      sizeymax=(RoundedYMax+1)*10/2;
-      sizeymax
+      sizeymax=(RoundedYMax+1)*10;
     }else{
-      sizeymax=RoundedYMax*10/2;
+      sizeymax=RoundedYMax*10;
     }
-  
-
     var yOffset=-Math.floor(sizeymax/2);
     var yFactor=2;
   }else{
     var yOffset=0;
     var yFactor=1
   }
-
-
 
 
   var grid = new THREE.Group();
