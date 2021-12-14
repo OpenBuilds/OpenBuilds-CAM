@@ -320,7 +320,7 @@ function addGrid(xLength,yWidth,xSpace,ySpace){
 
 
 
-
+var unitDisplay="inch";
 
 $(document).ready(function() {
   var modal = `
@@ -329,7 +329,7 @@ $(document).ready(function() {
     <div class="dialog-title" id="statusTitle">Add shape: Circle</div>
     <div class="dialog-content">
     <form>
-      <input type="number" class="form-control" id="XCenter" value="50" data-role="input" data-append="mm" data-prepend="X Center" step="any">
+      <input type="number" class="form-control" id="XCenter" value="50" data-role="input" data-append="+'unitDisplay'+" data-prepend="X Center" step="any">
       <br>
       <input type="number" class="form-control" id="YCenter" value="50" data-role="input" data-append="mm" data-prepend="Y Center" step="any">
       <br>
