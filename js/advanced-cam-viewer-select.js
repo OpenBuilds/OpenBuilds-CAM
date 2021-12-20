@@ -47,10 +47,12 @@ function listeners() {
 
   $('#selectAll').on('click', function() {
     selectAll()
+    filldoctree();
   });
 
   $('#selectNone').on('click', function() {
     selectNone()
+    filldoctree();
   });
 
   $('#selectInv').on('click', function() {
@@ -62,6 +64,7 @@ function listeners() {
         }
       });
     }
+    filldoctree();
   });
 
   $('#selectDel').on('click', function() {

@@ -29,18 +29,18 @@ function treeClick(checkbox, node) {
       var object = objectsInScene[object]
       object.traverse(function(child) {
         if (child.type == "Line") {
-          if (child.userData.layer.label == layer) {
+   //       if (child.userData.layer.label == layer) {
             child.userData.selected = true;
-          }
-        }
+    //      }
+       }
       });
     } else {
       var object = objectsInScene[object]
       object.traverse(function(child) {
         if (child.type == "Line") {
-          if (child.userData.layer.label == layer) {
+    //      if (child.userData.layer.label == layer) {
             child.userData.selected = false;
-          }
+      //    }
         }
       });
     }
