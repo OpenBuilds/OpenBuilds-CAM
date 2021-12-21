@@ -320,6 +320,91 @@ function addGrid(xLength,yWidth,xSpace,ySpace){
 
 
 
+  unitSwitch.addEventListener('change', function() {
+    if (this.checked) {
+      //circle
+      $("#circleXc").val(2);
+      $("#circleYc").val(2);
+      $("#circleRadius").val(0.5);
+      //rectangle
+      $("#rectXc").val(2);
+      $("#rectYc").val(2);
+      $("#rectX").val(3);
+      $("#rectY").val(2);
+      $("#rectR").val(0.25);
+      //star
+      $("#starXc").val(2);
+      $("#starYc").val(2);
+      $("#starOD").val(4);
+      $("#starID").val(1.528);
+      //triangle
+      $("#triangleXc").val(2);
+      $("#triangleYc").val(2);
+      $("#triangleSideA").val(4);
+      $("#triangleSideB").val(5);
+      $("#triangleSideC").val(3);
+      //ellipse
+      $("#ellipseXc").val(2);
+      $("#ellipseYc").val(2);
+      $("#ellipseX").val(3.5);
+      $("#ellipseY").val(2.5);
+      //line
+      $("#lineX1").val(0);
+      $("#lineY1").val(2);
+      $("#lineX2").val(4);
+      $("#lineY2").val(2);
+      //grid
+      $("#gridX").val(12);
+      $("#gridY").val(8);
+      $("#gridSpaceX").val(1);
+      $("#gridSpaceY").val(1);
+
+    } else {
+      //circle
+      $("#circleXc").val(50);
+      $("#circleYc").val(50);
+      $("#circleRadius").val(10);
+      //rectangle
+      $("#rectXc").val(50);
+      $("#rectYc").val(50);
+      $("#rectX").val(80);
+      $("#rectY").val(50);
+      $("#rectR").val(5);
+      //star
+      $("#starXc").val(50);
+      $("#starYc").val(50);
+      $("#starOD").val(100);
+      $("#starID").val(38.2);
+      //triangle
+      $("#triangleXc").val(50);
+      $("#triangleYc").val(50);
+      $("#triangleSideA").val(40);
+      $("#triangleSideB").val(50);
+      $("#triangleSideC").val(30);
+      //ellipse
+      $("#ellipseXc").val(50);
+      $("#ellipseYc").val(50);
+      $("#ellipseX").val(80);
+      $("#ellipseY").val(60);
+      //line
+      $("#lineX1").val(0);
+      $("#lineY1").val(50);
+      $("#lineX2").val(100);
+      $("#lineY2").val(50);
+      //line
+      $("#gridX").val(300);
+      $("#gridY").val(200);
+      $("#gridSpaceX").val(25);
+      $("#gridSpaceY").val(25);
+
+    }
+    redrawGrid();
+    resetView();
+  });
+
+
+
+
 var unitDisplay="inch";
 
 $(document).ready(function() {
@@ -329,11 +414,11 @@ $(document).ready(function() {
     <div class="dialog-title" id="statusTitle">Add shape: Circle</div>
     <div class="dialog-content">
     <form>
-      <input type="number" class="form-control" id="XCenter" value="50" data-role="input" data-append="+'unitDisplay'+" data-prepend="X Center" step="any">
+      <input type="number" class="form-control" id="circleXc" value="50" data-role="input"  data-prepend="X Center" step="any">
       <br>
-      <input type="number" class="form-control" id="YCenter" value="50" data-role="input" data-append="mm" data-prepend="Y Center" step="any">
+      <input type="number" class="form-control" id="circleYc" value="50" data-role="input"  data-prepend="Y Center" step="any">
       <br>
-      <input type="number" class="form-control" id="circleRadius" value="10" data-role="input" data-append="mm" data-prepend="Radius" step="any">
+      <input type="number" class="form-control" id="circleRadius" value="10" data-role="input"  data-prepend="Radius" step="any">
       <br>
       <input type="number" class="form-control" id="circleSegments" value="32" data-role="input"  data-prepend="Segments" step="any">
       <small>Segments determines the smoothness of the circle, as circles are processed as Polylines</small>
@@ -349,15 +434,15 @@ $(document).ready(function() {
 		<div class="dialog-title" id="statusTitle">Add shape: Rectangle</div>
 		<div class="dialog-content">
     <form>
-    <input type="number" class="form-control" id="rectXc" value="50" data-role="input" data-append="mm" data-prepend="X Center" step="any">
+    <input type="number" class="form-control" id="rectXc" value="50" data-role="input"  data-prepend="X Center" step="any">
     <br>
-    <input type="number" class="form-control" id="rectYc" value="50" data-role="input" data-append="mm" data-prepend="Y Center" step="any">
+    <input type="number" class="form-control" id="rectYc" value="50" data-role="input"  data-prepend="Y Center" step="any">
     <br>
-    <input type="number" class="form-control" id="rectX" value="100" data-role="input" data-append="mm" data-prepend="Width" step="any">
+    <input type="number" class="form-control" id="rectX" value="80" data-role="input"  data-prepend="Width" step="any">
       <br>
-    <input type="number" class="form-control" id="rectY" value="50" data-role="input" data-append="mm" data-prepend="Height" step="any">
+    <input type="number" class="form-control" id="rectY" value="50" data-role="input"  data-prepend="Height" step="any">
       <br>
-    <input type="number" class="form-control" id="rectR" value="5" data-role="input" data-append="mm" data-prepend="Corner Radius" step="any">
+    <input type="number" class="form-control" id="rectR" value="5" data-role="input"  data-prepend="Corner Radius" step="any">
       <br>
     <input type="checkbox" class="form-control" id="rectI" value="1" data-role="checkbox"  data-caption="Invert Radius"  data-style="2" step="any">
     </form>
@@ -372,15 +457,15 @@ $(document).ready(function() {
 		<div class="dialog-title" id="statusTitle">Add shape: Star</div>
 		<div class="dialog-content">
     <form>
-      <input type="number" class="form-control" id="XCenterS" value="50" data-role="input" data-append="mm" data-prepend="X  Center" step="any">
+      <input type="number" class="form-control" id="starXc" value="50" data-role="input"  data-prepend="X  Center" step="any">
       <br>
-      <input type="number" class="form-control" id="YCenterS" value="50" data-role="input" data-append="mm" data-prepend="Y  Center" step="any">
+      <input type="number" class="form-control" id="starYc" value="50" data-role="input"  data-prepend="Y  Center" step="any">
       <br>
-      <input type="number" class="form-control" id="ODS" value="100" data-role="input" data-append="mm" data-prepend=" Outside Diameter" step="any">
+      <input type="number" class="form-control" id="starOD" value="100" data-role="input"  data-prepend=" Outside Diameter" step="any">
       <br>
-      <input type="number" class="form-control" id="IDS" value="38.2" data-role="input" data-append="mm" data-prepend=" Inside Diameter" step="any">
+      <input type="number" class="form-control" id="starID" value="38.2" data-role="input"  data-prepend=" Inside Diameter" step="any">
       <br>
-      <input type="number" class="form-control" id="PointCountS" value="5" data-role="input" data-append="" data-prepend="Number of Points" step="any">
+      <input type="number" class="form-control" id="starPointCount" value="5" data-role="input" data-append="" data-prepend="Number of Points" step="any">
     </form>
 		</div>
 		<div class="dialog-actions" id="statusFooter">
@@ -395,15 +480,15 @@ $(document).ready(function() {
   <div class="dialog-title" id="statusTitle">Add shape: Triangle</div>
   <div class="dialog-content">
   <form>
-    <input type="number" class="form-control" id="XCenterT" value="50" data-role="input" data-append="mm" data-prepend="X  Center" step="any">
+    <input type="number" class="form-control" id="triangleXc" value="50" data-role="input"  data-prepend="X  Center" step="any">
     <br>
-    <input type="number" class="form-control" id="YCenterT" value="50" data-role="input" data-append="mm" data-prepend="Y  Center" step="any">
+    <input type="number" class="form-control" id="triangleYc" value="50" data-role="input" data-prepend="Y  Center" step="any">
     <br>
-    <input type="number" class="form-control" id="SideA" value="40" data-role="input" data-append="mm" data-prepend=" Base" step="any">
+    <input type="number" class="form-control" id="triangleSideA" value="40" data-role="input" data-prepend=" Base" step="any">
     <br>
-    <input type="number" class="form-control" id="SideB" value="50" data-role="input" data-append="mm" data-prepend="Left Side" step="any">
+    <input type="number" class="form-control" id="triangleSideB" value="50" data-role="input"  data-prepend="Left Side" step="any">
     <br>
-    <input type="number" class="form-control" id="SideC" value="30" data-role="input" data-append="" data-prepend="Right Side" step="any">
+    <input type="number" class="form-control" id="triangleSideC" value="30" data-role="input" data-append="" data-prepend="Right Side" step="any">
   </form>
   </div>
   <div class="dialog-actions" id="statusFooter">
@@ -416,13 +501,13 @@ $(document).ready(function() {
 <div class="dialog-title" id="statusTitle">Add shape: Ellipse</div>
 <div class="dialog-content">
 <form>
-  <input type="number" class="form-control" id="XCenterE" value="50" data-role="input" data-append="mm" data-prepend="X  Center" step="any">
+  <input type="number" class="form-control" id="ellipseXc" value="50" data-role="input"  data-prepend="X  Center" step="any">
   <br>
-  <input type="number" class="form-control" id="YCenterE" value="50" data-role="input" data-append="mm" data-prepend="Y  Center" step="any">
+  <input type="number" class="form-control" id="ellipseYc" value="50" data-role="input"  data-prepend="Y  Center" step="any">
   <br>
-  <input type="number" class="form-control" id="WidthE" value="80" data-role="input" data-append="mm" data-prepend="Width" step="any">
+  <input type="number" class="form-control" id="ellipseX" value="80" data-role="input"  data-prepend="Width" step="any">
   <br>
-  <input type="number" class="form-control" id="HeightE" value="60" data-role="input" data-append="mm" data-prepend="Height" step="any">
+  <input type="number" class="form-control" id="ellipseY" value="60" data-role="input"  data-prepend="Height" step="any">
  
 </form>
 </div>
@@ -437,13 +522,13 @@ $(document).ready(function() {
 <div class="dialog-title" id="statusTitle">Add shape: Line</div>
 <div class="dialog-content">
 <form>
-  <input type="number" class="form-control" id="XStart" value="0" data-role="input" data-append="mm" data-prepend="X Start Point" step="any">
+  <input type="number" class="form-control" id="lineX1" value="0" data-role="input"  data-prepend="X Start Point" step="any">
   <br>
-  <input type="number" class="form-control" id="YStart" value="50" data-role="input" data-append="mm" data-prepend="Y Start Point" step="any">
+  <input type="number" class="form-control" id="lineY1" value="50" data-role="input"  data-prepend="Y Start Point" step="any">
   <br>
-  <input type="number" class="form-control" id="XEnd" value="100" data-role="input" data-append="mm" data-prepend="X End Point" step="any">
+  <input type="number" class="form-control" id="lineX2" value="100" data-role="input"  data-prepend="X End Point" step="any">
   <br>
-  <input type="number" class="form-control" id="YEnd" value="50" data-role="input" data-append="mm" data-prepend="Y End Point" step="any">
+  <input type="number" class="form-control" id="lineY2" value="50" data-role="input"  data-prepend="Y End Point" step="any">
 
 </form>
 </div>
@@ -458,13 +543,13 @@ $(document).ready(function() {
 <div class="dialog-title" id="statusTitle">Add shape: Grid</div>
 <div class="dialog-content">
 <form>
-  <input type="number" class="form-control" id="XLength" value="600" data-role="input" data-append="mm" data-prepend="X Length" step="any">
+  <input type="number" class="form-control" id="gridX" value="300" data-role="input"  data-prepend="X Length" step="any">
   <br>
-  <input type="number" class="form-control" id="YWidth" value="600" data-role="input" data-append="mm" data-prepend="Y  Width" step="any">
+  <input type="number" class="form-control" id="gridY" value="200" data-role="input"  data-prepend="Y  Width" step="any">
   <br>
-  <input type="number" class="form-control" id="XSpace" value="50" data-role="input" data-append="mm" data-prepend="X Spacing" step="any">
+  <input type="number" class="form-control" id="gridSpaceX" value="25" data-role="input" " data-prepend="X Spacing" step="any">
   <br>
-  <input type="number" class="form-control" id="YSpace" value="50" data-role="input" data-append="mm" data-prepend="Y Spacing" step="any">
+  <input type="number" class="form-control" id="gridSpaceY" value="25" data-role="input"  data-prepend="Y Spacing" step="any">
  
 </form>
 </div>
@@ -492,10 +577,10 @@ $(document).ready(function() {
   $("#CreateEllipse").on("click", function(event) {
     //console.log("Clicked on Ellipse")
     event.preventDefault();
-    var xCenter= parseFloat($("#XCenterE").val());
-    var yCenter= parseFloat($("#YCenterE").val());
-    var Width= parseFloat($("#WidthE").val())/2;
-    var Height= parseFloat($("#HeightE").val())/2;
+    var xCenter= parseFloat($("#ellipseXc").val());
+    var yCenter= parseFloat($("#ellipseYc").val());
+    var Width= parseFloat($("#ellipseX").val())/2;
+    var Height= parseFloat($("#ellipseY").val())/2;
     addEllipse(xCenter,yCenter,Width,Height);
   });
 
@@ -506,10 +591,14 @@ $(document).ready(function() {
   $("#CreateCircle").on("click", function(event) {
     //console.log("Clicked on CreateCircle")
     event.preventDefault();
-    var xCenter = parseFloat($("#XCenter").val());
-    var yCenter = parseFloat($("#YCenter").val());
+    var xCenter = parseFloat($("#circleXc").val());
+    var yCenter = parseFloat($("#circleYc").val());
     var radius = $("#circleRadius").val();
     var segments = $("#circleSegments").val();
+
+
+
+    
     addCircle(xCenter, yCenter, radius, segments);
   });
 
@@ -532,11 +621,11 @@ $(document).ready(function() {
   $("#CreateStar").on("click", function(event) {
     //console.log("Clicked on CreateStar")
     event.preventDefault();
-    var xCenter = $("#XCenterS").val();
-    var yCenter = $("#YCenterS").val();
-    var innerDiameter = $("#IDS").val();
-    var outerDiameter = $("#ODS").val();
-    var pointCount = $("#PointCountS").val();
+    var xCenter = $("#starXc").val();
+    var yCenter = $("#starYc").val();
+    var innerDiameter = $("#starID").val();
+    var outerDiameter = $("#starOD").val();
+    var pointCount = $("#starPointCount").val();
     addStar(xCenter,yCenter,innerDiameter,outerDiameter,pointCount);
   });
 
@@ -544,32 +633,32 @@ $(document).ready(function() {
   $("#CreateTriangle").on("click", function(event) {
     //console.log("Clicked on CreateStar")
     event.preventDefault();
-    var xCenter = $("#XCenterT").val();
-    var yCenter = $("#YCenterT").val();
-    var sideA = $("#SideA").val();
-    var sideB = $("#SideB").val();
-    var sideC = $("#SideC").val();
+    var xCenter = $("#triangleXc").val();
+    var yCenter = $("#triangleYc").val();
+    var sideA = $("#triangleSideA").val();
+    var sideB = $("#triangleSideB").val();
+    var sideC = $("#triangleSideC").val();
     addTriangle(xCenter,yCenter,sideA,sideB,sideC);
   });
 
   $("#CreateLine").on("click", function(event) {
     //console.log("Clicked on CreateStar")
     event.preventDefault();
-    var xCenter1 = $("#XStart").val();
-    var yCenter1 = $("#YStart").val();
-    var xCenter2 = $("#XEnd").val();
-    var yCenter2 = $("#YEnd").val();
-    addLine(xCenter1,yCenter1,xCenter2,yCenter2);
+    var lineX1 = $("#lineX1").val();
+    var lineY1 = $("#lineY1").val();
+    var lineX2 = $("#lineX2").val();
+    var lineY2 = $("#lineY2").val();
+    addLine(lineX1,lineY1,lineX2,lineY2);
   });
 
 
   $("#CreateGrid").on("click", function(event) {
     //console.log("Clicked on CreateStar")
     event.preventDefault();
-    var xLength = $("#XLength").val();
-    var yWidth = $("#YWidth").val();
-    var xSpace = $("#XSpace").val();
-    var ySpace = $("#YSpace").val();
+    var xLength = $("#gridX").val();
+    var yWidth = $("#gridY").val();
+    var xSpace = $("#griidSpaceX").val();
+    var ySpace = $("#gridSpaceY").val();
     addGrid(xLength,yWidth,xSpace,ySpace);
   });
 
