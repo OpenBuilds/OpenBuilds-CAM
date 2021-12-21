@@ -28,7 +28,7 @@ function drawRuler() {
      mediumTickLength=-6
      largeTickLength=-7
      tickSpacing=-1
-     countInterval=10;
+     countInterval=20;
      countSize=6;
      countDistance=-10;
 
