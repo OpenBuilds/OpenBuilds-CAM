@@ -155,6 +155,31 @@ function redrawGrid() {
   };
 
 
+  // Change units of grid
+ 
+
+  if(document.getElementById("unitSwitch").checked){
+   // console.log("inch")
+
+    sizexmax = sizexmax/25.4;
+    sizeymax = sizeymax/25.4;
+    var majorGrid=1;
+    var minorGrid=.25;
+    var axisLabelSize=1.5;
+    var axisLabelDistance=1;
+
+ 
+  }else{
+   // console.log("mm")
+    majorGrid=100;
+    minorGrid=10;
+    axisLabelSize=30;
+    axisLabelDistance=25;
+  }
+
+
+
+
   // Change postion of grid if rotating axis is selected
   if(!document.getElementById("wrapX").hidden){
     var RoundedYMax= Math.round(sizeymax*Math.PI/10);
@@ -171,6 +196,11 @@ function redrawGrid() {
   }
 
 
+
+
+
+
+
   var grid = new THREE.Group();
 
   var axesgrp = new THREE.Object3D();
@@ -178,17 +208,19 @@ function redrawGrid() {
 
   // add axes labels
   var xlbl = this.makeSprite(this.scene, "webgl", {
-    x: parseInt(sizexmax) + 5,
+    x: parseInt(sizexmax) + axisLabelDistance,
     y: 0,
     z: 0,
     text: "X",
+    size: axisLabelSize,
     color: "#ff0000"
   });
   var ylbl = this.makeSprite(this.scene, "webgl", {
     x: 0,
-    y: parseInt(sizeymax/yFactor) + 5,
+    y: parseInt(sizeymax/yFactor) +axisLabelDistance,
     z: 0,
     text: "Y",
+    size: axisLabelSize,
     color: "#006600"
   });
   var zlbl = this.makeSprite(this.scene, "webgl", {
@@ -196,6 +228,7 @@ function redrawGrid() {
     y: 0,
     z: 125,
     text: "Z",
+    size: axisLabelSize,
     color: "#0000ff"
   });
 
@@ -235,7 +268,7 @@ function redrawGrid() {
 
 
 
-  helper = new THREE.GridHelper(sizexmax, sizeymax, 10, 0x888888);
+  helper = new THREE.GridHelper(sizexmax, sizeymax, minorGrid, 0x888888);
   helper.position.y = yOffset;
   helper.position.x = 0;
   helper.position.z = 0;
@@ -244,7 +277,7 @@ function redrawGrid() {
   helper.receiveShadow = false;
   helper.name = "GridHelper10mm"
   grid.add(helper);
-  helper = new THREE.GridHelper(sizexmax, sizeymax, 100, 0x666666);
+  helper = new THREE.GridHelper(sizexmax, sizeymax, majorGrid, 0x666666);
   helper.position.y = yOffset;
   helper.position.x = 0;
   helper.position.z = 0;

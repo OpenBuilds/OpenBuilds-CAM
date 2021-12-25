@@ -5,34 +5,61 @@ function drawRuler() {
   });
   material.opacity = 0.85;
 
+  
+  // setup ruler for units
+  if(document.getElementById("unitSwitch").checked){
+    // console.log("inch")
+    var smallTick=.25
+    var mediumTick=.5
+    var largeTick=1
+    var smallTickLength=-0.5
+    var mediumTickLength=-0.7
+    var largeTickLength=-0.9
+    var tickSpacing=-0.3
+    var countInterval=1;
+    var countSize=.5;
+    var countDistance=-1.2;
+   }else{
+    // console.log("mm")
+     smallTick=1
+     mediumTick=5
+     largeTick=10
+     smallTickLength=-4
+     mediumTickLength=-6
+     largeTickLength=-7
+     tickSpacing=-1
+     countInterval=20;
+     countSize=6;
+     countDistance=-10;
+
+ 
+   }
+
+
+   // add tick marks
+
   // x axis
-  for (i = 0; i <= sizexmax; i++) {
+  for (i = 0; i <= sizexmax; i+=smallTick) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3(i, -1, 0));
-    geometry.vertices.push(new THREE.Vector3(i, -4, 0));
+    geometry.vertices.push(new THREE.Vector3(i, tickSpacing, 0));
+    geometry.vertices.push(new THREE.Vector3(i, smallTickLength, 0));
     var line = new THREE.Line(geometry, material);
-    // line.translateX(-sizexmax / 2)
-    // line.translateY(-sizeymax / 2)
     ruler.add(line);
   }
 
-  for (i = 0; i <= sizexmax; i += 5) {
+  for (i = 0; i <= sizexmax; i += mediumTick) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3(i, -1, 0));
-    geometry.vertices.push(new THREE.Vector3(i, -6, 0));
+    geometry.vertices.push(new THREE.Vector3(i, tickSpacing, 0));
+    geometry.vertices.push(new THREE.Vector3(i, mediumTickLength, 0));
     var line = new THREE.Line(geometry, material);
-    // line.translateX(-sizexmax / 2)
-    // line.translateY(-sizeymax / 2)
     ruler.add(line);
   }
 
-  for (i = 0; i <= sizexmax; i += 10) {
+  for (i = 0; i <= sizexmax; i += largeTick) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3(i, -1, 0));
-    geometry.vertices.push(new THREE.Vector3(i, -7, 0));
+    geometry.vertices.push(new THREE.Vector3(i, tickSpacing, 0));
+    geometry.vertices.push(new THREE.Vector3(i, largeTickLength, 0));
     var line = new THREE.Line(geometry, material);
-    // line.translateX(-sizexmax / 2)
-    // line.translateY(-sizeymax / 2)
     ruler.add(line);
   }
 
@@ -47,70 +74,68 @@ function drawRuler() {
   }
 
 
-  // y axis
-  for (i = 0; i <= sizeymax/yFactor; i += 5) {
+    // y axis
+  for (i = 0; i <= sizeymax/yFactor; i+=smallTick) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3(-1, i, 0));
-    geometry.vertices.push(new THREE.Vector3(-6, i, 0));
+    geometry.vertices.push(new THREE.Vector3(tickSpacing, i, 0));
+    geometry.vertices.push(new THREE.Vector3(smallTickLength, i, 0));
     var line = new THREE.Line(geometry, material);
-    // line.translateX(-sizeymax / 2)
-    // line.translateY(-sizeymax / 2)
     ruler.add(line);
   }
 
-  for (i = 0; i <= sizeymax/yFactor; i += 10) {
+
+
+  for (i = 0; i <= sizeymax/yFactor; i += mediumTick) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3(-1, i, 0));
-    geometry.vertices.push(new THREE.Vector3(-7, i, 0));
+    geometry.vertices.push(new THREE.Vector3(tickSpacing, i, 0));
+    geometry.vertices.push(new THREE.Vector3(mediumTickLength, i, 0));
     var line = new THREE.Line(geometry, material);
-    // line.translateX(-sizeymax / 2)
-    // line.translateY(-sizeymax / 2)
     ruler.add(line);
   }
 
-  for (i = 0; i <= sizeymax/yFactor; i++) {
+  for (i = 0; i <= sizeymax/yFactor; i += largeTick) {
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3(-1, i, 0));
-    geometry.vertices.push(new THREE.Vector3(-4, i, 0));
+    geometry.vertices.push(new THREE.Vector3(tickSpacing, i, 0));
+    geometry.vertices.push(new THREE.Vector3(largeTickLength, i, 0));
     var line = new THREE.Line(geometry, material);
-    // line.translateX(-sizeymax / 2)
-    // line.translateY(-sizeymax / 2)
     ruler.add(line);
   }
+
+   //  add mumbers
 
   var x = [];
   var y = [];
-  for (var i = 0; i <= sizexmax; i += 10) {
+  for (var i = 0; i <= sizexmax; i += countInterval) {
     x[i] = this.makeSprite(this.scene, "webgl", {
       x: i,
-      y: -10,
+      y: countDistance,
       z: 0,
       text: i,
       color: "#cc0000",
-      size: 6
+      size: countSize
     });
     ruler.add(x[i]);
   }
 
-  for (var i = 0; i <= sizeymax/yFactor; i += 10) {
+  for (var i = 0; i <= sizeymax/yFactor; i += countInterval) {
     y[i] = this.makeSprite(this.scene, "webgl", {
-      x: -10,
+      x: countDistance,
       y: i,
       z: 0,
       text: i,
       color: "#006600",
-      size: 6
+      size: countSize
     });
     ruler.add(y[i]);
 
     if(wrapX){
       y[-i] = this.makeSprite(this.scene, "webgl", {
-        x: -10,
+        x: countDistance,
         y: -i,
         z: 0,
         text: -i,
         color: "#006600",
-        size: 6
+        size: countSize
       });
       ruler.add(y[-i]);
     }
