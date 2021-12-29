@@ -28,7 +28,8 @@ localParams = [
   ['startgcode', false],
   ['endgcode', false],
   ['machinetype', true],
-  ['performanceLimit', false]
+  ['performanceLimit', false],
+  ['unitSwitch', true]
 ];
 
 
@@ -59,6 +60,8 @@ function saveSettingsLocal() {
       var val = $('#' + paramName).is(":checked");
     } else if (paramName == 'performanceLimit') {
       var val = $('#' + paramName).is(":checked");
+    } else if (paramName == 'unitSwitch') {
+      var val = $('#' + paramName).is(":checked");
     } else {
       var val = $('#' + paramName).val(); // Read the value from form
     }
@@ -84,6 +87,10 @@ function loadSettingsLocal() {
         selectMachine(val); 
       } else if (paramName == 'performanceLimit') {
         $('#' + paramName).prop('checked', parseBoolean(val));
+        // console.log('#' + paramName + " is set to " + val)
+      } else if (paramName == 'unitSwitch') {
+        $('#' + paramName).prop('checked', parseBoolean(val));
+        setShapeValues( parseBoolean(val));
         // console.log('#' + paramName + " is set to " + val)
       } else {
         $('#' + paramName).val(val); // Set the value to Form from Storage
