@@ -3,12 +3,13 @@
   "productName": "BobsCNC Basic CAM",
   "version": "1.0.0",
   "description": "Basic CAM - Cloud based software for converting DXF, SVG, Bitmap (BMP, JPG, PNG, GIF) and Gerber X274 to GCODE",
-  "main": "index.js",
+  "main": "main.js",
   "directories": {
     "lib": "lib",
     "test": "tests"
   },
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
