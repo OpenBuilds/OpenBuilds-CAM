@@ -281,19 +281,17 @@ function addGrid(xLength,yWidth,xSpace,ySpace){
   var xLineCount=Math.floor(xL/xS);
   var yLineCount=Math.floor(yW/yS);
 
-  for (i=0;i<xLineCount+1;i++){
+  for (i=0;i<yLineCount+1;i++){
   var linegeom= new THREE.Geometry();
   linegeom.vertices.push(new THREE.Vector3(0, yS*i, 0));
   linegeom.vertices.push(new THREE.Vector3(xL, yS*(i), 0));
-  linegeom.vertices.push(new THREE.Vector3(xL, yS*(i), 0));
-  linegeom.vertices.push(new THREE.Vector3(0, yS*i, 0));
   
   var material = new THREE.MeshBasicMaterial({color: 0xffff00,side: THREE.DoubleSide});
   var grid = new THREE.Line(linegeom, material);
   grid.name = "XGrid"
   fileObject.add(grid);
   }
-  for (i=0;i<yLineCount+1;i++){
+  for (i=0;i<xLineCount+1;i++){
     var linegeom= new THREE.Geometry();
     linegeom.vertices.push(new THREE.Vector3(xS*i, 0, 0));
     linegeom.vertices.push(new THREE.Vector3(xS*i, yW, 0));
@@ -657,7 +655,7 @@ $(document).ready(function() {
     event.preventDefault();
     var xLength = $("#gridX").val();
     var yWidth = $("#gridY").val();
-    var xSpace = $("#griidSpaceX").val();
+    var xSpace = $("#gridSpaceX").val();
     var ySpace = $("#gridSpaceY").val();
     addGrid(xLength,yWidth,xSpace,ySpace);
   });
