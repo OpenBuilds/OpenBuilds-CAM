@@ -85,10 +85,13 @@ var getFont = function(url) {
   });
 };
 
-async function getFontList() {
-  return await fetch('fonts/fontslib/fontslib.json')
-    .then(response => response.json())
-    .then(data => data.items);
+function getFontList() {
+  return new RSVP.Promise(
+    function(resolve, reject) {
+      $.get('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDOcn3KpnYV-8SDuILln1YAH3FWT4K8G38', function(result) {
+        resolve(result.items);
+      });
+    });
 }
 
 function getTextFromData(fontData, fontVariant, text, fontSize, x, y) {
@@ -200,10 +203,10 @@ $(document).ready(function() {
 `
   $("body").append(modal);
 
-  $('#texttorender').css('font-family', "Bebas Neue");
+  $('#texttorender').css('font-family', "Bowlby One SC");
 
   $('#font').fontselect({
-    placeholder: 'Bebas Neue',
+    placeholder: 'Bowlby One SC',
     lookahead: 3
   }).change(function() {
 
@@ -216,7 +219,7 @@ $(document).ready(function() {
     // console.log('font-family', font[0])
     var fontsize = $('#fontsize').val();
     $('#texttorender').css('font-size', fontsize + "px");
-  }).val("Bebas+Neue");
+  }).val("Bowlby+One+SC");
 
   $('#fontsize').change(function() {
     var fontsize = $('#fontsize').val();
