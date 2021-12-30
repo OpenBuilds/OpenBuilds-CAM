@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/rlwoodjr/Basic-CAM#readme",
   "devDependencies": {
-    "electron": "^16.0.5"
+    "electron": "^16.0.5",
+    "electron-builder": "^22.14.5"
   }
 }
