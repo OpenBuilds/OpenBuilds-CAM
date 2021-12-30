@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>BobsCNC BASIC CAM</title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="author" content="" />
+		<meta name="version" content="" />
+		<!-- Mobile Redirect if screen is too small. -->
+		<meta name="metro4:init" content="true">
+
+		<script type="text/javascript">
+			if (screen.width <= 720) {
+				window.location = "mobile.html";
+			}
+		</script>
+		<link rel="stylesheet" type="text/css" href="lib/jquery/fontselect/styles/fontselect-bootstrap4.css" />
+		<link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" media="all" href="css/main.css" />
+		<link type="text/css" rel="stylesheet" media="all" href="css/grpblock.css" />
+		<link rel="stylesheet" href="css/my_fonts.css" >
+		<link type="text/css" rel="stylesheet" media="all" href="lib/jquery/jquery-ui.css" />
+		<link rel="stylesheet" href="lib/metro4/css/metro-all.css" />
+		<!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css"> -->
+		<link type="text/css" rel="stylesheet" media="all" href="css/sidebarmenu.css" />
+		<link rel="manifest" href="/manifest.json">
+	</head>
+
+	<body>
+		<!-- container1 Drog Container wraps all other content -->
+		<div id="container1">
+			<span class="fa-layers fa-fw fa-4x" id="flyingdoc" style="display: none; position: absolute; z-index: 20000;">
+				<i class="fas fa-square fg-red"></i>
+				<i class="fa fa-object-group fg-white" data-fa-transform="shrink-6"></i>
+			</span>
+			<div data-role="splitter" data-split-sizes="70,30" class="h-100">
+				<div id="col1">
+					<div class="window drop-shadow" style="height: calc(100% - 10px);">
+						<div class="window-caption bg-openbuilds">
+							<span class="title">BobsCNC BASIC CAM<span class="workspaceTitle">  - Beta</span></span>
+						</div>
+						<div class="window-content pt-2" style="overflow-y:hidden; ">
+							<nav data-role="ribbonmenu">
+								<ul class="tabs-holder">
+									<li><a href="#section-workspace">WorkSpace</a></li>
+									
+								</ul>
+								<div class="content-holder">
+									<div class="section" id="section-workspace">
+										<div class="group">
+											<div>
+												<button class="ribbon-button dropdown-toggle">
+													<span class="icon">
+														<span class="far fa-folder-open fg-amber"></span>
+													</span>
+													<span class="caption">&nbsp;&nbsp;&nbsp;File...&nbsp;&nbsp;&nbsp;</span>
+												</button>
+												<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
+													<li class="btn-file"><a href="#"></span><span class="far fa-folder-open fg-amber fa-fw"></span> Open Drawing File (.DXF, .SVG, Image, Gerber, Excellon)</a><input id="file" type="file"
+															accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple /></li>
+													<li class="divider"></li>
+													<li class="" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree(); $('.workspaceTitle').html('');"><a href="#"> <span class="far fa-file fa-fw"></span> New (Empty)
+															Workspace</a></li>
+													<li class="btn-file"><a href="#"><i class="far fa-folder-open fa-fw"></i> Open Workspace (.JSON, .OBC)</a><input type="file" id="workspaceImport" accept=".json,.obc" multiple style="height: 26px;" /></li>
+													<li class="" onclick="exportWorkspace();"><a href="#"><span class="fas fa-download fa-fw"></span> Save Workspace (Export .OBC file)</a></li>
+													<li class="divider"></li>
+													<li><a href="#" onclick="Metro.dialog.open('#partslibModal')"><i class="fas fa-sitemap fa-fw"></i> Import from Parts Library</a></li>
+												</ul>
+											</div>
+											<span class="title">File</span>
+										</div>
+						
+										<div class="group">
+											<div class="ribbon-group">
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeText ');">
+													<span class="icon">
+														<span class="fas fa-font"></span>
+													</span>
+													<span class="caption">Text</span>
+												</button>
+												<br>
+
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeCircle ');">
+													<span class="icon">
+														<span class="far fa-circle"></span>
+													</span>
+													<span class="caption">Circle</span>
+												</button>
+												<br>
+
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeRect ');">
+													<span class="icon">
+														<span class="far fa-square"></span>
+													</span>
+													<span class="caption">Rectangle</span>
+												</button>
+												<br>
+											</div><div>
+
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeStar ');">
+													<span class="icon">
+														<span class="far fa-star"></span>
+													</span>
+													<span class="caption">Star</span>
+												</button>
+											    <br>
+
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeEllipse ');">
+													<span class="icon">
+														<span class="icon-ellipse_icon"></span>
+													</span>
+													<span class="caption">Ellipse</span>
+												</button>
+												<br>		
+											
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeTriangle ');">
+													<span class="icon">
+														<span  class="icon-triangle_icon"></span>
+													</span>
+													<span class="caption">Triangle</span>
+												</button>
+												<br>
+												
+											</div><div>
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeLine ');">
+													<span class="icon">
+														<span class="fas fa-slash"></span>
+													</span>
+													<span class="caption">Line</span>
+												</button>
+												<br>
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeGrid ');">
+													<span class="icon">
+														<span class="icon-grid_icon"></span>
+													</span>
+													<span class="caption">Grid</span>
+												</button>
+											</div>
+											
+											<span class="title">Insert Shape</span>
+										</div>
+									
+										<div class="group">
+											<div class="ribbon-group">
+												<button class="ribbon-icon-button" onclick="resetView();">
+													<span class="icon">
+														<span class="fa fa-eye"></span>
+													</span>
+													<span class="caption">Job</span>
+												</button>
+												<br>
+												<button class="ribbon-icon-button" onclick="resetView(scene.getObjectByName('Grid'));">
+													<span class="icon">
+														<span class="fa fa-th"></span>
+													</span>
+													<span class="caption">Grid</span>
+												</button>
+											</div>
+											<span class="title">Zoom</span>
+										</div>
+										
+									
+
+
+										<div class="group">
+											<div class="ribbon-group">
+												<input type="checkbox" data-role="switch"  id="unitSwitch" >
+											</div>
+											<span class="title">Unit Display</span>
+										</div>
+
+
+										
+										<div class="group">
+											<div class="ribbon-group"></div>
+											<button class="ribbon-button" onclick="alreadyDetected = false; checkIfDriverIsInstalled(); Metro.dialog.open('#settingsmodal');">
+												<span class="icon">
+													<span class="fa fa-fw fa-cogs"></span>
+												</span>
+												<span class="caption">Settings</span>
+											</button>
+											<div class="ribbon-group">
+											
+											</div>
+											<span class="title">App</span>
+										</div>
+										
+									
+									
+									<div id="wrapX" class="group" hidden>
+										<div class="ribbon-group"></div>
+											<span class="caption">Project Diameter:</span>
+											<input type="number" data-size="150" id="projectdiameter" value="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
+											<span></span>
+											<span class="caption">Project Length:</span>
+											<input type="number" data-size="150" id="projectlength" value="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
+											
+										<div class="ribbon-group"></div>	
+									<span class="title">Wrap X Axis</span>
+
+
+									</div>
+									<div class="group"></div>
+								</div>
+
+								</div>
+							</nav>
+							<div id="renderArea">
+								<!-- #draganddrop -->
+								<div id="draganddrop" style="display: none;">
+									<div class="well">Drop File(s) Here!</div>
+									<!-- <img src="images/draganddrop.svg" /> -->
+								</div>
+								<div class="sidemenu">
+									<div class="tbtn tbtnactive mouseSelectBtn" onclick="mouseSelectMode();" title="Mouse Select Mode">
+										<i class="fa fas fa-mouse-pointer" aria-hidden="true"></i>
+									</div>
+
+									<div class="tbtn mouseMoveBtn" onclick="mouseMoveMode();" title="Mouse Move Mode">
+										<i class="fas fa-arrows-alt " aria-hidden="true"></i>
+									</div>
+
+									<div class="tbtn mouseDelBtn" onclick="mouseEraseMode();" title="Mouse Erase Mode">
+										<i class="fas fa-eraser " aria-hidden="true"></i>
+									</div>
+									<!-- <hr class="bg-grayBlue"> -->
+									<div class="tbtn mouseScaleBtn" onclick="mouseScaleMode();" title="Mouse Scale/Move/Rotate Mode">
+										<i class="fas fa-ruler" aria-hidden="true"></i>
+									</div>
+
+								</div>
+								<div id="selection" style="visibility: hidden;"></div>
+								<!--  -->
+
+								<!--  -->
+							</div>
+
+							<div id="scalewindow" style="visibility: hidden;" data-role="draggable" data-drag-element=".drag-element">
+								<div class="window">
+									<div class="window-caption drag-element bg-openbuilds">
+										<span class="icon fas fa-ruler"></span>
+										<span class="title">Transform</span>
+										<div class="buttons">
+											<span class="btn-close" onclick="scalewindow.style.visibility = 'hidden';"></span>
+										</div>
+									</div>
+									<div class="window-content p-2" id="scalewindowcontent">
+										<!--  -->
+									</div>
+								</div>
+							</div>
+
+							<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;"></div>
+
+						</div>
+						<div id="helpoverlay">
+							<kbd>Left Mouse</kbd> = Select / <kbd>Middle Mouse</kbd> = Orbit / <kbd>Right Mouse</kbd> = Pan / <kbd>Wheel</kbd> = Zoom / <kbd>Ctrl</kbd> = Multiple Select / <kbd>Del</kbd> = Delete Selected
+						</div>
+						<div id="simoverlay" class="text-center">
+							<button class="button dark drop-shadow" onclick="simSpeed();"><span class="icon"><span class="fas fa-tachometer-alt"></span></span><span class="caption"><span id="simspeedval">1</span>x</span></button>
+							<button id="runSimBtn" title="Run simulation" class="button dark drop-shadow" onclick="sim(0)" disabled><i class="fas fa-fighter-jet"></i> Simulate</button>&nbsp;
+							<button id="stopSimBtn" style="display: none;" title="Stop Sim" class="button dark drop-shadow" onclick="simstop()"><i class="fas fa-stop"></i> Stop Sim</button>&nbsp;
+							<button id="resetViewBtn" title="Stop Sim" class="button dark drop-shadow" onclick="resetView(object)"><i class="fas fa-stop"></i> Reset View</button>&nbsp;
+							<div class="text-left drop-shadow" style="z-index: 200; width: 110px; display: block; position: absolute; bottom:0px; right:10px; background: rgba(240, 240, 240, 0.85);">
+								<div data-role="collapse" data-collapsed="false" data-toggle-element="#collapse_toggle_1">
+									<input type="checkbox" data-role="checkbox" data-caption="Documents" checked data-style="2" id="view-docs">
+									<input type="checkbox" data-role="checkbox" data-caption="Toolpaths" checked data-style="2" id="view-toolpath">
+									<input type="checkbox" data-role="checkbox" data-caption="GCODE" checked data-style="2" id="view-gcode">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- #col2 (main content)-->
+				<div id="col2">
+					<!-- <div style="height: 100%; overflow-y:hidden; padding-right:5px;"> -->
+
+					<div data-role="splitter" data-split-mode="vertical" class="h-100">
+
+						<div id="renderDocuments" class="window drop-shadow">
+							<div class="window-caption bg-openbuilds">
+								<i class="far fa-file-alt fa-fw ml-1 mr-1"></i>
+								<span class="title">Documents <span class="workspaceTitle"></span></span>
+							</div>
+							<div id="selectoverlay" class="text-center">
+								<button class="button small dark outline bg-white drop-shadow" id="selectAll"><span class="far fa-check-square"></span> All</button>
+								<button class="button small dark outline bg-white drop-shadow" id="selectNone"><span class="far fa-square"></span> None</button>
+								<button class="button small dark outline bg-white drop-shadow" id="selectInv"><span class="fas fa-check"></span> Invert</button>
+								<button class="button small dark outline bg-white drop-shadow" id="selectDel"><span class="fas fa-trash"></span> Delete</button>
+							</div>
+							<div class="window-content p-1" style="overflow-y:scroll;">
+								<!-- Documents Here -->
+								<div class="pt-2" id="documentactivity" style="display: none;">
+									<center>
+										<h5>Please Wait </h5>
+										<div data-role="activity" data-type="ring" data-style="dark"></div>
+										<h6>Parsing Documents...</h6>
+								</div>
+
+								<div id="documentstree">
+									<div id="nodocuments" style="display:none;">
+										<p class="text-secondary">Please load some vectors from DXF, SVG or Images using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open Drawing</kbd> button, or insert from the inbuilt library
+											and tools </p>
+									</div>
+									<ul data-role="treeview pl-0" id="left-tree-view">
+									</ul>
+								</div>
+
+							</div>
+
+						</div>
+						<div class="window drop-shadow mt-2">
+							<div class="window-caption bg-openbuilds">
+								<i class="fas fa-tasks fa-fw ml-1 mr-1"></i>
+								<span class="title">Toolpaths</span>
+								<div class="buttons">
+									<!-- <button type="button " id="generatetpgcode2" class="button small bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button> -->
+								</div>
+							</div>
+							<div id="tpathoverlay" class="text-center">
+								<button id="addJobBtn" class="button small dark outline drop-shadow dropdown-toggle"><span class="icon fa fa-plus"></span> Add <span class="selectCount" style="display: none;"> 0 </span></button>
+								<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="toolpathsmenu" data-toggle-element="#addJobBtn">
+									<li><a href="#" onclick="addJob(-1);"><span class="icon fa fa-plus"></span> Create a new Operation</a></li>
+								</ul>
+								<button class="button small dark outline drop-shadow" title="Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes icon"></span>Generate GCODE</button>
+								<button class="button small dark outline drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span id="gcodeexporticon" class="fa fa-save icon fg-gray"></span></button>
+								<button class="button small dark outline drop-shadow" title="Preview GCODE" id="gcodeviewbtn2" onclick="previewFile();"><span id="gcodepreviewicon" class="fa fa-eye icon fg-gray"></span></button>
+								<button class="button small dark outline drop-shadow" title="Clear GCODE" id="gcodetrashbtn2" onclick="trashGcode();"><span id="trashicon" class="fa fa-trash fg-gray icon"></span></button>
+							</div>
+
+							<div class="window-content p-1" style="overflow-y:scroll;">
+								<div class="pt-2" id="toolpathactivity" style="display: none;">
+									<center>
+										<h5>Please Wait </h5>
+										<div data-role="activity" data-type="ring" data-style="dark"></div>
+										<h6>Calculating Toolpaths...</h6>
+								</div>
+								<div id="toolpathtree">
+								</div>
+								<!-- Toolpaths Here -->
+							</div>
+						</div>
+
+						<div class="window mt-2 drop-shadow">
+							<div class="window-caption bg-openbuilds">
+								<i class="fas fa-network-wired fa-fw ml-1 mr-1"></i>
+								<span class="title">Connection</span>
+							</div>
+							<div class="window-content p-1" id="connectiontree" style="overflow-y:scroll;">
+
+
+								<div class="row" style="margin-left: 1px; margin-right: 1px;">
+									<div class="cell p-0">
+										<div id="noDriverDetected" style="display:none;">
+											<nav data-role="ribbonmenu">
+												<ul class="tabs-holder">
+													<li><a href="#tab-win"><i class="fab fa-windows"></i>&nbsp;Windows</a></li>
+													<li><a href="#tab-mac"><i class="fab fa-apple"></i>&nbsp;Mac</a></li>
+													<li><a href="#tab-linux"><i class="fab fa-linux"></i>&nbsp;Linux</a></li>
+												</ul>
+
+												<div class="content-holder">
+													<div class="section" id="tab-win">
+														<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
+															<a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows (EXE)</a>
+															<a href="#" class="info omdavailversion">v1.0.0</a>
+														</div><br>
+													</div>
+													<div class="section" id="tab-mac">
+														<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
+															<a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> MacOS (DMG)</a>
+															<a href="#" class="info omdavailversion">v1.0.0</a>
+														</div><br>
+													</div>
+													<div class="section" id="tab-linux">
+														<div>
+															<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
+																<a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux (DEB)</a>
+																<a href="#" class="info omdavailversion">v1.0.0</a>
+															</div>
+															<p>
+																<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
+																	<a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux (AppImage)</a>
+																	<a href="#" class="info omdavailversion">v1.0.0</a>
+																</div>
+														</div>
+													</div>
+												</div>
+											</nav>
+
+
+											<p class="text-secondary" id="installDriverMessage">Connecting to a machine, requires that you have the Basic CONTROL installed.</p>
+											<p class="text-small" id="installDriverHelp">If you have not installed it yet, you can download it above, or if you have the latest version installed already, please start it.<br> If you still see this message, we are
+												experiencing a problem detecting your driver<br> You can also export
+												GCODE and send it to your machine</p>
+
+										</div>
+
+										<div id="DriverDetected" style="display:none;">Basic
+
+											<button class="image-button success" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" disabled style="width: 100%">
+												<span class="icon"><span class="fas fa-play"></span></span>
+												<span class="caption">Transfer GCODE to Basic CONTROL</span>
+											</button>
+											<p class="text-small" id="detectedVersion"></p>
+											<p class="text-small" id="validDocuments"><i class='fas fa-times fa-fw fg-red'></i>2. No Documents yet</p>
+											<p class="text-small" id="validToolpaths"><i class='fas fa-times fa-fw fg-red'></i>3. No Toolpaths yet</p>
+											<p class="text-small" id="validGcode"><i class='fas fa-times fa-fw fg-red'></i>4. No GCODE yet</p>
+											<br>
+											<button class="image-button" id="activateDriver" onclick="activateDriver()" style="width: 100%">
+												<span class="icon"><span class="far fa-window-restore"></span></span>
+												<span class="caption">Show CONTROL Window</span>
+											</button>
+										</div>
+									</div>
+									<!-- <div class="cell">
+										<img src="driver.png" />
+									</div> -->
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- </div> -->
+				</div>
+			</div>
+		</div>
+
+		<!-- Modals Divs -->
+		<div style="display: none;">
+			<!-- Hide Dialogs until called -->
+			<!-- openjscad output -->
+			<textarea id="dxf" style="width: 565px; height: 400px;"></textarea>
+			<!-- <div id="openjscad"></div>
+		<div oncontextmenu="return false;" id="viewerContext"></div> -->
+			<!-- avoiding popup when right mouse is clicked -->
+
+			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="statusmodal" data-to-top="true" data-width="540">
+				<div class="dialog-title" id="statusTitle">Status title </div>
+				<div class="dialog-content">
+					<div id="statusBody"></div>
+					<div id="statusBody2" style="overflow-y: auto; height: calc(100vh - 430px); "></div>
+				</div>
+				<div class="dialog-actions" id="statusFooter">
+					<button class="button js-dialog-close">Disagree</button>
+					<button class="button primary js-dialog-close">Agree</button>
+				</div>
+			</div>
+
+			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="partslibModal" data-width="800" data-to-top="true">
+				<div class="dialog-title">Parts Library</div>
+				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+					<div id="partslibrary"></div>
+				</div>
+				<div class="dialog-actions">
+					<button class="button js-dialog-close">Close</button>
+				</div>
+			</div>
+		<!--
+			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="splashModal" data-width="800" data-to-top="true">
+				<div class="dialog-title"><i class="fas fa-fw fa-history"></i> Changelog</div>
+				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+					<div id="changelog" class="text-small"></div>
+				</div>
+				<div class="dialog-actions">
+					<button class="button js-dialog-close alert" onclick="localStorage.setItem('hideChangelog', true);">Never show</button>
+					<button class="button js-dialog-close primary">Close</button>
+				</div>
+			</div>
+		-->
+
+
+
+	</body>
+
+	<script>
+		METRO_HOTKEYS_FILTER_CONTENT_EDITABLE = false;
+		METRO_HOTKEYS_FILTER_INPUT_ACCEPTING_ELEMENTS = true;
+		METRO_HOTKEYS_FILTER_TEXT_INPUTS = true;
+	</script>
+
+	<script type="text/javascript" src="lib/fontawesome5/js/all.js"></script>
+
+	<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="lib/popper.min.js"></script> -->
+	<!-- <script type="text/javascript" src="lib/bootstrap4/js/bootstrap.min.js"></script> -->
+	<script type="text/javascript" src="lib/jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="lib/jquery/jquery.ui.touch-punch.min.js"></script>
+
+	<!-- <link type="text/css" rel="stylesheet" media="all" href="lib/bootoast/src/bootoast.css" />
+<script type="text/javascript" src="lib/bootoast/src/bootoast.js"></script> -->
+
+	<!-- METRO -->
+	<script type="text/javascript" src="lib/metro4/js/metro.min.js"></script>
+	<!-- <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script> -->
+
+	<!-- Helpers -->
+	<script type="text/javascript" src="js/helpers.js"></script>
+
+	<!-- Google Fonts as CAM paths -->
+	<script type="text/javascript" src="lib/jquery/fontselect/jquery.fontselect.js"></script>
+	<script type="text/javascript" src="lib/opentypejs/opentype.min.js"></script>
+
+	<!-- SimpleCAD -->
+	<script type="text/javascript" src="js/basic-cad-shapes.js"></script>
+	<script type="text/javascript" src="js/basic-cad-text-electron.js"></script>
+	<script type="text/javascript" src="js/basic-cad-partslib.js"></script>
+
+	<!-- ThreeJS -->
+	<script type="text/javascript" src="lib/threejs/three.min.js"></script>
+	<script type="text/javascript" src="lib/threejs/GridRect.js"></script>
+	<script type="text/javascript" src="lib/threejs/OrbitControls.js"></script>
+	<script type="text/javascript" src="lib/threejs/DragControls.js"></script>
+	<script type="text/javascript" src="lib/threejs/Projector.js"></script>
+	<script type="text/javascript" src="lib/threejs/CanvasRenderer.js"></script>
+	<script type="text/javascript" src="lib/threejs/TransformControls.js"></script>
+	<script type="text/javascript" src="lib/threejs/TweenMax.min.js"></script>
+	<script type="text/javascript" src="js/viewer.js"></script>
+	<script type="text/javascript" src="js/viewer-ruler.js"></script>
+	<script type="text/javascript" src="js/viewer-pause.js"></script>
+
+
+	<!-- CAM populated from threejs objects -->
+	<script type="text/javascript" src="lib/gl-matrix.js"></script>
+	<script type="text/javascript" src="lib/tbfleming/web-cam-cpp.js"></script>
+	<script type="text/javascript" src="lib/clipperjs/clipper_unminified.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-fillpath.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-geometryutils.js"></script>
+	<script type="text/javascript" src="js/advanced-cam.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-gcode.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-doctree.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-tree.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-modal.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-viewer-mouse.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-viewer-select.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-workspace-export.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-pretty-render.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-sim.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-keyboard-bindings.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-transforms.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-drill.js"></script>
+	<script type="text/javascript" src="js/advanced-cam-booleans.js"></script>
+
+	<!-- DXF Library -->
+	<script type="text/javascript" src="lib/dxf/dxf-parser.js"></script>
+	<script type="text/javascript" src="lib/dxf/three-dxf.js"></script>
+	<script type="text/javascript" src="js/dxf-render.js"></script>
+
+	<!-- lautr3k's SVG  Library -->
+	<script type="text/javascript" src="lib/lw.svg-parser/dist/lw.svg-parser.js"></script>
+	<script type="text/javascript" src="js/svgparser.js"></script>
+
+	<script type="text/javascript" src="js/integration-machine-driver.js"></script>
+
+	<!-- Bitmap Tracing -->
+	<script type="text/javascript" src="lib/potrace/potrace.js"></script>
+	<script type="text/javascript" src="js/potrace.js"></script>
+
+	<!--Settings Widgets -->
+	<script type="text/javascript" src="js/application-settings-controller.js"></script>
+
+	<!-- Gcode Viewer -->
+	<script type="text/javascript" src="lib/3dview/3dview.js"></script>
+
+	<!-- Hello World Job -->
+	<script type="text/javascript" src="js/basic-cad-helloworld.js"></script>
+
+	<!-- Gerber Parser -->
+	<script type="text/javascript" src="lib/gerber/parser.js"></script>
+	<script type="text/javascript" src="lib/gerber/gerberparser.js"></script>
+
+	<!-- User Interface -->
+	<script type="text/javascript" src="js/main.js"></script>
+
+	<!-- WebWorkers -->
+	<script src="workers/toolpath/toolpath.js"></script>
+	<script src="workers/toolpath/worker/toolpathworker.js"></script>
+
+	<!-- OpenJSCAD -->
+	<!-- <script src="lib/openjscad/src/csg.js"></script>
+<script src="lib/openjscad/src/threecsg.js"></script>
+<script src="lib/openjscad/src/openjscad.js"></script>
+<script src="lib/openjscad/src/openscad.js"></script>
+<script src="lib/openjscad/src/formats.js"></script>
+<script src="lib/openjscad/geargen.js"></script> -->
+
+
+	<!-- Used by CAD-text -->
+	<script src="https://cdn.jsdelivr.net/npm/rsvp@4/dist/rsvp.min.js"></script>
+
+	<script type="x-shader/x-vertex" id="vertexShader">
+		varying vec3 vWorldPosition; void main() { vec4 worldPosition = modelMatrix * vec4( position, 1.0 ); vWorldPosition = worldPosition.xyz; gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 ); }
+
+</script>
+	<script type="x-shader/x-fragment" id="fragmentShader">
+		uniform vec3 topColor; uniform vec3 bottomColor; uniform float offset; uniform float exponent; varying vec3 vWorldPosition; void main() { float h = normalize( vWorldPosition + offset ).z; gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max(
+	h , 0.0), exponent ), 0.0 ) ), 1.0 ); }
+
+</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-38524928-4"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-38524928-4');
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-46207169-2"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-46207169-2');
+	</script>
+
+</html>
