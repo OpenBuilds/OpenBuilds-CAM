@@ -6,7 +6,7 @@ const createWindow = () => {
         height: 800
     });
 
-    mainWindow.loadFile('index.html');
+    mainWindow.loadFile('electron.html');
 
     // Open the DevTools.
     mainWindow.webContents.openDevTools()
