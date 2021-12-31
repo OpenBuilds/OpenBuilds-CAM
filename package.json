@@ -45,7 +45,7 @@
       "allowToChangeInstallationDirectory": true,
       "allowElevation": true,
       "license": "licence.txt",
-      "installerIcon": "apple-icon-512x512.png"
+      "installerIcon": "icon.ico"
     },
     "win": {
       "target": [
@@ -57,7 +57,7 @@
           ]
         }
       ],
-      "icon": "apple-icon-512x512.png"
+      "icon": "icon.ico"
     },
     "linux": {
       "icon": "apple-icon-512x512.png",
