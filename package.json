@@ -1,16 +1,14 @@
 {
   "name": "bobscnc-basic-cam",
-  "productName": "BobsCNC Basic CAM",
   "version": "1.0.0",
   "description": "Basic CAM - Cloud based software for converting DXF, SVG, Bitmap (BMP, JPG, PNG, GIF) and Gerber X274 to GCODE",
   "main": "main.js",
-  "directories": {
-    "lib": "lib",
-    "test": "tests"
-  },
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
   },
   "repository": {
     "type": "git",
@@ -26,5 +24,63 @@
   "devDependencies": {
     "electron": "^16.0.5",
     "electron-builder": "^22.14.5"
+  },
+  "build": {
+    "appId": "bobscnc.cam",
+    "mac": {
+      "icon": "icon.icns",
+      "category": "public.app-category.graphics-design"
+    },
+    "productName": "BobsCNC Basic CAM",
+    "icon": "icon.icns",
+    "publish": [
+      {
+        "provider": "github",
+        "vPrefixedTagName": true
+      }
+    ],
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "license": "licence.txt",
+      "installerIcon": "apple-icon-512x512.png"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "apple-icon-512x512.png"
+    },
+    "linux": {
+      "icon": "apple-icon-512x512.png",
+      "target": [
+        "deb",
+        "AppImage"
+      ]
+    },
+    "dmg": {
+      "icon": "icon.icns",
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    }
   }
 }
