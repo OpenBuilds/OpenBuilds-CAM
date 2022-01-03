@@ -44,7 +44,6 @@
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
       "allowElevation": true,
-      "license": "licence.txt",
       "installerIcon": "icon.ico"
     },
     "win": {
