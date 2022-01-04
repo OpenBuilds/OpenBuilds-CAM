@@ -310,6 +310,10 @@ function setBullseyePosition(x, y, z) {
 function init3D() {
 
   // events
+  $('#view-project').change(function() {
+    clearSceneFlag = true;
+  });
+
   $('#view-docs').change(function() {
     clearSceneFlag = true;
   });
@@ -420,10 +424,14 @@ function animate() {
 
     if (clearSceneFlag) {
       animateTree();
-      while (scene.children.length > 1) {
-        scene.remove(scene.children[1])
+      while (scene.children.length > 1 || workspace.getObjectByName("aCylinder")) {
+        scene.remove(scene.children[1]);
+        workspace.remove(workspace.getObjectByName("aCylinder"));
       }
 
+      if ($("#view-project").is(":checked")) {
+        drawCylinderProject();
+      }
 
       if ($("#view-docs").is(":checked")) {
         var documents = new THREE.Group();

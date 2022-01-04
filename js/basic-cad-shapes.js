@@ -36,7 +36,7 @@ function addCircle(xCenter,yCenter,radius, segments) {
   var circle = new THREE.Line(geometry2, material);
   circle.name = "circle"
   fileObject.add(circle);
-  fileObject.name = "Internal CAD" + Math.random()
+  fileObject.name = `Circle (x:${xCenter} y:${yCenter})`  // "Internal CAD" + Math.random()
   if (!existingInternalCad) {
     objectsInScene.push(fileObject)
   }
@@ -67,7 +67,7 @@ function addEllipse(xCenter,yCenter,xStretch, yStretch) {
 
   ellipse.name = "ellipse"
   fileObject.add(ellipse);
-  fileObject.name = "Internal CAD" + Math.random()
+  fileObject.name = `Ellipse (x:${xCenter} y:${yCenter})`  // "Internal CAD" + Math.random()
   if (!existingInternalCad) {
     objectsInScene.push(fileObject)
   }
@@ -118,7 +118,7 @@ function addRect(xCenter, yCenter,width, height,radius, inverted) {
   var rectangle = new THREE.Line(geometry, material);
   rectangle.name = "rectangle"
   fileObject.add(rectangle);
-  fileObject.name = "Internal CAD" + Math.random()
+  fileObject.name = `Rectangle (x:${xCenter} y:${yCenter})` // "Internal CAD" + Math.random()
   if (!existingInternalCad) {
     objectsInScene.push(fileObject)
   }
@@ -165,7 +165,7 @@ function addStar(xCenter,yCenter,innerDiameter,outerDiameter,pointCount){
   var star = new THREE.Line(geometry, material);
   star.name = "star"
   fileObject.add(star);
-  fileObject.name = "Internal CAD" + Math.random()
+  fileObject.name = `Star (x:${xCenter} y:${yCenter})` // "Internal CAD" + Math.random()
   if (!existingInternalCad) {
     objectsInScene.push(fileObject)
   }
@@ -214,7 +214,7 @@ function addTriangle(xCenter,yCenter,sideA,sideB,sideC){
     var triangle = new THREE.Line(geometry, material);
     triangle.name = "triangle"
     fileObject.add(triangle);
-    fileObject.name = "Internal CAD" + Math.random()
+    fileObject.name = `Triangle (x:${xCenter} y:${yCenter})` // "Internal CAD" + Math.random()
     if (!existingInternalCad) {
       objectsInScene.push(fileObject)
     }
@@ -252,7 +252,7 @@ function addLine(xCenter1,yCenter1,xCenter2,yCenter2){
   var line = new THREE.Line(linegeom, material);
   line.name = "line"
   fileObject.add(line);
-  fileObject.name = "Internal CAD" + Math.random()
+  fileObject.name = `Line (x:${xCenter1} y:${yCenter1} - x:${xCenter2} y:${yCenter2})` // "Internal CAD" + Math.random()
   if (!existingInternalCad) {
     objectsInScene.push(fileObject)
   }
@@ -304,7 +304,7 @@ function addGrid(xLength,yWidth,xSpace,ySpace){
 
  
 
-  fileObject.name = "Internal CAD" + Math.random()
+  fileObject.name = `Grid` // "Internal CAD" + Math.random()
   if (!existingInternalCad) {
     objectsInScene.push(fileObject)
   }

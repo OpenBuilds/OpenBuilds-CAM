@@ -183,28 +183,24 @@
 												</span>
 												<span class="caption">Settings</span>
 											</button>
-											<div class="ribbon-group">
-											
-											</div>
+											<div class="ribbon-group"></div>
 											<span class="title">App</span>
 										</div>
 										
 									
 									
-									<div id="wrapX" class="group" hidden>
-										<div class="ribbon-group"></div>
-											<span class="caption">Project Diameter:</span>
-											<input type="number" data-size="150" id="projectdiameter" value="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
-											<span></span>
-											<span class="caption">Project Length:</span>
-											<input type="number" data-size="150" id="projectlength" value="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
-											
-										<div class="ribbon-group"></div>	
-									<span class="title">Wrap X Axis</span>
+										<div id="wrapX" class="group" hidden>
+											<div class="ribbon-group">
+												<label for="projectdiameter">Project Diameter:</label>
+												<input type="number" data-size="150" id="projectdiameter" name="projectdiameter" placeholder="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
+												<label for="projectlength">Project Length:</label>
+												<input type="number" data-size="150" id="projectlength" name="projectlength" placeholder="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
+											</div>
+											<span class="title">Wrap X Axis</span>
+										</div>
 
+										<div class="group"></div> <!-- This closes off the last group -->
 
-									</div>
-									<div class="group"></div>
 								</div>
 
 								</div>
@@ -267,6 +263,7 @@
 							<button id="resetViewBtn" title="Stop Sim" class="button dark drop-shadow" onclick="resetView(object)"><i class="fas fa-stop"></i> Reset View</button>&nbsp;
 							<div class="text-left drop-shadow" style="z-index: 200; width: 110px; display: block; position: absolute; bottom:0px; right:10px; background: rgba(240, 240, 240, 0.85);">
 								<div data-role="collapse" data-collapsed="false" data-toggle-element="#collapse_toggle_1">
+									<input type="checkbox" data-role="checkbox" data-caption="Project" checked data-style="2" id="view-project">
 									<input type="checkbox" data-role="checkbox" data-caption="Documents" checked data-style="2" id="view-docs">
 									<input type="checkbox" data-role="checkbox" data-caption="Toolpaths" checked data-style="2" id="view-toolpath">
 									<input type="checkbox" data-role="checkbox" data-caption="GCODE" checked data-style="2" id="view-gcode">
