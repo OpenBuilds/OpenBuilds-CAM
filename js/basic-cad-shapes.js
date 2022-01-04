@@ -316,10 +316,20 @@ function addGrid(xLength,yWidth,xSpace,ySpace){
 }
 
 
+unitSwitch.addEventListener('change', function() {
+  if (this.checked) {
+    setShapeValues(true)
+  }else{
+    setShapeValues(false)
+  }
+  redrawGrid();
+  resetView();
+});
 
 
-  unitSwitch.addEventListener('change', function() {
-    if (this.checked) {
+function setShapeValues(unit){
+
+  if(unit){
       //circle
       $("#circleXc").val(2);
       $("#circleYc").val(2);
@@ -396,14 +406,10 @@ function addGrid(xLength,yWidth,xSpace,ySpace){
       $("#gridSpaceY").val(25);
 
     }
-    redrawGrid();
-    resetView();
-  });
+    saveSettingsLocal();
+  
+  };
 
-
-
-
-var unitDisplay="inch";
 
 $(document).ready(function() {
   var modal = `
