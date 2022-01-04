@@ -9,7 +9,7 @@
     font-style: normal;
     font-display: block;
   }
-  
+
   [class^="icon-"], [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'icomoon' !important;
@@ -33,4 +33,143 @@
   .icon-ellipse_icon:before {
     content: "\e902";
   }
-  
+
+@font-face {
+  font-family: 'Bebas Neue';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Bebas_Neue/BebasNeue-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Comfortaa/Comfortaa-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Dancing_Script/DancingScript-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Inconsolata/Inconsolata-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Indie Flower';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Indie_Flower/IndieFlower-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Lato/Lato-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Lobster';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Lobster/Lobster-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Lora/Lora-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Merriweather/Merriweather-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Montserrat/Montserrat-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Open_Sans/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Pacifico/Pacifico-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Playfair_Display/PlayfairDisplay-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Roboto_Mono/RobotoMono-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Roboto_Slab/RobotoSlab-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Shadows Into Light';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Shadows_Into_Light/ShadowsIntoLight-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Source Code Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Source_Code_Pro/SourceCodePro-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Staatliches';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Staatliches/Staatliches-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/fontslib/Ubuntu_Mono/UbuntuMono-Regular.ttf');
+}
