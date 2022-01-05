@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rlwoodjr/Basic-CAM.git"
+    "url": "https://github.com/rlwoodjr/Basic-CAM.git"
   },
   "keywords": [],
   "author": "github.com/rlwoodjr <bob@bobscnc.com>",
