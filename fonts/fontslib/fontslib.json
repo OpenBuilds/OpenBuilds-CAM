@@ -1,0 +1,204 @@
+{
+    "items": [
+        {
+            "family": "Bebas Neue",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Bebas_Neue/BebasNeue-Regular.ttf"
+            },
+            "category": "display" 
+        },
+        {
+            "family": "Comfortaa",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Comfortaa/Comfortaa-Regular.ttf"
+            },
+            "category": "display" 
+        },
+        {
+            "family": "Dancing Script",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Dancing_Script/DancingScript-Regular.ttf"
+            },
+            "category": "handwriting" 
+        },
+        {
+            "family": "Inconsolata",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Inconsolata/Inconsolata-Regular.ttf"
+            },
+            "category": "monospace" 
+        },
+        {
+            "family": "Indie Flower",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Indie_Flower/IndieFlower-Regular.ttf"
+            },
+            "category": "handwriting" 
+        },
+        {
+            "family": "Lato",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Lato/Lato-Regular.ttf"
+            },
+            "category": "sans-serif" 
+        },
+        {
+            "family": "Lobster",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Lobster/Lobster-Regular.ttf"
+            },
+            "category": "display" 
+        },
+        {
+            "family": "Lora",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Lora/Lora-Regular.ttf"
+            },
+            "category": "serif" 
+        },
+        {
+            "family": "Merriweather",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Merriweather/Merriweather-Regular.ttf"
+            },
+            "category": "serif" 
+        },
+        {
+            "family": "Montserrat",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Montserrat/Montserrat-Regular.ttf"
+            },
+            "category": "sans-serif" 
+        },
+        {
+            "family": "Open Sans",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Open_Sans/OpenSans-Regular.ttf"
+            },
+            "category": "sans-serif" 
+        },
+        {
+            "family": "Pacifico",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Pacifico/Pacifico-Regular.ttf"
+            },
+            "category": "handwriting" 
+        },
+        {
+            "family": "Playfair Display",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Playfair_Display/PlayfairDisplay-Regular.ttf"
+            },
+            "category": "serif" 
+        },
+        {
+            "family": "Roboto",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Roboto/Roboto-Regular.ttf"
+            },
+            "category": "sans-serif" 
+        },
+        {
+            "family": "Roboto Mono",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Roboto_Mono/RobotoMono-Regular.ttf"
+            },
+            "category": "monospace" 
+        },
+        {
+            "family": "Roboto Slab",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Roboto_Slab/RobotoSlab-Regular.ttf"
+            },
+            "category": "serif" 
+        },
+        {
+            "family": "Shadows Into Light",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Shadows_Into_Light/ShadowsIntoLight-Regular.ttf"
+            },
+            "category": "handwriting" 
+        },
+        {
+            "family": "Source Code Pro",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Source_Code_Pro/SourceCodePro-Regular.ttf"
+            },
+            "category": "monospace" 
+        },
+        {
+            "family": "Staatliches",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Staatliches/Staatliches-Regular.ttf"
+            },
+            "category": "display" 
+        },
+        {
+            "family": "Ubuntu Mono",
+            "variants": [
+                "regular"
+            ],
+            "files": {
+                "regular": "fonts/fontslib/Ubuntu_Mono/UbuntuMono-Regular.ttf"
+            },
+            "category": "monospace" 
+        }
+    ]
+}

@@ -193,7 +193,7 @@ function selectMachine(type) {
   //console.log("Loading Machine Template")
   document.getElementById("wrapX").hidden = true;
   workspace.remove(workspace.getObjectByName('aCylinder'));
-  $("#projectdiameter").val(0.00);
+  $("#projectdiameter").val();
  
   if (type == "E3") {
     $('#context_toggle2').html(type);
@@ -260,7 +260,6 @@ function selectMachine(type) {
 
 // Add a cylinfer when a rotating axis is selected to help te user se how the gcode wraps on the cylinder.
 function drawCylinderProject(){
-
   workspace.remove(workspace.getObjectByName('aCylinder'));
 
   var OD= $("#projectdiameter").val();
@@ -286,15 +285,6 @@ function drawCylinderProject(){
   workspace.add(aCylinder)
   }
 }
-  
-jQuery('#projectdiameter').on('input', function() {
-  drawCylinderProject();
-});
-
-
-jQuery('#projectlength').on('input', function() {
-  drawCylinderProject();
-});
 
 
 

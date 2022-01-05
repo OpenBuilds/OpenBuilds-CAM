@@ -119,7 +119,7 @@ body {
   height: 100%;
   width: 100%;
   position: absolute;
-  background: #e3e3e3 url(../images/xenzine_bk.png) repeat;
+  /* background: #e3e3e3 url(../images/xenzine_bk.png) repeat; */
 }
 
 .card {
