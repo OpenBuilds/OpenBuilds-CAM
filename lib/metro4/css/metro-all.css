@@ -35430,6 +35430,13 @@ html.metro-touch-device .streamer .stream.focused .stream-icon {
 .ribbon-icon-button [class*=mif-] {
   vertical-align: inherit;
 }
+.ribbon-group input[type=checkbox],
+.ribbon-group .caption {
+  display: block;
+  margin: auto;
+  text-align: center;
+  font-size: 12px;
+}
 .ribbon-tool-button {
   width: 24px;
   height: 24px;
