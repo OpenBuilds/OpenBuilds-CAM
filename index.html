@@ -169,25 +169,6 @@
 										<div class="group">
 											<div class="ribbon-group">
 												<input type="checkbox" data-role="switch" name="unitSwitch" id="unitSwitch" onclick="changeUnits()" >
-												<script>
-													function changeUnits() {
-														let unitSwitch = document.getElementById("unitSwitch");
-														let unitDisplay = document.getElementById("unitDisplay");
-														let unitAppend = document.getElementsByClassName("append");
-
-														if (unitSwitch.checked) {
-															unitDisplay.textContent = "inch";
-															for (let i = 0; i < unitAppend.length; i++) {
-																unitAppend[i].textContent = "inch";
-															}
-														} else {
-															unitDisplay.textContent = "mm";
-															for (let i = 0; i < unitAppend.length; i++) {
-																unitAppend[i].textContent = "mm";
-															}
-														}
-													}
-												</script>
 												<br>
 												<label for="unitSwitch" class="caption" id="unitDisplay">mm</label>
 											</div>
