@@ -670,3 +670,21 @@ function resetView(object) {
     viewExtents(object);
   }
 }
+
+function changeUnits() {
+  let unitSwitch = document.getElementById("unitSwitch");
+  let unitDisplay = document.getElementById("unitDisplay");
+  let unitAppend = document.getElementsByClassName("append");
+
+  if (unitSwitch.checked) {
+    unitDisplay.textContent = "inch";
+    for (let i = 0; i < unitAppend.length; i++) {
+      unitAppend[i].textContent = "inch";
+    }
+  } else {
+    unitDisplay.textContent = "mm";
+    for (let i = 0; i < unitAppend.length; i++) {
+      unitAppend[i].textContent = "mm";
+    }
+  }
+}
