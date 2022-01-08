@@ -65,7 +65,8 @@ function drawRuler() {
 
 
   // Change postion of grid if rotating axis is selected
-  if(!document.getElementById("wrapX").hidden){
+  var type = loadSetting("machinetype");
+  if(type=="Revolution"){
     var yFactor=2;
     var wrapX=true;
   }else{

@@ -84,7 +84,7 @@
 												</button>
 												<br>
 
-												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeCircle ');">
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeCircle '); changeUnits();">
 													<span class="icon">
 														<span class="far fa-circle"></span>
 													</span>
@@ -92,7 +92,7 @@
 												</button>
 												<br>
 
-												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeRect ');">
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeRect '); changeUnits();">
 													<span class="icon">
 														<span class="far fa-square"></span>
 													</span>
@@ -101,7 +101,7 @@
 												<br>
 											</div><div>
 
-												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeStar ');">
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeStar '); changeUnits();">
 													<span class="icon">
 														<span class="far fa-star"></span>
 													</span>
@@ -109,7 +109,7 @@
 												</button>
 											    <br>
 
-												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeEllipse ');">
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeEllipse '); changeUnits();">
 													<span class="icon">
 														<span class="icon-ellipse_icon"></span>
 													</span>
@@ -117,7 +117,7 @@
 												</button>
 												<br>		
 											
-												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeTriangle ');">
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeTriangle '); changeUnits();">
 													<span class="icon">
 														<span  class="icon-triangle_icon"></span>
 													</span>
@@ -126,14 +126,14 @@
 												<br>
 												
 											</div><div>
-												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeLine ');">
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeLine '); changeUnits();">
 													<span class="icon">
 														<span class="fas fa-slash"></span>
 													</span>
 													<span class="caption">Line</span>
 												</button>
 												<br>
-												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeGrid ');">
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeGrid '); changeUnits();">
 													<span class="icon">
 														<span class="icon-grid_icon"></span>
 													</span>
@@ -170,7 +170,7 @@
 											<div class="ribbon-group">
 												<input type="checkbox" data-role="switch" name="unitSwitch" id="unitSwitch" onclick="changeUnits()" >
 												<br>
-												<label for="unitSwitch" class="caption" id="unitDisplay">mm</label>
+												<label for="unitSwitch" class="caption" style="font-size: 16px"  id="unitDisplay">mm</label>
 											</div>
 											<span class="title">Unit Display</span>
 										</div>
@@ -193,14 +193,14 @@
 										
 									
 									
-										<div id="wrapX" class="group" hidden>
+										<div id="projectSize" class="group">
 											<div class="ribbon-group">
-												<label for="projectdiameter">Project Diameter:</label>
-												<input type="number" data-size="150" id="projectdiameter" name="projectdiameter" placeholder="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
-												<label for="projectlength">Project Length:</label>
+												<label for="projectWD" id="projectWDlabel">Project Width Y:</label>
+												<input type="number" data-size="150" id="projectWD" name="projectWD" placeholder="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
+												<label for="projectlength">Project Length X:</label>
 												<input type="number" data-size="150" id="projectlength" name="projectlength" placeholder="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
 											</div>
-											<span class="title">Wrap X Axis</span>
+											<span class="title">Project Size</span>
 										</div>
 
 										<div class="group"></div> <!-- This closes off the last group -->

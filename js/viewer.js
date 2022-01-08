@@ -137,7 +137,9 @@ function drawWorkspace() {
   gridsystem.name = "Grid System"
   workspace.add(gridsystem)
   redrawGrid();
+  changeUnits();
   scene.add(workspace)
+
 }
 
 function redrawGrid() {
@@ -155,20 +157,13 @@ function redrawGrid() {
   };
 
 
-  // Change units of grid
- 
-
-  if(document.getElementById("unitSwitch").checked){
+  // Change units tick marks of grid
+   if(document.getElementById("unitSwitch").checked){
    // console.log("inch")
-
-    sizexmax = sizexmax/25.4;
-    sizeymax = sizeymax/25.4;
     var majorGrid=1;
     var minorGrid=.25;
     var axisLabelSize=1.5;
     var axisLabelDistance=1;
-
- 
   }else{
    // console.log("mm")
     majorGrid=100;
@@ -181,7 +176,8 @@ function redrawGrid() {
 
 
   // Change postion of grid if rotating axis is selected
-  if(!document.getElementById("wrapX").hidden){
+  var type = loadSetting("machinetype");
+  if(type=="Revolution"){
     var RoundedYMax= Math.round(sizeymax*Math.PI/10);
     if ( !RoundedYMax % 2 == 0) {
       sizeymax=(RoundedYMax+1)*10;
@@ -424,13 +420,14 @@ function animate() {
 
     if (clearSceneFlag) {
       animateTree();
-      while (scene.children.length > 1 || workspace.getObjectByName("aCylinder")) {
+      while (scene.children.length > 1 || workspace.getObjectByName("aCylinder") ||workspace.getObjectByName("aCube")) {
         scene.remove(scene.children[1]);
         workspace.remove(workspace.getObjectByName("aCylinder"));
+        workspace.remove(workspace.getObjectByName('aCube'));
       }
 
       if ($("#view-project").is(":checked")) {
-        drawCylinderProject();
+        showProject();
       }
 
       if ($("#view-docs").is(":checked")) {
@@ -671,10 +668,12 @@ function resetView(object) {
   }
 }
 
+// change units and update
 function changeUnits() {
   let unitSwitch = document.getElementById("unitSwitch");
   let unitDisplay = document.getElementById("unitDisplay");
   let unitAppend = document.getElementsByClassName("append");
+  var type = loadSetting("machinetype");
 
   if (unitSwitch.checked) {
     unitDisplay.textContent = "inch";
@@ -687,4 +686,83 @@ function changeUnits() {
       unitAppend[i].textContent = "mm";
     }
   }
+
+  selectMachine(type);  // reset the grid size
+  setShapeValues(unitSwitch.checked)  
+  redrawGrid();
+  resetView();
 }
+// listener for the unit switch
+unitSwitch.addEventListener('change', function() {
+  var switchName=unitSwitch.name;
+  if (this.checked) {
+    saveSetting(switchName, true);
+    changeUnits();
+  }else{
+    saveSetting(switchName, false);
+    changeUnits();
+  }
+
+});
+
+
+// Add a cylinfer when a rotating axis is selected to help te user se how the gcode wraps on the cylinder.
+function showProject(){
+ 
+
+  var OD= $("#projectWD").val();
+  var xLen= $("#projectlength").val();
+
+  var type = loadSetting("machinetype");
+
+  if(type=="Revolution"){
+      workspace.remove(workspace.getObjectByName('aCylinder'));
+      if(OD>0){
+
+      var aCylinder = new THREE.Mesh(new THREE.CylinderGeometry(OD/2, OD/2, xLen, 32, 1, false), new THREE.MeshPhongMaterial({
+        color: 0x0000ff,
+        specular: 0x0000ff,
+        shininess: 00
+      }));
+      aCylinder.name = "aCylinder";
+      aCylinder.overdraw = true;
+      aCylinder.rotation.z = -90*Math.PI / 180;
+      aCylinder.position.x = xLen/2;
+      aCylinder.position.y = 0;
+      aCylinder.position.z = 0;
+      aCylinder.material.opacity = 0.1;
+      aCylinder.material.transparent = true;
+      aCylinder.castShadow = false;
+      aCylinder.visible = true;
+      workspace.add(aCylinder)
+      }
+  }else{
+    ///   add rectangular workpiece code
+    if(OD>0){
+
+    var unit = $('#unitSwitch').prop('checked');
+    if(unit){
+      var thick=0.5;
+    }else{
+      var thick=12;
+    }
+
+    
+    workspace.remove(workspace.getObjectByName('aCube'));
+    var aCube= new THREE.Mesh(new THREE.BoxGeometry( xLen, OD, thick ),new THREE.MeshPhongMaterial({
+    color: 0x0000ff,
+    specular: 0x0000ff,
+    shininess: 00
+  }));
+      aCube.name = "aCube";
+      aCube.overdraw = true;
+      aCube.rotation.z = 0;
+      aCube.position.x = xLen/2;
+      aCube.position.y = OD/2;
+      aCube.position.z = -thick/2;
+      aCube.material.opacity = 0.1;
+      aCube.material.transparent = true;
+      aCube.castShadow = false;
+      aCube.visible = true;
+      workspace.add(aCube)
+}}}
