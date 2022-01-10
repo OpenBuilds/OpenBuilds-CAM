@@ -110,13 +110,15 @@ function inflatedReplacer(key, value) {
 }
 
  // Updated parameters for bit selection
-function setBit(i,bitDia,zSafe,feedRate,cutDepth,plungeRate){
+function setBit(i,bitDia,zSafe,feedRate,stepDepth,plungeRate,zCutDepth){
   
    $('#ttooldia' + i).val(bitDia);
    $('#tclearanceHeight' + i).val(zSafe);
    $('#tspeed' + i).val(feedRate);
-   $('#tzstep' + i).val(cutDepth);
+   $('#tzdepth' + i).val(zCutDepth);
    $('#tplungespeed' + i).val(plungeRate);
+   $('#tzstep' + i).val(stepDepth);
+
    updateCamUserData(i);
 }
 
@@ -128,20 +130,21 @@ function setupJob(i) {
   if(document.getElementById("unitSwitch").checked){
     var bit = ['0.031','0.063','0.125','0.250','0.375','0.500']
     var feedRate = ['25','50','100','80','75','70']
-    var cutDepth = ['0.015','0.031','0.063','0.08','0.08','0.030']
+    var stepDepth = ['0.015','0.031','0.063','0.08','0.08','0.030']
     var plungeRate = ['12','25','50','40','37','35']
-
     var setUnitText="inch";
     var setSpeedUnitText="inches/min";
     var zSafe="0.5"
+    var zCutDepth="0.25";
   }else{
     var bit = ['1.0','2.0','3.0','4.0','5.0','6.0']
     var feedRate = ['225','550','1000','800','750','700']
-    var cutDepth = ['0.5','1.0','1.5','2.0','2.5','3.0']
+    var stepDepth = ['0.5','1.0','1.5','2.0','2.5','3.0']
     var plungeRate = ['125','250','500','400','375','350']
     var setUnitText="mm";
     var setSpeedUnitText="mm/min";
     var zSafe="10"
+    var zCutDepth="6.0";
    
   }
 
@@ -205,12 +208,12 @@ function setupJob(i) {
             <div class="dropdown-button ">
                 <button class="button success dropdown-toggle"  style="margin: 2px"  >Select Bit</button>
                 <ul class="d-menu" data-role="dropdown" style="padding: 5px 15px; font-size:18px">
-                  <li onclick="setBit(${i},${bit[0]},${zSafe},${feedRate[0]},${cutDepth[0]},${plungeRate[0]})" >${bit[0]}</li> 
-                  <li onclick="setBit(${i},${bit[1]},${zSafe},${feedRate[1]},${cutDepth[1]},${plungeRate[1]})" >${bit[1]}</li> 
-                  <li onclick="setBit(${i},${bit[2]},${zSafe},${feedRate[2]},${cutDepth[2]},${plungeRate[2]})" >${bit[2]}</li> 
-                  <li onclick="setBit(${i},${bit[3]},${zSafe},${feedRate[3]},${cutDepth[3]},${plungeRate[3]})" >${bit[3]}</li> 
-                  <li onclick="setBit(${i},${bit[4]},${zSafe},${feedRate[4]},${cutDepth[4]},${plungeRate[4]})" >${bit[4]}</li> 
-                  <li onclick="setBit(${i},${bit[5]},${zSafe},${feedRate[5]},${cutDepth[5]},${plungeRate[5]})" >${bit[5]}</li> 
+                  <li onclick="setBit(${i},${bit[0]},${zSafe},${feedRate[0]},${stepDepth[0]},${plungeRate[0]},${zCutDepth})" >${bit[0]})"</li> 
+                  <li onclick="setBit(${i},${bit[1]},${zSafe},${feedRate[1]},${stepDepth[1]},${plungeRate[1]},${zCutDepth})" >${bit[1]}</li> 
+                  <li onclick="setBit(${i},${bit[2]},${zSafe},${feedRate[2]},${stepDepth[2]},${plungeRate[2]},${zCutDepth})" >${bit[2]}</li> 
+                  <li onclick="setBit(${i},${bit[3]},${zSafe},${feedRate[3]},${stepDepth[3]},${plungeRate[3]},${zCutDepth})" >${bit[3]}</li> 
+                  <li onclick="setBit(${i},${bit[4]},${zSafe},${feedRate[4]},${stepDepth[4]},${plungeRate[4]},${zCutDepth})" >${bit[4]}</li> 
+                  <li onclick="setBit(${i},${bit[5]},${zSafe},${feedRate[5]},${stepDepth[5]},${plungeRate[5]},${zCutDepth})" >${bit[5]}</li> 
                   
                 </ul>
             </div>

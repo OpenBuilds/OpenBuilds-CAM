@@ -14,7 +14,7 @@ function initLocalStorage() {
   $('#savesettings').on('click', function() {
     saveSettingsLocal();
   });
-  checkSettingsLocal();
+    checkSettingsLocal();
 }
 
 // FIXME
@@ -22,15 +22,15 @@ function initLocalStorage() {
 // $("#settings-menu-panel input, #settings-menu-panel textarea, #settings-menu-panel select").each(function() {console.log(this.id + ": " + $(this).val())});
 
 localParams = [
+  ['unitSwitch', true],
   ['sizexmax', true],
   ['sizeymax', true],
   ['sizezmax', true],
   ['startgcode', false],
   ['endgcode', false],
   ['machinetype', true],
-  ['performanceLimit', false],
-  ['unitSwitch', true]
-];
+  ['performanceLimit', false]
+ ];
 
 
 // Wrappers for direct access to local storage -- these will get swapped with profiles laster
@@ -48,14 +48,6 @@ function saveSettingsLocal() {
   for (i = 0; i < localParams.length; i++) {
     var localParam = localParams[i];
     var paramName = localParam[0];
-    if (paramName == 'sizexmax' || paramName == 'sizeymax') {
-      var newval = $('#' + paramName).val()
-      var oldval = loadSetting(paramName);
-      if (oldval != newval) {
-        redrawGrid()
-        resetView()
-      }
-    }
     if (paramName == 'scommandnewline') {
       var val = $('#' + paramName).is(":checked");
     } else if (paramName == 'performanceLimit') {
@@ -67,8 +59,10 @@ function saveSettingsLocal() {
     }
     printLog('Saving: ' + paramName + ' : ' + val, successcolor);
     saveSetting(paramName, val);
+    redrawGrid()
+   
   }
-  printLog('<b>Saved Settings: <br>NB:</b> Please refresh page for settings to take effect', errorcolor, "settings");
+ // printLog('<b>Saved Settings: <br>NB:</b> Please refresh page for settings to take effect', errorcolor, "settings");
   // $("#settingsmodal").modal("hide");
   console.groupEnd();
 };
@@ -86,21 +80,23 @@ function loadSettingsLocal() {
       if (paramName == 'machinetype') {
         selectMachine(val); 
       } else if (paramName == 'performanceLimit') {
-        $('#' + paramName).prop('checked', parseBoolean(val));
-        // console.log('#' + paramName + " is set to " + val)
+        $('#' + paramName).prop('checked', parseBoolean(val)); // set value
       } else if (paramName == 'unitSwitch') {
-        $('#' + paramName).prop('checked', parseBoolean(val));
-        setShapeValues( parseBoolean(val));
-        // console.log('#' + paramName + " is set to " + val)
+        $('#' + paramName).prop('checked', parseBoolean(val)); //set value
+        if(val=='true'){
+          $("#unitDisplay").text("inch")
+        }else{
+          $("#unitDisplay").text("mm")
+        }
       } else {
         $('#' + paramName).val(val); // Set the value to Form from Storage
       }
       
     } else {
-      // console.log('Not in local storage: ' +  paramName);
+       //console.log('Not in local storage: ' +  paramName);
     }
   }
-  // console.groupEnd();
+   // console.groupEnd();
 };
 
 function backupSettingsLocal() {
@@ -121,13 +117,13 @@ function checkSettingsLocal() {
     var val = $('#' + localParams[i]).val(); // Read the value from form
 
     if (!val && paramRequired) {
-      // printLog('Missing required setting: ' + paramName, errorcolor, "settings");
+    //   printLog('Missing required setting: ' + paramName, errorcolor, "settings");
       anyissues = true;
 
     } else if (!val && !paramRequired) {
-      // printLog('Missing optional setting: ' + paramName, warncolor, "settings");
+    //   printLog('Missing optional setting: ' + paramName, warncolor, "settings");
     } else {
-      // printLog('Found setting: ' + paramName + " : " + val, msgcolor, "settings");
+     //  printLog('Found setting: ' + paramName + " : " + val, msgcolor, "settings");
     }
   }
 
@@ -165,7 +161,7 @@ function loadSettings(e) {
       saveSetting(property, o[property]);
     } else {
       // I'm not sure this can happen... I want to log this if it does!
-      // console.log("Found a property " + property + " which does not belong to itself.");
+  //     console.log("Found a property " + property + " which does not belong to itself.");
     }
   }
   loadSettingsLocal();
@@ -191,100 +187,129 @@ window.parseBoolean = function(string) {
 
 function selectMachine(type) {
   //console.log("Loading Machine Template")
-  document.getElementById("wrapX").hidden = true;
-  workspace.remove(workspace.getObjectByName('aCylinder'));
-  $("#projectdiameter").val();
+  var unit = $('#unitSwitch').prop('checked');
+  $('#projectWDlabel').text("Project Width Y");
  
   if (type == "E3") {
     $('#context_toggle2').html(type);
-    var xaxis = 450
-    var yaxis = 390
-    var zaxis = 85
+      if(unit==true){
+        var xaxis = 17.7
+        var yaxis = 15.3
+        var zaxis = 3.3
+      }else{
+        var xaxis = 450
+        var yaxis = 390
+        var zaxis = 85
+      }
   } else if (type == "E4") {
     $('#context_toggle2').html(type);
-    var xaxis = 610
-    var yaxis = 610
-    var zaxis = 85
+      if(unit==true){
+        var xaxis = 24.0
+        var yaxis = 24.0
+        var zaxis = 3.3
+      }else{
+        var xaxis = 610
+        var yaxis = 610
+        var zaxis = 85
+      }
   } else if (type == "Evolution 3") {
     $('#context_toggle2').html(type);
-    var xaxis = 407
-    var yaxis = 458
-    var zaxis = 85
+      if(unit==true){
+        var xaxis = 18.0
+        var yaxis = 16.0
+        var zaxis = 3.3
+      }else{
+        var xaxis = 458
+        var yaxis = 407
+        var zaxis = 85
+      }
   } else if (type == "Evolution 4") {
     $('#context_toggle2').html(type);
-    var xaxis = 610
-    var yaxis = 610
-    var zaxis = 85
+      if(unit==true){
+        var xaxis = 24.0
+        var yaxis = 24.0
+        var zaxis = 3.3
+      }else{
+        var xaxis = 610
+        var yaxis = 610
+        var zaxis = 85
+      }
   } else if (type == "Evolution 5") {
     $('#context_toggle2').html(type);
-    var xaxis = 1283
-    var yaxis = 610
-    var zaxis = 85
+      if(unit==true){
+        var xaxis = 50.5
+        var yaxis = 24.0
+        var zaxis = 3.3
+      }else{
+        var xaxis = 1283
+        var yaxis = 610
+        var zaxis = 85
+      }
   } else if (type == "KL733") {
     $('#context_toggle2').html(type);
-    var xaxis = 915
-    var yaxis = 915
-    var zaxis = 127
+      if(unit==true){
+        var xaxis = 36.0
+        var yaxis = 36.0
+        var zaxis = 5.0
+      }else{
+        var xaxis = 915
+        var yaxis = 915
+        var zaxis = 127
+      }
   } else if (type == "KL744") {
     $('#context_toggle2').html(type);
-    var xaxis = 1220
-    var yaxis = 1220
-    var zaxis = 127
+      if(unit==true){
+        var xaxis = 48.0
+        var yaxis = 48.0
+        var zaxis = 5.0
+      }else{
+        var xaxis = 1220
+        var yaxis = 1220
+        var zaxis = 127
+      }
 
   } else if (type == "KL744E") {
     $('#context_toggle2').html(type);
-    var xaxis = 2440
-    var yaxis = 1220
-    var zaxis = 127
+      if(unit==true){
+        var xaxis = 96.0
+        var yaxis = 48.0
+        var zaxis = 5.0
+      }else{
+        var xaxis = 2440
+        var yaxis = 1220
+        var zaxis = 127
+      }
   } else if (type == "Revolution") {
+    $('#projectWDlabel').text("Project Diameter A:");
     $('#context_toggle2').html(type);
-    var xaxis = 610
-    var yaxis = 165
-    var zaxis = 3.3
-    document.getElementById("wrapX").hidden = false;
-    }else if (type == "Other") {
+      if(unit==true){
+        var xaxis = 24.0
+        var yaxis = 6.5
+        var zaxis = 3.3
+      }else{
+        var xaxis = 610
+        var yaxis = 165
+        var zaxis = 85
+      }
+  } else if (type == "Other") {
     $('#context_toggle2').html(type);
-    var xaxis = 300
-    var yaxis = 300
-    var zaxis = 500
-   }
-  
-
+      if(unit==true){
+        var xaxis = 8.0
+        var yaxis = 8.0
+        var zaxis = 2.0
+      }else{
+        var xaxis = 200
+        var yaxis = 200
+        var zaxis = 50
+      }
+  }
   $("#machinetype").val(type)
   $("#sizexmax").val(xaxis)
   $("#sizeymax").val(yaxis)
   $("#sizezmax").val(zaxis)
-  
+ 
 };
 
-
-// Add a cylinfer when a rotating axis is selected to help te user se how the gcode wraps on the cylinder.
-function drawCylinderProject(){
-  workspace.remove(workspace.getObjectByName('aCylinder'));
-
-  var OD= $("#projectdiameter").val();
-  var xLen= $("#projectlength").val();
-
-  if(OD>0){
-
-  var aCylinder = new THREE.Mesh(new THREE.CylinderGeometry(OD/2, OD/2, xLen, 32, 1, false), new THREE.MeshPhongMaterial({
-    color: 0x0000ff,
-    specular: 0x0000ff,
-    shininess: 00
-  }));
-  aCylinder.name = "aCylinder";
-  aCylinder.overdraw = true;
-  aCylinder.rotation.z = -90*Math.PI / 180;
-  aCylinder.position.x = xLen/2;
-  aCylinder.position.y = 0;
-  aCylinder.position.z = 0;
-  aCylinder.material.opacity = 0.1;
-  aCylinder.material.transparent = true;
-  aCylinder.castShadow = false;
-  aCylinder.visible = true;
-  workspace.add(aCylinder)
-  }
-}
 
 
 

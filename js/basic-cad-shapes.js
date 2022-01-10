@@ -316,15 +316,7 @@ function addGrid(xLength,yWidth,xSpace,ySpace){
 }
 
 
-unitSwitch.addEventListener('change', function() {
-  if (this.checked) {
-    setShapeValues(true)
-  }else{
-    setShapeValues(false)
-  }
-  redrawGrid();
-  resetView();
-});
+
 
 
 function setShapeValues(unit){
@@ -406,9 +398,9 @@ function setShapeValues(unit){
       $("#gridSpaceY").val(25);
 
     }
-    saveSettingsLocal();
-  
-  };
+ 
+   
+    };
 
 
 $(document).ready(function() {
@@ -418,11 +410,11 @@ $(document).ready(function() {
     <div class="dialog-title" id="statusTitle">Add shape: Circle</div>
     <div class="dialog-content">
     <form>
-      <input type="number" class="form-control" id="circleXc" value="50" data-role="input"  data-prepend="X Center" step="any">
+      <input type="number" class="form-control" id="circleXc" value="50" data-role="input"  data-prepend="X Center" data-append="mm" step="any">
       <br>
-      <input type="number" class="form-control" id="circleYc" value="50" data-role="input"  data-prepend="Y Center" step="any">
+      <input type="number" class="form-control" id="circleYc" value="50" data-role="input"  data-prepend="Y Center" data-append="mm"step="any">
       <br>
-      <input type="number" class="form-control" id="circleRadius" value="10" data-role="input"  data-prepend="Radius" step="any">
+      <input type="number" class="form-control" id="circleRadius" value="10" data-role="input"  data-prepend="Radius" data-append="mm" step="any">
       <br>
       <input type="number" class="form-control" id="circleSegments" value="32" data-role="input"  data-prepend="Segments" step="any">
       <small>Segments determines the smoothness of the circle, as circles are processed as Polylines</small>
@@ -438,15 +430,15 @@ $(document).ready(function() {
 		<div class="dialog-title" id="statusTitle">Add shape: Rectangle</div>
 		<div class="dialog-content">
     <form>
-    <input type="number" class="form-control" id="rectXc" value="50" data-role="input"  data-prepend="X Center" step="any">
+    <input type="number" class="form-control" id="rectXc" value="50" data-role="input"  data-prepend="X Center" data-append="mm" step="any">
     <br>
-    <input type="number" class="form-control" id="rectYc" value="50" data-role="input"  data-prepend="Y Center" step="any">
+    <input type="number" class="form-control" id="rectYc" value="50" data-role="input"  data-prepend="Y Center" data-append="mm" step="any">
     <br>
-    <input type="number" class="form-control" id="rectX" value="80" data-role="input"  data-prepend="Width" step="any">
+    <input type="number" class="form-control" id="rectX" value="80" data-role="input"  data-prepend="Width" data-append="mm" step="any">
       <br>
-    <input type="number" class="form-control" id="rectY" value="50" data-role="input"  data-prepend="Height" step="any">
+    <input type="number" class="form-control" id="rectY" value="50" data-role="input"  data-prepend="Height" data-append="mm" step="any">
       <br>
-    <input type="number" class="form-control" id="rectR" value="5" data-role="input"  data-prepend="Corner Radius" step="any">
+    <input type="number" class="form-control" id="rectR" value="5" data-role="input"  data-prepend="Corner Radius" data-append="mm" step="any">
       <br>
     <input type="checkbox" class="form-control" id="rectI" value="1" data-role="checkbox"  data-caption="Invert Radius"  data-style="2" step="any">
     </form>
@@ -461,13 +453,13 @@ $(document).ready(function() {
 		<div class="dialog-title" id="statusTitle">Add shape: Star</div>
 		<div class="dialog-content">
     <form>
-      <input type="number" class="form-control" id="starXc" value="50" data-role="input"  data-prepend="X  Center" step="any">
+      <input type="number" class="form-control" id="starXc" value="50" data-role="input"  data-prepend="X  Center" data-append="mm" step="any">
       <br>
-      <input type="number" class="form-control" id="starYc" value="50" data-role="input"  data-prepend="Y  Center" step="any">
+      <input type="number" class="form-control" id="starYc" value="50" data-role="input"  data-prepend="Y  Center" data-append="mm" step="any">
       <br>
-      <input type="number" class="form-control" id="starOD" value="100" data-role="input"  data-prepend=" Outside Diameter" step="any">
+      <input type="number" class="form-control" id="starOD" value="100" data-role="input"  data-prepend=" Outside Diameter" data-append="mm" step="any">
       <br>
-      <input type="number" class="form-control" id="starID" value="38.2" data-role="input"  data-prepend=" Inside Diameter" step="any">
+      <input type="number" class="form-control" id="starID" value="38.2" data-role="input"  data-prepend=" Inside Diameter" data-append="mm" step="any">
       <br>
       <input type="number" class="form-control" id="starPointCount" value="5" data-role="input" data-append="" data-prepend="Number of Points" step="any">
     </form>
@@ -484,15 +476,15 @@ $(document).ready(function() {
   <div class="dialog-title" id="statusTitle">Add shape: Triangle</div>
   <div class="dialog-content">
   <form>
-    <input type="number" class="form-control" id="triangleXc" value="50" data-role="input"  data-prepend="X  Center" step="any">
+    <input type="number" class="form-control" id="triangleXc" value="50" data-role="input"  data-prepend="X  Center" data-append="mm" step="any">
     <br>
-    <input type="number" class="form-control" id="triangleYc" value="50" data-role="input" data-prepend="Y  Center" step="any">
+    <input type="number" class="form-control" id="triangleYc" value="50" data-role="input" data-prepend="Y  Center" data-append="mm" step="any">
     <br>
-    <input type="number" class="form-control" id="triangleSideA" value="40" data-role="input" data-prepend=" Base" step="any">
+    <input type="number" class="form-control" id="triangleSideA" value="40" data-role="input" data-prepend=" Base" data-append="mm" step="any">
     <br>
-    <input type="number" class="form-control" id="triangleSideB" value="50" data-role="input"  data-prepend="Left Side" step="any">
+    <input type="number" class="form-control" id="triangleSideB" value="50" data-role="input"  data-prepend="Left Side" data-append="mm" step="any">
     <br>
-    <input type="number" class="form-control" id="triangleSideC" value="30" data-role="input" data-append="" data-prepend="Right Side" step="any">
+    <input type="number" class="form-control" id="triangleSideC" value="30" data-role="input" data-append="" data-prepend="Right Side" data-append="mm" step="any">
   </form>
   </div>
   <div class="dialog-actions" id="statusFooter">
@@ -505,13 +497,13 @@ $(document).ready(function() {
 <div class="dialog-title" id="statusTitle">Add shape: Ellipse</div>
 <div class="dialog-content">
 <form>
-  <input type="number" class="form-control" id="ellipseXc" value="50" data-role="input"  data-prepend="X  Center" step="any">
+  <input type="number" class="form-control" id="ellipseXc" value="50" data-role="input"  data-prepend="X Center" data-append="mm"  step="any">
   <br>
-  <input type="number" class="form-control" id="ellipseYc" value="50" data-role="input"  data-prepend="Y  Center" step="any">
+  <input type="number" class="form-control" id="ellipseYc" value="50" data-role="input"  data-prepend="Y Center" data-append="mm" step="any">
   <br>
-  <input type="number" class="form-control" id="ellipseX" value="80" data-role="input"  data-prepend="Width" step="any">
+  <input type="number" class="form-control" id="ellipseX" value="80" data-role="input"  data-prepend="Width" data-append="mm" step="any">
   <br>
-  <input type="number" class="form-control" id="ellipseY" value="60" data-role="input"  data-prepend="Height" step="any">
+  <input type="number" class="form-control" id="ellipseY" value="60" data-role="input"  data-prepend="Height" data-append="mm" step="any">
  
 </form>
 </div>
@@ -526,13 +518,13 @@ $(document).ready(function() {
 <div class="dialog-title" id="statusTitle">Add shape: Line</div>
 <div class="dialog-content">
 <form>
-  <input type="number" class="form-control" id="lineX1" value="0" data-role="input"  data-prepend="X Start Point" step="any">
+  <input type="number" class="form-control" id="lineX1" value="0" data-role="input"  data-prepend="X Start Point" data-append="mm" step="any">
   <br>
-  <input type="number" class="form-control" id="lineY1" value="50" data-role="input"  data-prepend="Y Start Point" step="any">
+  <input type="number" class="form-control" id="lineY1" value="50" data-role="input"  data-prepend="Y Start Point" data-append="mm" step="any">
   <br>
-  <input type="number" class="form-control" id="lineX2" value="100" data-role="input"  data-prepend="X End Point" step="any">
+  <input type="number" class="form-control" id="lineX2" value="100" data-role="input"  data-prepend="X End Point" data-append="mm" step="any">
   <br>
-  <input type="number" class="form-control" id="lineY2" value="50" data-role="input"  data-prepend="Y End Point" step="any">
+  <input type="number" class="form-control" id="lineY2" value="50" data-role="input"  data-prepend="Y End Point" data-append="mm" step="any">
 
 </form>
 </div>
@@ -547,13 +539,13 @@ $(document).ready(function() {
 <div class="dialog-title" id="statusTitle">Add shape: Grid</div>
 <div class="dialog-content">
 <form>
-  <input type="number" class="form-control" id="gridX" value="300" data-role="input"  data-prepend="X Length" step="any">
+  <input type="number" class="form-control" id="gridX" value="300" data-role="input"  data-prepend="X Length" data-append="mm" step="any">
   <br>
-  <input type="number" class="form-control" id="gridY" value="200" data-role="input"  data-prepend="Y  Width" step="any">
+  <input type="number" class="form-control" id="gridY" value="200" data-role="input"  data-prepend="Y  Width" data-append="mm" step="any">
   <br>
-  <input type="number" class="form-control" id="gridSpaceX" value="25" data-role="input" " data-prepend="X Spacing" step="any">
+  <input type="number" class="form-control" id="gridSpaceX" value="25" data-role="input" " data-prepend="X Spacing" data-append="mm" step="any">
   <br>
-  <input type="number" class="form-control" id="gridSpaceY" value="25" data-role="input"  data-prepend="Y Spacing" step="any">
+  <input type="number" class="form-control" id="gridSpaceY" value="25" data-role="input"  data-prepend="Y Spacing" data-append="mm" step="any">
  
 </form>
 </div>
@@ -563,19 +555,9 @@ $(document).ready(function() {
 </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
   `
+
+
   $("body").append(modal);
 
   $("#CreateEllipse").on("click", function(event) {
@@ -599,10 +581,6 @@ $(document).ready(function() {
     var yCenter = parseFloat($("#circleYc").val());
     var radius = $("#circleRadius").val();
     var segments = $("#circleSegments").val();
-
-
-
-    
     addCircle(xCenter, yCenter, radius, segments);
   });
 

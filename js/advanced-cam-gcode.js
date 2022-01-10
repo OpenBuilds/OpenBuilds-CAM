@@ -51,8 +51,14 @@ function makeGcodeExec() {
           var ZClearance = toolpathsInScene[j].userData.camZClearance;
           var rampplunge = toolpathsInScene[j].userData.tRampPlunge == "" ? true : false;
 
-
-          var rotatingDiameter=parseFloat($("#projectdiameter").val());  // get diameter if XZA CNC is selected
+          
+          //  only apply rotating diameter if Revolution is selected
+          var type = loadSetting("machinetype");
+          if(type=="Revolution"){
+            var rotatingDiameter=parseFloat($("#projectWD").val());  
+          }else{
+            var rotatingDiameter=0;
+          }
 
        
         toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, ZClearance, rampplunge, rotatingDiameter);
