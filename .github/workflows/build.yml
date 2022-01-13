@@ -9,6 +9,7 @@ on:
 jobs:
   release:
     runs-on: ${{ matrix.os }}
+    environment: production
 
     strategy:
       matrix:
@@ -23,14 +24,28 @@ jobs:
         with:
           node-version: 16
 
+      - name: Prepare for app notarization
+        if: startsWith(matrix.os, 'macos')
+        # Import Apple API key for app notarization on macOS
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.github_token }}
+          mac_certs: ${{ secrets.MAC_CERTS }}
+          mac_certs_password: ${{ secrets.MAC_CERTS_PASSWORD }}
           args: "-p always"
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+        env:
+          # macOS notarization API key
+          api_key_id: ${{ secrets.API_KEY_ID }}
+          api_key_issuer_id: ${{ secrets.API_KEY_ISSUER_ID }}
