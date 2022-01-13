@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-		"release": "electron-builder --mac --windows --linux --publish always",
+    "release": "electron-builder --mac --windows --linux --publish always",
     "postinstall": "electron-builder install-app-deps"
   },
   "repository": {
@@ -24,11 +24,14 @@
   "homepage": "https://github.com/rlwoodjr/Basic-CAM#readme",
   "devDependencies": {
     "electron": "^16.0.5",
-    "electron-builder": "^22.14.5"
+    "electron-builder": "^22.14.5",
+    "electron-builder-notarize": "^1.2.0"
   },
   "build": {
     "appId": "bobscnc.cam",
+    "afterSign": "electron-builder-notarize",
     "mac": {
+      "hardenedRuntime": true,
       "icon": "icon.icns",
       "category": "public.app-category.graphics-design"
     },
