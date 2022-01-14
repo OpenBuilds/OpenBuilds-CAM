@@ -268,7 +268,7 @@ $(document).ready(function() {
     </form>
     <hr/>
     <div class="input-addon">
-      <input style="width: 100%;" id="texttorender" class="active-border" value="Type Here"></input>
+      <input style="width: 100%; font-size:30px" id="texttorender" class="active-border" value="Type Here"></input>
     </div>
     </div>
     <div class="dialog-actions" id="statusFooter">
@@ -296,11 +296,6 @@ $(document).ready(function() {
     var fontsize = $('#fontsize').val();
     $('#texttorender').css('font-size', fontsize + "px");
   }).val("Bowlby+One+SC");
-
-  $('#fontsize').change(function() {
-    var fontsize = $('#fontsize').val();
-    $('#texttorender').css('font-size', fontsize + "px");
-  });
 
   $("#CreateText").on("click", function() {
     event.preventDefault();
