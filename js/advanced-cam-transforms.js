@@ -12,6 +12,18 @@ function showScaleWindow(object) {
   var xcenter = (bbox2.max.x - (bbox2.max.x - bbox2.min.x) / 2).toFixed(2);
   var ycenter = (bbox2.max.y - (bbox2.max.y - bbox2.min.y) / 2).toFixed(2);
   // console.log(width, height, left, bottom)
+
+  
+  let unitSwitch = document.getElementById("unitSwitch");
+  if(unitSwitch.checked){
+    var unit="inch"
+  }else{
+    var unit="mm"
+  }
+ 
+
+
+
   var template = `
 
   <ul data-role="tabs" data-expand="true">
@@ -32,7 +44,7 @@ function showScaleWindow(object) {
               <input type="text" class="cam-form-field active-border" value="` + width + `" id="scaleWidth"  objectseq="` + i + `" style="text-align: right;">
             </div>
           </td>
-          <td>mm</td>
+          <td>${unit}</td>
         </tr>
         <tr>
           <td>Height: </td>
@@ -42,7 +54,7 @@ function showScaleWindow(object) {
               <input type="text" class="cam-form-field active-border" value="` + height + `" id="scaleHeight"  objectseq="` + i + `" style="text-align: right;">
             </div>
           </td>
-          <td>mm</td>
+          <td>${unit}</td>
         </tr>
       </table>
       <button type="button" class="button alert" onclick="scalewindow.style.visibility = 'hidden';" aria-label="Close">
@@ -90,7 +102,7 @@ function showScaleWindow(object) {
             </div>
           </td>
           <td>
-            mm
+          ${unit}
           </td>
         </tr>
         <tr>
@@ -113,7 +125,7 @@ function showScaleWindow(object) {
             </div>
           </td>
           <td>
-            mm
+          ${unit}
           </td>
         </tr>
       </table>

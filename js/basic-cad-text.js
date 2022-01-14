@@ -1,5 +1,11 @@
 function addText() {
   var fontsize = $('#fontsize').val();
+
+  var unitSwitch = document.getElementById("unitSwitch");
+  if(unitSwitch.checked){
+    fontsize=fontsize/25.4;
+  }
+ 
   var font = $("#font").val().replace(/\+/g, ' ');
   // split font into family and weight
   font = font.split(':');
@@ -104,23 +110,84 @@ function getTextFromData(fontData, fontVariant, text, fontSize, x, y) {
 
 function getTextFromFile(file, text, fontSize, offsetX, offsetY) {
   return getFont(file).then(function(font) {
-    console.log(font)
-    var path = font.getPath(text, 0, 0, fontSize);
-    var res = '';
+      
+    spaceWidth=parseFloat($("#fontspacing").val());
 
+    var unitSwitch = document.getElementById("unitSwitch");
+    if(unitSwitch.checked){
+      var spaceWidth=spaceWidth/25.4;
+      var xpos=16;
+      var ypos=.4;
+    }else{
+      var xpos=0;
+      var ypos=5;
+ 
+    }
+  
+    var path = font.getPath(text, ypos, xpos, fontSize);
+    var res = '';
+    var xSpace=0;
+    var zFound=[];
+    var ctr=1;
+    var ctr2=1;
+    var x0=0;
+    var x1=0;
+    var x2=0;
+    var xmax1=0;
+    var xmax2=0;
+    var maxEqual=[];   
+   
+    // Allow change of spacing in between letters 
+    // run through the letters to find letters that have 2 parts (example A, B, P, R..) 
+    // send it to next for loop so spacing is not added for the second part of th letter
+    for (var i = 0; i < path.commands.length; i++) {
+      
+      var c = path.commands[i];
+         
+      if (c.type == 'M' || c.type == 'L'){
+        x0=c.x
+      }else if (c.type == 'Q'){
+        x1=Math.max(c.x,c.x1)
+      }else if (c.type == 'C'){
+        x2=Math.max(c.x,c.x1,c.x2)
+      }
+      if (c.type == 'Z'){
+        zFound[ctr]=i;
+      if(xmax1==xmax2){
+        maxEqual[ctr2]=zFound[ctr-1];
+        ctr2++;
+        }
+        xmax2=xmax1
+        ctr++;
+      }
+      xmax1=Math.max(x0,x1,x2,xmax1)
+    }
+      
     function xy(x, y) {
       return (offsetX + x) + ',' + (offsetY - y);
     }
+    ctr2=1;
 
     for (var i = 0; i < path.commands.length; i++) {
       var c = path.commands[i];
       res += ' ' + c.type;
       if (c.type == 'M' || c.type == 'L')
-        res += ' ' + xy(c.x, c.y);
+        res += ' ' + xy(c.x+xSpace, c.y);
       else if (c.type == 'Q')
-        res += xy(c.x1, c.y1) + ' ' + xy(c.x, c.y);
+        res += xy(c.x1+xSpace, c.y1) + ' ' + xy(c.x+xSpace, c.y);
       else if (c.type == 'C')
-        res += xy(c.x1, c.y1) + ' ' + xy(c.x2, c.y2) + ' ' + xy(c.x, c.y);
+        res += xy(c.x1+xSpace, c.y1) + ' ' + xy(c.x2+xSpace, c.y2) + ' ' + xy(c.x+xSpace, c.y);
+
+
+      // only add the spacing betwen letters it is the nex letter.  
+      if (c.type == 'Z'){
+        if(maxEqual[ctr2]==i){
+          console.log(ctr2+" ,"+maxEqual[ctr2])
+          ctr2++;
+        }else{
+          xSpace+=spaceWidth;
+        }
+      }
     }
     // console.log(res)
     return res;
@@ -187,12 +254,21 @@ $(document).ready(function() {
               </div>
             </td>
           </tr>
+          <tr>
+          <td>Spacing: </td>
+          <td>
+            <div class="input-addon">
+              <span class="input-addon-label-left active-border"><i class="fas fa-arrows-alt-h"></i></span>
+              <input type="number" class="cam-form-field cam-form-field-right  active-border" id="fontspacing" value="1" />
+            </div>
+          </td>
+        </tr>
         </table>
       </div>
     </form>
     <hr/>
     <div class="input-addon">
-      <input style="width: 100%;" id="texttorender" class="active-border" value="Type Here"></input>
+      <input style="width: 100%; font-size:30px" id="texttorender" class="active-border" value="Type Here"></input>
     </div>
     </div>
     <div class="dialog-actions" id="statusFooter">
@@ -220,11 +296,6 @@ $(document).ready(function() {
     var fontsize = $('#fontsize').val();
     $('#texttorender').css('font-size', fontsize + "px");
   }).val("Bowlby+One+SC");
-
-  $('#fontsize').change(function() {
-    var fontsize = $('#fontsize').val();
-    $('#texttorender').css('font-size', fontsize + "px");
-  });
 
   $("#CreateText").on("click", function() {
     event.preventDefault();
