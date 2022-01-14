@@ -127,7 +127,6 @@ function getTextFromFile(file, text, fontSize, offsetX, offsetY) {
     var path = font.getPath(text, ypos, xpos, fontSize);
     var res = '';
     var xSpace=0;
-    var spaceWidth=parseFloat($("#fontspacing").val());
     var zFound=[];
     var ctr=1;
     var ctr2=1;
