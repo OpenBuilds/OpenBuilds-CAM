@@ -208,7 +208,7 @@ function setupJob(i) {
             <div class="dropdown-button ">
                 <button class="button success dropdown-toggle"  style="margin: 2px"  >Select Bit</button>
                 <ul class="d-menu" data-role="dropdown" style="padding: 5px 15px; font-size:18px">
-                  <li onclick="setBit(${i},${bit[0]},${zSafe},${feedRate[0]},${stepDepth[0]},${plungeRate[0]},${zCutDepth})" >${bit[0]})"</li> 
+                  <li onclick="setBit(${i},${bit[0]},${zSafe},${feedRate[0]},${stepDepth[0]},${plungeRate[0]},${zCutDepth})" >${bit[0]}</li> 
                   <li onclick="setBit(${i},${bit[1]},${zSafe},${feedRate[1]},${stepDepth[1]},${plungeRate[1]},${zCutDepth})" >${bit[1]}</li> 
                   <li onclick="setBit(${i},${bit[2]},${zSafe},${feedRate[2]},${stepDepth[2]},${plungeRate[2]},${zCutDepth})" >${bit[2]}</li> 
                   <li onclick="setBit(${i},${bit[3]},${zSafe},${feedRate[3]},${stepDepth[3]},${plungeRate[3]},${zCutDepth})" >${bit[3]}</li> 

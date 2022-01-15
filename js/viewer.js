@@ -423,6 +423,8 @@ function animate() {
       while (scene.children.length > 1 || workspace.getObjectByName("aCylinder") ||workspace.getObjectByName("aCube")) {
         scene.remove(scene.children[1]);
         workspace.remove(workspace.getObjectByName("aCylinder"));
+        workspace.remove(workspace.getObjectByName('seamLine1'));
+        workspace.remove(workspace.getObjectByName('seamLine2'));
         workspace.remove(workspace.getObjectByName('aCube'));
       }
 
@@ -689,6 +691,7 @@ function changeUnits() {
 
   selectMachine(type);  // reset the grid size
   setShapeValues(unitSwitch.checked)  
+  showProject();
   redrawGrid();
   resetView();
 }
@@ -717,10 +720,13 @@ function showProject(){
 
   if(type=="Revolution"){
       workspace.remove(workspace.getObjectByName('aCylinder'));
+      workspace.remove(workspace.getObjectByName('seamLine1'));
+      workspace.remove(workspace.getObjectByName('seamLine2'));
+      
       if(OD>0){
 
       var aCylinder = new THREE.Mesh(new THREE.CylinderGeometry(OD/2, OD/2, xLen, 32, 1, false), new THREE.MeshPhongMaterial({
-        color: 0x0000ff,
+        color: 0x1F42A5,
         specular: 0x0000ff,
         shininess: 00
       }));
@@ -730,15 +736,44 @@ function showProject(){
       aCylinder.position.x = xLen/2;
       aCylinder.position.y = 0;
       aCylinder.position.z = 0;
-      aCylinder.material.opacity = 0.1;
+      aCylinder.material.opacity = 0.3;
       aCylinder.material.transparent = true;
       aCylinder.castShadow = false;
       aCylinder.visible = true;
       workspace.add(aCylinder)
       }
+
+      ypos=Math.PI*OD/2
+
+      var geometrySpline1 = new THREE.Geometry();
+      geometrySpline1.vertices.push(
+      new THREE.Vector3( 0, ypos, 0 ),
+      new THREE.Vector3(xLen, ypos, 0),
+      );
+
+      var geometrySpline2 = new THREE.Geometry();
+      geometrySpline2.vertices.push(
+      new THREE.Vector3( 0, -ypos, 0 ),
+      new THREE.Vector3(xLen, -ypos, 0),
+      );
+
+      var material = new THREE.MeshBasicMaterial({color: 0x1F42A5,side: THREE.DoubleSide});
+
+      var seamLine1 = new THREE.Line( geometrySpline1, material );
+      seamLine1.name = "seamLine1";
+      workspace.add(seamLine1)
+  
+      var seamLine2 = new THREE.Line( geometrySpline2, material );
+      seamLine2.name = "seamLine2";
+      workspace.add(seamLine2)
+
+
+
+
+
   }else{
     ///   add rectangular workpiece code
-    if(OD>0){
+    if(OD>0){5
 
     var unit = $('#unitSwitch').prop('checked');
     if(unit){
@@ -750,7 +785,7 @@ function showProject(){
     
     workspace.remove(workspace.getObjectByName('aCube'));
     var aCube= new THREE.Mesh(new THREE.BoxGeometry( xLen, OD, thick ),new THREE.MeshPhongMaterial({
-    color: 0x0000ff,
+    color: 0x1F42A5,
     specular: 0x0000ff,
     shininess: 00
   }));
@@ -760,7 +795,7 @@ function showProject(){
       aCube.position.x = xLen/2;
       aCube.position.y = OD/2;
       aCube.position.z = -thick/2;
-      aCube.material.opacity = 0.1;
+      aCube.material.opacity = 0.3;
       aCube.material.transparent = true;
       aCube.castShadow = false;
       aCube.visible = true;

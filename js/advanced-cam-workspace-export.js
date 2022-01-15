@@ -287,9 +287,9 @@ function parseLoadWorkspace(json, resetViewAfter) {
 
 // fix for .toJSON not supporting the export of .position data: https://github.com/mrdoob/three.js/issues/13903
 function changePositionToGeoTranslate() {
-  for (i = 0; i < objectsInScene.length; i++) {
+  for (i = 1; i < objectsInScene.length; i++) {
     var object = objectsInScene[i]
-    for (j = 0; j < object.children.length; j++) {
+    for (j = 1; j < object.children.length; j++) {
       object.children[j].geometry.translate(object.children[j].position.x, object.children[j].position.y, 0)
       object.children[j].geometry.translate(object.position.x, object.position.y, 0)
       object.children[j].geometry.verticesNeedUpdate = true
