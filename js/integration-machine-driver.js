@@ -26,7 +26,7 @@ function checkIfDriverIsInstalled() {
         setTimeout(function() {
           // console.log('checking for update')
           // printLog("<span class='fg-green'>Checking for Updates</span>")
-          $.getJSON("https://api.github.com/repos/OpenBuilds/OpenBuilds-CONTROL/releases/latest", {
+          $.getJSON("https://api.github.com/repos/rlwoodjr/Basic-CONTROL/releases/latest", {
             crossDomain: true
           }).done(function(release) {
             var availVersion = release.name.substr(1)
@@ -70,7 +70,7 @@ function hasDriver(version) {
   $("#DriverDetected").show();
   alreadyDetected = true;
   $('#installDriversOnSettingspage').hide();
-  $('#detectedVersion').html("<i class='fas fa-check fa-fw fg-green'></i>1. Detected Basic CONTROL: " + version)
+  $('#detectedVersion').html("<i class='fas fa-check fa-fw fg-green'></i>1. Detected Basic SENDER: " + version)
 }
 
 function noDriver() {
@@ -79,8 +79,8 @@ function noDriver() {
   $("#DriverDetected").hide();
   $("#noDriverDetected").show();
   $('#installDriversOnSettingspage').show();
-  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting Basic CONTROL")
-  $('#installDriverMessage').html('Connecting to a machine, requires that you have the Basic CONTROL installed.')
+  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting Basic SENDER")
+  $('#installDriverMessage').html('Connecting to a machine, requires that you have the Basic SENDER installed.')
 }
 
 function oldDriver(version, availVersion) {
@@ -89,8 +89,8 @@ function oldDriver(version, availVersion) {
   $("#DriverDetected").hide();
   $("#noDriverDetected").show();
   $('#installDriversOnSettingspage').show();
-  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. You are running an outdated version of the Basic CONTROL v." + version + ". Please update to v" + availVersion)
-  $('#installDriverMessage').html('Connecting to a machine, requires that you have the latest Basic CONTROL installed. <br>You are running version <code>' + version + "</code> - Please update to version <code>" + availVersion + "</code> or newer...")
+  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. You are running an outdated version of the Basic SENDER v." + version + ". Please update to v" + availVersion)
+  $('#installDriverMessage').html('Connecting to a machine, requires that you have the latest Basic SENDER installed. <br>You are running version <code>' + version + "</code> - Please update to version <code>" + availVersion + "</code> or newer...")
   $('#installDriverHelp').hide();
 }
 // Loop to check if we can use Machine Integration
@@ -108,7 +108,7 @@ setInterval(function() {
 }, 1000);
 
 function downloadDrivers(os) {
-  $.getJSON("https://api.github.com/repos/OpenBuilds/OpenBuilds-CONTROL/releases/latest", {
+  $.getJSON("https://api.github.com/repos/rlwoodjr/Basic-CONTROL/releases/latest", {
     crossDomain: true
   }).done(function(release) {
     console.log(release)
@@ -153,7 +153,7 @@ function downloadDrivers(os) {
 }
 
 function getAvailableDriverVersion() {
-  $.getJSON("https://api.github.com/repos/OpenBuilds/OpenBuilds-CONTROL/releases/latest", {
+  $.getJSON("https://api.github.com/repos/rlwoodjr/Basic-CONTROL/releases/latest", {
     crossDomain: true
   }).done(function(release) {
     $('.omdavailversion').html(release.name)
@@ -215,7 +215,7 @@ function sendGcodeToMyMachine() {
       contentType: false
     }).done(function(data) {
       // console.log(data);
-      var message = `GCODE Successfully sent to Basic CONTROL! Continue from the Basic CONTROL window`
+      var message = `GCODE Successfully sent to Basic SENDER! Continue from the Basic SENDER window`
       Metro.toast.create(message, null, 4000);
     });
   };
