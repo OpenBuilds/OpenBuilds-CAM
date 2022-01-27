@@ -108,7 +108,7 @@ setInterval(function() {
 }, 1000);
 
 function downloadDrivers(os) {
-  $.getJSON("https://api.github.com/repos/rlwoodjr/Basic-CONTROL/releases/latest", {
+  $.getJSON("https://api.github.com/repos/rlwoodjr/Basic-SENDER/releases/latest", {
     crossDomain: true
   }).done(function(release) {
     console.log(release)
