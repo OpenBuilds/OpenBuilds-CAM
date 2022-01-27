@@ -1,6 +1,6 @@
 {
   "name": "bobscnc-basic-cam",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Basic CAM - Cloud based software for converting DXF, SVG, Bitmap (BMP, JPG, PNG, GIF) and Gerber X274 to GCODE",
   "main": "main.js",
   "scripts": {
