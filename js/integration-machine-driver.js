@@ -26,7 +26,7 @@ function checkIfDriverIsInstalled() {
         setTimeout(function() {
           // console.log('checking for update')
           // printLog("<span class='fg-green'>Checking for Updates</span>")
-          $.getJSON("https://api.github.com/repos/rlwoodjr/Basic-CONTROL/releases/latest", {
+          $.getJSON("https://api.github.com/repos/rlwoodjr/Basic-SENDER/releases/latest", {
             crossDomain: true
           }).done(function(release) {
             var availVersion = release.name.substr(1)
@@ -153,7 +153,7 @@ function downloadDrivers(os) {
 }
 
 function getAvailableDriverVersion() {
-  $.getJSON("https://api.github.com/repos/rlwoodjr/Basic-CONTROL/releases/latest", {
+  $.getJSON("https://api.github.com/repos/rlwoodjr/Basic-SENDER/releases/latest", {
     crossDomain: true
   }).done(function(release) {
     $('.omdavailversion').html(release.name)
