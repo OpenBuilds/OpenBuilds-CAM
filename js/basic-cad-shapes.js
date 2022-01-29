@@ -224,7 +224,8 @@ function addTriangle(xCenter,yCenter,sideA,sideB,sideC){
     resetView();
     }, 250);
   }else{
-
+    var message = `Triange Creation Error - The sum of the lengths of any 2 sides of a triangle must be greater than the length of the 3rd side.`
+    Metro.toast.create(message, null, 10000, 'bg-red');
   }
 }
 
