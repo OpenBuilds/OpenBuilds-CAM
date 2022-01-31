@@ -37,6 +37,8 @@ function initAdvancedCAM() {
       updateCamUserData(objectseq);
     } else if (id.indexOf('tspeed') == 0) {
       updateCamUserData(objectseq);
+    } else if (id.indexOf('tzdepth') == 0) {
+      updateCamUserData(objectseq);
     } else if (id.indexOf('tplungespeed') == 0) {
       updateCamUserData(objectseq);
     } else if (id.indexOf('ttooldia') == 0) {
@@ -169,7 +171,7 @@ function setupJob(i) {
       <tr>
         <td>Name:</td>
         <td>
-          <div ">
+          <div>
             <input data-role="input" autofocus type="text" class="cam-form-field cam-form-field-right active-border" value="${toolpathsInScene[i].name}" id="tOpName${i}"  objectseq="${i}" style="width: 350px; min="0" style="text-align: center;">
           </div>
         </td>
