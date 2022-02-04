@@ -1,10 +1,10 @@
 # Basic CAM
 Basic CAM - Cloud based software for converting DXF, SVG, Bitmap (BMP, JPG, PNG, GIF) and Gerber X274 to GCODE
 
-## Access live at:  cam.bobscnc.com
+## Access live:
 Access it live at [https://cam.bobscnc.com](https://cam.bobscnc.com) 
 
-## or Download
+## or Download:
 
 #### Latest Version
 Click to download latest version:  
