@@ -482,3 +482,7 @@ function isJson(item) {
 
   return false;
 }
+
+function openAboutDialog() {
+  Metro.dialog.open("#aboutDialog");
+}
