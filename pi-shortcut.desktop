@@ -2,7 +2,7 @@
 Name=Basic-CAM
 Version=1.0
 Comment=BasicCAM
-Exec=bash -c "cd ~/Basic-CAM; git fetch --all; git reset --hard origin/master; MESA_EXTENSION_OVERRIDE=-GL_MESA_framebuffer_flip_y ~/Basic-CAM/node_modules/.bin/electron --no-sandbox ~/Basic-CAM"
+Exec=bash -c "cd ~/Basic-CAM; git fetch --all; git reset --hard origin/master; MESA_EXTENSION_OVERRIDE=-GL_MESA_framebuffer_flip_y ~/Basic-CAM/node_modules/.bin/electron ~/Basic-CAM"
 Icon=/home/pi/Basic-CAM/favicon-96x96.png
 Terminal=false
 Type=Application
