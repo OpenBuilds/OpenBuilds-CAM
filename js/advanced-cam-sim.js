@@ -10,32 +10,6 @@ function disableSim() {
   $('#runSimBtn').prop('disabled', true)
 }
 
-function simAnimate() {
-  if (cone) {
-    // 160widthx200height offset?
-    if (cone.position) {
-      var conepos = toScreenPosition(cone, camera)
-      var offset = $("#renderArea").offset()
-      var farside = $("#renderArea").offset().left + $("#renderArea").outerWidth()
-      var bottomside = $("#renderArea").offset().top + $("#renderArea").outerHeight()
-      // console.log(conepos)
-      if (conepos.y < offset.top) {
-        conepos.y = offset.top + 20;
-      }
-      if (conepos.y > bottomside - 120) {
-        conepos.y = bottomside - 120;
-      }
-      if (conepos.x < 70) {
-        conepos.x = 70;
-      }
-
-      if (conepos.x > farside - 90) {
-        conepos.x = farside - 90;
-      }
-      $("#conetext").css('left', conepos.x - 60 + "px").css('top', conepos.y - 110 + "px");
-    }
-  }
-}
 
 function toScreenPosition(obj, camera) {
   var vector = new THREE.Vector3(obj.position.x, obj.position.y + 10, obj.position.z + 30);
@@ -92,6 +66,7 @@ function sim(startindex) {
       z: 0,
       e: 0,
       f: 0,
+      a: 0,
       feedrate: null,
       extruding: false
     };
@@ -100,7 +75,7 @@ function sim(startindex) {
     cone.visible = true
     var posx = object.userData.lines[0].p2.x; //- (sizexmax/2);
     var posy = object.userData.lines[0].p2.y; //- (sizeymax/2);
-    var posz = object.userData.lines[0].p2.z + 20;
+    var posz = object.userData.lines[0].p2.z;// + 20;
     cone.position.x = posx;
     cone.position.y = posy;
     cone.position.z = posz;
@@ -119,13 +94,39 @@ function sim(startindex) {
     $('#runSimBtn').hide()
     $('#stopSimBtn').show()
     $('#editorContextMenu').hide() // sometimes we launch sim(linenum) from the context menu... close it once running
+    
     var runSim = function() {
       // editor.gotoLine(simIdx + 1)
       $('#gcodesent').html(simIdx + 1);
+
+
+      var unitSwitch = document.getElementById("unitSwitch");
+      if(unitSwitch.checked){
+        var simUnit=" in"
+        var simFeedRate=" in/min"
+        var simScale=25.4
+
+        cone.scale.x=1/25.4
+        cone.scale.y=1/25.4
+        cone.scale.z=1/25.4
+
+     } else{
+        var simUnit=" mm"
+        var simFeedRate=" mm/min"
+        var simScale=1.0
+
+        cone.scale.x=1.0
+        cone.scale.y=1.0
+        cone.scale.z=1.0
+     }
+
+
       // $('#simgcode').html(object.userData.lines[simIdx].args.origtext);
       var posx = object.userData.lines[simIdx].p2.x; //- (sizexmax/2);
       var posy = object.userData.lines[simIdx].p2.y; //- (sizeymax/2);
       var posz = object.userData.lines[simIdx].p2.z;
+
+
 
       if (object.userData.lines[simIdx].args.isFake) {
         if (object.userData.lines[simIdx].args.text.length < 1) {
@@ -139,40 +140,85 @@ function sim(startindex) {
         var simTime = object.userData.lines[simIdx].p2.timeMins / timefactor;
       }
       if (object.userData.lines[simIdx].p2.feedrate == null) {
-        var feedrate = 0.00
-        simTime = 0.01
+        var feedrate = 25400.00/simScale
+        var simTime = 0.1 / timefactor;
+        
       } else {
         var feedrate = object.userData.lines[simIdx].p2.feedrate
       }
 
+
+      var unitSwitch = document.getElementById("unitSwitch");
+      if(unitSwitch.checked){
+        var simUnit=" in "
+        var simFeedRate=" in/min "
+        var simScale=25.4
+
+        cone.scale.x=1/25.4
+        cone.scale.y=1/25.4
+        cone.scale.z=1/25.4
+
+     } else{
+        var simUnit=" mm "
+        var simFeedRate=" mm/min "
+        var simScale=1.0
+
+        cone.scale.x=1.0
+        cone.scale.y=1.0
+        cone.scale.z=1.0
+     }
+
+
+
+
+     if(  $('#projectWDlabel').text()=="Project Diameter A:"){
+      var axisLabel='A'
+      var simUnitY=" &#176;"  //degree symbol
+      var coneAngle= Math.atan2(posy, posz)
+      var posay=coneAngle* 180 / Math.PI
+      cone.rotation.x=-coneAngle-Math.PI/2
+      posy = posy + 20/simScale*Math.sin(coneAngle);
+      posz = posz + 20/simScale*Math.cos(coneAngle);
+
+    }else{
+      var axisLabel='Y'
+      var simUnitY=simUnit
+      posy=posy
+      posz=posz + 20/simScale
+      cone.rotation.x=-Math.PI/2
+      var posay=posy
+    }
+
+
       $("#conetext").html(
-        ` <table style="border: 1px solid #888">
+        ` <table style="border: 1px solid #888" width="200px">
             <tr class="stripe" style="border-bottom: 1px solid #888">
               <td><b>CMD</b></td><td align="right"><b>` + text + `</b></td>
             </tr>
             <tr class="stripe" style="border-bottom: 1px solid #888">
-              <td><b>X:</b></td><td align="right"><b>` + posx.toFixed(2) + `mm</b></td>
+              <td><b>X:</b></td><td align="right"><b>` + posx.toFixed(2) + `${simUnit}</b></td>
             </tr>
             <tr class="stripe" style="border-bottom: 1px solid #888">
-              <td><b>Y:</b></td><td align="right"><b>` + posy.toFixed(2) + `mm</b></td>
+              <td><b>${axisLabel}:</b></td><td align="right"><b>` + posay.toFixed(2) + `${simUnitY}</b></td>
             </tr>
             <tr class="stripe" style="border-bottom: 1px solid #888">
-              <td><b>Z:</b></td><td align="right"><b>` + posz.toFixed(2) + `mm</b></td>
+              <td><b>Z:</b></td><td align="right"><b>` + posz.toFixed(2) + `${simUnit}</b></td>
             </tr>
             <tr class="stripe" style="border-bottom: 1px solid #888">
-              <td><b>F:</b></td><td align="right"><b>` + feedrate + `mm/min</b></td>
+              <td><b>F:</b></td><td align="right"><b>` + feedrate.toFixed(1) + `${simFeedRate}</b></td>
             </tr>
           </table>
         `);
 
-
+ 
       // if (simTime < 0.1) { simTime = 0.1};
       var simTimeInSec = simTime * 60;
       if (!object.userData.lines[simIdx].args.isFake) {
         TweenMax.to(cone.position, simTimeInSec, {
           x: posx,
           y: posy,
-          z: posz + 20,
+          z: posz,
+         
           onComplete: function() {
             if (simstopped == true) {
               //return
