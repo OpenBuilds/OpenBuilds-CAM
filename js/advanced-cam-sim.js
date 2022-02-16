@@ -141,7 +141,7 @@ function sim(startindex) {
       }
       if (object.userData.lines[simIdx].p2.feedrate == null) {
         var feedrate = 25400.00/simScale
-        var simTime = 0.1 / timefactor;
+        var simTime = 0.01 / timefactor;
         
       } else {
         var feedrate = object.userData.lines[simIdx].p2.feedrate
@@ -169,9 +169,9 @@ function sim(startindex) {
      }
 
 
+     var unitAppend = document.getElementsByClassName("prepend");
 
-
-     if(  $('#projectWDlabel').text()=="Project Diameter A:"){
+     if(unitAppend[0].textContent==="Project Diameter A:"){
       var axisLabel='A'
       var simUnitY=" &#176;"  //degree symbol
       var coneAngle= Math.atan2(posy, posz)
