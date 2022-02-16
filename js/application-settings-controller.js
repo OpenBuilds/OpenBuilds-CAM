@@ -188,8 +188,10 @@ window.parseBoolean = function(string) {
 function selectMachine(type) {
   //console.log("Loading Machine Template")
   var unit = $('#unitSwitch').prop('checked');
-  $('#projectWDlabel').text("Project Width Y");
- 
+  var unitAppend = document.getElementsByClassName("prepend");
+  unitAppend[0].textContent="Project Width Y"
+
+
   if (type == "E3") {
     $('#context_toggle2').html(type);
       if(unit==true){
@@ -280,7 +282,7 @@ function selectMachine(type) {
         var zaxis = 127
       }
   } else if (type == "Revolution") {
-    $('#projectWDlabel').text("Project Diameter A:");
+    unitAppend[0].textContent="Project Diameter A:"
     $('#context_toggle2').html(type);
       if(unit==true){
         var xaxis = 24.0
