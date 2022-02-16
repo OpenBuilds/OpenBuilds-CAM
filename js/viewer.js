@@ -397,7 +397,17 @@ function init3D() {
 function animate() {
   if (!pauseAnimation) {
     camera.updateMatrixWorld();
-    simAnimate();
+
+    if (cone) {
+      // 160widthx200height offset?
+      if (cone.position) {
+        
+        var farside = $("#renderArea").offset().left
+        var topside = $("#renderArea").offset().top 
+        }
+        $("#conetext").css('left', farside + 45 +"px").css('top', topside  -25 +"px");
+  
+      }
 
     // half-hide toolpaths in delete/move mode
     if (mouseState == "select") {
