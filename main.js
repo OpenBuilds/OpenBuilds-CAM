@@ -4,12 +4,6 @@ const createWindow = () => {
     const mainWindow = new BrowserWindow({
         width: 1025,
         height: 850,
-        fullscreen: false,
-        center: true,
-        resizable: true,
-        maximizable: true,
-        title: "Basic=CAM ",
-        frame: false,
         autoHideMenuBar: true,
     });
 
