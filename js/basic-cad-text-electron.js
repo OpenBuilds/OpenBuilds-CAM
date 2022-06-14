@@ -1,10 +1,7 @@
 function addText() {
   var fontsize = $('#fontsize').val();
 
-  var unitSwitch = document.getElementById("unitSwitch");
-  if(unitSwitch.checked){
-    fontsize=fontsize/25.4;
-  }
+ 
  
   var font = $("#font").val().replace(/\+/g, ' ');
   // split font into family and weight
