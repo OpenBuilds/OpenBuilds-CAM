@@ -104,6 +104,7 @@
   padding-right: 10px;
   border: 1px solid;
   border-color: #ddd;
+  font-size: 30px;
 }
 
 #texttorender:focus {
