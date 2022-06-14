@@ -3,7 +3,7 @@ function addText() {
 
   var unitSwitch = document.getElementById("unitSwitch");
   if(unitSwitch.checked){
-    fontsize=fontsize/25.4;
+    //fontsize=fontsize/2;
   }
  
   var font = $("#font").val().replace(/\+/g, ' ');
@@ -292,9 +292,7 @@ $(document).ready(function() {
     font = font.split(':');
     // set family on paragraphs
     $('#texttorender').css('font-family', font[0]);
-    // console.log('font-family', font[0])
-    var fontsize = $('#fontsize').val();
-    $('#texttorender').css('font-size', fontsize + "px");
+
   }).val("Bowlby+One+SC");
 
   $("#CreateText").on("click", function() {

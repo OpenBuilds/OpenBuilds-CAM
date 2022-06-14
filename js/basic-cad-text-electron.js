@@ -289,9 +289,7 @@ $(document).ready(function() {
     font = font.split(':');
     // set family on paragraphs
     $('#texttorender').css('font-family', font[0]);
-    // console.log('font-family', font[0])
-    var fontsize = $('#fontsize').val();
-    $('#texttorender').css('font-size', fontsize + "px");
+
   }).val("Bebas+Neue");
 
   $("#CreateText").on("click", function() {
