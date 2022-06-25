@@ -63,10 +63,10 @@ function drawFile(name, tag, flip) {
   }
   console.log(editor, version)
   if (editor == "inkscape") {
-    if (version > 1.0) {
-      resol = 96;
-    } else if (version > 0.91) {
+    if (version > 0.91) {
       resol = 90;
+    } else if (version > 1.0) {
+      resol = 96;
     } else {
       resol = 96;
     }
