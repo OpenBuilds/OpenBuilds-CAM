@@ -386,47 +386,52 @@
 								<div class="row" style="margin-left: 1px; margin-right: 1px;">
 									<div class="cell p-0">
 										<div id="noDriverDetected" style="display:none;">
-											<nav data-role="ribbonmenu">
-												<ul class="tabs-holder">
-													<li><a href="#tab-win"><i class="fab fa-windows"></i>&nbsp;Windows</a></li>
-													<li><a href="#tab-mac"><i class="fab fa-apple"></i>&nbsp;Mac</a></li>
-													<li><a href="#tab-linux"><i class="fab fa-linux"></i>&nbsp;Linux</a></li>
-												</ul>
 
-												<div class="content-holder">
-													<div class="section" id="tab-win">
-														<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-															<a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows (EXE)</a>
-															<a href="#" class="info omdavailversion">v1.0.0</a>
-														</div><br>
-													</div>
-													<div class="section" id="tab-mac">
-														<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-															<a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> MacOS (DMG)</a>
-															<a href="#" class="info omdavailversion">v1.0.0</a>
-														</div><br>
-													</div>
-													<div class="section" id="tab-linux">
-														<div>
+											<p class="text-small mb-1">Unable to connect to CONTROL: Please Save your GCODE then Open it in OpenBuilds CONTROL </p>
+											<button class="button success drop-shadow disabled" title="Save GCODE" id="gcodesavebtn3" onclick="saveFile();"><span id="gcodeexporticon2" class="fa fa-save icon fg-white"></span> Save GCODE</button>
+											<hr>
+											<p class="text-small m-0 p-0" id="installDriverMessage">Connecting to a machine, requires that you have the latest OpenBuilds CONTROL installed.</p>
+											<p class="text-small mb-1" id="installDriverHelp">If you have not installed it yet, you can download it below, or if you have the latest version installed already, please start it.<br> If you still see this message, we are
+												experiencing a temporary problem connecting to it and you can still use the Save button above<br>
+
+												<nav data-role="ribbonmenu">
+													<ul class="tabs-holder">
+														<li><a href="#tab-win"><i class="fab fa-windows"></i>&nbsp;Windows</a></li>
+														<li><a href="#tab-mac"><i class="fab fa-apple"></i>&nbsp;Mac</a></li>
+														<li><a href="#tab-linux"><i class="fab fa-linux"></i>&nbsp;Linux</a></li>
+													</ul>
+
+													<div class="content-holder">
+														<div class="section" id="tab-win">
 															<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-																<a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux (DEB)</a>
+																<a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows (EXE)</a>
 																<a href="#" class="info omdavailversion">v1.0.0</a>
-															</div>
-															<p>
+															</div><br>
+														</div>
+														<div class="section" id="tab-mac">
+															<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
+																<a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> MacOS (DMG)</a>
+																<a href="#" class="info omdavailversion">v1.0.0</a>
+															</div><br>
+														</div>
+														<div class="section" id="tab-linux">
+															<div>
 																<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-																	<a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux (AppImage)</a>
+																	<a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux (DEB)</a>
 																	<a href="#" class="info omdavailversion">v1.0.0</a>
 																</div>
+																<p>
+																	<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
+																		<a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux (AppImage)</a>
+																		<a href="#" class="info omdavailversion">v1.0.0</a>
+																	</div>
+															</div>
 														</div>
 													</div>
-												</div>
-											</nav>
+												</nav>
 
 
-											<p class="text-secondary" id="installDriverMessage">Connecting to a machine, requires that you have the OpenBuilds CONTROL installed.</p>
-											<p class="text-small" id="installDriverHelp">If you have not installed it yet, you can download it above, or if you have the latest version installed already, please start it.<br> If you still see this message, we are
-												experiencing a problem detecting your driver<br> You can also export
-												GCODE and send it to your machine</p>
+
 
 										</div>
 
