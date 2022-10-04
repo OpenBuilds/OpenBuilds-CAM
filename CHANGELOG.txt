@@ -1,4 +1,3 @@
-28 Sep 2022:  Removed DragControls based Entity Move Tool.  Please use Transform Tool instead
 14 Jun 2022:  Fixed SVG DPI for Inkscape 1.2 SVGs
 04 Apr 2021:  Fixed bug with Pocketing Z on unmerged geometry: https://openbuilds.com/threads/large-z-dive-when-cnc-pocketing.17704/
 16 Mar 2021:  Improved Plasma Lead-In Algorithm
