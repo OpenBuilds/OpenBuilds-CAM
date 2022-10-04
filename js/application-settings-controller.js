@@ -247,6 +247,41 @@ function selectMachine(type) {
         var yaxis = 610
         var zaxis = 85
       }
+
+
+    } else if (type == "Quantum Mini") {
+      $('#context_toggle2').html(type);
+        if(unit==true){
+          var xaxis = 16.0
+          var yaxis = 16.0
+          var zaxis = 3.8
+        }else{
+          var xaxis = 407
+          var yaxis = 407
+          var zaxis = 98
+        }
+    } else if (type == "Quantum") {
+      $('#context_toggle2').html(type);
+        if(unit==true){
+          var xaxis = 24.0
+          var yaxis = 24.0
+          var zaxis = 3.8
+        }else{
+          var xaxis = 610
+          var yaxis = 610
+          var zaxis = 98
+        }
+    } else if (type == "Quantum Max") {
+      $('#context_toggle2').html(type);
+        if(unit==true){
+          var xaxis = 50.5
+          var yaxis = 24.0
+          var zaxis = 3.8
+        }else{
+          var xaxis = 1283
+          var yaxis = 610
+          var zaxis = 98
+        }
   } else if (type == "KL733") {
     $('#context_toggle2').html(type);
       if(unit==true){
@@ -348,13 +383,16 @@ $(document).ready(function() {
               <div>
                 <a style="width: 100%;" class="button dropdown-toggle secondary outline" id="context_toggle2"> Select Machine</a>
                 <ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
-                    <li>
-                      <a href="#" class="dropdown-toggle"> E Series CNC Router</a>
-                      <ul class="ribbon-dropdown" data-role="dropdown">
-                        <li onclick="selectMachine('E3');"><a href="#"><img src="" width="16px"/>E3 </a>></li>
-                        <li onclick="selectMachine('E4');"><a href="#"><img src="" width="16px"/>E4 </a>></li>
-                      </ul>
-                    </li>
+
+                   <li>
+                    <a href="#" class="dropdown-toggle">Quantum Series CNC Routers</a>
+                    <ul class="ribbon-dropdown" data-role="dropdown">
+                      <li onclick="selectMachine('Quantum Mini');"><a href="#"><img src="" width="16px"/>Quantum Mini </a>></li>
+                      <li onclick="selectMachine('Quantum');"><a href="#"><img src="" width="16px"/>Quantum </a>></li>
+                      <li onclick="selectMachine('Quantum Max');"><a href="#"><img src="" width="16px"/>Quantum Max </a>></li>
+                    </ul>
+                   </li>
+                   
                     <li>
                       <a href="#" class="dropdown-toggle">Evolution Series CNC Routers</a>
                       <ul class="ribbon-dropdown" data-role="dropdown">
@@ -371,11 +409,15 @@ $(document).ready(function() {
                         <li onclick="selectMachine('KL744E');"><a href="#"><img src="" width="16px"/>KL744E </a>></li>
                       </ul>
                     </li>
-                   
+                    <li>
+                      <a href="#" class="dropdown-toggle"> E Series CNC Router</a>
+                      <ul class="ribbon-dropdown" data-role="dropdown">
+                        <li onclick="selectMachine('E3');"><a href="#"><img src="" width="16px"/>E3 </a>></li>
+                        <li onclick="selectMachine('E4');"><a href="#"><img src="" width="16px"/>E4 </a>></li>
+                      </ul>
+                    </li>
                     <li><a href="#" onclick="selectMachine('Revolution');"><img src="" width="16px"/>Revolution </a>></li>
                     <li><a href="#" onclick="selectMachine('Other');"><img src="" width="16px"/>Other </a>></li>
-                   
-
                   </ul>
                 <input type="hidden" class="form-control form-control-sm" id="machinetype" value="" >
               </div>
