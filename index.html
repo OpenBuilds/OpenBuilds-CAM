@@ -41,7 +41,7 @@
 				<div id="col1">
 					<div class="window drop-shadow" style="height: calc(100% - 10px);">
 						<div class="window-caption bg-openbuilds">
-							<span class="title">BobsCNC BASIC CAM<span class="workspaceTitle">  - Beta</span></span>
+							<span class="title">BobsCNC BASIC CAM<span class="workspaceTitle">  version 1.3.1</span></span>
 						</div>
 						<div class="window-content pt-2" style="overflow-y:hidden; ">
 							<nav data-role="ribbonmenu">
@@ -209,7 +209,7 @@
 										
 										<div class="group">
 											<div class="ribbon-group"></div>
-											<button class="ribbon-button" onclick="alreadyDetected = false; checkIfDriverIsInstalled(); Metro.dialog.open('#settingsmodal');">
+											<button class="ribbon-button" onclick=" Metro.dialog.open('#settingsmodal');">
 												<span class="icon">
 													<span class="fa fa-fw fa-cogs"></span>
 												</span>
@@ -218,9 +218,9 @@
 											<div class="ribbon-group"></div>
 											<span class="title">App</span>
 										</div>
-										
-									
-									
+
+
+								
 										<div id="projectSize" class="group">
 											<div class="ribbon-group">
 												<input type="number" data-size="260" id="projectWD"  style="font-size:small; font-weight: 600;" name="projectWD" data-prepend="Project Width Y"  placeholder="0.00"  data-role="input" data-append="mm" data-clear-button="false" step="any">
@@ -502,7 +502,6 @@
 	<script type="text/javascript" src="lib/lw.svg-parser/dist/lw.svg-parser.js"></script>
 	<script type="text/javascript" src="js/svgparser.js"></script>
 
-	<script type="text/javascript" src="js/integration-machine-driver.js"></script>
 
 	<!-- Bitmap Tracing -->
 	<script type="text/javascript" src="lib/potrace/potrace.js"></script>
@@ -514,8 +513,6 @@
 	<!-- Gcode Viewer -->
 	<script type="text/javascript" src="lib/3dview/3dview.js"></script>
 
-	<!-- Hello World Job -->
-	<script type="text/javascript" src="js/basic-cad-helloworld.js"></script>
 
 	<!-- Gerber Parser -->
 	<script type="text/javascript" src="lib/gerber/parser.js"></script>

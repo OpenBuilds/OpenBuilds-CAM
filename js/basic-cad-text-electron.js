@@ -1,7 +1,6 @@
 function addText() {
-  var fontsize = $('#fontsize').val();
+  var fontsize = $('#fontsize').val()*100; // 100 multiplier for needed for small fonts
 
- 
  
   var font = $("#font").val().replace(/\+/g, ' ');
   // split font into family and weight
@@ -36,41 +35,9 @@ function addText() {
 
     printLog('SVG Opened', msgcolor, "file");
   })
-
-
-  // console.log(textasSVG)
-  // setTimeout(function() {
-  //   var svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50 50\" width=\"150px\"> <path fill=\"#F7931E\" stroke=\"#000\" d=\"" + textasSVG._result + "\"/>  </svg>"
-  //   // console.log(svg)
-  //   return lwsvgparser.loadFromString(svg).then(function(element) {
-  //       return lwsvgparser.parse().then(function(tags) {
-  //         lwsvgparser.editor = {
-  //           name: "Opentype.js",
-  //           version: "1.00"
-  //         };
-  //         drawFile("Text: " + string + " (" + font[0] + ")", tags, true);
-  //         resetView();
-  //       });
-  //     })
-  //     .catch(function(error) {
-  //       console.error('error:', error);
-  //       // $("#addShapeText").modal("hide");
-  //       resetView();
-  //     });
-  //
-  //   printLog('SVG Opened', msgcolor, "file");
-  // }, 2000);
 }
 
 
-// FONTS
-
-// Fetch GoogleFonts List
-// $.get('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDOcn3KpnYV-8SDuILln1YAH3FWT4K8G38', function (result) {
-//   console.log(result)
-// });
-
-// from https://github.com/nraynaud/webgcode/blob/66e2662fcb72219024976610a6c66d307af84882/webapp/cnc/cam/text.js
 var getFont = function(url) {
   if (url.match('^http://')) {
     url = url.replace("http://", "//")
@@ -211,11 +178,7 @@ function getText(fontFamily, fontVariant, text, fontSize) {
   });
 }
 
-// function getText(fontFamily, fontVariant, text, fontSize) {
-//   return getFontList().then(function(fontList) {
-//     return getTextFromData(searchFontInList(fontList, fontFamily), fontVariant, text, fontSize);
-//   })
-// }
+
 
 $(document).ready(function() {
   var modal = `
@@ -240,7 +203,7 @@ $(document).ready(function() {
             </td>
           </tr>
           <tr>
-            <td>Size: </td>
+            <td>Height: </td>
             <td>
               <div class="input-addon">
                 <span class="input-addon-label-left active-border"><i class="fas fa-text-height"></i></span>

@@ -61,38 +61,6 @@ $(document).ready(function() {
  // getForksCount();
 
 
-  // lets see if there's any Workspaces on CONTROL
-  $.get("https://mymachine.openbuilds.com:3001/workspace").done(function(data) {
-    if (isJson(data)) {
-      hasWorkspace = true;
-      Metro.dialog.create({
-        width: 500,
-        title: "Import workspace.",
-        content: "<div>Would you like to Import the workspace you opened?</div>",
-        actions: [{
-            caption: "<i class=\"far fa-fw fa-save\"></i>Import",
-            cls: "js-dialog-close success",
-            onclick: function() {
-              parseLoadWorkspace(data)
-            }
-          },
-          {
-            caption: "<i class=\"far fa-fw fa-file\"></i>Cancel",
-            cls: "js-dialog-close",
-            onclick: function() {
-              loadLastClosedOnPageload()
-            }
-          }
-        ]
-      });
-    } else {
-      loadLastClosedOnPageload()
-    }
-  }).fail(function() {
-    loadLastClosedOnPageload()
-  });
-
-
 
 
 

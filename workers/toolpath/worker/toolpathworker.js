@@ -324,9 +324,9 @@ if (typeof window == "undefined") { // Only run as worker
       }
     } // end config.union="No"
     if (config.offset > minimumToolDiaForPreview || config.offset < -minimumToolDiaForPreview) { //Dont show for very small offsets, not worth the processing time
-      inflateGrpZ.userData.pretty = prettyGrp
+     // inflateGrpZ.userData.pretty = prettyGrp
     };
-    inflateGrpZ.userData.toolDia = config.offset * 2
+   // inflateGrpZ.userData.toolDia = config.offset * 2
     return inflateGrpZ;
   }
 

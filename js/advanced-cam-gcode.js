@@ -6,7 +6,6 @@ function trashGcode() {
     object = false;
   }
   disableSim()
-  $('#sendGcodeToMyMachine').prop('disabled', true);;
   $('#gcodesavebtn2').addClass('disabled');
   $('#gcodetrashbtn2').addClass('disabled');
   $('#gcodeexporticon').removeClass('fg-grayBlue').addClass('fg-gray');

@@ -78,7 +78,7 @@ function drawFile(name, tag, flip) {
     resol = 96;
   }
   console.log("File: " + name + " was created in " + editor + " version " + version + ".  Setting import resolution to " + resol + "dpi")
-  scale = 1 / (resol / 25.4)
+  scale = 25.4 / resol
   var svgtagobject = new THREE.Object3D();
   svgtagobject.name = name
   svgtraverse(tag, function(child) {
@@ -131,8 +131,8 @@ function drawSVGLine(tag, path, scale, flip) {
 
   var opt = {
     scale: {
-      x: scale,
-      y: scale,
+      x: scale/100,  // 100 multiplier for needed for small fonts
+      y: scale/100,
       z: 1
     }
   }

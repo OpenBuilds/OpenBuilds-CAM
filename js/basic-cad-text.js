@@ -1,5 +1,5 @@
 function addText() {
-  var fontsize = $('#fontsize').val();
+  var fontsize = $('#fontsize').val()*100; // 100 multiplier for needed for small fonts
 
  
   var font = $("#font").val().replace(/\+/g, ' ');
@@ -106,7 +106,7 @@ function getTextFromData(fontData, fontVariant, text, fontSize, x, y) {
 
 function getTextFromFile(file, text, fontSize, offsetX, offsetY) {
   return getFont(file).then(function(font) {
-      
+
     spaceWidth=parseFloat($("#fontspacing").val());
 
     var unitSwitch = document.getElementById("unitSwitch");
@@ -119,7 +119,7 @@ function getTextFromFile(file, text, fontSize, offsetX, offsetY) {
       var ypos=5;
  
     }
-  
+
     var path = font.getPath(text, ypos, xpos, fontSize);
     var res = '';
     var xSpace=0;
@@ -131,7 +131,7 @@ function getTextFromFile(file, text, fontSize, offsetX, offsetY) {
     var x2=0;
     var xmax1=0;
     var xmax2=0;
-    var maxEqual=[];   
+    var maxEqual=[];
    
     // Allow change of spacing in between letters 
     // run through the letters to find letters that have 2 parts (example A, B, P, R..) 
@@ -158,7 +158,7 @@ function getTextFromFile(file, text, fontSize, offsetX, offsetY) {
       }
       xmax1=Math.max(x0,x1,x2,xmax1)
     }
-      
+
     function xy(x, y) {
       return (offsetX + x) + ',' + (offsetY - y);
     }
@@ -242,7 +242,7 @@ $(document).ready(function() {
             </td>
           </tr>
           <tr>
-            <td>Size: </td>
+            <td>Height: </td>
             <td>
               <div class="input-addon">
                 <span class="input-addon-label-left active-border"><i class="fas fa-text-height"></i></span>
