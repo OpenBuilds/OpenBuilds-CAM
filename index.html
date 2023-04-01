@@ -60,7 +60,7 @@
 													<span class="caption">&nbsp;&nbsp;&nbsp;File...&nbsp;&nbsp;&nbsp;</span>
 												</button>
 												<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
-													<li class="btn-file"><a href="#"></span><span class="far fa-folder-open fg-amber fa-fw"></span> Open Drawing File (.DXF, .SVG, Image, Gerber, Excellon)</a><input id="file" type="file"
+													<li class="btn-file"><a href="#"><!-- /span--><span class="far fa-folder-open fg-amber fa-fw"></span> Open Drawing File (.DXF, .SVG, Image, Gerber, Excellon)</a><input id="file" type="file"
 															accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple /></li>
 													<li class="divider"></li>
 													<li class="" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree(); $('.workspaceTitle').html('');"><a href="#"> <span class="far fa-file fa-fw"></span> New (Empty)
@@ -79,6 +79,7 @@
 														</ul>
 													</li>
 													<li><a href="#" onclick="Metro.dialog.open('#partslibModal')"><i class="fas fa-sitemap fa-fw"></i> Import from Parts Library</a></li>
+													<li><a href="#" onclick="Metro.dialog.open('#iconslibModal')"><i class="far fa-images fa-fw"></i> Import from Icons Library</a></li>
 												</ul>
 											</div>
 											<span class="title">File</span>
@@ -496,6 +497,32 @@
 				</div>
 			</div>
 
+			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="iconslibModal" data-width="800" data-to-top="true">
+				<div class="dialog-title">Icons Library</div>
+				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+					<div id="iconslibrary">
+
+					</div>
+				</div>
+				<div class="dialog-actions row" style="white-space: nowrap;">
+					<button class="button float-right js-dialog-close cell-3">Close</button>
+
+					<input id="iconlib_filter" onchange="iconlib_Page()" class="float-left"  style="max-width:150px;"
+						data-role="input" data-search-button="true" placeholder="Filter" autofocus type="text"
+						value="">
+
+					<div style="display:inline-block;white-space: normal;">
+						<button class="button float-left" onclick="iconlib_Page(-1)"><span class="fa fa-fw fa-arrow-left"></span></button>
+
+						<input data-role="input" id="iconlib_PageOf" onchange="iconlib_Page()" autofocus type="number"  min="1" step="1"
+							data-prepend="Page:" data-append="Of #"
+							class="float-left" value="1" style="width:175px;">
+
+						<button class="button float-left" onclick="iconlib_Page(1)"><span class="fa fa-fw fa-arrow-right"></span></button>
+					</div>
+				</div>
+			</div>
+
 			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="splashModal" data-width="800" data-to-top="true">
 				<div class="dialog-title"><i class="fas fa-fw fa-history"></i> Changelog</div>
 				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
@@ -630,6 +657,7 @@
 	<script type="text/javascript" src="js/basic-cad-shapes.js"></script>
 	<script type="text/javascript" src="js/basic-cad-text.js"></script>
 	<script type="text/javascript" src="js/basic-cad-partslib.js"></script>
+	<script type="text/javascript" src="js/basic-cad-iconslib.js"></script>
 
 	<!-- ThreeJS -->
 	<script type="text/javascript" src="lib/threejs/three.min.js"></script>
