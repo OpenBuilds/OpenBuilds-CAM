@@ -138,3 +138,20 @@ function updateCloneMoves() {
     });
   }
 }
+
+// ------------------------------------------------------------------------------
+
+function getSelectedObjects(){
+  let selected = [];
+
+  for (i = 0; i < objectsInScene.length; i++) {
+    var object = objectsInScene[i]
+    object.traverse(function(child) {
+      if (child.userData.selected && child.userData.link) {
+        selected.push(child)
+      }
+    });
+  }
+
+  return selected;
+}

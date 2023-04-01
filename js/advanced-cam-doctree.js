@@ -186,9 +186,12 @@ function animateTree() {
     $('#addJobBtn').addClass('bg-green').addClass('fg-white').removeClass('disabled');
     $("#tpaddicon").addClass('fg-green')
     $(".selectCount").show();
+
     if (toolpathsInScene.length > 0) {
+      $('#remJobBtn').addClass('bg-green').addClass('fg-white').removeClass('disabled');
       $("#tpaddpath-dropdown").prop('disabled', false);
     }
+
   } else {
     $("#tpaddpathParent").prop('disabled', true).addClass('disabled');
     $("#tpaddicon").removeClass('fg-green')
@@ -197,7 +200,7 @@ function animateTree() {
     $("#tpaddpath").prop('disabled', true);
     // $('#floating-tpaddpath-btn').prop('disabled', true);
     // $('#floating-tpaddpath-btn').removeClass('success')
-    $('#addJobBtn').removeClass('bg-green').removeClass('fg-white').addClass('disabled');
+    $('#addJobBtn,#remJobBtn').removeClass('bg-green').removeClass('fg-white').addClass('disabled');
     $("#tpaddpath-dropdown").prop('disabled', true);
   }
 }
