@@ -555,7 +555,7 @@ $(document).ready(function() {
               <div>
                 <a style="width: 100%;" class="button dropdown-toggle secondary outline" id="context_toggle"><img src="images/brd/grbl.png"/> Select Controller</a>
                 <ul class="d-menu border bd-gray" data-role="dropdown" data-toggle-element="#context_toggle">
-                <li onclick="selectBoard('blackbox');"><a href="#"><img src="images/brd/blackbox.png"/>  OpenBuilds BlackBox 4X</a></li>
+                <li onclick="selectBoard('blackbox');"><a href="#"><img src="images/brd/blackbox.png"/>  OpenBuilds BlackBox 4X / X32</a></li>
                   <li onclick="selectBoard('xpro');"><a href="#"><img src="images/brd/xpro.png"/>  Spark Concepts xPro</a></li>
                   <li onclick="selectBoard('smoothie');"><a href="#"><img src="images/brd/smoothie.png"/>  Smoothieboard</a></li>
                   <li class="divider"></li>
