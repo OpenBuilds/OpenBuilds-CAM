@@ -78,9 +78,9 @@ function noDriver() {
   installedDriver = 'not detected'
   $("#DriverDetected").hide();
   $("#noDriverDetected").show();
-  $('#installDriversOnSettingspage').show();
-  $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting OpenBuilds CONTROL")
-  $('#installDriverMessage').html('Connecting to a machine, requires that you have the OpenBuilds CONTROL installed.')
+  // $('#installDriversOnSettingspage').show();
+  // $('#detectedVersion').html("<i class='fas fa-times fa-fw fg-red'></i>1. Not detecting OpenBuilds CONTROL")
+  // $('#installDriverMessage').html('Connecting to a machine, requires that you have the OpenBuilds CONTROL installed.')
 }
 
 function oldDriver(version, availVersion) {

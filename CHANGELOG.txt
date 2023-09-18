@@ -1,3 +1,4 @@
+19 Sep 2023:  Disable CONTROL integration.  Use the SAVE GCODE button please
 16 Jun 2023:  Added X32 option to Board selection
 5 June 2023:  Updated Analytics V4 ID
 14 Jun 2022:  Fixed SVG DPI for Inkscape 1.2 SVGs
