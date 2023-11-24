@@ -63,7 +63,7 @@ function addText() {
 // FONTS
 
 // Fetch GoogleFonts List
-// $.get('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDOcn3KpnYV-8SDuILln1YAH3FWT4K8G38', function (result) {
+// $.get('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB6CfNzjx-T-iGR4-1ECG1bmZ0eNU-4cTU', function (result) {
 //   console.log(result)
 // });
 
@@ -88,7 +88,7 @@ var getFont = function(url) {
 function getFontList() {
   return new RSVP.Promise(
     function(resolve, reject) {
-      $.get('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDOcn3KpnYV-8SDuILln1YAH3FWT4K8G38', function(result) {
+      $.get('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB6CfNzjx-T-iGR4-1ECG1bmZ0eNU-4cTU', function(result) {
         resolve(result.items);
       });
     });
