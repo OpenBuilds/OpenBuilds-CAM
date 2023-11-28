@@ -345,8 +345,8 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputlaser inputlaserraster">
-        <td>Laser: Power</td>
+      <tr class="inputcnc inputpocket inputplasma inputlaser inputlaserraster inputdrill inputdrillpeck">
+        <td>Laser Power / Spindle Speed</td>
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-tachometer-alt fa-fw"></i></span>
