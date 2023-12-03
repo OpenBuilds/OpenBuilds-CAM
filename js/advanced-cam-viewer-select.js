@@ -7,27 +7,6 @@ var selectobj, arrow;
 var hoverShapesinScene = [];
 var mouseIsDown = false;
 
-function selectAll() {
-  for (i = 0; i < objectsInScene.length; i++) {
-    var obj = objectsInScene[i]
-    obj.traverse(function(child) {
-      if (child.type == "Line") {
-        child.userData.selected = true
-      }
-    });
-  }
-}
-
-function selectNone() {
-  for (i = 0; i < objectsInScene.length; i++) {
-    var obj = objectsInScene[i]
-    obj.traverse(function(child) {
-      if (child.type == "Line") {
-        child.userData.selected = false
-      }
-    });
-  }
-}
 
 function initMouseSelect() {
   selection = document.getElementById("selection");
@@ -45,28 +24,36 @@ function listeners() {
   // renderer.domElement.mouseup(mouseUp);
   // renderer.domElement.mousemove(mouseMove);
 
-  $('#selectAll').on('click', function() {
-    selectAll()
-  });
 
-  $('#selectNone').on('click', function() {
-    selectNone()
-  });
 
+  function selectAll_None(e) {
+    objectsInScene.map(a => a.children.map(b=>b.userData.selected = e.data.On_Off))
+    fillTree();
+  };
+
+  $('#selectAll').on('click', { On_Off: true}, selectAll_None); // Select All
+
+  $('#selectNone').on('click', {On_Off: false}, selectAll_None); // Select None
+
+  // function drf_inverse
   $('#selectInv').on('click', function() {
-    for (i = 0; i < objectsInScene.length; i++) {
-      var obj = objectsInScene[i]
-      obj.traverse(function(child) {
-        if (child.type == "Line") {
-          child.userData.selected = !child.userData.selected
-        }
-      });
-    }
+    objectsInScene.map(a => a.children.map(b=>b.userData.selected = !b.userData.selected))
+    fillTree();
   });
+
 
   $('#selectDel').on('click', function() {
-    storeUndo(true);
-    deleteSelectedObjects();
+    var x = getSelectedObjects();
+    if(x.length > 0){
+      var x = confirm("Are you sure you want to Delete the selected items?");
+      if (x) {
+        storeUndo(true);
+        deleteSelectedObjects();
+        return true;
+      } else {
+        return false;
+      }
+    }
   });
 }
 

@@ -101,3 +101,105 @@ function addJob(id) {
   }
 
 }
+
+// -----------------------------------------------------------------------------------------------
+
+function remJob(id){
+  storeUndo(true);
+  $("#savetpgcode").addClass("disabled");
+  $("#exportGcodeMenu").addClass("disabled");
+
+  // animation to remove "doc" from Toolpath - helps user visualize what happened
+  var offset = $('#toolpathtree').offset()
+  $("#flyingdoc").css('top', offset.top);
+  $("#flyingdoc").css('left', offset.left);
+  $("#flyingdoc").fadeIn(200);
+
+  setTimeout(function() {
+    $("#flyingdoc").fadeOut(300);
+  }, 200);
+  $("#flyingdoc").animate({
+    left: '50%',
+    top: '50%'
+  }, 600);
+
+  var toolpath;
+  if (id > -1) { // Use Existing Toolpath
+      toolpath = toolpathsInScene[id];
+  }
+
+  selectedGeom = objectsInScene.map(a => a.children.map(b => b).filter(c => c.userData.selected)).reduce(a=>a);
+
+  selectedGeom.forEach(
+    function(e){
+      toolpath_IDS = toolpath.children.map(a => a.geometry.uuid)
+      toolpath.children.splice(toolpath_IDS.indexOf(e.geometry.uuid), 1) ;
+  });
+
+  if(toolpath.children.length == 0){
+    var message = `Toolpath Container is empty.  Would you like to remove it.`
+
+    Metro.dialog.create({
+      width: 500,
+      title: "Empty Toolpath.",
+      content: "<div>Toolpath container is empty.  Would you like to remove it?</div>",
+      actions: [{
+          caption: "<i class=\"far fa-fw fa-save\"></i>Remove",
+          cls: "js-dialog-close success",
+          onclick: function() {
+            toolpathsInScene.splice(id ,1);
+            fillTree();
+          }
+        },
+        {
+          caption: "<i class=\"far fa-fw fa-file\"></i>Keep",
+          cls: "js-dialog-close success",
+          onclick: function() {}
+        }
+      ]
+    });
+  }
+  else{
+    var message = `Toolpath container updated.`
+    Metro.toast.create(message, null, 4000, 'bg-green');
+  }
+
+  setTimeout(function() {
+    fillTree();
+    toolpathPreview(id);
+  }, 800); // launch modal
+
+}
+
+function setSelectionFromToolPath(id){
+  storeUndo(true);
+  $("#savetpgcode").addClass("disabled");
+  $("#exportGcodeMenu").addClass("disabled");
+
+  // animation to remove "doc" from Toolpath - helps user visualize what happened
+  var offset = $('#toolpathtree').offset()
+  $("#flyingdoc").css('top', offset.top);
+  $("#flyingdoc").css('left', offset.left);
+  $("#flyingdoc").fadeIn(200);
+
+  setTimeout(function() {
+    $("#flyingdoc").fadeOut(300);
+  }, 200);
+  $("#flyingdoc").animate({
+    left: '50%',
+    top: '50%'
+  }, 600);
+
+  var toolpath;
+  if (id > -1) { // Use Existing Toolpath
+      toolpath = toolpathsInScene[id];
+  }
+
+  GeoInToolPath = toolpath.children.map(a=>a.geometry.uuid);
+  ItemsToSelect = objectsInScene.map(a => a.children.map(b => GeoInToolPath.indexOf(b.geometry.uuid))).reduce(a=>a);
+  objectsInScene.map(a => a.children.map(b => b.userData.selected = (GeoInToolPath.indexOf(b.geometry.uuid) >= 0) ? true : false ));
+
+  setTimeout(function() {
+     fillTree();
+  }, 500); // launch modal
+}
