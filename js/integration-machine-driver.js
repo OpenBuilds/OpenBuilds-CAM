@@ -52,7 +52,7 @@ $(document).ready(function() {
   // Check if Driver is running
   var DriverCheckinterval = setInterval(function() {
     checkIfDriverIsInstalled();
-  }, 1000);
+  }, 1000 * 60 * 60);
   getAvailableDriverVersion()
 
 });
