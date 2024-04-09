@@ -357,6 +357,12 @@
 								<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="toolpathsmenu" data-toggle-element="#addJobBtn">
 									<li><a href="#" onclick="addJob(-1);"><span class="icon fa fa-plus"></span> Create a new Operation</a></li>
 								</ul>
+
+								<button id="remJobBtn" class="button small dark outline drop-shadow dropdown-toggle"><span class="icon fa fa-minus"></span> Rem <span class="selectCount" style="display: none;"> 0 </span></button>
+								<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="remtoolpathsmenu" data-toggle-element="#remJobBtn">
+									<li><a href="#" onclick="remJob(-1);"><span class="icon fa fa-plus"></span> Remove From Operation</a></li>
+								</ul>
+
 								<button class="button small dark outline drop-shadow" title="Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes icon"></span>Generate GCODE</button>
 								<button class="button small dark outline drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span id="gcodeexporticon" class="fa fa-save icon fg-gray"></span></button>
 								<button class="button small dark outline drop-shadow" title="Preview GCODE" id="gcodeviewbtn2" onclick="previewFile();"><span id="gcodepreviewicon" class="fa fa-eye icon fg-gray"></span></button>
