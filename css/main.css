@@ -251,7 +251,7 @@ button:focus {
 #selection {
   position: absolute;
   background: rgba(128, 128, 128, 0.2);
-  border: 1px dashed rgba(55, 55, 55, 0.5);
+  border: 1px dashed rgba(155, 155, 155, 0.8);
   border-radius: 4px;
   opacity: 50%;
   width: 50px;
@@ -346,6 +346,7 @@ button:focus {
   text-shadow: rgba(0, 0, 0, .2) 0 0 1px;
   -webkit-font-smoothing: antialiased;
   border: 1px solid rgba(55, 55, 55, 0.5);
+  overflow: hidden;
 }
 
 #helpoverlay>kbd {
@@ -694,7 +695,15 @@ d-grid {
   font-size: 11px;
 }
 
-.jobsetuptable {}
+.jobsetuptable {
+  padding: 0px;
+  margin: 0px;
+}
+
+.jobsetupfile td {
+  padding-bottom: 6px;
+  padding-left: 3px;
+}
 
 .jobsetupfile {
   text-align: right;
@@ -859,4 +868,14 @@ d-grid {
   background-color: white;
   color: black;
   font-size: 16px;
+}
+
+.viewer-checkboxes {
+  z-index: 200;
+  width: 110px;
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  background: rgba(240, 240, 240, 0.85);
 }

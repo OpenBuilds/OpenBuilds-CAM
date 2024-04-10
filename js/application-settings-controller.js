@@ -502,68 +502,10 @@ $(document).ready(function() {
         <form>
 
         <div id="checkLocalSettingsError">
-          <center><h6>Welcome to OpenBuilds CAM</h6> Please configure the application below</center>
+          <center><h6>Welcome to OpenBuilds CAM</h6> Let us help you get set up!</center>
         </div>
 
           <ul class="step-list">
-
-            <li id="installDriversOnSettingspage">
-              <h6 class="fg-grayBlue">Install CONTROL<br><small>Used to Connect to and control you machine. If you already have it installed, please run the application, or</small></h6>
-              <hr class="bg-grayBlue">
-              <div>
-              <nav data-role="ribbonmenu">
-                <ul class="tabs-holder">
-                  <li><a href="#tab-win2"><i class="fab fa-windows"></i> Windows</a></li>
-                  <li><a href="#tab-mac2"><i class="fab fa-apple"></i> Mac</a></li>
-                  <li><a href="#tab-linux2"><i class="fab fa-linux"></i> Linux</a></li>
-                </ul>
-
-                <div class="content-holder">
-                  <div class="section" id="tab-win2">
-                    <div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-                      <a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows CONTROL (EXE)</a>
-                      <a href="#" class="info omdavailversion">v1.0.0</a>
-                    </div><br>
-                  </div>
-                  <div class="section" id="tab-mac2">
-                    <div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-                      <a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> MacOS CONTROL (DMG)</a>
-                      <a href="#" class="info omdavailversion">v1.0.0</a>
-                    </div><br>
-                  </div>
-                  <div class="section" id="tab-linux2">
-                    <div>
-                      <div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-                        <a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux CONTROL (DEB)</a>
-                        <a href="#" class="info omdavailversion">v1.0.0</a>
-                      </div>
-
-                        <div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-                          <a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux CONTROL (AppImage)</a>
-                          <a href="#" class="info omdavailversion">v1.0.0</a>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </nav>
-              </div>
-            </li>
-
-            <li>
-              <h6 class="fg-grayBlue">Select your controller<br><small>Sets approximate defaults below, which should suffice for most users</small></h6>
-              <hr class="bg-grayBlue">
-              <div>
-                <a style="width: 100%;" class="button dropdown-toggle secondary outline" id="context_toggle"><img src="images/brd/grbl.png"/> Select Controller</a>
-                <ul class="d-menu border bd-gray" data-role="dropdown" data-toggle-element="#context_toggle">
-                <li onclick="selectBoard('blackbox');"><a href="#"><img src="images/brd/blackbox.png"/>  OpenBuilds BlackBox 4X / X32</a></li>
-                  <li onclick="selectBoard('xpro');"><a href="#"><img src="images/brd/xpro.png"/>  Spark Concepts xPro</a></li>
-                  <li onclick="selectBoard('smoothie');"><a href="#"><img src="images/brd/smoothie.png"/>  Smoothieboard</a></li>
-                  <li class="divider"></li>
-                  <li onclick="selectBoard('grbl');"><a href="#"><img src="images/brd/grbl.png"/>  Generic GRBL</a></li>
-                </ul>
-                <input type="hidden" class="form-control form-control-sm" id="firmwaretype" value="" >
-              </div>
-            </li>
 
             <li>
               <h6 class="fg-grayBlue">Select your Machine<br><small>Sets approximate defaults below, which should suffice for most users</small></h6>
@@ -634,6 +576,9 @@ $(document).ready(function() {
               <h6 class="fg-grayBlue">Select your Tool initialization<br><small>Sets approximate defaults below, which should suffice for most users</small></h6>
               <hr class="bg-grayBlue">
               <div>
+
+
+
                 <select data-filter="false" data-on-change="selectToolhead();" id="toolheadSelect" data-role="select" title="" multiple class="secondary">
 
                       <option data-template="<span class='icon fas fas fa-tag' data-fa-transform='rotate-225'></span> $1" value="spindleonoff">Turn Spindle on and Off (M3/M5)</option>
@@ -648,127 +593,127 @@ $(document).ready(function() {
               </div>
             </li>
 
-            <li>
-              <h6 class="fg-grayBlue">Customise Defaults<br><small>From your machine and controller choice above we have prepopulated the settings below.  If you have any custom requirements, please customise the settings below</small></h6>
-              <hr class="bg-grayBlue">
-              <div>
 
-                <div class="row mb-2">
-                    <label class="cell-sm-6">X-Axis Length</label>
-                    <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizexmax" value="200" data-append="mm" step="any">
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Y-Axis Length</label>
-                    <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizeymax" value="200" data-append="mm" step="any">
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Z-Axis Length</label>
-                    <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizezmax" value="100" data-append="mm" step="any">
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Spindle / Laser / Plasma Command</label>
-                    <div class="cell-sm-6">
-                        <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="scommand" value="S" >
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Power/Speed Scale</label>
-                    <div class="cell-sm-6">
-                      <input type="number" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="scommandscale" value="1" data-prepend="0 to" step="any">
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Power/Speed on new-line</label>
-                    <div class="cell-sm-6">
-                          <input data-role="checkbox" type="checkbox" id="scommandnewline" value="option1">
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Rapid Move Command</label>
-                    <div class="cell-sm-6">
-                        <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="g0command" value="G0" >
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Linear Move Command</label>
-                    <div class="cell-sm-6">
-                        <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="g1command" value="G1" >
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Start G-Code</label>
-                    <div class="cell-sm-6">
-                      <textarea id="startgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <label class="cell-sm-6">End G-Code</label>
-                    <div class="cell-sm-6">
-                      <textarea id="endgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
-                    </div>
-                </div>
-
-              </div>
-            </li>
 
             <li>
-              <h6 class="fg-grayBlue">Advanced<br><small>Change application behaviour to suit your specific needs</small></h6>
+              <h6 class="fg-grayBlue">Customise Defaults<br><small>If you have any custom requirements, please customise the settings in the Advanced Setting Section</small></h6>
               <hr class="bg-grayBlue">
-              <div>
 
-                <div class="row mb-2">
-                    <label class="cell-sm-6">Plasma: Touch Off Sequence</label>
-                    <div class="cell-sm-6">
-                      <textarea id="ihsgcode" data-role="textarea" contenteditable="true" data-auto-size="true" data-clear-button="false" placeholder="G0 + clearanceHeight + \nG38.2 Z-30 F100\nG10 L20 P1 Z0"></textarea>
-                    </div>
-                </div>
-
-                <div class="row mb-0">
-                    <label class="cell-sm-6">Performance: Disable Tool-Width Preview<br>
-                    <span class="text-small">
-                      This can speed up toolpath calculations, but will
-                      disable the toolpath-width preview: You'll only see
-                      the centerline of the toolpath, not the width of the
-                      cut.  Helps slow PCs work better
-                    </span>
-                    </label>
-                    <div class="cell-sm-6">
-                        <input data-role="checkbox" type="checkbox" id="performanceLimit" value="option1">
-                    </div>
-                </div>
+              <button class="button" id="collapse_toggle_2">Show Advanced Settings</button>
+              <div class="pos-relative">
+                  <div data-role="collapse"
+                       data-toggle-element="#collapse_toggle_2" data-collapsed="true">
 
 
+                       <div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">X-Axis Length</label>
+                             <div class="cell-sm-6">
+                               <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizexmax" value="200" data-append="mm" step="any">
+                             </div>
+                         </div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">Y-Axis Length</label>
+                             <div class="cell-sm-6">
+                               <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizeymax" value="200" data-append="mm" step="any">
+                             </div>
+                         </div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">Z-Axis Length</label>
+                             <div class="cell-sm-6">
+                               <input type="number" data-role="input" data-clear-button="false" class="form-control " id="sizezmax" value="100" data-append="mm" step="any">
+                             </div>
+                         </div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">Spindle / Laser / Plasma Command</label>
+                             <div class="cell-sm-6">
+                                 <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="scommand" value="S" >
+                             </div>
+                         </div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">Power/Speed Scale</label>
+                             <div class="cell-sm-6">
+                               <input type="number" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="scommandscale" value="1000" data-prepend="0 to" step="any">
+                             </div>
+                         </div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">Power/Speed on new-line</label>
+                             <div class="cell-sm-6">
+                                   <input data-role="checkbox" type="checkbox" id="scommandnewline" value="option1">
+                             </div>
+                         </div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">Rapid Move Command</label>
+                             <div class="cell-sm-6">
+                                 <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="g0command" value="G0" >
+                             </div>
+                         </div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">Linear Move Command</label>
+                             <div class="cell-sm-6">
+                                 <input type="text" data-role="input" data-clear-button="false" class="form-control form-control-sm" id="g1command" value="G1" >
+                             </div>
+                         </div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">Start G-Code</label>
+                             <div class="cell-sm-6">
+                               <textarea id="startgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="For example M4 G28 G90 M80 - supports multi line commands"></textarea>
+                             </div>
+                         </div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">End G-Code</label>
+                             <div class="cell-sm-6">
+                               <textarea id="endgcode" data-role="textarea" data-auto-size="true" data-clear-button="false" placeholder="For example M5 M81 G28 - supports multi line commands"></textarea>
+                             </div>
+                         </div>
+
+                         <div class="row mb-2">
+                             <label class="cell-sm-6">Plasma: Touch Off Sequence</label>
+                             <div class="cell-sm-6">
+                               <textarea id="ihsgcode" data-role="textarea" contenteditable="true" data-auto-size="true" data-clear-button="false" placeholder="G0 + clearanceHeight + \nG38.2 Z-30 F100\nG10 L20 P1 Z0"></textarea>
+                             </div>
+                         </div>
+
+                         <div class="row mb-0">
+                             <label class="cell-sm-6">Performance: Disable Tool-Width Preview<br>
+                             <span class="text-small">
+                               This can speed up toolpath calculations, but will
+                               disable the toolpath-width preview: You'll only see
+                               the centerline of the toolpath, not the width of the
+                               cut.  Helps slow PCs work better
+                             </span>
+                             </label>
+                             <div class="cell-sm-6">
+                                 <input data-role="checkbox" type="checkbox" id="performanceLimit" value="option1">
+                             </div>
+                         </div>
+
+                       </div>
+
+
+                  </div>
               </div>
+
+
             </li>
+
+
 
           </form>
 
     </div>
     <div class="dialog-actions">
-      <button id="backup" class="button secondary outline btn-file" data-tooltip="tooltip" data-placement="bottom" title="Take a backup" onclick="backupSettingsLocal()">
-        <i class="fa fa-download fa-fw"></i> Backup Settings
-      </button>
-      <span id="restore" href="#" class="button secondary outline btn-file" data-tooltip="tooltip" data-placement="bottom" title="Open a backup settings file">
-        <i class="fa fa-upload  fa-fw"></i> Restore from file <input id="jsonFile" type="file" accept=".json" />
-      </span>
-      <button class="button alert outline btn-file" data-tooltip="tooltip" data-placement="bottom" title="Reset all settings to default" onclick="ConfirmDelete()">
-        <i class="fa fa-exclamation-triangle fa-fw"></i> Factory Reset
-      </button>
+    
       <button class="button secondary outline js-dialog-close">Cancel</button>
       <button id="savesettings" type="button" class="button js-dialog-close success">Save</button>
     </div>

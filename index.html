@@ -26,6 +26,7 @@
 		<link rel="stylesheet" href="lib/metro4/css/metro-all.css" />
 		<!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css"> -->
 		<link type="text/css" rel="stylesheet" media="all" href="css/sidebarmenu.css" />
+		<link type="text/css" rel="stylesheet" media="all" href="css/iconlib.css" />
 		<link rel="manifest" href="/manifest.json">
 	</head>
 
@@ -37,13 +38,13 @@
 				<i class="fa fa-object-group fg-white" data-fa-transform="shrink-6"></i>
 			</span>
 			<div data-role="splitter" data-split-sizes="70,30" class="h-100">
-				<div id="col1">
-					<div class="window drop-shadow" style="height: calc(100% - 10px);">
+				<div id="col1" style="overflow: hidden;">
+					<div class="window drop-shadow" style="height: calc(100% - 10px); overflow: hidden;">
 						<div class="window-caption bg-openbuilds">
 							<span class="icon mif-cog"></span>
 							<span class="title">OpenBuilds CAM - GCODE Generator - <span class="workspaceTitle">Public Beta</span></span>
 						</div>
-						<div class="window-content pt-2" style="overflow-y:hidden; ">
+						<div class="window-content pt-2" style="overflow:hidden; ">
 							<nav data-role="ribbonmenu">
 								<ul class="tabs-holder">
 									<li><a href="#section-workspace">Workspace</a></li>
@@ -60,7 +61,8 @@
 													<span class="caption">&nbsp;&nbsp;&nbsp;File...&nbsp;&nbsp;&nbsp;</span>
 												</button>
 												<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
-													<li class="btn-file"><a href="#"><!-- /span--><span class="far fa-folder-open fg-amber fa-fw"></span> Open Drawing File (.DXF, .SVG, Image, Gerber, Excellon)</a><input id="file" type="file"
+													<li class="btn-file"><a href="#">
+															<!-- /span--><span class="far fa-folder-open fg-amber fa-fw"></span> Open Drawing File (.DXF, .SVG, Image, Gerber, Excellon)</a><input id="file" type="file"
 															accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple /></li>
 													<li class="divider"></li>
 													<li class="" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree(); $('.workspaceTitle').html('');"><a href="#"> <span class="far fa-file fa-fw"></span> New (Empty)
@@ -78,8 +80,6 @@
 															<li onclick="helloWorldPlasma()"><a href="#">Plasma Hello World</a></li>
 														</ul>
 													</li>
-													<li><a href="#" onclick="Metro.dialog.open('#partslibModal')"><i class="fas fa-sitemap fa-fw"></i> Import from Parts Library</a></li>
-													<li><a href="#" onclick="Metro.dialog.open('#iconslibModal')"><i class="far fa-images fa-fw"></i> Import from Icons Library</a></li>
 												</ul>
 											</div>
 											<span class="title">File</span>
@@ -97,7 +97,7 @@
 												<li><a href="#" onclick="$('#file').trigger('click');">Open File (DXF, SVG, Image, Gerber, Excellon)</a></li>
 												<li class="divider"></li>
 												<li><a href="#" onclick="helloWorld();">Open "Hello World" example</a></li>
-												<li><a href="#" onclick="Metro.dialog.open('#partslibModal')">Import from Parts Library</a></li>
+
 											</ul>
 										</div>
 										<span class="title">File</span>
@@ -127,6 +127,18 @@
 													<span class="caption">Rectangle</span>
 												</button>
 											</div>
+
+											<div class="ribbon-group">
+
+												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #iconslibModal ');">
+													<span class="icon">
+														<span class="far fa-images"></span>
+													</span>
+													<span class="caption">Icononography</span>
+												</button>
+
+											</div>
+
 											<span class="title">Insert</span>
 										</div>
 
@@ -217,6 +229,37 @@
 												</span>
 												<span class="caption">Settings</span>
 											</button>
+
+											<div class="ribbon-group">
+												<button class="ribbon-icon-button" onclick="backupSettingsLocal()" title="Take a backup">
+													<span class="icon">
+														<span class="fa fa-download fa-fw"></span>
+													</span>
+													<span class="caption">Backup Settings</span>
+												</button>
+												<br>
+
+												<button class="ribbon-icon-button btn-file" title="Open a backup settings file">
+													<span class="icon">
+														<span class="fa fa-upload fa-fw"></span>
+													</span>
+													<span class="caption">Restore from file</span>
+													<input id="jsonFile" type="file" accept=".json" />
+												</button>
+												<br>
+
+												<button class="ribbon-icon-button btn-file" onclick="ConfirmDelete()" title="Reset all settings to default">
+													<span class="icon">
+														<span class="fa fa-exclamation-triangle fa-fw"></span>
+													</span>
+													<span class="caption">Factory Reset</span>
+												</button>
+												<br>
+											</div>
+											<span class="title">Settings</span>
+										</div>
+
+										<div class="group">
 											<div class="ribbon-group">
 												<button class="ribbon-icon-button" onclick="getChangelog()">
 													<span class="icon">
@@ -234,27 +277,9 @@
 											</div>
 											<span class="title">App</span>
 										</div>
-										<div class="group">
-											<div class="ribbon-group">
-												<button class="ribbon-icon-button" onclick="undo()">
-													<span class="icon">
-														<span class="fas fa-undo"></span>
-													</span>
-													<span class="caption">Undo</span>
-												</button>
-												<br>
-												<button class="ribbon-icon-button" onclick="redo()">
-													<span class="icon">
-														<span class="fas fa-redo"></span>
-													</span>
-													<span class="caption">Redo</span>
-												</button>
-											</div>
-											<span class="title">Undo/Redo</span>
-										</div>
-									</div>
 
-								</div>
+
+									</div>
 							</nav>
 							<div id="renderArea">
 								<!-- #draganddrop -->
@@ -312,7 +337,7 @@
 							<button id="runSimBtn" title="Run simulation" class="button dark drop-shadow" onclick="sim(0)" disabled><i class="fas fa-fighter-jet"></i> Simulate</button>&nbsp;
 							<button id="stopSimBtn" style="display: none;" title="Stop Sim" class="button dark drop-shadow" onclick="simstop()"><i class="fas fa-stop"></i> Stop Sim</button>&nbsp;
 							<button id="resetViewBtn" title="Stop Sim" class="button dark drop-shadow" onclick="resetView(object)"><i class="fas fa-stop"></i> Reset View</button>&nbsp;
-							<div class="text-left drop-shadow" style="z-index: 200; width: 110px; display: block; position: absolute; bottom:0px; right:10px; background: rgba(240, 240, 240, 0.85);">
+							<div class="text-left viewer-checkboxes drop-shadow">
 								<div data-role="collapse" data-collapsed="false" data-toggle-element="#collapse_toggle_1">
 									<input type="checkbox" data-role="checkbox" data-caption="Documents" checked data-style="2" id="view-docs">
 									<input type="checkbox" data-role="checkbox" data-caption="Toolpaths" checked data-style="2" id="view-toolpath">
@@ -375,7 +400,7 @@
 									<li><a href="#" onclick="addJob(-1);"><span class="icon fa fa-plus"></span> Create a new Operation</a></li>
 								</ul>
 
-								<button id="remJobBtn" class="button small dark outline drop-shadow dropdown-toggle"><span class="icon fa fa-minus"></span> Rem <span class="selectCount" style="display: none;"> 0 </span></button>
+								<button id="remJobBtn" class="button small dark outline drop-shadow dropdown-toggle"><span class="icon fa fa-minus"></span> Del <span class="selectCount" style="display: none;"> 0 </span></button>
 								<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="remtoolpathsmenu" data-toggle-element="#remJobBtn">
 									<li><a href="#" onclick="remJob(-1);"><span class="icon fa fa-plus"></span> Remove From Operation</a></li>
 								</ul>
@@ -409,7 +434,7 @@
 
 								<div class="row" style="margin-left: 1px; margin-right: 1px;">
 									<div class="cell p-0">
-										<div id="noDriverDetected" style="display:none;">
+										<div id="noDriverDetected">
 
 											<!-- <p class="text-small mb-1">Unable to connect to CONTROL: Please Save your GCODE then Open it in OpenBuilds CONTROL </p> -->
 											<button class="button success drop-shadow disabled" title="Save GCODE" id="gcodesavebtn3" onclick="saveFile();"><span id="gcodeexporticon2" class="fa fa-save icon fg-white"></span> Save GCODE</button>
@@ -510,36 +535,24 @@
 				</div>
 			</div>
 
-			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="partslibModal" data-width="800" data-to-top="true">
-				<div class="dialog-title">Parts Library</div>
-				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-					<div id="partslibrary"></div>
-				</div>
-				<div class="dialog-actions">
-					<button class="button js-dialog-close">Close</button>
-				</div>
-			</div>
-
 			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="iconslibModal" data-width="800" data-to-top="true">
 				<div class="dialog-title">Icons Library</div>
 				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+					Click Icon below to load it into CAM workspace:
+					<hr>
 					<div id="iconslibrary">
 
 					</div>
 				</div>
 				<div class="dialog-actions row" style="white-space: nowrap;">
-					<button class="button float-right js-dialog-close cell-3">Close</button>
+					<button class="button float-right js-dialog-close cell-3">Cancel</button>
 
-					<input id="iconlib_filter" onchange="iconlib_Page()" class="float-left"  style="max-width:150px;"
-						data-role="input" data-search-button="true" placeholder="Filter" autofocus type="text"
-						value="">
+					<input id="iconlib_filter" onchange="iconlib_Page()" class="float-left" style="max-width:150px;" data-role="input" data-search-button="true" placeholder="Filter" autofocus type="text" value="">
 
 					<div style="display:inline-block;white-space: normal;">
 						<button class="button float-left" onclick="iconlib_Page(-1)"><span class="fa fa-fw fa-arrow-left"></span></button>
 
-						<input data-role="input" id="iconlib_PageOf" onchange="iconlib_Page()" autofocus type="number"  min="1" step="1"
-							data-prepend="Page:" data-append="Of #"
-							class="float-left" value="1" style="width:175px;">
+						<input data-role="input" id="iconlib_PageOf" onchange="iconlib_Page()" autofocus type="number" min="1" step="1" data-prepend="Page:" data-append="Of #" class="float-left" value="1" style="width:175px;">
 
 						<button class="button float-left" onclick="iconlib_Page(1)"><span class="fa fa-fw fa-arrow-right"></span></button>
 					</div>
@@ -682,7 +695,6 @@
 	<!-- SimpleCAD -->
 	<script type="text/javascript" src="js/basic-cad-shapes.js"></script>
 	<script type="text/javascript" src="js/basic-cad-text.js"></script>
-	<script type="text/javascript" src="js/basic-cad-partslib.js"></script>
 	<script type="text/javascript" src="js/basic-cad-iconslib.js"></script>
 
 	<!-- ThreeJS -->

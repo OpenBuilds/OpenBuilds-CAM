@@ -166,7 +166,8 @@ function animateTree() {
         if (child.userData.hover) {
           child.material.color.setRGB(0, 0.48, 1);
         } else {
-          child.material.color.setRGB(0, 0, 0);
+          var defaultcolor = new THREE.Color(Theme.CAM_DOC_DEFAULT_COLOR);
+          child.material.color = defaultcolor
         }
         var check = $('#checkbox_' + i + '_' + j);
         check.prop('checked', false);

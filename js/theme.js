@@ -3,6 +3,7 @@ let ThemeData = {
     "light": {
       DESCRIPTION: 'Light Mode',
       ICON: 'sun',
+      CAM_DOC_DEFAULT_COLOR: 0x000000,
       SPRITE_OPACITY: 0.6,
       SKY_TOP_COLOR: 0x0077ff,
       SKY_BOTTOM_COLOR: 0xffffff,
@@ -48,6 +49,7 @@ let ThemeData = {
     "dark": {
       DESCRIPTION: 'Dark Mode',
       ICON: 'moon',
+      CAM_DOC_DEFAULT_COLOR: 0xffffff,
       SPRITE_OPACITY: 0.8,
       SKY_TOP_COLOR: 0x333333,
       SKY_BOTTOM_COLOR: 0x222222,

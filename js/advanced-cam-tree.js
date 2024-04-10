@@ -84,9 +84,9 @@ function fillTree() {
         }
 
         toolp += `<button data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" class="tool-button alert" onclick="storeUndo(); toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times" aria-hidden="true"></i></button>
-            <button data-tooltip="tooltip" data-placement="bottom" title="Configure toolpath" class="tool-button primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
             <button data-tooltip="tooltip" data-placement="bottom" title="Reselect toolpaths"   class="tool-button secondary" onclick="setSelectionFromToolPath(` + i + `)"><i class="fa fa-braille"></i></button>
-            <span class="tally alert" style="display: none; margin-top: 6px;" id="toolpathSpinner`+i+`"><i class="fas fa-spinner fa-pulse"></i><small> calculating...</small></span>
+            <button data-tooltip="tooltip" data-placement="bottom" title="Configure toolpath" class="tool-button primary" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>
+            <span class="tally alert" style="display: none; margin-top: 6px;" id="toolpathSpinner` + i + `"><i class="fas fa-spinner fa-pulse"></i><small> calculating...</small></span>
                     </div>
                     </td>
                     </tr>
@@ -108,8 +108,10 @@ function fillTree() {
 
 
       // append removal toolpath to menu
-      var string = `Rem from: ` + toolpathsInScene[i].name + `: ` + operation
-      if (string.length > 32) { string = string.substring(0, 32) + "..." }
+      var string = `Del from: ` + toolpathsInScene[i].name + `: ` + operation
+      if (string.length > 32) {
+        string = string.substring(0, 32) + "..."
+      }
       var menuitem = `<li><a  href="#" onclick="remJob(` + i + `)">` + string + `</a></li>`;
       $('#remtoolpathsmenu').append(menuitem);
 

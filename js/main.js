@@ -24,7 +24,6 @@ $(document).ready(function() {
   initDragDrop();
   initExportworkspace();
 
-
   //File -> Open
   var fileOpen = document.getElementById('file');
   fileOpen.addEventListener('change', readFile, false);

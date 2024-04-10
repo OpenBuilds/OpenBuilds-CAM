@@ -8,6 +8,14 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
   color: #FFF;
 }
 
+.theme_dark .jobsetupfile:hover {
+  background: #333;
+}
+
+.theme_dark .treeview li .node-toggle::before {
+  border-color: #ffffff;
+}
+
 .theme_dark li.divider {
   border-color: #444;
   background-color: #444;
@@ -19,7 +27,15 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
 
 .theme_dark .gutter {
   background-color: #222;
-  border-color: #444;
+  border-color: #333;
+}
+
+.theme_dark .gutter::before {
+  background-color: #444;
+}
+
+.theme_dark .viewer-checkboxes {
+  background: rgba(70, 70, 70, 0.85);
 }
 
 .theme_dark .sidemenu {
@@ -143,7 +159,7 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
 }
 
 .theme_dark .d-menu, .theme_dark .v-menu {
-  background: #222;
+  background: #555;
   color: #FFF;
   border: 1px solid #999;
 }
@@ -451,4 +467,74 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
 .theme_dark .button:focus {
   -webkit-box-shadow: 0 0 0 3px rgba(48, 48, 48, .45);
   box-shadow: 0 0 0 3px rgba(48, 48, 48, .45);
+}
+
+.theme_dark .iconThumbnailImage {
+  filter: invert(1);
+}
+
+.theme_dark #helpoverlay {
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border: 1px solid rgba(55, 55, 55, 0.8);
+}
+
+.theme_dark #helpoverlay>kbd {
+  background: rgba(70, 70, 70, 0.6);
+  color: #fff;
+}
+
+.theme_dark code {
+  background: #333;
+  border: 1px solid #444;
+  color: #fff;
+}
+
+.theme_dark .input-addon .font-select>a {
+  border-color: #fff;
+  color: #fff;
+  background-color: #333;
+}
+
+.theme_dark .input-addon:hover .font-select>a {
+  border-color: #fff;
+  color: #fff;
+  background-color: #333;
+}
+
+.theme_dark .input-addon:hover .active-border {
+  border-color: #fff;
+}
+
+.theme_dark .input-addon:focus-within .active-border {
+  border-color: #fff;
+}
+
+.theme_dark .input-addon-label-left {
+  background-color: #333;
+  color: #fff border-color: #555;
+}
+
+.theme_dark .input-addon-label-right {
+  background-color: #333;
+  color: #fff border-color: #555;
+}
+
+.theme_dark .input-addon-label-right-sm {
+  background-color: #333;
+  color: #fff border-color: #555;
+}
+
+.theme_dark .font-select .fs-results {
+  background-color: #333;
+}
+
+.theme_dark .selected-item {
+  background-color: #555;
+  border: 1px solid #fff;
+}
+
+.theme_dark .selected-item>.remover {
+  background-color: #333;
+  border-bottom: 1px solid #fff;
 }
