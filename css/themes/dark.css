@@ -490,8 +490,12 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
   color: #fff;
 }
 
+.theme_dark .cam-form-field {
+  border-color: #555;
+}
+
 .theme_dark .input-addon .font-select>a {
-  border-color: #fff;
+  border-color: #555;
   color: #fff;
   background-color: #333;
 }
@@ -507,15 +511,17 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
 }
 
 .theme_dark .input-addon:focus-within .active-border {
-  border-color: #fff;
+  border-color: #555;
 }
 
 .theme_dark .input-addon-label-left {
+  border-color: #555;
   background-color: #333;
   color: #fff border-color: #555;
 }
 
 .theme_dark .input-addon-label-right {
+  border-color: #555;
   background-color: #333;
   color: #fff border-color: #555;
 }
