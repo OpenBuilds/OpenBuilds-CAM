@@ -60,7 +60,7 @@
 													<span class="caption">&nbsp;&nbsp;&nbsp;File...&nbsp;&nbsp;&nbsp;</span>
 												</button>
 												<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
-													<li class="btn-file"><a href="#"></span><span class="far fa-folder-open fg-amber fa-fw"></span> Open Drawing File (.DXF, .SVG, Image, Gerber, Excellon)</a><input id="file" type="file"
+													<li class="btn-file"><a href="#"><!-- /span--><span class="far fa-folder-open fg-amber fa-fw"></span> Open Drawing File (.DXF, .SVG, Image, Gerber, Excellon)</a><input id="file" type="file"
 															accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple /></li>
 													<li class="divider"></li>
 													<li class="" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree(); $('.workspaceTitle').html('');"><a href="#"> <span class="far fa-file fa-fw"></span> New (Empty)
@@ -79,6 +79,7 @@
 														</ul>
 													</li>
 													<li><a href="#" onclick="Metro.dialog.open('#partslibModal')"><i class="fas fa-sitemap fa-fw"></i> Import from Parts Library</a></li>
+													<li><a href="#" onclick="Metro.dialog.open('#iconslibModal')"><i class="far fa-images fa-fw"></i> Import from Icons Library</a></li>
 												</ul>
 											</div>
 											<span class="title">File</span>
@@ -373,6 +374,12 @@
 								<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="toolpathsmenu" data-toggle-element="#addJobBtn">
 									<li><a href="#" onclick="addJob(-1);"><span class="icon fa fa-plus"></span> Create a new Operation</a></li>
 								</ul>
+
+								<button id="remJobBtn" class="button small dark outline drop-shadow dropdown-toggle"><span class="icon fa fa-minus"></span> Rem <span class="selectCount" style="display: none;"> 0 </span></button>
+								<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="remtoolpathsmenu" data-toggle-element="#remJobBtn">
+									<li><a href="#" onclick="remJob(-1);"><span class="icon fa fa-plus"></span> Remove From Operation</a></li>
+								</ul>
+
 								<button class="button small dark outline drop-shadow" title="Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes icon"></span>Generate GCODE</button>
 								<button class="button small dark outline drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span id="gcodeexporticon" class="fa fa-save icon fg-gray"></span></button>
 								<button class="button small dark outline drop-shadow" title="Preview GCODE" id="gcodeviewbtn2" onclick="previewFile();"><span id="gcodepreviewicon" class="fa fa-eye icon fg-gray"></span></button>
@@ -394,8 +401,8 @@
 
 						<div class="window mt-2 drop-shadow">
 							<div class="window-caption bg-openbuilds">
-								<i class="fas fa-network-wired fa-fw ml-1 mr-1"></i>
-								<span class="title">Connection</span>
+								<i class="fa fa-save fa-fw ml-1 mr-1"></i>
+								<span class="title">Save GCODE File</span>
 							</div>
 							<div class="window-content p-1" id="connectiontree" style="overflow-y:scroll;">
 
@@ -404,11 +411,11 @@
 									<div class="cell p-0">
 										<div id="noDriverDetected" style="display:none;">
 
-											<p class="text-small mb-1">Unable to connect to CONTROL: Please Save your GCODE then Open it in OpenBuilds CONTROL </p>
+											<!-- <p class="text-small mb-1">Unable to connect to CONTROL: Please Save your GCODE then Open it in OpenBuilds CONTROL </p> -->
 											<button class="button success drop-shadow disabled" title="Save GCODE" id="gcodesavebtn3" onclick="saveFile();"><span id="gcodeexporticon2" class="fa fa-save icon fg-white"></span> Save GCODE</button>
 											<hr>
-											<p class="text-small m-0 p-0" id="installDriverMessage">Connecting to a machine, requires that you have the latest OpenBuilds CONTROL installed.</p>
-											<p class="text-small mb-1" id="installDriverHelp">If you have not installed it yet, you can download it below, or if you have the latest version installed already, please start it.<br> If you still see this message, we are
+											<p class="text-small m-0 p-0" id="installDriverMessage">Save the GCODE to your Computer and then Open it using CONTROL</p>
+											<!-- <p class="text-small mb-1" id="installDriverHelp">If you have not installed it yet, you can download it below, or if you have the latest version installed already, please start it.<br> If you still see this message, we are
 												experiencing a temporary problem connecting to it and you can still use the Save button above<br>
 
 												<nav data-role="ribbonmenu">
@@ -445,7 +452,7 @@
 															</div>
 														</div>
 													</div>
-												</nav>
+												</nav> -->
 
 
 
@@ -510,6 +517,32 @@
 				</div>
 				<div class="dialog-actions">
 					<button class="button js-dialog-close">Close</button>
+				</div>
+			</div>
+
+			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="iconslibModal" data-width="800" data-to-top="true">
+				<div class="dialog-title">Icons Library</div>
+				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
+					<div id="iconslibrary">
+
+					</div>
+				</div>
+				<div class="dialog-actions row" style="white-space: nowrap;">
+					<button class="button float-right js-dialog-close cell-3">Close</button>
+
+					<input id="iconlib_filter" onchange="iconlib_Page()" class="float-left"  style="max-width:150px;"
+						data-role="input" data-search-button="true" placeholder="Filter" autofocus type="text"
+						value="">
+
+					<div style="display:inline-block;white-space: normal;">
+						<button class="button float-left" onclick="iconlib_Page(-1)"><span class="fa fa-fw fa-arrow-left"></span></button>
+
+						<input data-role="input" id="iconlib_PageOf" onchange="iconlib_Page()" autofocus type="number"  min="1" step="1"
+							data-prepend="Page:" data-append="Of #"
+							class="float-left" value="1" style="width:175px;">
+
+						<button class="button float-left" onclick="iconlib_Page(1)"><span class="fa fa-fw fa-arrow-right"></span></button>
+					</div>
 				</div>
 			</div>
 
@@ -650,6 +683,7 @@
 	<script type="text/javascript" src="js/basic-cad-shapes.js"></script>
 	<script type="text/javascript" src="js/basic-cad-text.js"></script>
 	<script type="text/javascript" src="js/basic-cad-partslib.js"></script>
+	<script type="text/javascript" src="js/basic-cad-iconslib.js"></script>
 
 	<!-- ThreeJS -->
 	<script type="text/javascript" src="lib/threejs/three.min.js"></script>
