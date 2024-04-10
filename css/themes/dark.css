@@ -1,0 +1,454 @@
+.theme_dark #splash {
+  background-image: linear-gradient(to top, #111, #555, #111);
+  color: #FFF;
+}
+
+body.theme_dark, .theme_dark div.window, .theme_dark .card {
+  background: #222 !important;
+  color: #FFF;
+}
+
+.theme_dark li.divider {
+  border-color: #444;
+  background-color: #444;
+}
+
+.theme_dark div.window {
+  border: 1px solid #222;
+}
+
+.theme_dark .gutter {
+  background-color: #222;
+  border-color: #444;
+}
+
+.theme_dark .sidemenu {
+  background-color: #333;
+  color: #fff;
+  border-right: 1px solid #555;
+}
+
+.theme_dark .tbtn, {
+  color: #fff;
+  background-color: #333;
+}
+
+.theme_dark .tbtn:active, .theme_dark .tbtnactive {
+  border-color: #888;
+  background-color: #222 !important;
+}
+
+.theme_dark .tbtn:hover {
+  border-color: #888 !important;
+  background-color: rgba(164, 164, 164, 0.58);
+}
+
+.theme_dark .ribbon-menu .content-holder {
+  background: #333;
+}
+
+.theme_dark .ribbon-menu .tabs-holder, .theme_dark .ribbon-menu .content-holder .section {
+  border-color: #444;
+}
+
+.theme_dark .ribbon-menu .tabs-holder li {
+  background: #222;
+  color: #FFF;
+  border-bottom: 1px solid #333;
+}
+
+.theme_dark .ribbon-menu .tabs-holder li:hover {
+  border-color: #444;
+}
+
+.theme_dark .ribbon-menu .tabs-holder .active {
+  background: #333;
+  border-color: #444;
+  color: #FFF;
+}
+
+.theme_dark .ribbon-button, .theme_dark .ribbon-button-dropdown, .theme_dark .ribbon-icon-button, .theme_dark .ribbon-tool-button {
+  background-color: #333;
+  color: #FFF;
+}
+
+.theme_dark .ribbon-button:disabled, .theme_dark .ribbon-button-dropdown:disabled, .theme_dark .ribbon-icon-button:disabled, .theme_dark .ribbon-tool-button:disabled {
+  background-color: #333;
+  color: #777;
+}
+
+.theme_dark .ribbon-dropdown {
+  box-shadow: 2px 2px 2px 0 rgb(40 40 40 / 70%);
+}
+
+.theme_dark .ribbon-dropdown a {
+  border-left: solid 1px #333;
+}
+
+.theme_dark .ribbon-menu .content-holder .group+.group, .theme_dark .ribbon-menu .content-holder .group .title {
+  border-color: #444;
+}
+
+.theme_dark .dialog.dark, .theme_dark .dialog {
+  background: #222;
+  color: #FFF;
+  border-color: #333;
+}
+
+.theme_dark .dialog.dark .dialog-title, .theme_dark .dialog .dialog-title {
+  background: #111;
+  color: #FFF;
+}
+
+.theme_dark .dialog-actions {
+  border-color: #333;
+}
+
+.theme_dark .button.light, .theme_dark .command-button.light, .theme_dark .image-button.light, .theme_dark .info-button.light, .theme_dark .input .button.light, .theme_dark .notify.light, .theme_dark .select .button.light, .theme_dark .shortcut.light, .theme_dark .spinner .button.light, .theme_dark .split-button .split.light, .theme_dark .tag-input .button.light, .theme_dark .tally.light, .theme_dark .toast.light, .theme_dark .tool-button.light, .theme_dark code.light, .theme_dark tbody td.light, .theme_dark tbody tr.light,
+.theme_dark .dro {
+  background-color: #333;
+  border-color: #444;
+}
+
+.theme_dark label.select.disabled>.select-input {
+  border-bottom: solid 1px #fff;
+}
+
+.theme_dark .button.light:hover, .theme_dark .command-button.light:hover, .theme_dark .image-button.light:hover, .theme_dark .info-button.light:hover, .theme_dark .input .button.light:hover, .theme_dark .notify.light:hover, .theme_dark .select .button.light:hover, .theme_dark .shortcut.light:hover, .theme_dark .spinner .button.light:hover, .theme_dark .split-button .split.light:hover, .theme_dark .tag-input .button.light:hover, .theme_dark .tally.light:hover, .theme_dark .toast.light:hover, .theme_dark .tool-button.light:hover, .theme_dark code.light:hover, .theme_dark tbody td.light:hover, .theme_dark tbody tr.light:hover {
+  background-color: #222;
+  color: #FFF;
+}
+
+.theme_dark .button.disabled, .theme_dark .button:disabled, .theme_dark .command-button.disabled, .theme_dark .command-button:disabled, .theme_dark .image-button.disabled, .theme_dark .image-button:disabled, .theme_dark .shortcut.disabled, .theme_dark .shortcut:disabled, .theme_dark .split-button .split.disabled, .theme_dark .split-button .split:disabled, .theme_dark .tool-button.disabled, .theme_dark .tool-button:disabled {
+  opacity: 1;
+}
+
+.theme_dark .file, .theme_dark .input, .theme_dark .select, .theme_dark .spinner, .theme_dark .tag-input, .theme_dark .textarea, .theme_dark input[type=datetime-local], .theme_dark input[type=email], .theme_dark input[type=file], .theme_dark input[type=month], .theme_dark input[type=number], .theme_dark input[type=password], .theme_dark input[type=search], .theme_dark input[type=tel], .theme_dark input[type=text], .theme_dark input[type=time], .theme_dark input[type=url], .theme_dark input[type=week], .theme_dark select, .theme_dark textarea {
+  background-color: #222;
+  color: #FFF;
+}
+
+.theme_dark .file.disabled .caption, .theme_dark .file.disabled .select-input, .theme_dark .file.disabled .stars li, .theme_dark .file.disabled input, .theme_dark .file.disabled select, .theme_dark .file.disabled textarea, .theme_dark .file:disabled .caption, .theme_dark .file:disabled .select-input, .theme_dark .file:disabled .stars li, .theme_dark .file:disabled input, .theme_dark .file:disabled select, .theme_dark .file:disabled textarea, .theme_dark .input.disabled .caption, .theme_dark .input.disabled .select-input, .theme_dark .input.disabled .stars li, .theme_dark .input.disabled input, .theme_dark .input.disabled select, .theme_dark .input.disabled textarea, .theme_dark .input:disabled .caption, .theme_dark .input:disabled .select-input, .theme_dark .input:disabled .stars li, .theme_dark .input:disabled input, .theme_dark .input:disabled select, .theme_dark .input:disabled textarea, .theme_dark .rating.disabled .caption, .theme_dark .rating.disabled .select-input, .theme_dark .rating.disabled .stars li, .theme_dark .rating.disabled input, .theme_dark .rating.disabled select, .theme_dark .rating.disabled textarea, .theme_dark .rating:disabled .caption, .theme_dark .rating:disabled .select-input, .theme_dark .rating:disabled .stars li, .theme_dark .rating:disabled input, .theme_dark .rating:disabled select, .theme_dark .rating:disabled textarea, .theme_dark .select.disabled .caption, .theme_dark .select.disabled .select-input, .theme_dark .select.disabled .stars li, .theme_dark .select.disabled input, .theme_dark .select.disabled select, .theme_dark .select.disabled textarea, .theme_dark .select:disabled .caption, .theme_dark .select:disabled .select-input, .theme_dark .select:disabled .stars li, .theme_dark .select:disabled input, .theme_dark .select:disabled select, .theme_dark .select:disabled textarea, .theme_dark .spinner.disabled .caption, .theme_dark .spinner.disabled .select-input, .theme_dark .spinner.disabled .stars li, .theme_dark .spinner.disabled input, .theme_dark .spinner.disabled select, .theme_dark .spinner.disabled textarea, .theme_dark .spinner:disabled .caption, .theme_dark .spinner:disabled .select-input, .theme_dark .spinner:disabled .stars li, .theme_dark .spinner:disabled input, .theme_dark .spinner:disabled select, .theme_dark .spinner:disabled textarea, .theme_dark .tag-input.disabled .caption, .theme_dark .tag-input.disabled .select-input, .theme_dark .tag-input.disabled .stars li, .theme_dark .tag-input.disabled input, .theme_dark .tag-input.disabled select, .theme_dark .tag-input.disabled textarea, .theme_dark .tag-input:disabled .caption, .theme_dark .tag-input:disabled .select-input, .theme_dark .tag-input:disabled .stars li, .theme_dark .tag-input:disabled input, .theme_dark .tag-input:disabled select, .theme_dark .tag-input:disabled textarea, .theme_dark .textarea.disabled .caption, .theme_dark .textarea.disabled .select-input, .theme_dark .textarea.disabled .stars li, .theme_dark .textarea.disabled input, .theme_dark .textarea.disabled select, .theme_dark .textarea.disabled textarea, .theme_dark .textarea:disabled .caption, .theme_dark .textarea:disabled .select-input, .theme_dark .textarea:disabled .stars li, .theme_dark .textarea:disabled input, .theme_dark .textarea:disabled select, .theme_dark .textarea:disabled textarea {
+  background-color: #222;
+  color: #666;
+}
+
+.theme_dark .file.disabled, .theme_dark .file:disabled, .theme_dark .input.disabled, .theme_dark .input:disabled, .theme_dark .select.disabled, .theme_dark .select:disabled, .theme_dark .spinner.disabled, .theme_dark .spinner:disabled, .theme_dark .tag-input.disabled, .theme_dark .tag-input:disabled, .theme_dark .textarea.disabled, .theme_dark .textarea:disabled, .theme_dark input[type=datetime-local].disabled, .theme_dark input[type=datetime-local]:disabled, .theme_dark input[type=email].disabled, .theme_dark input[type=email]:disabled, .theme_dark input[type=file].disabled, .theme_dark input[type=file]:disabled, .theme_dark input[type=month].disabled, .theme_dark input[type=month]:disabled, .theme_dark input[type=number].disabled, .theme_dark input[type=number]:disabled, .theme_dark input[type=password].disabled, .theme_dark input[type=password]:disabled, .theme_dark input[type=search].disabled, .theme_dark input[type=search]:disabled, .theme_dark input[type=tel].disabled, .theme_dark input[type=tel]:disabled, .theme_dark input[type=text].disabled, .theme_dark input[type=text]:disabled, .theme_dark input[type=time].disabled, .theme_dark input[type=time]:disabled, .theme_dark input[type=url].disabled, .theme_dark input[type=url]:disabled, .theme_dark input[type=week].disabled, .theme_dark input[type=week]:disabled, .theme_dark select.disabled, .theme_dark select:disabled, .theme_dark textarea.disabled, .theme_dark textarea:disabled {
+  background: #222;
+}
+
+.theme_dark .input .prepend, .theme_dark .select .prepend, .theme_dark .input .append {
+  background: #99999922;
+  color: #FFF;
+}
+
+.theme_dark .d-menu, .theme_dark .v-menu {
+  background: #222;
+  color: #FFF;
+  border: 1px solid #999;
+}
+
+.theme_dark .ribbon-dropdown {
+  background: #222;
+  color: #FFF;
+  border: 1px solid #444;
+}
+
+.theme_dark #command {
+  font-family: consolas;
+}
+
+.theme_dark .bg-openbuilds {
+  background-color: #111 !important;
+}
+
+.theme_dark .fg-openbuilds {
+  color: #DDD !important;
+}
+
+.theme_dark #console p.pf span.fg-darkRed {
+  color: #f65 !important;
+}
+
+.theme_dark #console p.pf span.fg-darkGreen {
+  color: #091 !important;
+}
+
+.theme_dark .fg-red {
+  /* color: #f65 !important; */
+}
+
+.theme_dark .fg-green {
+  /* color: #3f6 !important; */
+}
+
+.theme_dark .fg-blue {
+  /* color: #36f !important; */
+}
+
+.theme_dark #console, .theme_dark #editor, .theme_dark #renderArea, .theme_dark #macros {
+  background-color: #222;
+  box-shadow: none;
+  border: 1px solid #555;
+}
+
+.theme_dark #console>p:hover {
+  background-color: #444;
+}
+
+.theme_dark #console p.pf span.fg-dark {
+  color: #FFF !important;
+}
+
+.theme_dark #macros {
+  background-color: #222;
+}
+
+.theme_dark .table .tfoot .td, .theme_dark .table .tfoot .th, .theme_dark .table .tfoot td, .theme_dark .table .tfoot th, .theme_dark .table .thead .td, .theme_dark .table .thead .th, .theme_dark .table .thead td, .theme_dark .table .thead th, .theme_dark .table tfoot .td, .theme_dark .table tfoot .th, .theme_dark .table tfoot td, .theme_dark .table tfoot th, .theme_dark .table thead .td, .theme_dark .table thead .th, .theme_dark .table thead td, .theme_dark .table thead th {
+  color: #DDD;
+  border-color: #444;
+}
+
+.theme_dark .table thead {
+  border: none;
+}
+
+.theme_dark .alt-header>.small, .theme_dark .alt-header>small, .theme_dark .h1>.small, .theme_dark .h1>small, .theme_dark .h2>.small, .theme_dark .h2>small, .theme_dark .h3>.small, .theme_dark .h3>small, .theme_dark .h4>.small, .theme_dark .h4>small, .theme_dark .h5>.small, .theme_dark .h5>small, .theme_dark .h6>.small, .theme_dark .h6>small, .theme_dark .header>.small, .theme_dark .header>small, .theme_dark .leader>.small, .theme_dark .leader>small, .theme_dark .sub-alt-header>.small, .theme_dark .sub-alt-header>small, .theme_dark .sub-header>.small, .theme_dark .sub-header>small, .theme_dark .sub-leader>.small, .theme_dark .sub-leader>small, .theme_dark h1>.small, .theme_dark h1>small, .theme_dark h2>.small, .theme_dark h2>small, .theme_dark h3>.small, .theme_dark h3>small, .theme_dark h4>.small, .theme_dark h4>small, .theme_dark h5>.small, .theme_dark h5>small, .theme_dark h6>.small, .theme_dark h6>small {
+  color: #FFF;
+}
+
+.theme_dark .table.striped .tbody .tr:nth-child(odd), .theme_dark .table.striped tbody tr:nth-child(odd),
+.theme_dark .table.row-hover .tbody .tr:nth-child(odd):hover, .theme_dark .table.row-hover .tbody tr:nth-child(odd):hover, .theme_dark .table.row-hover tbody .tr:nth-child(odd):hover, .theme_dark .table.row-hover tbody tr:nth-child(odd):hover {
+  background-color: #333;
+}
+
+.theme_dark .table.striped .tbody .tr:nth-child(even), .theme_dark .table.striped tbody tr:nth-child(even),
+.theme_dark .table.row-hover .tbody .tr:nth-child(even):hover, .theme_dark .table.row-hover .tbody tr:nth-child(even):hover, .theme_dark .table.row-hover tbody .tr:nth-child(even):hover, .theme_dark .table.row-hover tbody tr:nth-child(even):hover {
+  background-color: #222;
+}
+
+.theme_dark .table.row-hover .tbody .tr:hover, .theme_dark .table.row-hover .tbody tr:hover, .theme_dark .table.row-hover tbody .tr:hover, .theme_dark .table.row-hover tbody tr:hover {
+  background-color: unset;
+}
+
+.table.row-border .tr+.tr, .table.row-border tr+tr {
+  border-top: none;
+}
+
+.theme_dark .switch .check, .theme_dark .switch .check::after {
+  border-color: #333 !important;
+}
+
+.theme_dark .switch .check::after {
+  color: #DDD !important;
+  background-color: #DDD !important;
+}
+
+.theme_dark .action-button, .theme_dark .button, .theme_dark .flat-button {
+  background-color: #666;
+  border-color: #999;
+  color: #FFF;
+}
+
+.theme_dark .bd-openbuilds {
+  border-color: #999 !important;
+}
+
+.theme_dark .button.primary, .theme_dark .command-button.primary, .theme_dark .image-button.primary, .theme_dark .info-button.primary, .theme_dark .input .button.primary, .theme_dark .notify.primary, .theme_dark .select .button.primary, .theme_dark .shortcut.primary, .theme_dark .spinner .button.primary, .theme_dark .split-button .split.primary, .theme_dark .tag-input .button.primary, .theme_dark .tally.primary, .theme_dark .toast.primary, .theme_dark .tool-button.primary, .theme_dark code.primary, .theme_dark tbody td.primary, .theme_dark tbody tr.primary {
+  border-color: #36F;
+  background-color: #04A;
+}
+
+.theme_dark .button.secondary, .theme_dark .command-button.secondary, .theme_dark .image-button.secondary, .theme_dark .info-button.secondary, .theme_dark .input .button.secondary, .theme_dark .notify.secondary, .theme_dark .select .button.secondary, .theme_dark .shortcut.secondary, .theme_dark .spinner .button.secondary, .theme_dark .split-button .split.secondary, .theme_dark .tag-input .button.secondary, .theme_dark .tally.secondary, .theme_dark .toast.secondary, .theme_dark .tool-button.secondary, .theme_dark code.secondary, .theme_dark tbody td.secondary, .theme_dark tbody tr.secondary {
+  border-color: #888;
+}
+
+.theme_dark .button.success, .theme_dark .command-button.success, .theme_dark .image-button.success, .theme_dark .info-button.success, .theme_dark .input .button.success, .theme_dark .notify.success, .theme_dark .select .button.success, .theme_dark .shortcut.success, .theme_dark .spinner .button.success, .theme_dark .split-button .split.success, .theme_dark .tag-input .button.success, .theme_dark .tally.success, .theme_dark .toast.success, .theme_dark .tool-button.success, .theme_dark code.success, .theme_dark tbody td.success, .theme_dark tbody tr.success {
+  border-color: #009942;
+  background-color: #073;
+}
+
+.theme_dark .button.success:disabled, .theme_dark .button.success.disabled, .theme_dark .command-button.success:disabled, .theme_dark .image-button.success:disabled, .theme_dark .info-button.success:disabled, .theme_dark .input .button.success:disabled, .theme_dark .notify.success:disabled, .theme_dark .select .button.success:disabled, .theme_dark .shortcut.success:disabled, .theme_dark .spinner .button.success:disabled, .theme_dark .split-button .split.success:disabled, .theme_dark .tag-input .button.success:disabled, .theme_dark .tally.success:disabled, .theme_dark .toast.success:disabled, .theme_dark .tool-button.success:disabled, .theme_dark code.success:disabled, .theme_dark tbody td.success:disabled, .theme_dark tbody tr.success:disabled, button.success.disabled {
+  border-color: #71b08c;
+  background-color: #668b76;
+}
+
+.theme_dark .button.alert, .theme_dark .command-button.alert, .theme_dark .image-button.alert, .theme_dark .info-button.alert, .theme_dark .input .button.alert, .theme_dark .notify.alert, .theme_dark .select .button.alert, .theme_dark .shortcut.alert, .theme_dark .spinner .button.alert, .theme_dark .split-button .split.alert, .theme_dark .tag-input .button.alert, .theme_dark .tally.alert, .theme_dark .toast.alert, .theme_dark .tool-button.alert, .theme_dark code.alert, .theme_dark tbody td.alert, .theme_dark tbody tr.alert {
+  border-color: #F65;
+  background-color: #ce352c;
+}
+
+.theme_dark .button.outline, .theme_dark .command-button.outline, .theme_dark .image-button.outline, .theme_dark .shortcut.outline, .theme_dark .split-button .split.outline, .theme_dark .tool-button.outline {
+  color: #FFF;
+}
+
+.theme_dark .button.primary.outline, .theme_dark .command-button.primary.outline, .theme_dark .image-button.primary.outline, .theme_dark .info-button.primary.outline, .theme_dark .input .button.primary.outline, .theme_dark .notify.primary.outline, .theme_dark .select .button.primary.outline, .theme_dark .shortcut.primary.outline, .theme_dark .spinner .button.primary.outline, .theme_dark .split-button .split.primary.outline, .theme_dark .tag-input .button.primary.outline, .theme_dark .tally.primary.outline, .theme_dark .toast.primary.outline, .theme_dark .tool-button.primary.outline, .theme_dark code.primary.outline, .theme_dark tbody td.primary.outline, .theme_dark tbody tr.primary.outline {
+  border-color: #36F;
+}
+
+.theme_dark .button.secondary.outline, .theme_dark .command-button.secondary.outline, .theme_dark .image-button.secondary.outline, .theme_dark .info-button.secondary.outline, .theme_dark .input .button.secondary.outline, .theme_dark .notify.secondary.outline, .theme_dark .select .button.secondary.outline, .theme_dark .shortcut.secondary.outline, .theme_dark .spinner .button.secondary.outline, .theme_dark .split-button .split.secondary.outline, .theme_dark .tag-input .button.secondary.outline, .theme_dark .tally.secondary.outline, .theme_dark .toast.secondary.outline, .theme_dark .tool-button.secondary.outline, .theme_dark code.secondary.outline, .theme_dark tbody td.secondary.outline, .theme_dark tbody tr.secondary.outline {
+  color: #DDD;
+}
+
+.theme_dark .button.success.outline, .theme_dark .command-button.success.outline, .theme_dark .image-button.success.outline, .theme_dark .info-button.success.outline, .theme_dark .input .button.success.outline, .theme_dark .notify.success.outline, .theme_dark .select .button.success.outline, .theme_dark .shortcut.success.outline, .theme_dark .spinner .button.success.outline, .theme_dark .split-button .split.success.outline, .theme_dark .tag-input .button.success.outline, .theme_dark .tally.success.outline, .theme_dark .toast.success.outline, .theme_dark .tool-button.success.outline, .theme_dark code.success.outline, .theme_dark tbody td.success.outline, .theme_dark tbody tr.success.outline {
+  border-color: #3f6;
+}
+
+.theme_dark .button.alert.outline, .theme_dark .command-button.alert.outline, .theme_dark .image-button.alert.outline, .theme_dark .info-button.alert.outline, .theme_dark .input .button.alert.outline, .theme_dark .notify.alert.outline, .theme_dark .select .button.alert.outline, .theme_dark .shortcut.alert.outline, .theme_dark .spinner .button.alert.outline, .theme_dark .split-button .split.alert.outline, .theme_dark .tag-input .button.alert.outline, .theme_dark .tally.alert.outline, .theme_dark .toast.alert.outline, .theme_dark .tool-button.alert.outline, .theme_dark code.alert.outline, .theme_dark tbody td.alert.outline, .theme_dark tbody tr.alert.outline {
+  border-color: #F65;
+}
+
+.theme_dark .button.outline, .theme_dark .command-button.outline, .theme_dark .image-button.outline, .theme_dark .shortcut.outline, .theme_dark .split-button .split.outline, .theme_dark .tool-button.outline {
+  color: #DDD;
+}
+
+.theme_dark .command-button .icon, .theme_dark .image-button .icon {
+  color: #FFF;
+}
+
+.theme_dark .ace_line {
+  color: #FFF !important;
+}
+
+.theme_dark .ace_scroller {
+  background-color: #222 !important;
+}
+
+.theme_dark .ace-sqlserver .ace_gutter {
+  background-color: #222 !important;
+  color: #FFF !important;
+}
+
+.theme_dark .ace-sqlserver .ace_gutter-active-line {
+  background-color: #444 !important;
+}
+
+.theme_dark .ace-sqlserver .ace_marker-layer .ace_active-line {
+  background: #1D1D1D !important;
+}
+
+.theme_dark .ace-sqlserver .ace_string {
+  color: #FFF !important;
+}
+
+.theme_dark .ace-sqlserver .ace_comment {
+  color: #6F6 !important;
+}
+
+.theme_dark .ace-sqlserver .ace_numeric {
+  color: #DDD !important;
+}
+
+.theme_dark .ace-sqlserver .ace_identifier {
+  color: #0FF !important;
+}
+
+.theme_dark .ace-sqlserver .ace_keyword {
+  color: #0FF !important;
+}
+
+.theme_dark hr {
+  background-color: #444;
+}
+
+.theme_dark .bd-gray {
+  border-color: #333 !important;
+}
+
+.theme_dark .tabs>ul.tabs-list>li>a {
+  background: #222;
+  color: #FFF;
+  border-bottom: 1px solid #333;
+}
+
+.theme_dark .tabs>ul.tabs-list>li.active>a {
+  background: #555;
+  border-bottom: 1px solid #222;
+}
+
+.theme_dark .tabs>ul.tabs-list {
+  background: #222;
+  color: #FFF;
+  border-bottom: 1px solid #fff;
+}
+
+.theme-dark div#IconPickerModal .ip-icons-content .ip-icons-search-results>*>i, div#IconPickerModal .ip-icons-content .ip-icons-area>i, div#IconPickerModal .ip-icons-content .ip-icons-search-results>*>svg, div#IconPickerModal .ip-icons-content .ip-icons-area>svg {
+  color: #000;
+}
+
+.theme_dark .fg-gray {
+  border-color: #333;
+}
+
+.theme_dark .ribbon-button.dropdown-toggle::before {
+  border-color: #fff;
+}
+
+.theme_dark .card {
+  border-color: #333;
+}
+
+.theme_dark .fg-dark {
+  color: #fff !important;
+}
+
+.theme_dark .fg-grayBlue {
+  color: #24A0ED !important;
+}
+
+.theme_dark .hint {
+  background: #222 !important;
+  border: 1px solid #333;
+}
+
+.theme_dark #progressbar {
+  background: #555 !important;
+}
+
+.theme_dark .d-menu>li.group-title {
+  background: #222 !important;
+}
+
+.theme_dark .d-menu {
+  border: 1px solid #222;
+}
+
+.theme_dark .drop-container {
+  background: #222 !important;
+  border: 1px solid #333;
+}
+
+.theme_dark div.input {
+  border: 1px solid #555;
+}
+
+.theme_dark div.input.alert {
+  border: 1px solid #ce352c;
+}
+
+.theme_dark select {
+  border: 1px solid #555;
+}
+
+.theme_dark select.alert {
+  border: 1px solid #ce352c;
+}
+
+.theme_dark #openbuildslogosplashImg {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.theme_dark .droInput {
+  background: #222 !important;
+  border: 1px solid #555;
+}
+
+/* as per https://github.com/OpenBuilds/OpenBuilds-CONTROL/issues/291  */
+.theme_dark .disabled {
+  color: #999 !important;
+}
+
+.theme_dark .button:focus {
+  -webkit-box-shadow: 0 0 0 3px rgba(48, 48, 48, .45);
+  box-shadow: 0 0 0 3px rgba(48, 48, 48, .45);
+}

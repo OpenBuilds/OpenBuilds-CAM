@@ -128,6 +128,8 @@
 											</div>
 											<span class="title">Insert</span>
 										</div>
+
+
 										<!-- <div class="group">
 										<div class="ribbon-group">
 											<button class="ribbon-icon-button" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
@@ -190,6 +192,21 @@
 											</div>
 											<span class="title">Undo/Redo</span>
 										</div>
+
+										<div class="group">
+
+											<div id="ddThemeButton">
+												<button id="btnTheme" class="ribbon-button" onclick="Theme.toggle();">
+													<span class="icon" id="currentThemeIcon">
+														<i class="fas fa-paint-brush"></i>
+													</span>
+													<span class="caption" id="currentThemeName">Dark<br>Mode</span>
+													<span class="h6 badge bg-green fg-white"> <i class="fas fa-brush  fa-spin"></i> New!</span>
+												</button>
+											</div>
+											<span class="title">Theme</span>
+										</div>
+
 									</div>
 									<div class="section" id="section-settings">
 										<div class="group">
@@ -317,10 +334,10 @@
 								<span class="title">Documents <span class="workspaceTitle"></span></span>
 							</div>
 							<div id="selectoverlay" class="text-center">
-								<button class="button small dark outline bg-white drop-shadow" id="selectAll"><span class="far fa-check-square"></span> All</button>
-								<button class="button small dark outline bg-white drop-shadow" id="selectNone"><span class="far fa-square"></span> None</button>
-								<button class="button small dark outline bg-white drop-shadow" id="selectInv"><span class="fas fa-check"></span> Invert</button>
-								<button class="button small dark outline bg-white drop-shadow" id="selectDel"><span class="fas fa-trash"></span> Delete</button>
+								<button class="button small dark outline drop-shadow" id="selectAll"><span class="far fa-check-square"></span> All</button>
+								<button class="button small dark outline drop-shadow" id="selectNone"><span class="far fa-square"></span> None</button>
+								<button class="button small dark outline drop-shadow" id="selectInv"><span class="fas fa-check"></span> Invert</button>
+								<button class="button small dark outline drop-shadow" id="selectDel"><span class="fas fa-trash"></span> Delete</button>
 							</div>
 							<div class="window-content p-1" style="overflow-y:scroll;">
 								<!-- Documents Here -->
@@ -621,6 +638,9 @@
 
 	<!-- Helpers -->
 	<script type="text/javascript" src="js/helpers.js"></script>
+
+	<!-- Theme  -->
+	<script type="text/javascript" src="js/theme.js"></script>
 
 	<!-- Google Fonts as CAM paths -->
 	<script type="text/javascript" src="lib/jquery/fontselect/jquery.fontselect.min.js"></script>

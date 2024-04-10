@@ -1,0 +1,264 @@
+body.theme_hicontrast, .theme_hicontrast div.window, .theme_hicontrast .card, .theme_hicontrast #splash {
+  background: #000;
+  color: #FFF;
+}
+
+.theme_hicontrast .ribbon-menu .content-holder {
+  background: #222;
+}
+
+.theme_hicontrast .ribbon-menu .tabs-holder, .theme_hicontrast .ribbon-menu .content-holder .section {
+  border-color: #FFF;
+}
+
+.theme_hicontrast .ribbon-menu .tabs-holder li {
+  background: #222;
+  color: #0FF;
+  border: 1px solid #FFF;
+}
+
+.theme_hicontrast .ribbon-menu .tabs-holder li:hover {
+  border-color: #0FF;
+}
+
+.theme_hicontrast .ribbon-menu .tabs-holder .active {
+  background: #0FF;
+  border-color: #FFF;
+  color: #000;
+}
+
+.theme_hicontrast .ribbon-button, .theme_hicontrast .ribbon-button-dropdown, .theme_hicontrast .ribbon-icon-button, .theme_hicontrast .ribbon-tool-button {
+  background-color: #222;
+  color: #FFF;
+  border: 1px solid transparent;
+}
+
+.theme_hicontrast .ribbon-button:hover, .theme_hicontrast .ribbon-button-dropdown:hover, .theme_hicontrast .ribbon-icon-button:hover, .theme_hicontrast .ribbon-tool-button:hover {
+  border-color: #0FF;
+}
+
+.theme_hicontrast .ribbon-menu .content-holder .group+.group, .theme_hicontrast .ribbon-menu .content-holder .group .title {
+  border-color: #FFF;
+  color: #0FF;
+}
+
+.theme_hicontrast .dialog.dark, .theme_hicontrast .dialog {
+  background: #000;
+  color: #FFF;
+  border-color: #0FF;
+}
+
+.theme_hicontrast .dialog.dark .dialog-title, .theme_hicontrast .dialog .dialog-title {
+  background: #0FF;
+  color: #000;
+}
+
+.theme_hicontrast .dialog-actions {
+  border-color: #666;
+}
+
+.theme_hicontrast .button.light, .theme_hicontrast .command-button.light, .theme_hicontrast .image-button.light, .theme_hicontrast .info-button.light, .theme_hicontrast .input .button.light, .theme_hicontrast .notify.light, .theme_hicontrast .select .button.light, .theme_hicontrast .shortcut.light, .theme_hicontrast .spinner .button.light, .theme_hicontrast .split-button .split.light, .theme_hicontrast .tag-input .button.light, .theme_hicontrast .tally.light, .theme_hicontrast .toast.light, .theme_hicontrast .tool-button.light, .theme_hicontrast code.light, .theme_hicontrast tbody td.light, .theme_hicontrast tbody tr.light,
+.theme_hicontrast .dro {
+  background-color: #000;
+  border-color: #0FF;
+}
+
+.theme_hicontrast .button.light:hover, .theme_hicontrast .command-button.light:hover, .theme_hicontrast .image-button.light:hover, .theme_hicontrast .info-button.light:hover, .theme_hicontrast .input .button.light:hover, .theme_hicontrast .notify.light:hover, .theme_hicontrast .select .button.light:hover, .theme_hicontrast .shortcut.light:hover, .theme_hicontrast .spinner .button.light:hover, .theme_hicontrast .split-button .split.light:hover, .theme_hicontrast .tag-input .button.light:hover, .theme_hicontrast .tally.light:hover, .theme_hicontrast .toast.light:hover, .theme_hicontrast .tool-button.light:hover, .theme_hicontrast code.light:hover, .theme_hicontrast tbody td.light:hover, .theme_hicontrast tbody tr.light:hover {
+  background-color: #099;
+}
+
+.theme_hicontrast .button.disabled, .theme_hicontrast .button:disabled, .theme_hicontrast .command-button.disabled, .theme_hicontrast .command-button:disabled, .theme_hicontrast .image-button.disabled, .theme_hicontrast .image-button:disabled, .theme_hicontrast .shortcut.disabled, .theme_hicontrast .shortcut:disabled, .theme_hicontrast .split-button .split.disabled, .theme_hicontrast .split-button .split:disabled, .theme_hicontrast .tool-button.disabled, .theme_hicontrast .tool-button:disabled {
+  opacity: 1;
+}
+
+.theme_hicontrast .file, .theme_hicontrast .input, .theme_hicontrast .select, .theme_hicontrast .spinner, .theme_hicontrast .tag-input, .theme_hicontrast .textarea, .theme_hicontrast input[type=datetime-local], .theme_hicontrast input[type=email], .theme_hicontrast input[type=file], .theme_hicontrast input[type=month], .theme_hicontrast input[type=number], .theme_hicontrast input[type=password], .theme_hicontrast input[type=search], .theme_hicontrast input[type=tel], .theme_hicontrast input[type=text], .theme_hicontrast input[type=time], .theme_hicontrast input[type=url], .theme_hicontrast input[type=week], .theme_hicontrast select, .theme_hicontrast textarea {
+  background-color: #000;
+  color: #FFF;
+  border-color: #0FF;
+}
+
+.theme_hicontrast .file.disabled .caption, .theme_hicontrast .file.disabled .select-input, .theme_hicontrast .file.disabled .stars li, .theme_hicontrast .file.disabled input, .theme_hicontrast .file.disabled select, .theme_hicontrast .file.disabled textarea, .theme_hicontrast .file:disabled .caption, .theme_hicontrast .file:disabled .select-input, .theme_hicontrast .file:disabled .stars li, .theme_hicontrast .file:disabled input, .theme_hicontrast .file:disabled select, .theme_hicontrast .file:disabled textarea, .theme_hicontrast .input.disabled .caption, .theme_hicontrast .input.disabled .select-input, .theme_hicontrast .input.disabled .stars li, .theme_hicontrast .input.disabled input, .theme_hicontrast .input.disabled select, .theme_hicontrast .input.disabled textarea, .theme_hicontrast .input:disabled .caption, .theme_hicontrast .input:disabled .select-input, .theme_hicontrast .input:disabled .stars li, .theme_hicontrast .input:disabled input, .theme_hicontrast .input:disabled select, .theme_hicontrast .input:disabled textarea, .theme_hicontrast .rating.disabled .caption, .theme_hicontrast .rating.disabled .select-input, .theme_hicontrast .rating.disabled .stars li, .theme_hicontrast .rating.disabled input, .theme_hicontrast .rating.disabled select, .theme_hicontrast .rating.disabled textarea, .theme_hicontrast .rating:disabled .caption, .theme_hicontrast .rating:disabled .select-input, .theme_hicontrast .rating:disabled .stars li, .theme_hicontrast .rating:disabled input, .theme_hicontrast .rating:disabled select, .theme_hicontrast .rating:disabled textarea, .theme_hicontrast .select.disabled .caption, .theme_hicontrast .select.disabled .select-input, .theme_hicontrast .select.disabled .stars li, .theme_hicontrast .select.disabled input, .theme_hicontrast .select.disabled select, .theme_hicontrast .select.disabled textarea, .theme_hicontrast .select:disabled .caption, .theme_hicontrast .select:disabled .select-input, .theme_hicontrast .select:disabled .stars li, .theme_hicontrast .select:disabled input, .theme_hicontrast .select:disabled select, .theme_hicontrast .select:disabled textarea, .theme_hicontrast .spinner.disabled .caption, .theme_hicontrast .spinner.disabled .select-input, .theme_hicontrast .spinner.disabled .stars li, .theme_hicontrast .spinner.disabled input, .theme_hicontrast .spinner.disabled select, .theme_hicontrast .spinner.disabled textarea, .theme_hicontrast .spinner:disabled .caption, .theme_hicontrast .spinner:disabled .select-input, .theme_hicontrast .spinner:disabled .stars li, .theme_hicontrast .spinner:disabled input, .theme_hicontrast .spinner:disabled select, .theme_hicontrast .spinner:disabled textarea, .theme_hicontrast .tag-input.disabled .caption, .theme_hicontrast .tag-input.disabled .select-input, .theme_hicontrast .tag-input.disabled .stars li, .theme_hicontrast .tag-input.disabled input, .theme_hicontrast .tag-input.disabled select, .theme_hicontrast .tag-input.disabled textarea, .theme_hicontrast .tag-input:disabled .caption, .theme_hicontrast .tag-input:disabled .select-input, .theme_hicontrast .tag-input:disabled .stars li, .theme_hicontrast .tag-input:disabled input, .theme_hicontrast .tag-input:disabled select, .theme_hicontrast .tag-input:disabled textarea, .theme_hicontrast .textarea.disabled .caption, .theme_hicontrast .textarea.disabled .select-input, .theme_hicontrast .textarea.disabled .stars li, .theme_hicontrast .textarea.disabled input, .theme_hicontrast .textarea.disabled select, .theme_hicontrast .textarea.disabled textarea, .theme_hicontrast .textarea:disabled .caption, .theme_hicontrast .textarea:disabled .select-input, .theme_hicontrast .textarea:disabled .stars li, .theme_hicontrast .textarea:disabled input, .theme_hicontrast .textarea:disabled select, .theme_hicontrast .textarea:disabled textarea {
+  background-color: #000;
+  color: #666;
+}
+
+.theme_hicontrast .file.disabled, .theme_hicontrast .file:disabled, .theme_hicontrast .input.disabled, .theme_hicontrast .input:disabled, .theme_hicontrast .select.disabled, .theme_hicontrast .select:disabled, .theme_hicontrast .spinner.disabled, .theme_hicontrast .spinner:disabled, .theme_hicontrast .tag-input.disabled, .theme_hicontrast .tag-input:disabled, .theme_hicontrast .textarea.disabled, .theme_hicontrast .textarea:disabled, .theme_hicontrast input[type=datetime-local].disabled, .theme_hicontrast input[type=datetime-local]:disabled, .theme_hicontrast input[type=email].disabled, .theme_hicontrast input[type=email]:disabled, .theme_hicontrast input[type=file].disabled, .theme_hicontrast input[type=file]:disabled, .theme_hicontrast input[type=month].disabled, .theme_hicontrast input[type=month]:disabled, .theme_hicontrast input[type=number].disabled, .theme_hicontrast input[type=number]:disabled, .theme_hicontrast input[type=password].disabled, .theme_hicontrast input[type=password]:disabled, .theme_hicontrast input[type=search].disabled, .theme_hicontrast input[type=search]:disabled, .theme_hicontrast input[type=tel].disabled, .theme_hicontrast input[type=tel]:disabled, .theme_hicontrast input[type=text].disabled, .theme_hicontrast input[type=text]:disabled, .theme_hicontrast input[type=time].disabled, .theme_hicontrast input[type=time]:disabled, .theme_hicontrast input[type=url].disabled, .theme_hicontrast input[type=url]:disabled, .theme_hicontrast input[type=week].disabled, .theme_hicontrast input[type=week]:disabled, .theme_hicontrast select.disabled, .theme_hicontrast select:disabled, .theme_hicontrast textarea.disabled, .theme_hicontrast textarea:disabled {
+  background: #000;
+}
+
+.theme_hicontrast .input .prepend, .theme_hicontrast .select .prepend, .theme_hicontrast .input .append {
+  background: #99999922;
+  color: #FFF;
+}
+
+.theme_hicontrast .d-menu, .theme_hicontrast .v-menu, .theme_hicontrast .ribbon-dropdown {
+  background: #000;
+  color: #FFF;
+  border: 1px solid #999;
+}
+
+.theme_hicontrast #command {
+  font-family: consolas;
+}
+
+.theme_hicontrast .bg-openbuilds {
+  background-color: #666 !important;
+}
+
+.theme_hicontrast .fg-openbuilds {
+  color: #FFF !important;
+}
+
+.theme_hicontrast .fg-red, .theme_hicontrast #console p.pf span.fg-darkRed {
+  color: #F60 !important;
+}
+
+.theme_hicontrast #console p.pf span.fg-darkGreen {
+  color: #0FF !important;
+}
+
+.theme_hicontrast .fg-green {
+  color: #0F0 !important;
+}
+
+.theme_hicontrast .fg-blue {
+  color: #0FF !important;
+}
+
+.theme_hicontrast #console, .theme_hicontrast #editor, .theme_hicontrast #renderArea, .theme_hicontrast #macros {
+  background-color: #000;
+  box-shadow: none;
+  border: 1px solid #999;
+}
+
+.theme_hicontrast #console>p:hover {
+  background-color: #444;
+}
+
+.theme_hicontrast #console p.pf span.fg-dark {
+  color: #FFF !important;
+}
+
+.theme_hicontrast #macros {
+  background-color: #000;
+}
+
+.theme_hicontrast .table .tfoot .td, .theme_hicontrast .table .tfoot .th, .theme_hicontrast .table .tfoot td, .theme_hicontrast .table .tfoot th, .theme_hicontrast .table .thead .td, .theme_hicontrast .table .thead .th, .theme_hicontrast .table .thead td, .theme_hicontrast .table .thead th, .theme_hicontrast .table tfoot .td, .theme_hicontrast .table tfoot .th, .theme_hicontrast .table tfoot td, .theme_hicontrast .table tfoot th, .theme_hicontrast .table thead .td, .theme_hicontrast .table thead .th, .theme_hicontrast .table thead td, .theme_hicontrast .table thead th {
+  color: #FFF;
+}
+
+.theme_hicontrast .alt-header>.small, .theme_hicontrast .alt-header>small, .theme_hicontrast .h1>.small, .theme_hicontrast .h1>small, .theme_hicontrast .h2>.small, .theme_hicontrast .h2>small, .theme_hicontrast .h3>.small, .theme_hicontrast .h3>small, .theme_hicontrast .h4>.small, .theme_hicontrast .h4>small, .theme_hicontrast .h5>.small, .theme_hicontrast .h5>small, .theme_hicontrast .h6>.small, .theme_hicontrast .h6>small, .theme_hicontrast .header>.small, .theme_hicontrast .header>small, .theme_hicontrast .leader>.small, .theme_hicontrast .leader>small, .theme_hicontrast .sub-alt-header>.small, .theme_hicontrast .sub-alt-header>small, .theme_hicontrast .sub-header>.small, .theme_hicontrast .sub-header>small, .theme_hicontrast .sub-leader>.small, .theme_hicontrast .sub-leader>small, .theme_hicontrast h1>.small, .theme_hicontrast h1>small, .theme_hicontrast h2>.small, .theme_hicontrast h2>small, .theme_hicontrast h3>.small, .theme_hicontrast h3>small, .theme_hicontrast h4>.small, .theme_hicontrast h4>small, .theme_hicontrast h5>.small, .theme_hicontrast h5>small, .theme_hicontrast h6>.small, .theme_hicontrast h6>small {
+  color: #FFF;
+}
+
+.theme_hicontrast .table.striped .tbody .tr:nth-child(odd), .theme_hicontrast .table.striped tbody tr:nth-child(odd),
+.theme_hicontrast .table.row-hover .tbody .tr:nth-child(odd):hover, .theme_hicontrast .table.row-hover .tbody tr:nth-child(odd):hover, .theme_hicontrast .table.row-hover tbody .tr:nth-child(odd):hover, .theme_hicontrast .table.row-hover tbody tr:nth-child(odd):hover {
+  background-color: #000;
+  border-top: 1px dashed #999;
+  border-bottom: 1px dashed #999;
+}
+
+.theme_hicontrast .table.row-hover .tbody .tr:hover, .theme_hicontrast .table.row-hover .tbody tr:hover, .theme_hicontrast .table.row-hover tbody .tr:hover, .theme_hicontrast .table.row-hover tbody tr:hover {
+  background-color: unset;
+}
+
+.theme_hicontrast .table.row-border .tr+.tr, .theme_hicontrast .table.row-border tr+tr {
+  border-top: 1px dashed #999;
+  border-bottom: 1px dashed #999;
+}
+
+.theme_hicontrast .switch .check, .theme_hicontrast .switch .check::after {
+  border-color: #0FF !important;
+}
+
+.theme_hicontrast .switch .check::after {
+  color: #0FF !important;
+  background-color: #0FF !important;
+}
+
+.theme_hicontrast .action-button, .theme_hicontrast .button, .theme_hicontrast .flat-button {
+  background-color: #000;
+  border-color: #0FF;
+  color: #FFF;
+}
+
+.theme_hicontrast .bd-openbuilds {
+  border-color: #FFF !important;
+}
+
+.theme_hicontrast .button.primary, .theme_hicontrast .command-button.primary, .theme_hicontrast .image-button.primary, .theme_hicontrast .info-button.primary, .theme_hicontrast .input .button.primary, .theme_hicontrast .notify.primary, .theme_hicontrast .select .button.primary, .theme_hicontrast .shortcut.primary, .theme_hicontrast .spinner .button.primary, .theme_hicontrast .split-button .split.primary, .theme_hicontrast .tag-input .button.primary, .theme_hicontrast .tally.primary, .theme_hicontrast .toast.primary, .theme_hicontrast .tool-button.primary, .theme_hicontrast code.primary, .theme_hicontrast tbody td.primary, .theme_hicontrast tbody tr.primary {
+  border-color: #09F;
+}
+
+.theme_hicontrast .button.secondary, .theme_hicontrast .command-button.secondary, .theme_hicontrast .image-button.secondary, .theme_hicontrast .info-button.secondary, .theme_hicontrast .input .button.secondary, .theme_hicontrast .notify.secondary, .theme_hicontrast .select .button.secondary, .theme_hicontrast .shortcut.secondary, .theme_hicontrast .spinner .button.secondary, .theme_hicontrast .split-button .split.secondary, .theme_hicontrast .tag-input .button.secondary, .theme_hicontrast .tally.secondary, .theme_hicontrast .toast.secondary, .theme_hicontrast .tool-button.secondary, .theme_hicontrast code.secondary, .theme_hicontrast tbody td.secondary, .theme_hicontrast tbody tr.secondary {
+  border-color: #0F0;
+}
+
+.theme_hicontrast .button.success, .theme_hicontrast .command-button.success, .theme_hicontrast .image-button.success, .theme_hicontrast .info-button.success, .theme_hicontrast .input .button.success, .theme_hicontrast .notify.success, .theme_hicontrast .select .button.success, .theme_hicontrast .shortcut.success, .theme_hicontrast .spinner .button.success, .theme_hicontrast .split-button .split.success, .theme_hicontrast .tag-input .button.success, .theme_hicontrast .tally.success, .theme_hicontrast .toast.success, .theme_hicontrast .tool-button.success, .theme_hicontrast code.success, .theme_hicontrast tbody td.success, .theme_hicontrast tbody tr.success {
+  border-color: #0F0;
+}
+
+.theme_hicontrast .button.alert, .theme_hicontrast .command-button.alert, .theme_hicontrast .image-button.alert, .theme_hicontrast .info-button.alert, .theme_hicontrast .input .button.alert, .theme_hicontrast .notify.alert, .theme_hicontrast .select .button.alert, .theme_hicontrast .shortcut.alert, .theme_hicontrast .spinner .button.alert, .theme_hicontrast .split-button .split.alert, .theme_hicontrast .tag-input .button.alert, .theme_hicontrast .tally.alert, .theme_hicontrast .toast.alert, .theme_hicontrast .tool-button.alert, .theme_hicontrast code.alert, .theme_hicontrast tbody td.alert, .theme_hicontrast tbody tr.alert {
+  border-color: #F60;
+}
+
+.theme_hicontrast .button.outline, .theme_hicontrast .command-button.outline, .theme_hicontrast .image-button.outline, .theme_hicontrast .shortcut.outline, .theme_hicontrast .split-button .split.outline, .theme_hicontrast .tool-button.outline {
+  color: #FFF;
+}
+
+.theme_hicontrast .button.primary.outline, .theme_hicontrast .command-button.primary.outline, .theme_hicontrast .image-button.primary.outline, .theme_hicontrast .info-button.primary.outline, .theme_hicontrast .input .button.primary.outline, .theme_hicontrast .notify.primary.outline, .theme_hicontrast .select .button.primary.outline, .theme_hicontrast .shortcut.primary.outline, .theme_hicontrast .spinner .button.primary.outline, .theme_hicontrast .split-button .split.primary.outline, .theme_hicontrast .tag-input .button.primary.outline, .theme_hicontrast .tally.primary.outline, .theme_hicontrast .toast.primary.outline, .theme_hicontrast .tool-button.primary.outline, .theme_hicontrast code.primary.outline, .theme_hicontrast tbody td.primary.outline, .theme_hicontrast tbody tr.primary.outline {
+  border-color: #09F;
+}
+
+.theme_hicontrast .button.secondary.outline, .theme_hicontrast .command-button.secondary.outline, .theme_hicontrast .image-button.secondary.outline, .theme_hicontrast .info-button.secondary.outline, .theme_hicontrast .input .button.secondary.outline, .theme_hicontrast .notify.secondary.outline, .theme_hicontrast .select .button.secondary.outline, .theme_hicontrast .shortcut.secondary.outline, .theme_hicontrast .spinner .button.secondary.outline, .theme_hicontrast .split-button .split.secondary.outline, .theme_hicontrast .tag-input .button.secondary.outline, .theme_hicontrast .tally.secondary.outline, .theme_hicontrast .toast.secondary.outline, .theme_hicontrast .tool-button.secondary.outline, .theme_hicontrast code.secondary.outline, .theme_hicontrast tbody td.secondary.outline, .theme_hicontrast tbody tr.secondary.outline {
+  color: #FFF;
+}
+
+.theme_hicontrast .button.success.outline, .theme_hicontrast .command-button.success.outline, .theme_hicontrast .image-button.success.outline, .theme_hicontrast .info-button.success.outline, .theme_hicontrast .input .button.success.outline, .theme_hicontrast .notify.success.outline, .theme_hicontrast .select .button.success.outline, .theme_hicontrast .shortcut.success.outline, .theme_hicontrast .spinner .button.success.outline, .theme_hicontrast .split-button .split.success.outline, .theme_hicontrast .tag-input .button.success.outline, .theme_hicontrast .tally.success.outline, .theme_hicontrast .toast.success.outline, .theme_hicontrast .tool-button.success.outline, .theme_hicontrast code.success.outline, .theme_hicontrast tbody td.success.outline, .theme_hicontrast tbody tr.success.outline {
+  border-color: #0F0;
+}
+
+.theme_hicontrast .button.alert.outline, .theme_hicontrast .command-button.alert.outline, .theme_hicontrast .image-button.alert.outline, .theme_hicontrast .info-button.alert.outline, .theme_hicontrast .input .button.alert.outline, .theme_hicontrast .notify.alert.outline, .theme_hicontrast .select .button.alert.outline, .theme_hicontrast .shortcut.alert.outline, .theme_hicontrast .spinner .button.alert.outline, .theme_hicontrast .split-button .split.alert.outline, .theme_hicontrast .tag-input .button.alert.outline, .theme_hicontrast .tally.alert.outline, .theme_hicontrast .toast.alert.outline, .theme_hicontrast .tool-button.alert.outline, .theme_hicontrast code.alert.outline, .theme_hicontrast tbody td.alert.outline, .theme_hicontrast tbody tr.alert.outline {
+  border-color: #F60;
+}
+
+.theme_hicontrast .command-button .icon, .theme_hicontrast .image-button .icon {
+  color: #FFF;
+}
+
+.theme_hicontrast .ace_scroller {
+  background-color: #000 !important;
+}
+
+.theme_hicontrast .ace-sqlserver .ace_gutter {
+  background-color: #000 !important;
+  color: #FFF !important;
+}
+
+.theme_hicontrast .ace-sqlserver .ace_gutter-active-line {
+  background-color: #444 !important;
+}
+
+.theme_hicontrast .ace-sqlserver .ace_marker-layer .ace_active-line {
+  background: #1D1D1D !important;
+}
+
+.theme_hicontrast .ace-sqlserver .ace_string {
+  color: #FFF !important;
+}
+
+.theme_hicontrast .ace-sqlserver .ace_comment {
+  color: #0F0 !important;
+}
+
+.theme_hicontrast .ace-sqlserver .ace_numeric {
+  color: #FFF !important;
+}
+
+.theme_hicontrast .ace-sqlserver .ace_identifier {
+  color: #0FF !important;
+}
+
+.theme_hicontrast .ace-sqlserver .ace_keyword {
+  color: #0FF !important;
+}

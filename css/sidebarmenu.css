@@ -6,7 +6,6 @@
   background-color: #f5f6f7;
   width: 40px;
   height: calc(100% - 15px);
-  background-color: #f5f6f7;
   border-left: none;
   border-top: none;
   border-bottom: none;
@@ -19,15 +18,13 @@
 .tbtn {
   cursor: pointer;
   border: 1px solid transparent;
-  background-color: #f5f6f7;
   padding-top: 5px;
-	width: 32px;
-	height: 32px;
-  color: #000;
-	display: flex;
-	justify-content: center;
-	visibility: visible;
-	/* & .fa { align-self: center; } */
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  visibility: visible;
+  /* & .fa { align-self: center; } */
 }
 
 .tbtn:hover {

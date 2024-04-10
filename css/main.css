@@ -838,11 +838,15 @@ d-grid {
 
 /* OpenBuilds Navbar for MetroWindows */
 .fg-openbuilds {
-  color: rgb(74, 78, 81) !important;
+  color: rgb(64, 68, 71) !important;
 }
 
 .bg-openbuilds {
-  background-color: rgb(74, 78, 81) !important;
+  background-color: rgb(64, 68, 71) !important;
+}
+
+.bd-openbuilds {
+  border-color: rgb(64, 68, 71) !important;
 }
 
 .camOptgroup {
