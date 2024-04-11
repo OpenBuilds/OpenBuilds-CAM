@@ -35,7 +35,6 @@ localParams = [
   ['scommand', true],
   ['scommandscale', true],
   ['ihsgcode', false],
-  ['firmwaretype', true],
   ['machinetype', true],
   ['performanceLimit', false]
 ];
@@ -87,9 +86,6 @@ function loadSettingsLocal() {
 
     if (val) {
       // console.log('Loading: ' + paramName + ' : ' + val);
-      if (paramName == 'firmwaretype') {
-        setBoardButton(val)
-      }
       if (paramName == 'machinetype') {
         setMachineButton(val)
       }
@@ -127,11 +123,11 @@ function checkSettingsLocal() {
     var val = $('#' + localParams[i]).val(); // Read the value from form
 
     if (!val && paramRequired) {
-      // printLog('Missing required setting: ' + paramName, errorcolor, "settings");
+      printLog('Missing required setting: ' + paramName, errorcolor, "settings");
       anyissues = true;
 
     } else if (!val && !paramRequired) {
-      // printLog('Missing optional setting: ' + paramName, warncolor, "settings");
+      printLog('Missing optional setting: ' + paramName, warncolor, "settings");
     } else {
       // printLog('Found setting: ' + paramName + " : " + val, msgcolor, "settings");
     }
@@ -144,12 +140,10 @@ function checkSettingsLocal() {
     setTimeout(function() {
       Metro.dialog.open('#settingsmodal');
     }, 1000)
-    $('#checkLocalSettingsError').show();
   } else {
     if (!localStorage.getItem('hideChangelog')) {
       getChangelog();
     }
-    $('#checkLocalSettingsError').hide();
   }
 
 
@@ -199,127 +193,64 @@ window.parseBoolean = function(string) {
 
 // Settings Dialog
 
-function selectBoard(type) {
-  console.log("Loading Firmware Template")
-  if (type == "grbl") {
-    template = `<img src="images/brd/` + type + `.png"/>  Generic GRBL`
-    var tplscommand = `S`;
-    var tplsscale = `1000`;
-    var tplsnewline = false;
-    var tplrapidcommand = `G0`;
-    var tplmovecommand = `G1`;
-
-  } else if (type == "xpro") {
-    template = `<img src="images/brd/` + type + `.png"/>  Spark Concepts xPro`
-    var tplscommand = `S`;
-    var tplsscale = `1000`;
-    var tplsnewline = false;
-    var tplrapidcommand = `G0`;
-    var tplmovecommand = `G1`;
-
-  } else if (type == "blackbox") {
-    template = `<img src="images/brd/` + type + `.png"/>  Spark Concepts xPro`
-    var tplscommand = `S`;
-    var tplsscale = `1000`;
-    var tplsnewline = false;
-    var tplrapidcommand = `G0`;
-    var tplmovecommand = `G1`;
-
-  } else if (type == "smoothie") {
-    template = `<img src="images/brd/` + type + `.png"/>  Smoothieboard`
-    var tplscommand = `S`;
-    var tplsscale = `1`;
-    var tplsnewline = false;
-    var tplrapidcommand = `G0`;
-    var tplmovecommand = `G1`;
-
-  } else {
-    template = `<img src="images/brd/grbl.png"/>Select Controller`
-  }
-  $('#g0command').val(tplrapidcommand);
-  $('#g1command').val(tplmovecommand);
-  $('#scommandnewline').prop('checked', tplsnewline);
-  $('#scommand').val(tplscommand);
-  $('#scommandscale').val(tplsscale);
-  $("#firmwaretype").val(type)
-
-  setBoardButton(type)
-
-  controller = type;
-};
-
-function setBoardButton(type) {
-  if (type == "grbl") {
-    template = `<img src="images/brd/` + type + `.png"/>  Generic GRBL`
-  } else if (type == "xpro") {
-    template = `<img src="images/brd/` + type + `.png"/>  Spark Concepts xPro`
-  } else if (type == "blackbox") {
-    template = `<img src="images/brd/` + type + `.png"/>  OpenBuilds BlackBox 4X`
-  } else if (type == "smoothie") {
-    template = `<img src="images/brd/` + type + `.png"/>  Smoothieboard`
-  } else {
-    template = `<img src="images/brd/grbl.png"/>Select Controller`
-  }
-  $('#context_toggle').html(template);
-};
-
-
-var controller = ""
 
 function selectToolhead() {
-  // console.log('selecttool')
-  var toolArr = $("#toolheadSelect").val()
-  if (toolArr) {
-    $('#startgcode').val("")
-    $('#endgcode').val("")
-    var startcode = "G54; Work Coordinates\nG21; mm-mode\nG90; Absolute Positioning\n";
-    var endcode = "";
-    for (i = 0; i < toolArr.length; i++) {
-      var type = toolArr[i]
-      if (type == 'spindleonoff') {
-        // console.log('Add Spindle')
-        startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
-        endcode += "M5 S0; Spindle Off\n"
-      }
+  console.log(this)
+  // Default grbl parameters
+  var tplscommand = `S`;
+  $('#scommand').val(tplscommand);
+  var tplsscale = `1000`;
+  var tplsnewline = false;
+  $('#scommandnewline').prop('checked', tplsnewline);
+  var tplrapidcommand = `G0`;
+  $('#g0command').val(tplrapidcommand);
+  var tplmovecommand = `G1`;
+  $('#g1command').val(tplmovecommand);
 
-      if (type == 'plasma') {
-        $("#ihsgcode").val("; Machine does not support touch-off")
-      }
+  $('#startgcode').val("");
+  $('#endgcode').val("");
+  $("#ihsgcode").val("");
+  var startcode = `; Created by OpenBuilds CAM\nG54; Work Coordinates\nG21; mm-mode\nG90; Absolute Positioning\n`;
+  var endcode = "";
 
-      if (type == 'plasmaihs') {
-        $("#ihsgcode").val("G38.2 Z-30 F100; Probe\nG10 L20 Z0; Set Z Zero\n")
-      }
-
-
-
-
-      if (type == 'laserm3') {
-        // console.log('Add Laser Constant')
-        startcode += "M3; Constant Power Laser On\n"
-        endcode += "M5; Laser Off\n"
-      }
-      if (type == 'laserm4') {
-        // console.log('Add Laser Dynamic')
-        startcode += "M4; Dynamic Power Laser On\n"
-        endcode += "M5; Laser Off\n"
-      }
-      if (type == 'misting') {
-        // console.log('Add Misting')
-        startcode += "M8; Coolant On\n"
-        endcode += "M9; Coolant Off\n"
-      }
-      if (type == 'plotter') {
-        // console.log('Add Plotter')
-        startcode += "; Plotter Mode Active\n"
-        endcode += "; Plotter Mode Complete\n"
-      }
-    }
-    $('#startgcode').val(startcode)
-    $('#endgcode').val(endcode)
-  } else {
-    $('#startgcode').val("")
-    $('#endgcode').val("")
+  if ($("#hasRouter").is(':checked')) {
+    // console.log('Add Spindle')
+    startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
+    endcode += "M5 S0; Spindle Off\n"
+    $('#scommandscale').val(1000);
   }
+
+  if ($("#hasSpindle").is(':checked')) {
+    // console.log('Add Spindle')
+    startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
+    endcode += "M5 S0; Spindle Off\n"
+    $('#scommandscale').val(24000);
+  }
+
+  if ($("#hasPlasma").is(':checked')) {
+    $("#ihsgcode").val("G38.2 Z-30 F100; Probe\nG10 L20 Z0; Set Z Zero\n")
+    $('#scommandscale').val(1000);
+  }
+
+  if ($("#hasLaser").is(':checked')) {
+    // console.log('Add Laser Dynamic')
+    startcode += "M4; Dynamic Power Laser On\n"
+    endcode += "M5; Laser Off\n"
+    $('#scommandscale').val(1000);
+
+  }
+  if ($("#hasDust").is(':checked')) {
+    // console.log('Add Misting')
+    startcode += "M8; Coolant Output On - turns on Dust Extractor if wired\n"
+    endcode += "M9; Coolant Output Off  - turns off Dust Extractor if wired\n"
+  }
+
+  $('#startgcode').val(startcode)
+  $('#endgcode').val(endcode)
+
+  console.log("Start GCODE: ", startcode)
+  console.log("End GCODE: ", endcode)
+  console.log("Plasma Touchoff Macro: ", $("#ihsgcode").val())
 }
 
 function selectMachine(type) {
@@ -328,113 +259,112 @@ function selectMachine(type) {
     var xaxis = 333
     var yaxis = 325
     var zaxis = 85
-    $('#toolheadSelect').data('select').val('spindleonoff')
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "sphinx1050") {
     var xaxis = 833
     var yaxis = 325
     var zaxis = 85
-    $('#toolheadSelect').data('select').val('spindleonoff')
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "workbee1050") {
     var xaxis = 335
     var yaxis = 760
     var zaxis = 122
-    $('#toolheadSelect').data('select').val('spindleonoff')
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "workbee1010") {
     var xaxis = 824
     var yaxis = 780
     var zaxis = 122
-    $('#toolheadSelect').data('select').val('spindleonoff')
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "workbee1510") {
     var xaxis = 824
     var yaxis = 1280
     var zaxis = 122
-    $('#toolheadSelect').data('select').val('spindleonoff')
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "acro55") {
     var xaxis = 300
     var yaxis = 300
     var zaxis = 0
-    $('#toolheadSelect').data('select').val('laserm4')
+    //$('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro510") {
     var xaxis = 800
     var yaxis = 300
     var zaxis = 0
-    $('#toolheadSelect').data('select').val('laserm4')
+    //$('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro1010") {
     var xaxis = 800
     var yaxis = 800
     var zaxis = 0
-    $('#toolheadSelect').data('select').val('laserm4')
+    //$('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro1510") {
     var xaxis = 1300
     var yaxis = 800
     var zaxis = 0
-    $('#toolheadSelect').data('select').val('laserm4')
+    //$('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro1515") {
     var xaxis = 1300
     var yaxis = 1300
     var zaxis = 0
-    $('#toolheadSelect').data('select').val('laserm4')
+    //$('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "acro55pen") {
     var xaxis = 300
     var yaxis = 300
     var zaxis = 0
-    $('#toolheadSelect').data('select').val('plotter')
+    //$('#toolheadSelect').data('select').val('plotter')
   } else if (type == "acro510pen") {
     var xaxis = 800
     var yaxis = 300
     var zaxis = 0
-    $('#toolheadSelect').data('select').val('plotter')
+    //$('#toolheadSelect').data('select').val('plotter')
   } else if (type == "acro1010pen") {
     var xaxis = 800
     var yaxis = 800
     var zaxis = 0
-    $('#toolheadSelect').data('select').val('plotter')
+    //$('#toolheadSelect').data('select').val('plotter')
   } else if (type == "acro1510pen") {
     var xaxis = 1300
     var yaxis = 800
     var zaxis = 0
-    $('#toolheadSelect').data('select').val('plotter')
+    //$('#toolheadSelect').data('select').val('plotter')
   } else if (type == "acro1515pen") {
     var xaxis = 1300
     var yaxis = 1300
     var zaxis = 0
-    $('#toolheadSelect').data('select').val('laserm4')
+    //$('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "minimill") {
     var xaxis = 120
     var yaxis = 195
     var zaxis = 80
-    $('#toolheadSelect').data('select').val('spindleonoff')
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "cbeam") {
     var xaxis = 350
     var yaxis = 280
     var zaxis = 32
-    $('#toolheadSelect').data('select').val('spindleonoff')
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "cbeamxl") {
     var xaxis = 750
     var yaxis = 330
     var zaxis = 51
-    $('#toolheadSelect').data('select').val('spindleonoff')
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "leadmachine1515") {
     var xaxis = 1170
     var yaxis = 1250
     var zaxis = 90
-    $('#toolheadSelect').data('select').val('spindleonoff')
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "leadmachine1010") {
     var xaxis = 730
     var yaxis = 810
     var zaxis = 90
-    $('#toolheadSelect').data('select').val('spindleonoff')
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   } else if (type == "leadmachine1010laser") {
     var xaxis = 730
     var yaxis = 810
     var zaxis = 90
-    $('#toolheadSelect').data('select').val('laserm4')
+    //$('#toolheadSelect').data('select').val('laserm4')
   }
   $("#machinetype").val(type)
   $("#sizexmax").val(xaxis)
   $("#sizeymax").val(yaxis)
   $("#sizezmax").val(zaxis)
-  selectToolhead();
   setMachineButton(type);
 };
 
@@ -499,19 +429,18 @@ $(document).ready(function() {
   <div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="settingsmodal" data-width="730" data-to-top="true">
     <div class="dialog-title">Application Settings</div>
     <div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-        <form>
+      <form>
 
-        <div id="checkLocalSettingsError">
+        <div>
           <center><h6>Welcome to OpenBuilds CAM</h6> Let us help you get set up!</center>
         </div>
 
-          <ul class="step-list">
+          <ul class="step-list mb-3">
 
             <li>
-              <h6 class="fg-grayBlue">Select your Machine<br><small>Sets approximate defaults below, which should suffice for most users</small></h6>
-              <hr class="bg-grayBlue">
+              <h6>Select your Machine<br><small>Tell us what machine you have?</small></h6>
               <div>
-                <a style="width: 100%;" class="button dropdown-toggle secondary outline" id="context_toggle2"><img src="images/mch/sphinx55.png"/> Select Machine</a>
+                <a style="width: 100%;" class="button dropdown-toggle bd-openbuilds outline" id="context_toggle2"><img src="images/mch/sphinx55.png"/> Select Machine</a>
                 <ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
                     <li>
                       <a href="#" class="dropdown-toggle"><img src="images/mch/acro55.png" width="16px"/> OpenBuilds Acro</a>
@@ -573,31 +502,53 @@ $(document).ready(function() {
             </li>
 
             <li>
-              <h6 class="fg-grayBlue">Select your Tool initialization<br><small>Sets approximate defaults below, which should suffice for most users</small></h6>
-              <hr class="bg-grayBlue">
-              <div>
+              <h6>Add-Ons Installed<br><small>Telling us what kind of attachments the machine has, allows us to setup the GCODE to control these devices correctly from within the job</small></h6>
+
+              <ul class="image-checkbox-ul">
+                <li>
+                  <input type="checkbox" onchange="selectToolhead()" id="hasRouter"  />
+                  <label for="hasRouter"><img src="./images/router11.png" /></label>
+                  <div class="image-checkbox-text">RoutER11 with IoT Relay</div>
+                </li>
+                <li>
+                  <input type="checkbox" onchange="selectToolhead()" id="hasPlasma" />
+                  <label for="hasPlasma"><img src="./images/leadplasma.png" /></label>
+                  <div class="image-checkbox-text">LEAD 1010 Plasma Add-On</div>
+                </li>
+                <li>
+                  <input type="checkbox" onchange="selectToolhead()" id="hasLaser" />
+                  <label for="hasLaser"><img src="./images/laser.png" /></label>
+                  <div class="image-checkbox-text">Laser Diode Module</div>
+                </li>
+                <li>
+                  <input type="checkbox" onchange="selectToolhead()" id="hasDust" />
+                  <label for="hasDust"><img src="./images/dustshoe.png" /></label>
+                  <div class="image-checkbox-text">Dust Shoe with Extractor</div>
+                </li>
+                <li>
+                  <input type="checkbox" onchange="selectToolhead()" id="hasSpindle" />
+                  <label for="hasSpindle"><img src="./images/vfd.png" /></label>
+                  <div class="image-checkbox-text">Variable Speed Spindle</div>
+                </li>
+              </ul>
+
+              <!-- select data-filter="false" data-on-change="selectToolhead();" id="toolheadSelect" data-role="select" title="" multiple class="secondary">
+
+                    <option data-template="<span class='icon fas fas fa-tag' data-fa-transform='rotate-225'></span> $1" value="spindleonoff">Turn Spindle on and Off (M3/M5)</option>
+                    <option data-template="<span class='icon fas fa-broom' data-fa-transform='rotate--45'></span> $1" value="plasma">Turn Plasma on and Off</option>
+                    <option data-template="<span class='icon fas fa-broom' data-fa-transform='rotate--45'></span> $1" value="plasmaihs">Turn Plasma on and Off: With Touch Off</option>
+                    <option data-template="<span class='icon fas fa-circle'></span> $1" value="laserm3">Turn Laser on and Off: Constant Power (M3/M5)</option>
+                    <option data-template="<span class='icon fas fa-adjust'></span> $1" value="laserm4">Turn Laser on and Off: Dynamic  Power (M4/M5)</option>
+                    <option data-template="<span class='icon fas fa-edit'></span> $1" value="plotter">Plotter Pen Up/Down (M3S<min> / M3S<max>)</option>
+                    <option data-template="<span class='icon fas fa-tint'></span> $1" value="misting">Enable Misting/Cooling: (M8/M9)</option>
+
+              </select -->
 
 
-
-                <select data-filter="false" data-on-change="selectToolhead();" id="toolheadSelect" data-role="select" title="" multiple class="secondary">
-
-                      <option data-template="<span class='icon fas fas fa-tag' data-fa-transform='rotate-225'></span> $1" value="spindleonoff">Turn Spindle on and Off (M3/M5)</option>
-                      <option data-template="<span class='icon fas fa-broom' data-fa-transform='rotate--45'></span> $1" value="plasma">Turn Plasma on and Off</option>
-                      <option data-template="<span class='icon fas fa-broom' data-fa-transform='rotate--45'></span> $1" value="plasmaihs">Turn Plasma on and Off: With Touch Off</option>
-                      <option data-template="<span class='icon fas fa-circle'></span> $1" value="laserm3">Turn Laser on and Off: Constant Power (M3/M5)</option>
-                      <option data-template="<span class='icon fas fa-adjust'></span> $1" value="laserm4">Turn Laser on and Off: Dynamic  Power (M4/M5)</option>
-                      <option data-template="<span class='icon fas fa-edit'></span> $1" value="plotter">Plotter Pen Up/Down (M3S<min> / M3S<max>)</option>
-                      <option data-template="<span class='icon fas fa-tint'></span> $1" value="misting">Enable Misting/Cooling: (M8/M9)</option>
-
-                </select>
-              </div>
             </li>
 
-
-
             <li>
-              <h6 class="fg-grayBlue">Customise Defaults<br><small>If you have any custom requirements, please customise the settings in the Advanced Setting Section</small></h6>
-              <hr class="bg-grayBlue">
+              <h6>Advanced Settings<br><small>If you have any custom requirements, please customise the settings in the Advanced Settings section</small></h6>
 
               <button class="button" id="collapse_toggle_2">Show Advanced Settings</button>
               <div class="pos-relative">
@@ -706,14 +657,11 @@ $(document).ready(function() {
 
 
             </li>
-
-
-
-          </form>
-
+          </ul>
+        </form>
     </div>
     <div class="dialog-actions">
-    
+
       <button class="button secondary outline js-dialog-close">Cancel</button>
       <button id="savesettings" type="button" class="button js-dialog-close success">Save</button>
     </div>
@@ -721,5 +669,4 @@ $(document).ready(function() {
   <!-- #settingsmodal -->
   `
   $("body").append(modal);
-  selectToolhead();
 });

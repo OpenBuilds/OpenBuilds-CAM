@@ -142,6 +142,7 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
 .theme_dark .file, .theme_dark .input, .theme_dark .select, .theme_dark .spinner, .theme_dark .tag-input, .theme_dark .textarea, .theme_dark input[type=datetime-local], .theme_dark input[type=email], .theme_dark input[type=file], .theme_dark input[type=month], .theme_dark input[type=number], .theme_dark input[type=password], .theme_dark input[type=search], .theme_dark input[type=tel], .theme_dark input[type=text], .theme_dark input[type=time], .theme_dark input[type=url], .theme_dark input[type=week], .theme_dark select, .theme_dark textarea {
   background-color: #222;
   color: #FFF;
+  border-color: #555;
 }
 
 .theme_dark .file.disabled .caption, .theme_dark .file.disabled .select-input, .theme_dark .file.disabled .stars li, .theme_dark .file.disabled input, .theme_dark .file.disabled select, .theme_dark .file.disabled textarea, .theme_dark .file:disabled .caption, .theme_dark .file:disabled .select-input, .theme_dark .file:disabled .stars li, .theme_dark .file:disabled input, .theme_dark .file:disabled select, .theme_dark .file:disabled textarea, .theme_dark .input.disabled .caption, .theme_dark .input.disabled .select-input, .theme_dark .input.disabled .stars li, .theme_dark .input.disabled input, .theme_dark .input.disabled select, .theme_dark .input.disabled textarea, .theme_dark .input:disabled .caption, .theme_dark .input:disabled .select-input, .theme_dark .input:disabled .stars li, .theme_dark .input:disabled input, .theme_dark .input:disabled select, .theme_dark .input:disabled textarea, .theme_dark .rating.disabled .caption, .theme_dark .rating.disabled .select-input, .theme_dark .rating.disabled .stars li, .theme_dark .rating.disabled input, .theme_dark .rating.disabled select, .theme_dark .rating.disabled textarea, .theme_dark .rating:disabled .caption, .theme_dark .rating:disabled .select-input, .theme_dark .rating:disabled .stars li, .theme_dark .rating:disabled input, .theme_dark .rating:disabled select, .theme_dark .rating:disabled textarea, .theme_dark .select.disabled .caption, .theme_dark .select.disabled .select-input, .theme_dark .select.disabled .stars li, .theme_dark .select.disabled input, .theme_dark .select.disabled select, .theme_dark .select.disabled textarea, .theme_dark .select:disabled .caption, .theme_dark .select:disabled .select-input, .theme_dark .select:disabled .stars li, .theme_dark .select:disabled input, .theme_dark .select:disabled select, .theme_dark .select:disabled textarea, .theme_dark .spinner.disabled .caption, .theme_dark .spinner.disabled .select-input, .theme_dark .spinner.disabled .stars li, .theme_dark .spinner.disabled input, .theme_dark .spinner.disabled select, .theme_dark .spinner.disabled textarea, .theme_dark .spinner:disabled .caption, .theme_dark .spinner:disabled .select-input, .theme_dark .spinner:disabled .stars li, .theme_dark .spinner:disabled input, .theme_dark .spinner:disabled select, .theme_dark .spinner:disabled textarea, .theme_dark .tag-input.disabled .caption, .theme_dark .tag-input.disabled .select-input, .theme_dark .tag-input.disabled .stars li, .theme_dark .tag-input.disabled input, .theme_dark .tag-input.disabled select, .theme_dark .tag-input.disabled textarea, .theme_dark .tag-input:disabled .caption, .theme_dark .tag-input:disabled .select-input, .theme_dark .tag-input:disabled .stars li, .theme_dark .tag-input:disabled input, .theme_dark .tag-input:disabled select, .theme_dark .tag-input:disabled textarea, .theme_dark .textarea.disabled .caption, .theme_dark .textarea.disabled .select-input, .theme_dark .textarea.disabled .stars li, .theme_dark .textarea.disabled input, .theme_dark .textarea.disabled select, .theme_dark .textarea.disabled textarea, .theme_dark .textarea:disabled .caption, .theme_dark .textarea:disabled .select-input, .theme_dark .textarea:disabled .stars li, .theme_dark .textarea:disabled input, .theme_dark .textarea:disabled select, .theme_dark .textarea:disabled textarea {
@@ -165,7 +166,7 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
 }
 
 .theme_dark .ribbon-dropdown {
-  background: #222;
+  background: #333;
   color: #FFF;
   border: 1px solid #444;
 }
@@ -255,13 +256,17 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
   border-color: #333 !important;
 }
 
+.theme_dark .check {
+  border-color: #555 !important;
+}
+
 .theme_dark .switch .check::after {
   color: #DDD !important;
   background-color: #DDD !important;
 }
 
 .theme_dark .action-button, .theme_dark .button, .theme_dark .flat-button {
-  background-color: #666;
+  background-color: #222;
   border-color: #999;
   color: #FFF;
 }

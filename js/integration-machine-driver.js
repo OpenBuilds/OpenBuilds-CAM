@@ -50,9 +50,11 @@ function checkIfDriverIsInstalled() {
 $(document).ready(function() {
 
   // Check if Driver is running
-  var DriverCheckinterval = setInterval(function() {
-    checkIfDriverIsInstalled();
-  }, 10000);
+  if (window.location.hostname === 'cam.openbuilds.com') {
+    var DriverCheckinterval = setInterval(function() {
+      checkIfDriverIsInstalled();
+    }, 10000);
+  }
   getAvailableDriverVersion()
 
 });
