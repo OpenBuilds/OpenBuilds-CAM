@@ -355,11 +355,6 @@ function selectMachine(type) {
     var yaxis = 810
     var zaxis = 90
     //$('#toolheadSelect').data('select').val('spindleonoff')
-  } else if (type == "leadmachine1010laser") {
-    var xaxis = 730
-    var yaxis = 810
-    var zaxis = 90
-    //$('#toolheadSelect').data('select').val('laserm4')
   }
   $("#machinetype").val(type)
   $("#sizexmax").val(xaxis)
@@ -414,8 +409,6 @@ function setMachineButton(type) {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds LEAD 1515`
   } else if (type == "leadmachine1010") {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds LEAD 1010`
-  } else if (type == "leadmachine1010laser") {
-    template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds LEAD 1010 with Laser Module`
   } else {
     template = `<img src="images/mch/sphinx55.png"/>  Select Machine`
   }
@@ -473,7 +466,6 @@ $(document).ready(function() {
                       <a href="#" class="dropdown-toggle"><img src="images/mch/leadmachine1010.png" width="16px"/>  OpenBuilds Lead Machine</a>
                       <ul class="ribbon-dropdown" data-role="dropdown">
                         <li onclick="selectMachine('leadmachine1010');"><a href="#"><img src="images/mch/leadmachine1010.png" width="16px"/>OpenBuilds LEAD 1010</a></li>
-                        <li onclick="selectMachine('leadmachine1010laser');"><a href="#"><img src="images/mch/leadmachine1010laser.png" width="16px"/>OpenBuilds LEAD 1010 with Laser Module</a></li>
                         <li onclick="selectMachine('leadmachine1515');"><a href="#"><img src="images/mch/leadmachine1515.png" width="16px"/>OpenBuilds LEAD 1515</a></li>
 
                       </ul>

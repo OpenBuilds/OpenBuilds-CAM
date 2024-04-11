@@ -549,3 +549,7 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
   background-color: #333;
   border-bottom: 1px solid #fff;
 }
+
+.theme_dark .step-list>li::before {
+  color: #aaa !important;
+}

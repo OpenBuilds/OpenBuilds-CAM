@@ -879,3 +879,7 @@ d-grid {
   right: 10px;
   background: rgba(240, 240, 240, 0.85);
 }
+
+.step-list>li::before {
+  color: #555 !important;
+}
