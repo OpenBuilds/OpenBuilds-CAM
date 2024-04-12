@@ -8,7 +8,6 @@ function trashGcode() {
   disableSim()
   $('#sendGcodeToMyMachine').prop('disabled', true);;
   $('#gcodesavebtn2').addClass('disabled');
-  $('#gcodesavebtn3').addClass('disabled');
   $('#gcodetrashbtn2').addClass('disabled');
   $('#gcodeexporticon').removeClass('fg-grayBlue').addClass('fg-gray');
   $('#gcodepreviewicon').removeClass('fg-grayBlue').addClass('fg-gray');
@@ -37,8 +36,7 @@ function makeGcodeExec() {
     $("#generatetpgcode").html("<i class='fa fa-spinner fa-spin '></i> Generating, please wait");
     $("#generatetpgcode").prop('disabled', true);
     // Button on Window bar above Toolpaths
-    $("#generatetpgcode2").html("<i class='fa fa-spinner fa-spin '></i> Generating, please wait");
-    $("#generatetpgcode2").prop('disabled', true);
+
 
     setTimeout(function() {
       for (j = 0; j < toolpathsInScene.length; j++) {

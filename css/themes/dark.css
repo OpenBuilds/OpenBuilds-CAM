@@ -553,3 +553,18 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
 .theme_dark .step-list>li::before {
   color: #aaa !important;
 }
+
+.theme_dark .dropdown-toggle::before {
+  border-color: #fff;
+}
+
+.theme_dark .page-link {
+  border-color: #fff;
+  background-color: #333;
+  color: #fff !important;
+}
+
+.theme_dark #conetext {
+  background: #333;
+  color: #fff !important;
+}

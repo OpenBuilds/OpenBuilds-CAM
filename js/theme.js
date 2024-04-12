@@ -140,10 +140,12 @@ let ThemeData = {
     // }
   },
 
-  currentThemeId: "light", // Forcing dark mode after update
+  currentThemeId: "dark", // Forcing dark mode after update
 
   init: function init() {
+    console.log(localStorage.getItem('themeId'))
     let themeId = localStorage.getItem('themeId');
+
     if (themeId && ThemeData.THEMES[themeId]) {
       ThemeData.currentThemeId = themeId;
       for (let key in ThemeData.THEMES) {

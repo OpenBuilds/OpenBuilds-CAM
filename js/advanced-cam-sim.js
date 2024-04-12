@@ -147,19 +147,19 @@ function sim(startindex) {
 
       $("#conetext").html(
         ` <table style="border: 1px solid #888">
-            <tr class="stripe" style="border-bottom: 1px solid #888">
+            <tr style="border-bottom: 1px solid #888">
               <td><b>CMD</b></td><td align="right"><b>` + text + `</b></td>
             </tr>
-            <tr class="stripe" style="border-bottom: 1px solid #888">
+            <tr style="border-bottom: 1px solid #888">
               <td><b>X:</b></td><td align="right"><b>` + posx.toFixed(2) + `mm</b></td>
             </tr>
-            <tr class="stripe" style="border-bottom: 1px solid #888">
+            <tr style="border-bottom: 1px solid #888">
               <td><b>Y:</b></td><td align="right"><b>` + posy.toFixed(2) + `mm</b></td>
             </tr>
-            <tr class="stripe" style="border-bottom: 1px solid #888">
+            <tr style="border-bottom: 1px solid #888">
               <td><b>Z:</b></td><td align="right"><b>` + posz.toFixed(2) + `mm</b></td>
             </tr>
-            <tr class="stripe" style="border-bottom: 1px solid #888">
+            <tr style="border-bottom: 1px solid #888">
               <td><b>F:</b></td><td align="right"><b>` + feedrate + `mm/min</b></td>
             </tr>
           </table>

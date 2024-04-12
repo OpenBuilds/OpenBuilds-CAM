@@ -84,7 +84,7 @@ function addJob(id) {
 
   if (id == -1) { // New Toolpath
     if (toolpath.children.length > 0) {
-      toolpath.name = "Vector-" + (toolpathsInScene.length)
+      toolpath.name = "Toolpath-" + (toolpathsInScene.length)
       toolpath.userData.visible = true;
       toolpathsInScene.push(toolpath)
     }
@@ -104,7 +104,7 @@ function addJob(id) {
 
 // -----------------------------------------------------------------------------------------------
 
-function remJob(id){
+function remJob(id) {
   storeUndo(true);
   $("#savetpgcode").addClass("disabled");
   $("#exportGcodeMenu").addClass("disabled");
@@ -125,18 +125,18 @@ function remJob(id){
 
   var toolpath;
   if (id > -1) { // Use Existing Toolpath
-      toolpath = toolpathsInScene[id];
+    toolpath = toolpathsInScene[id];
   }
 
-  selectedGeom = objectsInScene.map(a => a.children.map(b => b).filter(c => c.userData.selected)).reduce(a=>a);
+  selectedGeom = objectsInScene.map(a => a.children.map(b => b).filter(c => c.userData.selected)).reduce(a => a);
 
   selectedGeom.forEach(
-    function(e){
+    function(e) {
       toolpath_IDS = toolpath.children.map(a => a.geometry.uuid)
-      toolpath.children.splice(toolpath_IDS.indexOf(e.geometry.uuid), 1) ;
-  });
+      toolpath.children.splice(toolpath_IDS.indexOf(e.geometry.uuid), 1);
+    });
 
-  if(toolpath.children.length == 0){
+  if (toolpath.children.length == 0) {
     var message = `Toolpath Container is empty.  Would you like to remove it.`
 
     Metro.dialog.create({
@@ -147,7 +147,7 @@ function remJob(id){
           caption: "<i class=\"far fa-fw fa-save\"></i>Remove",
           cls: "js-dialog-close success",
           onclick: function() {
-            toolpathsInScene.splice(id ,1);
+            toolpathsInScene.splice(id, 1);
             fillTree();
           }
         },
@@ -158,8 +158,7 @@ function remJob(id){
         }
       ]
     });
-  }
-  else{
+  } else {
     var message = `Toolpath container updated.`
     Metro.toast.create(message, null, 4000, 'bg-green');
   }
@@ -171,7 +170,7 @@ function remJob(id){
 
 }
 
-function setSelectionFromToolPath(id){
+function setSelectionFromToolPath(id) {
   storeUndo(true);
   $("#savetpgcode").addClass("disabled");
   $("#exportGcodeMenu").addClass("disabled");
@@ -192,14 +191,14 @@ function setSelectionFromToolPath(id){
 
   var toolpath;
   if (id > -1) { // Use Existing Toolpath
-      toolpath = toolpathsInScene[id];
+    toolpath = toolpathsInScene[id];
   }
 
-  GeoInToolPath = toolpath.children.map(a=>a.geometry.uuid);
-  ItemsToSelect = objectsInScene.map(a => a.children.map(b => GeoInToolPath.indexOf(b.geometry.uuid))).reduce(a=>a);
-  objectsInScene.map(a => a.children.map(b => b.userData.selected = (GeoInToolPath.indexOf(b.geometry.uuid) >= 0) ? true : false ));
+  GeoInToolPath = toolpath.children.map(a => a.geometry.uuid);
+  ItemsToSelect = objectsInScene.map(a => a.children.map(b => GeoInToolPath.indexOf(b.geometry.uuid))).reduce(a => a);
+  objectsInScene.map(a => a.children.map(b => b.userData.selected = (GeoInToolPath.indexOf(b.geometry.uuid) >= 0) ? true : false));
 
   setTimeout(function() {
-     fillTree();
+    fillTree();
   }, 500); // launch modal
 }

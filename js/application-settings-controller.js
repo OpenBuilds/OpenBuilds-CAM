@@ -355,6 +355,11 @@ function selectMachine(type) {
     var yaxis = 810
     var zaxis = 90
     //$('#toolheadSelect').data('select').val('spindleonoff')
+  } else if (type == "custom") {
+    var xaxis = 1000
+    var yaxis = 1000
+    var zaxis = 100
+    //$('#toolheadSelect').data('select').val('spindleonoff')
   }
   $("#machinetype").val(type)
   $("#sizexmax").val(xaxis)
@@ -409,6 +414,8 @@ function setMachineButton(type) {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds LEAD 1515`
   } else if (type == "leadmachine1010") {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds LEAD 1010`
+  } else if (type == "leadmachine1010") {
+    template = `<img src="images/mch/` + type + `.png"/>  CUSTOM`
   } else {
     template = `<img src="images/mch/sphinx55.png"/>  Select Machine`
   }
@@ -487,6 +494,7 @@ $(document).ready(function() {
                         <li onclick="selectMachine('workbee1510');"><a href="#"><img src="images/mch/workbee1510.png" width="16px"/>  OpenBuilds WorkBee 1510</a></li>
                       </ul>
                     </li>
+                    <li><a href="#" onclick="selectMachine('custom');"><img src="images/mch/custom.png" width="16px"/>  Custom Machine</a></li>
 
                   </ul>
                 <input type="hidden" class="form-control form-control-sm" id="machinetype" value="" >

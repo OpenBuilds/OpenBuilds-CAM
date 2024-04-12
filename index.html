@@ -5,7 +5,7 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>OpenBuilds CAM Gcode Creator - Public Beta</title>
+		<title>OpenBuilds CAM</title>
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<meta name="author" content="" />
@@ -33,18 +33,28 @@
 	</head>
 
 	<body>
+
+		<div class="pos-fixed pos-center" id="splash">
+			<center>
+				<div id="openbuildslogosplash" style="display: none;">
+					<h1>OpenBuilds<sup>&reg;</sup>&nbsp;CAM</h1>
+					<img id="openbuildslogosplashImg" src="/images/splash.svg" style="cursor:pointer" />
+				</div>
+			</center>
+		</div>
+
 		<!-- container1 Drog Container wraps all other content -->
 		<div id="container1">
 			<span class="fa-layers fa-fw fa-4x" id="flyingdoc" style="display: none; position: absolute; z-index: 20000;">
 				<i class="fas fa-square fg-red"></i>
 				<i class="fa fa-object-group fg-white" data-fa-transform="shrink-6"></i>
 			</span>
-			<div data-role="splitter" data-split-sizes="70,30" class="h-100">
+			<div data-role="splitter" data-split-sizes="70,30" data-min-sizes="400,400" class="h-100">
 				<div id="col1" style="overflow: hidden;">
 					<div class="window drop-shadow" style="height: calc(100% - 10px); overflow: hidden;">
 						<div class="window-caption bg-openbuilds">
 							<span class="icon mif-cog"></span>
-							<span class="title">OpenBuilds CAM - GCODE Generator - <span class="workspaceTitle">Public Beta</span></span>
+							<span class="title">OpenBuilds CAM <span class="workspaceTitle"></span></span>
 						</div>
 						<div class="window-content pt-2" style="overflow:hidden; ">
 							<nav data-role="ribbonmenu">
@@ -54,56 +64,59 @@
 								</ul>
 								<div class="content-holder">
 									<div class="section" id="section-workspace">
+
 										<div class="group">
-											<div>
-												<button class="ribbon-button dropdown-toggle">
-													<span class="icon">
-														<span class="far fa-folder-open fg-amber"></span>
-													</span>
-													<span class="caption">&nbsp;&nbsp;&nbsp;File...&nbsp;&nbsp;&nbsp;</span>
-												</button>
-												<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
-													<li class="btn-file"><a href="#">
-															<!-- /span--><span class="far fa-folder-open fg-amber fa-fw"></span> Open Drawing File (.DXF, .SVG, Image, Gerber, Excellon)</a><input id="file" type="file"
-															accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple /></li>
-													<li class="divider"></li>
-													<li class="" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree(); $('.workspaceTitle').html('');"><a href="#"> <span class="far fa-file fa-fw"></span> New (Empty)
-															Workspace</a></li>
-													<li class="btn-file"><a href="#"><i class="far fa-folder-open fa-fw"></i> Open Workspace (.JSON, .OBC)</a><input type="file" id="workspaceImport" accept=".json,.obc" multiple style="height: 26px;" /></li>
-													<li class="" onclick="exportWorkspace();"><a href="#"><span class="fas fa-download fa-fw"></span> Save Workspace (Export .OBC file)</a></li>
-													<li class="divider"></li>
-													<!-- <li><a href="#" onclick="helloWorld();"><i class="fas fa-cog fa-fw"></i> Open "Hello World" example</a></li> -->
-													<li>
-														<a href="#" class="dropdown-toggle"><i class="fas fa-cog fa-fw"></i> Open "Hello World" example</a>
-														<ul class="ribbon-dropdown" data-role="dropdown">
-															<li onclick="helloWorld()"><a href="#">CNC Hello World</a></li>
-															<li onclick="helloWorldLaser()"><a href="#">Laser Hello World</a></li>
-															<li onclick="helloWorldDragKnife()"><a href="#">Dragknife Hello World</a></li>
-															<li onclick="helloWorldPlasma()"><a href="#">Plasma Hello World</a></li>
-														</ul>
-													</li>
-												</ul>
-											</div>
-											<span class="title">File</span>
-										</div>
-										<!-- <div class="group">
-										<div class="ribbon-split-button">
-											<div class="ribbon-main btn-file" title="Open a drawing">
+
+											<div class="ribbon-button btn-file" title="Open a drawing">
 												<span class="icon">
-															<span class="far fa-folder-open fg-amber"></span>
+													<span class="far fa-folder-open fg-amber"></span>
 												</span>
 												<input id="file" type="file" accept=".svg,.dxf,.gif,.jpg,.jpeg,.tiff,.png,.bmp,.gbl,.gtl,.gbr,.dri,.txt" multiple />
+												<span class="caption">Open<br>Drawing</span>
 											</div>
-											<span class="ribbon-split dropdown-toggle">Open<br>Drawing</span>
-											<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100" style="text-align: left;">
-												<li><a href="#" onclick="$('#file').trigger('click');">Open File (DXF, SVG, Image, Gerber, Excellon)</a></li>
-												<li class="divider"></li>
-												<li><a href="#" onclick="helloWorld();">Open "Hello World" example</a></li>
 
-											</ul>
+
+											<span class="title">File</span>
 										</div>
-										<span class="title">File</span>
-									</div> -->
+
+										<div class="group">
+											<div class="ribbon-group">
+												<button class="ribbon-icon-button" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree(); $('.workspaceTitle').html('');">
+													<span class="icon">
+														<span class="far fa-file"></span>
+													</span>
+													<span class="caption">New (Empty) Workspace</span>
+												</button>
+												<div>
+													<button class="ribbon-icon-button dropdown-toggle">
+														<span class="icon">
+															<span class="fas fa-download"></span>
+														</span>
+														<span class="caption">Import/Export Workspace</span>
+													</button>
+													<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
+														<li onclick="exportWorkspace()"><a href="#">Save Workspace (Export .OBC file)</a></li>
+														<li class="btn-file"><a href="#">Open Workspace (.JSON, .OBC)</a><input type="file" id="workspaceImport" accept=".json,.obc" multiple style="height: 26px;" /></li>
+													</ul>
+												</div>
+												<div>
+													<button class="ribbon-icon-button dropdown-toggle">
+														<span class="icon">
+															<span class="fas fa-cog"></span>
+														</span>
+														<span class="caption">Load Example Workspace</span>
+													</button>
+													<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
+														<li onclick="helloWorld()"><a href="#">CNC Hello World</a></li>
+														<li onclick="helloWorldLaser()"><a href="#">Laser Hello World</a></li>
+														<li onclick="helloWorldPlasma()"><a href="#">Plasma Hello World</a></li>
+														<li onclick="helloWorldDragKnife()"><a href="#">Dragknife Hello World</a></li>
+													</ul>
+												</div>
+											</div>
+											<span class="title">Workspace</span>
+										</div>
+
 										<div class="group">
 											<div class="ribbon-group">
 												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeText ');">
@@ -114,33 +127,33 @@
 												</button>
 												<br>
 
-												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeCircle ');">
-													<span class="icon">
-														<span class="far fa-circle"></span>
-													</span>
-													<span class="caption">Circle</span>
-												</button>
-												<br>
+												<div>
+													<button class="ribbon-icon-button dropdown-toggle">
+														<span class="icon">
+															<span class="far fa-square"></span>
+														</span>
+														<span class="caption">Shapes</span>
+													</button>
+													<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
+														<li onclick="Metro.dialog.open(' #addShapeCircle ');"><a href="#">Circle</a></li>
+														<li onclick="Metro.dialog.open(' #addShapeRect ');"><a href="#">Rectangle</a></li>
+													</ul>
+												</div>
 
-												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #addShapeRect ');">
-													<span class="icon">
-														<span class="far fa-square"></span>
-													</span>
-													<span class="caption">Rectangle</span>
-												</button>
+
+
+												<div class="ribbon-group">
+
+													<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #iconslibModal ');">
+														<span class="icon">
+															<span class="far fa-images"></span>
+														</span>
+														<span class="caption">Icons</span>
+													</button>
+
+												</div>
+
 											</div>
-
-											<div class="ribbon-group">
-
-												<button class="ribbon-icon-button" onclick="Metro.dialog.open(' #iconslibModal ');">
-													<span class="icon">
-														<span class="far fa-images"></span>
-													</span>
-													<span class="caption">Icononography</span>
-												</button>
-
-											</div>
-
 											<span class="title">Insert</span>
 										</div>
 
@@ -225,7 +238,7 @@
 									</div>
 									<div class="section" id="section-settings">
 										<div class="group">
-											<button class="ribbon-button" onclick="alreadyDetected = false; checkIfDriverIsInstalled(); Metro.dialog.open('#settingsmodal');">
+											<button class="ribbon-button" onclick="Metro.dialog.open('#settingsmodal');">
 												<span class="icon">
 													<span class="fa fa-fw fa-cogs"></span>
 												</span>
@@ -328,7 +341,7 @@
 								</div>
 							</div>
 
-							<div id="conetext" style="background: #fff; position:absolute;top:0px;left:0px; padding: 0px; display:none;"></div>
+							<div id="conetext" style="position:absolute;top:0px;left:0px; padding: 0px; display:none;"></div>
 
 						</div>
 						<div id="helpoverlay">
@@ -354,18 +367,18 @@
 				<div id="col2">
 					<!-- <div style="height: 100%; overflow-y:hidden; padding-right:5px;"> -->
 
-					<div data-role="splitter" data-split-mode="vertical" class="h-100">
+					<div data-role="splitter" data-split-mode="vertical" data-split-sizes="30,60,10" data-min-sizes="220,280,150" class="h-100">
 
 						<div id="renderDocuments" class="window drop-shadow">
 							<div class="window-caption bg-openbuilds">
 								<i class="far fa-file-alt fa-fw ml-1 mr-1"></i>
 								<span class="title">Documents <span class="workspaceTitle"></span></span>
 							</div>
-							<div id="selectoverlay" class="text-center">
-								<button class="button small dark outline drop-shadow" id="selectAll"><span class="far fa-check-square"></span> All</button>
-								<button class="button small dark outline drop-shadow" id="selectNone"><span class="far fa-square"></span> None</button>
-								<button class="button small dark outline drop-shadow" id="selectInv"><span class="fas fa-check"></span> Invert</button>
-								<button class="button small dark outline drop-shadow" id="selectDel"><span class="fas fa-trash"></span> Delete</button>
+							<div id="selectoverlay" class="text-center mt-1">
+								<button class="button drop-shadow" id="selectAll"><span class="far fa-check-square"></span> All</button>
+								<button class="button drop-shadow" id="selectNone"><span class="far fa-square"></span> None</button>
+								<button class="button drop-shadow" id="selectInv"><span class="fas fa-check"></span> Invert</button>
+								<button class="button drop-shadow" id="selectDel"><span class="fas fa-trash"></span> Delete</button>
 							</div>
 							<div class="window-content p-1" style="overflow-y:scroll;">
 								<!-- Documents Here -->
@@ -378,8 +391,8 @@
 
 								<div id="documentstree">
 									<div id="nodocuments" style="display:none;">
-										<p class="text-secondary">Please load some vectors from DXF, SVG or Images using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open Drawing</kbd> button, or insert from the inbuilt library
-											and tools </p>
+										<p class="text-secondary text-center">Please load some vectors from DXF (Polylines) or SVG (Paths); or Images (Traceable) using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open
+												Drawing</kbd> button, or insert a Shape, Icon or some Text using the built-in tools to get started </p>
 									</div>
 									<ul data-role="treeview pl-0" id="left-tree-view">
 									</ul>
@@ -393,24 +406,18 @@
 								<i class="fas fa-tasks fa-fw ml-1 mr-1"></i>
 								<span class="title">Toolpaths</span>
 								<div class="buttons">
-									<!-- <button type="button " id="generatetpgcode2" class="button small bg-openbuilds secondary" onclick="makeGcode();"><span class="fa fa-cubes"></span> Generate GCODE</button> -->
+
 								</div>
 							</div>
-							<div id="tpathoverlay" class="text-center">
-								<button id="addJobBtn" class="button small dark outline drop-shadow dropdown-toggle"><span class="icon fa fa-plus"></span> Add <span class="selectCount" style="display: none;"> 0 </span></button>
-								<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="toolpathsmenu" data-toggle-element="#addJobBtn">
-									<li><a href="#" onclick="addJob(-1);"><span class="icon fa fa-plus"></span> Create a new Operation</a></li>
-								</ul>
+							<div id="tpathoverlay" class="text-center mt-1">
+								<div class="split-button drop-shadow">
+									<button class="button" id="addJobBtn" onclick="addJob(-1);"><span class="icon fa-fw fa fa-plus"></span><span class="addJobBtn-text">Please select Vector(s) to create toolpaths</span></button>
+									<button class="split dropdown-toggle outline" id="addJobMenuBtn" display: none;></button>
+									<ul class="d-menu" data-role="dropdown" id="toolpathsmenu">
+										<!--  -->
+									</ul>
+								</div>
 
-								<button id="remJobBtn" class="button small dark outline drop-shadow dropdown-toggle"><span class="icon fa fa-minus"></span> Del <span class="selectCount" style="display: none;"> 0 </span></button>
-								<ul class="d-menu context drop-shadow" data-role="dropdown" data-duration="100" id="remtoolpathsmenu" data-toggle-element="#remJobBtn">
-									<li><a href="#" onclick="remJob(-1);"><span class="icon fa fa-plus"></span> Remove From Operation</a></li>
-								</ul>
-
-								<button class="button small dark outline drop-shadow" title="Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes icon"></span>Generate GCODE</button>
-								<button class="button small dark outline drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span id="gcodeexporticon" class="fa fa-save icon fg-gray"></span></button>
-								<button class="button small dark outline drop-shadow" title="Preview GCODE" id="gcodeviewbtn2" onclick="previewFile();"><span id="gcodepreviewicon" class="fa fa-eye icon fg-gray"></span></button>
-								<button class="button small dark outline drop-shadow" title="Clear GCODE" id="gcodetrashbtn2" onclick="trashGcode();"><span id="trashicon" class="fa fa-trash fg-gray icon"></span></button>
 							</div>
 
 							<div class="window-content p-1" style="overflow-y:scroll;">
@@ -422,94 +429,30 @@
 								</div>
 								<div id="toolpathtree">
 								</div>
-								<!-- Toolpaths Here -->
+
 							</div>
 						</div>
 
-						<div class="window mt-2 drop-shadow">
+						<div class="window drop-shadow mt-2">
 							<div class="window-caption bg-openbuilds">
-								<i class="fa fa-save fa-fw ml-1 mr-1"></i>
-								<span class="title">Save GCODE File</span>
-							</div>
-							<div class="window-content p-1" id="connectiontree" style="overflow-y:scroll;">
-
-
-								<div class="row" style="margin-left: 1px; margin-right: 1px;">
-									<div class="cell p-0">
-										<div id="noDriverDetected">
-
-											<!-- <p class="text-small mb-1">Unable to connect to CONTROL: Please Save your GCODE then Open it in OpenBuilds CONTROL </p> -->
-											<button class="button success drop-shadow disabled" title="Save GCODE" id="gcodesavebtn3" onclick="saveFile();"><span id="gcodeexporticon2" class="fa fa-save icon fg-white"></span> Save GCODE</button>
-											<hr>
-											<p class="text-small m-0 p-0" id="installDriverMessage">Save the GCODE to your Computer and then Open it using CONTROL</p>
-											<!-- <p class="text-small mb-1" id="installDriverHelp">If you have not installed it yet, you can download it below, or if you have the latest version installed already, please start it.<br> If you still see this message, we are
-												experiencing a temporary problem connecting to it and you can still use the Save button above<br>
-
-												<nav data-role="ribbonmenu">
-													<ul class="tabs-holder">
-														<li><a href="#tab-win"><i class="fab fa-windows"></i>&nbsp;Windows</a></li>
-														<li><a href="#tab-mac"><i class="fab fa-apple"></i>&nbsp;Mac</a></li>
-														<li><a href="#tab-linux"><i class="fab fa-linux"></i>&nbsp;Linux</a></li>
-													</ul>
-
-													<div class="content-holder">
-														<div class="section" id="tab-win">
-															<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-																<a href="#" onclick="downloadDrivers('win')" class="button"><span class="fab fa-windows"></span> Windows (EXE)</a>
-																<a href="#" class="info omdavailversion">v1.0.0</a>
-															</div><br>
-														</div>
-														<div class="section" id="tab-mac">
-															<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-																<a href="#" onclick="downloadDrivers('mac')" class="button"><span class="fab fa-apple"></span> MacOS (DMG)</a>
-																<a href="#" class="info omdavailversion">v1.0.0</a>
-															</div><br>
-														</div>
-														<div class="section" id="tab-linux">
-															<div>
-																<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-																	<a href="#" onclick="downloadDrivers('deb')" class="button"><span class="fab fa-linux"></span> Linux (DEB)</a>
-																	<a href="#" class="info omdavailversion">v1.0.0</a>
-																</div>
-																<p>
-																	<div id="downloadDrivers" class="info-button bg-green fg-white bd-green">
-																		<a href="#" onclick="downloadDrivers('appimage')" class="button"><span class="fab fa-linux"></span> Linux (AppImage)</a>
-																		<a href="#" class="info omdavailversion">v1.0.0</a>
-																	</div>
-															</div>
-														</div>
-													</div>
-												</nav> -->
-
-
-
-
-										</div>
-
-										<div id="DriverDetected" style="display:none;">
-
-											<button class="image-button success" id="sendGcodeToMyMachine" onclick="sendGcodeToMyMachine()" disabled style="width: 100%">
-												<span class="icon"><span class="fas fa-play"></span></span>
-												<span class="caption">Transfer GCODE to OpenBuilds CONTROL</span>
-											</button>
-											<p class="text-small" id="detectedVersion"></p>
-											<p class="text-small" id="validDocuments"><i class='fas fa-times fa-fw fg-red'></i>2. No Documents yet</p>
-											<p class="text-small" id="validToolpaths"><i class='fas fa-times fa-fw fg-red'></i>3. No Toolpaths yet</p>
-											<p class="text-small" id="validGcode"><i class='fas fa-times fa-fw fg-red'></i>4. No GCODE yet</p>
-											<br>
-											<button class="image-button" id="activateDriver" onclick="activateDriver()" style="width: 100%">
-												<span class="icon"><span class="far fa-window-restore"></span></span>
-												<span class="caption">Show CONTROL Window</span>
-											</button>
-										</div>
-									</div>
-									<!-- <div class="cell">
-										<img src="driver.png" />
-									</div> -->
+								<i class="fas fa-tasks fa-fw ml-1 mr-1"></i>
+								<span class="title">Export Gcode</span>
+								<div class="buttons">
 								</div>
-
 							</div>
+
+
+							<div class="window-content p-1 text-center  mt-1" style="overflow-y:scroll;">
+								<button class="button drop-shadow" title="Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes fa-fw icon"></span>Generate GCODE</button>
+								<button class="button drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span id="gcodeexporticon" class="fa fa-save fa-fw icon fg-gray"></span>Save GCODE</button>
+								<button class="button drop-shadow" title="Preview GCODE" id="gcodeviewbtn2" onclick="previewFile();"><span id="gcodepreviewicon" class="fa fa-eye fa-fw icon fg-gray"></span></button>
+								<button class="button drop-shadow" title="Clear GCODE" id="gcodetrashbtn2" onclick="trashGcode();"><span id="trashicon" class="fa fa-trash fa-fw fg-gray icon"></span></button>
+								<hr>
+								<p class="text-secondary text-center">Save the GCODE to your Computer and then Open it using <kbd class="bg-openbuilds"><a href="https://software.openbuilds.com">OpenBuilds CONTROL</a></kbd></p>
+							</div>
+
 						</div>
+
 					</div>
 					<!-- </div> -->
 				</div>
@@ -742,8 +685,6 @@
 	<!-- lautr3k's SVG  Library -->
 	<script type="text/javascript" src="lib/lw.svg-parser/dist/lw.svg-parser.js"></script>
 	<script type="text/javascript" src="js/svgparser.js"></script>
-
-	<script type="text/javascript" src="js/integration-machine-driver.js"></script>
 
 	<!-- Bitmap Tracing -->
 	<script type="text/javascript" src="lib/potrace/potrace.js"></script>

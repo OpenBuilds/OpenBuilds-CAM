@@ -65,6 +65,7 @@ async function useIconsLib(id) {
   await loadIconItem(id);
   Metro.dialog.close('#iconslibModal');
   fillTree();
+  resetView();
   return ObjCnts < objectsInScene.length ? true : false;
 };
 

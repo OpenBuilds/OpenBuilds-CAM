@@ -1,11 +1,5 @@
 function toolpathPreview(i) {
   trashGcode();
-  $('#gcodesavebtn2').addClass('disabled');
-  $('#gcodesavebtn3').addClass('disabled');
-  $('#gcodetrashbtn2').addClass('disabled');
-  $('#gcodeexporticon').removeClass('fg-grayBlue').addClass('fg-gray');
-  $('#gcodepreviewicon').removeClass('fg-grayBlue').addClass('fg-gray');
-  $('#trashicon').removeClass('fg-red').addClass('fg-gray');
   $('#validGcode').html("<i class='fas fa-times fa-fw fg-red'></i> No GCODE yet")
   $("#savetpgcode").addClass("disabled");
   $("#exportGcodeMenu").addClass("disabled");
@@ -19,8 +13,7 @@ function toolpathPreview(i) {
 function drawToolpath(index) {
   $("#generatetpgcode").html("<i class='fa fa-spinner fa-spin '></i> Unavailable, please wait");
   $("#generatetpgcode").prop('disabled', true);
-  $("#generatetpgcode2").html("<i class='fa fa-spinner fa-spin '></i> Unavailable, please wait");
-  $("#generatetpgcode2").prop('disabled', true);
+
   var toolPathWorker = new Worker('workers/toolpath/worker/toolpathworker.js');
   toolpathsInScene[index].userData.worker = toolPathWorker
   toolPathWorker.addEventListener('message', function(e) {
@@ -56,13 +49,11 @@ function drawToolpath(index) {
         if (toolpathWorkersBusy()) {
           $("#generatetpgcode").html("<i class='fa fa-spinner fa-spin '></i> Unavailable, please wait");
           $("#generatetpgcode").prop('disabled', true);
-          $("#generatetpgcode2").html("<i class='fa fa-spinner fa-spin '></i> Unavailable, please wait");
-          $("#generatetpgcode2").prop('disabled', true);
+
         } else {
           $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
           $("#generatetpgcode").prop('disabled', false);
-          $("#generatetpgcode2").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
-          $("#generatetpgcode2").prop('disabled', false);
+
         }
       }
     }
