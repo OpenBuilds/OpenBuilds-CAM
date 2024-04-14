@@ -455,10 +455,6 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
   border: 1px solid #ce352c;
 }
 
-.theme_dark #openbuildslogosplashImg {
-  filter: invert(1) hue-rotate(180deg);
-}
-
 .theme_dark .droInput {
   background: #222 !important;
   border: 1px solid #555;

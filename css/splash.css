@@ -1,0 +1,67 @@
+#loading-icon svg {
+  width: 500px;
+  position: fixed;
+  left: 50%;
+  margin-left: -250px;
+  top: 32%;
+  margin-top: -50px;
+}
+
+#load-ring, #load-ring-second {
+  width: 500px;
+  height: 500px;
+  position: fixed;
+  left: 50%;
+  margin-left: -250px;
+  top: 32%;
+  margin-top: -50px;
+  border-radius: 50%;
+  animation-name: halo-effect;
+  animation-duration: 0.9s;
+  animation-iteration-count: infinite;
+}
+
+#load-ring {
+  animation-name: halo-effect;
+  animation-duration: 0.9s;
+  animation-iteration-count: infinite;
+}
+
+#load-ring-second {
+  animation-name: halo-effect;
+  animation-duration: 1.3s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.4s;
+}
+
+@keyframes halo-effect {
+  0% {
+    transform: scale(1);
+    background-color: rgba(56, 56, 56, 0.1);
+  }
+
+  20% {
+    transform: scale(1.05);
+    background-color: rgba(56, 56, 56, 0.2);
+  }
+
+  40% {
+    transform: scale(1.1);
+    background-color: rgba(56, 56, 56, 0.3);
+  }
+
+  60% {
+    transform: scale(1.15);
+    background-color: rgba(56, 56, 56, 0.4);
+  }
+
+  80% {
+    transform: scale(1.2);
+    background-color: rgba(56, 56, 56, 0.3);
+  }
+
+  100% {
+    transform: scale(1.1);
+    background-color: rgba(56, 56, 56, 0.2);
+  }
+}

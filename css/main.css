@@ -5,57 +5,10 @@
 
 #splash {
   z-index: 2000;
-  padding: 1000px;
+  width: 100vw;
+  height: 100vh;
   background-image: linear-gradient(to top, #888888, #ffffff, #888888);
   /* background-color: #fff */
-}
-
-#openbuildslogosplashImg {
-  -webkit-transition-property: -webkit-transform;
-  -webkit-transition-duration: 1.2s;
-  -webkit-animation-name: rotate;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-  -moz-transition-property: -moz-transform;
-  -moz-animation-name: rotate;
-  -moz-animation-duration: 4.4s;
-  -moz-animation-iteration-count: infinite;
-  -moz-animation-timing-function: linear;
-  transition-property: transform;
-  animation-name: rotate;
-  animation-duration: 4.4s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-@-webkit-keyframes rotate {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-
-  to {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@-moz-keyframes rotate {
-  from {
-    -moz-transform: rotate(0deg);
-  }
-
-  to {
-    -moz-transform: rotate(360deg);
-  }
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .stripe:nth-child(even) {
