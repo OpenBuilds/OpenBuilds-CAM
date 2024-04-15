@@ -185,7 +185,7 @@ function animateTree() {
     // $('#floating-tpaddpath-btn').addClass('success')
     $('#addJobBtn,#addJobMenuBtn').addClass('success').prop('disabled', false)
     $("#tpaddicon").addClass('fg-green')
-    $(".addJobBtn-text").html("Create toolpath using (" + selectCount + ") selected vectors");
+    $(".addJobBtn-text").html("Create Toolpath using (" + selectCount + ") selected vectors");
 
 
     if (toolpathsInScene.length > 0) {

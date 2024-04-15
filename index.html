@@ -70,7 +70,7 @@
 				<i class="fas fa-square fg-red"></i>
 				<i class="fa fa-object-group fg-white" data-fa-transform="shrink-6"></i>
 			</span>
-			<div data-role="splitter" data-split-sizes="70,30" data-min-sizes="400,400" class="h-100">
+			<div data-role="splitter" data-split-sizes="80,20" data-min-sizes="480,400" class="h-100">
 				<div id="col1" style="overflow: hidden;">
 					<div class="window drop-shadow" style="height: calc(100% - 10px); overflow: hidden;">
 						<div class="window-caption bg-openbuilds">
@@ -256,19 +256,7 @@
 											<span class="title">Settings</span>
 										</div>
 
-										<div class="group">
 
-											<div id="ddThemeButton">
-												<button id="btnTheme" class="ribbon-button" onclick="Theme.toggle();">
-													<span class="icon" id="currentThemeIcon">
-														<i class="fas fa-paint-brush"></i>
-													</span>
-													<span class="caption" id="currentThemeName">Dark<br>Mode</span>
-													<span class="h6 badge bg-green fg-white"> <i class="fas fa-brush  fa-spin"></i> New!</span>
-												</button>
-											</div>
-											<span class="title">Theme</span>
-										</div>
 
 										<div class="group">
 											<div class="ribbon-group">
@@ -287,6 +275,20 @@
 												</button>
 											</div>
 											<span class="title">App</span>
+										</div>
+
+										<div class="group">
+
+											<div id="ddThemeButton">
+												<button id="btnTheme" class="ribbon-button" onclick="Theme.toggle();">
+													<span class="icon" id="currentThemeIcon">
+														<i class="fas fa-paint-brush"></i>
+													</span>
+													<span class="caption" id="currentThemeName">Dark<br>Mode</span>
+													<span class="h6 badge bg-green fg-white"> <i class="fas fa-brush  fa-spin"></i> New!</span>
+												</button>
+											</div>
+											<span class="title">Theme</span>
 										</div>
 
 
@@ -362,12 +364,11 @@
 				<div id="col2">
 					<!-- <div style="height: 100%; overflow-y:hidden; padding-right:5px;"> -->
 
-					<div data-role="splitter" data-split-mode="vertical" data-split-sizes="30,60,10" data-min-sizes="220,280,150" class="h-100">
-
+					<div data-role="splitter" data-split-mode="vertical" data-split-sizes="25,55,10,10" data-min-sizes="220,280,100,110" class="h-100">
 						<div id="renderDocuments" class="window drop-shadow">
 							<div class="window-caption bg-openbuilds">
 								<i class="far fa-file-alt fa-fw ml-1 mr-1"></i>
-								<span class="title">Documents <span class="workspaceTitle"></span></span>
+								<span class="title">1. Documents <span class="workspaceTitle"></span></span>
 							</div>
 							<div id="selectoverlay" class="text-center mt-1">
 								<button class="button drop-shadow" id="selectAll"><span class="far fa-check-square"></span> All</button>
@@ -386,7 +387,7 @@
 
 								<div id="documentstree">
 									<div id="nodocuments" style="display:none;">
-										<p class="text-secondary text-center">Please load some vectors from DXF (Polylines) or SVG (Paths); or Images (Traceable) using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open
+										<p class="text-secondary text-center mt-3">Please load some vectors from DXF (Polylines) or SVG (Paths); or Images (Traceable) using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open
 												Drawing</kbd> button, or insert a Shape, Icon or some Text using the built-in tools to get started </p>
 									</div>
 									<ul data-role="treeview pl-0" id="left-tree-view">
@@ -399,7 +400,7 @@
 						<div class="window drop-shadow mt-2">
 							<div class="window-caption bg-openbuilds">
 								<i class="fas fa-tasks fa-fw ml-1 mr-1"></i>
-								<span class="title">Toolpaths</span>
+								<span class="title">2. Configure Toolpaths</span>
 								<div class="buttons">
 
 								</div>
@@ -430,20 +431,31 @@
 
 						<div class="window drop-shadow mt-2">
 							<div class="window-caption bg-openbuilds">
-								<i class="fas fa-tasks fa-fw ml-1 mr-1"></i>
-								<span class="title">Export Gcode</span>
+								<i class="fa fa-cubes fa-fw ml-1 mr-1"></i>
+								<span class="title">3. Create Gcode</span>
+								<div class="buttons">
+								</div>
+							</div>
+							<div class="window-content p-1 text-center  mt-1" style="overflow-y:hidden;">
+								<button class="button drop-shadow" style="width: 300px;" title=" Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes fa-fw icon"></span>Generate GCODE</button>
+							</div>
+						</div>
+
+						<div class="window drop-shadow mt-2">
+							<div class="window-caption bg-openbuilds">
+								<i class="fa fa-save fa-fw ml-1 mr-1"></i>
+								<span class="title">4. Export Gcode</span>
 								<div class="buttons">
 								</div>
 							</div>
 
 
-							<div class="window-content p-1 text-center  mt-1" style="overflow-y:scroll;">
-								<button class="button drop-shadow" title="Generate GCODE" id="generatetpgcode" onclick="makeGcode();"><span class="fa fa-cubes fa-fw icon"></span>Generate GCODE</button>
-								<button class="button drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span id="gcodeexporticon" class="fa fa-save fa-fw icon fg-gray"></span>Save GCODE</button>
+							<div class="window-content p-1 text-center  mt-1" style="overflow-y:hidden;">
+
+								<button class="button drop-shadow" title="Save GCODE" id="gcodesavebtn2" onclick="saveFile();"><span class="fa fa-save fa-fw icon"></span>Save GCODE</button>
 								<button class="button drop-shadow" title="Preview GCODE" id="gcodeviewbtn2" onclick="previewFile();"><span id="gcodepreviewicon" class="fa fa-eye fa-fw icon fg-gray"></span></button>
 								<button class="button drop-shadow" title="Clear GCODE" id="gcodetrashbtn2" onclick="trashGcode();"><span id="trashicon" class="fa fa-trash fa-fw fg-gray icon"></span></button>
-								<hr>
-								<p class="text-secondary text-center">Save the GCODE to your Computer and then Open it using <kbd class="bg-openbuilds"><a href="https://software.openbuilds.com">OpenBuilds CONTROL</a></kbd></p>
+
 							</div>
 
 						</div>

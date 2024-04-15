@@ -321,6 +321,7 @@ function loadFile(f) {
 function saveFile() {
   Metro.dialog.create({
     title: "Save GCODE",
+    clsDialog: "dark",
     content: `<div class="form-group">
            <label>Filename:</label>
            <input type="text" id="gcodeFilename" contenteditable="true" placeholder="` + 'file-' + date.yyyymmdd() + '.gcode' + `" value="` + 'file-' + date.yyyymmdd() + '.gcode' + `"/>

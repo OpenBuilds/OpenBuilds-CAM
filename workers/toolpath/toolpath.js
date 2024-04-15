@@ -13,6 +13,7 @@ function toolpathPreview(i) {
 function drawToolpath(index) {
   $("#generatetpgcode").html("<i class='fa fa-spinner fa-spin '></i> Unavailable, please wait");
   $("#generatetpgcode").prop('disabled', true);
+  $("#generatetpgcode").removeClass('success');
 
   var toolPathWorker = new Worker('workers/toolpath/worker/toolpathworker.js');
   toolpathsInScene[index].userData.worker = toolPathWorker
@@ -49,10 +50,14 @@ function drawToolpath(index) {
         if (toolpathWorkersBusy()) {
           $("#generatetpgcode").html("<i class='fa fa-spinner fa-spin '></i> Unavailable, please wait");
           $("#generatetpgcode").prop('disabled', true);
+          $("#generatetpgcode").removeClass('success');
+
 
         } else {
           $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
           $("#generatetpgcode").prop('disabled', false);
+          $("#generatetpgcode").addClass('success');
+
 
         }
       }
@@ -65,9 +70,12 @@ function drawToolpath(index) {
     performanceLimit: $('#performanceLimit').is(":checked")
   }
 
-  toolPathWorker.postMessage({
-    'data': dataToProcess
-  });
+  if (toolpathsInScene[index].userData.camOperation) {
+    toolPathWorker.postMessage({
+      'data': dataToProcess
+    });
+  }
+
 
 }
 

@@ -8,8 +8,8 @@ function trashGcode() {
   disableSim()
   $('#sendGcodeToMyMachine').prop('disabled', true);;
   $('#gcodesavebtn2').addClass('disabled');
+  $('#gcodesavebtn2').removeClass('primary');
   $('#gcodetrashbtn2').addClass('disabled');
-  $('#gcodeexporticon').removeClass('fg-grayBlue').addClass('fg-gray');
   $('#gcodepreviewicon').removeClass('fg-grayBlue').addClass('fg-gray');
   $('#trashicon').removeClass('fg-red').addClass('fg-gray');
 }
@@ -35,6 +35,7 @@ function makeGcodeExec() {
     // Button on Ribbon Menu
     $("#generatetpgcode").html("<i class='fa fa-spinner fa-spin '></i> Generating, please wait");
     $("#generatetpgcode").prop('disabled', true);
+    $("#generatetpgcode").removeClass('success');
     // Button on Window bar above Toolpaths
 
 
@@ -153,6 +154,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
     Metro.toast.create(message, null, 4000, 'bg-red');
     $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
     $("#generatetpgcode").prop('disabled', false);
+    $("#generatetpgcode").addClass('success');
   } else {
     toolpathGrp.traverse(function(child) {
       var toolDia = toolpathGrp.userData.toolDia;

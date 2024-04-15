@@ -35,6 +35,7 @@ function fillTree() {
   if (toolpathsInScene.length > 0) {
 
     $('#generatetpgcode').prop('disabled', false);
+    $("#generatetpgcode").addClass('success');
 
     var table = `<table class="jobsetuptable" style="width: 100%" id="toolpathstable">`
     $('#toolpathtree').append(table)
@@ -132,9 +133,10 @@ function fillTree() {
     }
 
   } else {
-    var instructions = `<p class="text-secondary text-center">Please select some Vectors by clicking them in the viewer or using the Documents tree above. Hold down Ctrl to select multiples, Ctrl+A for Select-All, etc. <br>Add them to a toolpath using the <kbd class="bg-openbuilds"> <i class="fa fa-plus" aria-hidden="true"></i> Create Toolpath</kbd> button</p>`
+    var instructions = `<p class="text-secondary text-center mt-3">Please select some Vectors by clicking them in the viewer or using the Documents tree above. Hold down Ctrl to select multiples, Ctrl+A for Select-All, etc. <br>Add them to a toolpath using the <kbd class="bg-openbuilds"> <i class="fa fa-plus" aria-hidden="true"></i> Create Toolpath</kbd> button</p>`
     $('#toolpathtree').append(instructions);
     $('#generatetpgcode').prop('disabled', true);
+    $("#generatetpgcode").removeClass('success');
 
   } // End of if (toolpathsInScene.length > 0)
 
