@@ -67,7 +67,7 @@ function fillTree() {
                     <div class="toolbar mb-0">
                     `
 
-        toolp += `<button class="tool-button primary" data-tooltip="tooltip" data-placement="bottom" title="Configure toolpath" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i></button>`
+        toolp += `<button style="width: 60px;" class="tool-button primary" data-tooltip="tooltip" data-placement="bottom" title="Configure toolpath" onclick="setupJob(` + i + `);"><i class="fas fa-sliders-h"></i> Edit</button>`
 
         toolp += `</div><div class="toolbar ml-1 mb-0">`
 
