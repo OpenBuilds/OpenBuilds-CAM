@@ -62,14 +62,7 @@ $(document).ready(function() {
     this.value = this.value.toLocaleUpperCase();
   });
 
-  // Changelog
-
-  // if (!localStorage.getItem('hideChangelog')) {
-  //   getChangelog();
-  // }
-
   getForksCount();
-
 
   // lets see if there's any Workspaces on CONTROL
   $.get("https://mymachine.openbuilds.com:3001/workspace").done(function(data) {
