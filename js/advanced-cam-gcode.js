@@ -36,6 +36,10 @@ function makeGcodeExec() {
     $("#generatetpgcode").html("<i class='fa fa-spinner fa-spin '></i> Generating, please wait");
     $("#generatetpgcode").prop('disabled', true);
     $("#generatetpgcode").removeClass('success');
+
+    $('#gcodesavebtn2').addClass('disabled');
+    $('#gcodesavebtn2').removeClass('primary');
+
     // Button on Window bar above Toolpaths
 
 
@@ -155,6 +159,8 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
     $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
     $("#generatetpgcode").prop('disabled', false);
     $("#generatetpgcode").addClass('success');
+    $('#gcodesavebtn2').removeClass('disabled');
+    $('#gcodesavebtn2').addClass('primary');
   } else {
     toolpathGrp.traverse(function(child) {
       var toolDia = toolpathGrp.userData.toolDia;

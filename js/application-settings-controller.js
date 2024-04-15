@@ -140,10 +140,6 @@ function checkSettingsLocal() {
     setTimeout(function() {
       Metro.dialog.open('#settingsmodal');
     }, 1000)
-  } else {
-    if (!localStorage.getItem('hideChangelog')) {
-      getChangelog();
-    }
   }
 
 
