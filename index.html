@@ -80,7 +80,7 @@
 						<div class="window-content pt-2" style="overflow:hidden; ">
 							<nav data-role="ribbonmenu">
 								<ul class="tabs-holder">
-									<li><a href="#section-workspace">Workspace</a></li>
+									<li><a href="#section-workspace">Project</a></li>
 									<li><a href="#section-settings">Settings</a></li>
 								</ul>
 								<div class="content-holder">
@@ -106,18 +106,18 @@
 													<span class="icon">
 														<span class="far fa-file"></span>
 													</span>
-													<span class="caption">New (Empty) Workspace</span>
+													<span class="caption">New (Empty) Project</span>
 												</button>
 												<div>
 													<button class="ribbon-icon-button dropdown-toggle">
 														<span class="icon">
 															<span class="fas fa-download"></span>
 														</span>
-														<span class="caption">Import/Export Workspace</span>
+														<span class="caption">Save/Open Project</span>
 													</button>
 													<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
-														<li onclick="exportWorkspace()"><a href="#">Save Workspace (Export .OBC file)</a></li>
-														<li class="btn-file"><a href="#">Open Workspace (.JSON, .OBC)</a><input type="file" id="workspaceImport" accept=".json,.obc" multiple style="height: 26px;" /></li>
+														<li onclick="exportWorkspace()"><a href="#">Save Project (Export .OBC file)</a></li>
+														<li class="btn-file"><a href="#">Open Project (.JSON, .OBC)</a><input type="file" id="workspaceImport" accept=".json,.obc" multiple style="height: 26px;" /></li>
 													</ul>
 												</div>
 												<div>
@@ -125,7 +125,7 @@
 														<span class="icon">
 															<span class="fas fa-cog"></span>
 														</span>
-														<span class="caption">Load Example Workspace</span>
+														<span class="caption">Load Example Project</span>
 													</button>
 													<ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
 														<li onclick="helloWorld()"><a href="#">CNC Hello World</a></li>
@@ -135,7 +135,7 @@
 													</ul>
 												</div>
 											</div>
-											<span class="title">Workspace</span>
+											<span class="title">Project</span>
 										</div>
 
 										<div class="group">
@@ -178,33 +178,6 @@
 											<span class="title">Insert</span>
 										</div>
 
-
-										<!-- <div class="group">
-										<div class="ribbon-group">
-											<button class="ribbon-icon-button" onclick="storeUndo(true); objectsInScene.length = 0; toolpathsInScene.length = 0; trashGcode(); fillTree();">
-				                    <span class="icon">
-				                      <span class="far fa-file"></span>
-				                    </span>
-				                    <span class="caption">New</span>
-				                  </button>
-											<br>
-											<div class="ribbon-icon-button btn-file" title="Import Workspace">
-												<span class="icon">
-															<i class="far fa-folder-open"></i>
-														</span>
-												<input type="file" id="workspaceImport" accept=".json" multiple style="height: 26px;" />
-												<span class="caption pl-1"> Import</span>
-											</div>
-											<br>
-											<button class="ribbon-icon-button" onclick="exportWorkspace();">
-				                    <span class="icon">
-				                      <span class="fas fa-download"></span>
-				                    </span>
-				                    <span class="caption">Export</span>
-				                  </button>
-										</div>
-										<span class="title">Workspace</span>
-									</div> -->
 										<div class="group">
 											<div class="ribbon-group">
 												<button class="ribbon-icon-button" onclick="resetView();">
@@ -362,7 +335,6 @@
 								</div>
 							</div>
 
-							<div id="conetext" style="position:absolute;top:0px;left:0px; padding: 0px; display:none;"></div>
 
 						</div>
 						<div id="helpoverlay">
@@ -504,7 +476,7 @@
 			<div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="iconslibModal" data-width="800" data-to-top="true">
 				<div class="dialog-title">Icons Library</div>
 				<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-					Click Icon below to load it into CAM workspace:
+					Click Icon below to load it into CAM project:
 					<hr>
 					<div id="iconslibrary">
 

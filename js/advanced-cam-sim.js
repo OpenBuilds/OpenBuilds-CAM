@@ -10,33 +10,6 @@ function disableSim() {
   $('#runSimBtn').prop('disabled', true)
 }
 
-function simAnimate() {
-  if (cone) {
-    // 160widthx200height offset?
-    if (cone.position) {
-      var conepos = toScreenPosition(cone, camera)
-      var offset = $("#renderArea").offset()
-      var farside = $("#renderArea").offset().left + $("#renderArea").outerWidth()
-      var bottomside = $("#renderArea").offset().top + $("#renderArea").outerHeight()
-      // console.log(conepos)
-      if (conepos.y < offset.top) {
-        conepos.y = offset.top + 20;
-      }
-      if (conepos.y > bottomside - 120) {
-        conepos.y = bottomside - 120;
-      }
-      if (conepos.x < 70) {
-        conepos.x = 70;
-      }
-
-      if (conepos.x > farside - 90) {
-        conepos.x = farside - 90;
-      }
-      $("#conetext").css('left', conepos.x - 60 + "px").css('top', conepos.y - 110 + "px");
-    }
-  }
-}
-
 function toScreenPosition(obj, camera) {
   var vector = new THREE.Vector3(obj.position.x, obj.position.y + 10, obj.position.z + 30);
   var widthHalf = 0.5 * renderer.context.canvas.width;
@@ -68,7 +41,6 @@ function simstop() {
     opacity: 0.9,
     transparent: true
   })
-  $("#conetext").hide();
   cone.visible = false;
   clearSceneFlag = true;
 }
@@ -96,7 +68,6 @@ function sim(startindex) {
       extruding: false
     };
     clearSceneFlag = true;
-    $("#conetext").show();
     cone.visible = true
     var posx = object.userData.lines[0].p2.x; //- (sizexmax/2);
     var posy = object.userData.lines[0].p2.y; //- (sizeymax/2);
@@ -144,27 +115,6 @@ function sim(startindex) {
       } else {
         var feedrate = object.userData.lines[simIdx].p2.feedrate
       }
-
-      $("#conetext").html(
-        ` <table style="border: 1px solid #888">
-            <tr style="border-bottom: 1px solid #888">
-              <td><b>CMD</b></td><td align="right"><b>` + text + `</b></td>
-            </tr>
-            <tr style="border-bottom: 1px solid #888">
-              <td><b>X:</b></td><td align="right"><b>` + posx.toFixed(2) + `mm</b></td>
-            </tr>
-            <tr style="border-bottom: 1px solid #888">
-              <td><b>Y:</b></td><td align="right"><b>` + posy.toFixed(2) + `mm</b></td>
-            </tr>
-            <tr style="border-bottom: 1px solid #888">
-              <td><b>Z:</b></td><td align="right"><b>` + posz.toFixed(2) + `mm</b></td>
-            </tr>
-            <tr style="border-bottom: 1px solid #888">
-              <td><b>F:</b></td><td align="right"><b>` + feedrate + `mm/min</b></td>
-            </tr>
-          </table>
-        `);
-
 
       // if (simTime < 0.1) { simTime = 0.1};
       var simTimeInSec = simTime * 60;

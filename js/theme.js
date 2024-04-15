@@ -140,7 +140,7 @@ let ThemeData = {
     // }
   },
 
-  currentThemeId: "dark", // Forcing dark mode after update
+  currentThemeId: "light", // Forcing dark mode after update
 
   init: function init() {
     console.log(localStorage.getItem('themeId'))

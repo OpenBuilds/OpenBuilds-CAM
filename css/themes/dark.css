@@ -559,8 +559,3 @@ body.theme_dark, .theme_dark div.window, .theme_dark .card {
   background-color: #333;
   color: #fff !important;
 }
-
-.theme_dark #conetext {
-  background: #333;
-  color: #fff !important;
-}

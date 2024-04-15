@@ -50,17 +50,17 @@ function loadLastClosedOnPageload() {
 
       Metro.dialog.create({
         width: 500,
-        title: "Found a recoverable workspace.",
-        content: "<div>Would you like to recover the previously used workspace, or would you like to start with a clean New workspace?</div>",
+        title: "Found a recoverable Project",
+        content: "<div>Would you like to recover the previously used Project, or would you like to start with a clean New Project?</div>",
         actions: [{
-            caption: "<i class=\"far fa-fw fa-save\"></i>Recover last used Workspace",
+            caption: "<i class=\"far fa-fw fa-save\"></i>Recover last used Project",
             cls: "js-dialog-close success",
             onclick: function() {
               parseLoadWorkspace(lastWorkspace, true)
             }
           },
           {
-            caption: "<i class=\"far fa-fw fa-file\"></i>Start with a New workspace",
+            caption: "<i class=\"far fa-fw fa-file\"></i>Start with a New Project",
             cls: "js-dialog-close success",
             onclick: function() {
               // console.log("Starting wtih a clean workspace")
@@ -69,13 +69,6 @@ function loadLastClosedOnPageload() {
         ]
       });
 
-      // var x = confirm("Found a recoverable workspace.  Would you like to load it, or start with a clean workspace?");
-      // if (x) {
-      //   parseLoadWorkspace(lastWorkspace)
-      //   return true;
-      // } else {
-      //   return false;
-      // }
     }
   }
 }
