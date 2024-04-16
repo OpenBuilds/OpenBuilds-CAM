@@ -367,7 +367,7 @@
 				<div id="col2">
 					<!-- <div style="height: 100%; overflow-y:hidden; padding-right:5px;"> -->
 
-					<div data-role="splitter" data-split-mode="vertical" data-split-sizes="25,55,10,10" data-min-sizes="220,280,100,110" class="h-100">
+					<div data-role="splitter" data-split-mode="vertical" data-split-sizes="25,55,10,10" data-min-sizes="230,280,100,110" class="h-100">
 						<div id="renderDocuments" class="window drop-shadow">
 							<div class="window-caption bg-openbuilds">
 								<i class="far fa-file-alt fa-fw ml-1 mr-1"></i>
@@ -390,8 +390,13 @@
 
 								<div id="documentstree">
 									<div id="nodocuments" style="display:none;">
-										<p class="text-secondary text-center mt-3">Please load some vectors from DXF (Polylines) or SVG (Paths); or Images (Traceable) using the <kbd class="bg-openbuilds"> <i class="far fa-folder-open" aria-hidden="true"></i> Open
-												Drawing</kbd> button, or insert a Shape, Icon or some Text using the built-in tools to get started </p>
+										<p class="text-secondary text-center mt-3">Please load some vectors from DXF (Polylines) or SVG (Paths); or Images (Traceable) or insert a Shape, Icon or some Text using the built-in tools to get started
+										</p>
+										<p class="text-center">
+											<button class="button success drop-shadow" style="width: 300px;" title="Open Drawing" onclick="$('#file').click();"><span class="far fa-folder-open fa-fw icon"></span>Open Drawing</button>
+										</p>
+
+
 									</div>
 									<ul data-role="treeview pl-0" id="left-tree-view">
 									</ul>
