@@ -224,7 +224,7 @@ function selectToolhead() {
   }
 
   if ($("#hasPlasma").is(':checked')) {
-    $("#ihsgcode").val("G38.2 Z-30 F100; Probe\nG10 L20 Z0; Set Z Zero\n")
+    $("#ihsgcode").val("G38.2 Z-30 F100; Probe\nG10 L20 Z-3; Set Z Zero\n")
     $('#scommandscale').val(1000);
   }
 
