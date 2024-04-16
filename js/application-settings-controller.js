@@ -422,6 +422,7 @@ function setMachineButton(type) {
     template = `<img src="images/mch/sphinx55.png"/>  Select Machine`
   }
   $('#context_toggle2').html(template);
+  $('#overlayimg').html(`<img src="images/mch/` + type + `.png" style="max-width:100%; max-height:100%;"/>`)
 };
 
 $(document).ready(function() {
