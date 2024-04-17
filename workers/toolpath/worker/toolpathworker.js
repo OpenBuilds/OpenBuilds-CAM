@@ -25,7 +25,6 @@ if (typeof window == "undefined") { // Only run as worker
     self.postMessage(data);
   }, false);
 
-
   function getToolpaths(toolpath, jobindex, performanceLimit) {
     // Process Them
     // console.log(toolpath)
@@ -42,7 +41,6 @@ if (typeof window == "undefined") { // Only run as worker
     config = {
       index: jobindex,
       toolpath: toolpath,
-      repair: false,
       union: toolpath.userData.camUnion,
       offset: toolpath.userData.camToolDia / 2,
       leadinval: 0,
@@ -188,9 +186,7 @@ if (typeof window == "undefined") { // Only run as worker
     var inflateGrpZ = new THREE.Group();
     var prettyGrp = new THREE.Group();
     var clipperPaths = workerGetClipperPaths(config.toolpath)
-    if (config.repair) {
-      clipperPaths = repairClipperPath(clipperPaths);
-    }
+
     // console.log('Original Toolpath: ', JSON.stringify(clipperPaths))
     if (config.union == "Yes") {
       // simplify this set of paths which is a very powerful Clipper call that figures out holes and path orientations
