@@ -385,7 +385,9 @@ function selectMachine(type) {
 
 function setMachineButton(type) {
   console.log(type)
-  if (type == "sphinx55") {
+  if (localStorage.getItem("hasPlasma") == 'true') {
+    template = `<img src="images/mch/` + type + `plasma.png"/>  OpenBuilds LEAD 1010 with Plasma Add-On`
+  } else if (type == "sphinx55") {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds Sphinx 55`
   } else if (type == "sphinx1050") {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds Sphinx 1050`
@@ -435,7 +437,11 @@ function setMachineButton(type) {
     template = `<img src="images/mch/sphinx55.png"/>  Select Machine`
   }
   $('#context_toggle2').html(template);
-  $('#overlayimg').html(`<img src="images/mch/` + type + `.png" style="max-width:100%; max-height:100%;"/>`)
+  if (localStorage.getItem("hasPlasma") == 'true') {
+    $('#overlayimg').html(`<img src="images/mch/` + type + `plasma.png" style="max-width:100%; max-height:100%;"/>`)
+  } else {
+    $('#overlayimg').html(`<img src="images/mch/` + type + `.png" style="max-width:100%; max-height:100%;"/>`)
+  }
 };
 
 $(document).ready(function() {
