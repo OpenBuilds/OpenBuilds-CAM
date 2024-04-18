@@ -214,7 +214,9 @@ function selectToolhead() {
     startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
     endcode += "M5 S0; Spindle Off\n"
     $('#scommandscale').val(1000);
-    localStorage.setItem("hasRouter", value);
+    localStorage.setItem("hasRouter", true);
+  } else {
+    localStorage.setItem("hasRouter", false);
   }
 
   if ($("#hasSpindle").is(':checked')) {
@@ -385,9 +387,9 @@ function selectMachine(type) {
 
 function setMachineButton(type) {
   console.log(type)
-  if (localStorage.getItem("hasPlasma") == 'true') {
-    template = `<img src="images/mch/` + type + `plasma.png"/>  OpenBuilds LEAD 1010 with Plasma Add-On`
-  } else if (type == "sphinx55") {
+
+  // Set Dropdown menu selected option in Settings modal
+  if (type == "sphinx55") {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds Sphinx 55`
   } else if (type == "sphinx1050") {
     template = `<img src="images/mch/` + type + `.png"/>  OpenBuilds Sphinx 1050`
@@ -437,8 +439,27 @@ function setMachineButton(type) {
     template = `<img src="images/mch/sphinx55.png"/>  Select Machine`
   }
   $('#context_toggle2').html(template);
+
+  // Tick add-on checkboxes
   if (localStorage.getItem("hasPlasma") == 'true') {
-    $('#overlayimg').html(`<img src="images/mch/` + type + `plasma.png" style="max-width:100%; max-height:100%;"/>`)
+    $("#hasPlasma").attr('checked', true)
+  }
+  if (localStorage.getItem("hasRouter") == 'true') {
+    $("#hasRouter").attr('checked', true)
+  }
+  if (localStorage.getItem("hasSpindle") == 'true') {
+    $("#hasSpindle").attr('checked', true)
+  }
+  if (localStorage.getItem("hasDust") == 'true') {
+    $("#hasDust").attr('checked', true)
+  }
+  if (localStorage.getItem("hasLaser") == 'true') {
+    $("#hasLaser").attr('checked', true)
+  }
+
+  // workaround for Lead Plasma specifically (not quite a modular machine, has its own picture on front page overlay)
+  if (type == "leadmachine1010" && localStorage.getItem("hasPlasma") == 'true') {
+    $('#overlayimg').html(`<img src="images/mch/leadmachine1010plasma.png" style="max-width:100%; max-height:100%;"/>`)
   } else {
     $('#overlayimg').html(`<img src="images/mch/` + type + `.png" style="max-width:100%; max-height:100%;"/>`)
   }
