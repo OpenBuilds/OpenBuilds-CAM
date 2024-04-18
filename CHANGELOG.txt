@@ -1,3 +1,5 @@
+18 Apr 2024:  Fixed bug related to Drill Plunge feedrate, Minor cosmetic tweaks, Improvements to new Settings page, added Machine type overlay Image, Updated Plasma Hello World OBC file,
+16 Apr 2024:  Modified right-column stack to show as a step by step wizard (4 steps: Document > Toolpath > Generate Gcode > Export Gcode)
 10 Apr 2024:  Dark Mode, Iconography Library, Reselect and toolpath management tools, UI enhancements, New Settings page, Added LEAD Plasma Add-On support
 19 Sep 2023:  Disable CONTROL integration.  Use the SAVE GCODE button please
 16 Jun 2023:  Added X32 option to Board selection

@@ -169,6 +169,9 @@ function initAdvancedCAM() {
     } else if (id.indexOf('tpwr') == 0) {
       // $('#svgUnion').text(newval);
       updateCamUserData(objectseq);
+    } else if (id.indexOf('trpm') == 0) {
+      // $('#svgUnion').text(newval);
+      updateCamUserData(objectseq);
     } else if (id.indexOf('tpendown') == 0) {
       // $('#svgUnion').text(newval);
       updateCamUserData(objectseq);
@@ -200,6 +203,7 @@ function updateCamUserData(i) {
   toolpathsInScene[i].userData.camPasses = $('#tPasses' + i).val();
   toolpathsInScene[i].userData.camDragOffset = $('#tdragoffset' + i).val();
   toolpathsInScene[i].userData.camLaserPower = $('#tpwr' + i).val();
+  toolpathsInScene[i].userData.camSpindleRpm = $('#trpm' + i).val();
   toolpathsInScene[i].userData.camZStep = $('#tzstep' + i).val();
   toolpathsInScene[i].userData.camZDepth = $('#tzdepth' + i).val();
   toolpathsInScene[i].userData.camFeedrate = $('#tspeed' + i).val();
@@ -352,6 +356,16 @@ function setupJob(i) {
             <span class="input-addon-label-left active-border"><i class="fas fa-tachometer-alt fa-fw"></i></span>
             <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="100" id="tpwr` + i + `" objectseq="` + i + `" min="1" max="100" step="any">
             <span class="input-addon-label-right active-border">%</span>
+          </div>
+        </td>
+      </tr>
+      <tr class="inputcnc inputpocket inputdrill">
+        <td>Spindle: RPM</td>
+        <td>
+          <div class="input-addon">
+            <span class="input-addon-label-left active-border"><i class="fas fa-tachometer-alt fa-fw"></i></span>
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="1000" id="trpm` + i + `" objectseq="` + i + `" min="1" max="36000" step="any">
+            <span class="input-addon-label-right active-border">rpm</span>
           </div>
         </td>
       </tr>
@@ -638,6 +652,7 @@ function setupJob(i) {
     $('#tspotsize' + i).val(toolpathsInScene[i].userData.camSpotSize);
     $('#tfillAngle' + i).val(toolpathsInScene[i].userData.camFillAngle);
     $('#tpwr' + i).val(toolpathsInScene[i].userData.camLaserPower);
+    $('#trpm' + i).val(toolpathsInScene[i].userData.camSpindleRpm);
     $('#tzstep' + i).val(toolpathsInScene[i].userData.camZStep);
     $('#tzdepth' + i).val(toolpathsInScene[i].userData.camZDepth);
     $('#tspeed' + i).val(toolpathsInScene[i].userData.camFeedrate);
@@ -687,6 +702,7 @@ function setupJob(i) {
       $('#tspotsize' + i).val(lastused.camSpotSize);
       $('#tfillAngle' + i).val(lastused.camFillAngle);
       $('#tpwr' + i).val(lastused.camLaserPower);
+      $('#trpm' + i).val(lastused.camSpindleRpm);
       $('#tzstep' + i).val(lastused.camZStep);
       $('#tzdepth' + i).val(lastused.camZDepth);
       $('#tspeed' + i).val(lastused.camFeedrate);

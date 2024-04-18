@@ -226,7 +226,7 @@ function selectToolhead() {
 
   if ($("#hasSpindle").is(':checked')) {
     // console.log('Add Spindle')
-    startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
+    //startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
     endcode += "M5 S0; Spindle Off\n"
     $('#scommandscale').val(24000);
     localStorage.setItem("hasSpindle", true);

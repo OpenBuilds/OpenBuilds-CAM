@@ -61,6 +61,7 @@ function makeGcodeExec() {
           }
           var Plungerate = toolpathsInScene[j].userData.camPlungerate;
           var LaserPower = toolpathsInScene[j].userData.camLaserPower;
+          var SpindleRPM = toolpathsInScene[j].userData.camSpindleRpm;
           var ZClearance = toolpathsInScene[j].userData.camZClearance;
           var PlasmaIHS = toolpathsInScene[j].userData.camPlasmaIHS;
           var rampplunge = toolpathsInScene[j].userData.tRampPlunge == "Yes" ? true : false;
@@ -79,14 +80,14 @@ function makeGcodeExec() {
 
           if (parseInt(Passes) && toolpathsInScene[j].userData.camOperation.indexOf('Laser') == 0) {
             var g = ""
-            var gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
+            var gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, SpindleRPM, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
             for (k = 0; k < Passes; k++) {
               g += '; Pass ' + k + "\n"
               g += gcode
             }
             toolpathsInScene[j].userData.gcode = g;
           } else {
-            toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
+            toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, SpindleRPM, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
           }
 
 
@@ -120,12 +121,13 @@ function makeGcodeExec() {
   }
 }
 
-function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapidSpeed, toolon, tooloff, clearanceHeight, zoffset, PlasmaIHS, rampplunge) {
+function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, spindleRpm, laserPwr, rapidSpeed, toolon, tooloff, clearanceHeight, zoffset, PlasmaIHS, rampplunge) {
 
   // Calculate Correct S Value
   //laserPwr // 0-100%
 
   var laserPwr = laserPwr / 100 * parseInt($('#scommandscale').val());
+
 
 
   // empty string to store gcode
@@ -168,6 +170,12 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
     $('#gcodesavebtn2').removeClass('disabled');
     $('#gcodesavebtn2').addClass('primary');
   } else {
+    console.log(toolpathGrp)
+    if (toolpathsInScene[index].userData.camOperation.indexOf('CNC') == 0 || toolpathGrp.userData.camOperation.indexOf('Drill') == 0) {
+      g += `M3 S` + spindleRpm + `; Start Spindle\n`
+      g += `G4 P8; Wait 8 seconds for spindle to spin up to speed\n`
+    }
+
     toolpathGrp.traverse(function(child) {
       var toolDia = toolpathGrp.userData.toolDia;
       if (toolDia < 0) {
