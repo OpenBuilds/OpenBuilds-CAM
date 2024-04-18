@@ -53,7 +53,12 @@ function makeGcodeExec() {
           var toolon = "";
           var tooloff = "";
           // toolpath settings is applied to the parent Toolpath.  Each child in the "toolpath" is processed with the same settings
-          var Feedrate = toolpathsInScene[j].userData.camFeedrate;
+          if (toolpathsInScene[j].userData.camOperation.indexOf('Drill') == 0) {
+            // for Drilling, feed at Plunge Rate for the entire drill feed
+            var Feedrate = toolpathsInScene[j].userData.camPlungerate;
+          } else {
+            var Feedrate = toolpathsInScene[j].userData.camFeedrate;
+          }
           var Plungerate = toolpathsInScene[j].userData.camPlungerate;
           var LaserPower = toolpathsInScene[j].userData.camLaserPower;
           var ZClearance = toolpathsInScene[j].userData.camZClearance;
@@ -137,6 +142,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, laserPwr, rapi
   } else if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
     g += "; Pen Diameter: " + toolpathsInScene[index].userData.camToolDia + "\n";
   }
+
 
   // Optimise gcode, send commands only when changed
   var isToolOn = false;
