@@ -214,6 +214,7 @@ function selectToolhead() {
     startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
     endcode += "M5 S0; Spindle Off\n"
     $('#scommandscale').val(1000);
+    localStorage.setItem("hasRouter", value);
   }
 
   if ($("#hasSpindle").is(':checked')) {
@@ -221,6 +222,9 @@ function selectToolhead() {
     startcode += "M3 S" + $('#scommandscale').val() + "; Spindle On\n"
     endcode += "M5 S0; Spindle Off\n"
     $('#scommandscale').val(24000);
+    localStorage.setItem("hasSpindle", true);
+  } else {
+    localStorage.setItem("hasSpindle", false);
   }
 
   if ($("#hasPlasma").is(':checked')) {
@@ -232,6 +236,9 @@ function selectToolhead() {
     $("#sizexmax").val(xaxis)
     $("#sizeymax").val(yaxis)
     $("#sizezmax").val(zaxis)
+    localStorage.setItem("hasPlasma", true);
+  } else {
+    localStorage.setItem("hasPlasma", false);
   }
 
   if ($("#hasLaser").is(':checked')) {
@@ -239,12 +246,18 @@ function selectToolhead() {
     startcode += "M4; Dynamic Power Laser On\n"
     endcode += "M5; Laser Off\n"
     $('#scommandscale').val(1000);
-
+    localStorage.setItem("hasLaser", true);
+  } else {
+    localStorage.setItem("hasLaser", false);
   }
+
   if ($("#hasDust").is(':checked')) {
     // console.log('Add Misting')
     startcode += "M8; Coolant Output On - turns on Dust Extractor if wired\n"
     endcode += "M9; Coolant Output Off  - turns off Dust Extractor if wired\n"
+    localStorage.setItem("hasDust", true);
+  } else {
+    localStorage.setItem("hasDust", false);
   }
 
   $('#startgcode').val(startcode)
