@@ -42,7 +42,11 @@ localParams = [
 
 // Wrappers for direct access to local storage -- these will get swapped with profiles laster
 function saveSetting(setting, value) {
+  if (setting == "machinetype") {
+    setMachineButton(value)
+  }
   localStorage.setItem(setting, value);
+
 };
 
 function loadSetting(setting) {
@@ -75,6 +79,7 @@ function saveSettingsLocal() {
   printLog('<b>Saved Settings: <br>NB:</b> Please refresh page for settings to take effect', errorcolor, "settings");
   // $("#settingsmodal").modal("hide");
   console.groupEnd();
+
 };
 
 function loadSettingsLocal() {
