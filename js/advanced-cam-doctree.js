@@ -29,7 +29,7 @@ function treeClick(checkbox, node) {
       var object = objectsInScene[object]
       object.traverse(function(child) {
         if (child.type == "Line") {
-          if (child.userData.layer.label == layer) {
+          if (child.userData.layer && child.userData.layer.label == layer) {
             child.userData.selected = true;
           }
         }
@@ -38,7 +38,7 @@ function treeClick(checkbox, node) {
       var object = objectsInScene[object]
       object.traverse(function(child) {
         if (child.type == "Line") {
-          if (child.userData.layer.label == layer) {
+          if (child.userData.layer && child.userData.layer.label == layer) {
             child.userData.selected = false;
           }
         }
@@ -123,11 +123,7 @@ function filldoctree() {
       // Add Vectors to Layers
       for (j = 0; j < objectsInScene[i].children.length; j++) {
 
-        if (objectsInScene[i].children[j].closed) {
-          var template = ` <li><input id="checkbox_` + i + `_` + j + `" type="checkbox" data-role="checkbox" data-caption="<span class='fas fa-vector-square'></span> ` + objectsInScene[i].children[j].name + `" data-type="vector" data-object="` + i + `" data-child="` + j + `" data-layer="` + layersinthisdoc[j] + `"></li>`
-        } else {
-          var template = ` <li><input id="checkbox_` + i + `_` + j + `" type="checkbox" data-role="checkbox" data-caption="<span class='fas fa-slash'></span> ` + objectsInScene[i].children[j].name + ` (open vector)" data-type="vector" data-object="` + i + `" data-child="` + j + `" data-layer="` + layersinthisdoc[j] + `"></li>`
-        }
+        var template = ` <li><input id="checkbox_` + i + `_` + j + `" type="checkbox" data-role="checkbox" data-caption="<span class='fas fa-vector-square'></span> ` + objectsInScene[i].children[j].name + `" data-type="vector" data-object="` + i + `" data-child="` + j + `" data-layer="` + layersinthisdoc[j] + `"></li>`
 
         objectsInScene[i].children[j].userData.link = "link" + i + "_" + j;
         if (objectsInScene[i].children[j].userData.layer) {
