@@ -235,7 +235,7 @@ function selectToolhead() {
   }
 
   if ($("#hasPlasma").is(':checked')) {
-    $("#ihsgcode").val("G38.2 Z-30 F100; Touch off Probe\nG10 L20 Z-3; Set Z Zero\n")
+    $("#ihsgcode").val("G38.2 Z-30 F500; Touch off Probe\nG10 L20 Z-3; Set Z Zero\n")
     $('#scommandscale').val(1000);
     var xaxis = 740
     var yaxis = 830
