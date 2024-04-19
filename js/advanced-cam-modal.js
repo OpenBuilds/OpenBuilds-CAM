@@ -485,8 +485,8 @@ function setupJob(i) {
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="far fa-arrow-alt-circle-down fa-fw"></i></span>
             <select class="cam-form-field cam-form-field-right active-border" id="tplasmaihs` + i + `" objectseq="` + i + `" style="width: 280px; border-left: solid 1px #ccc; padding: 0px; padding-left: 10px;">
-              <option>No</option>
-              <option selected>Yes</option>
+              <option selected>No</option>
+              <option>Yes</option>
             </select>
           </div>
         </td>
@@ -641,6 +641,9 @@ function setupJob(i) {
     template3 += '</div>'
     $('#toolpathWarnings').html(template3)
   }
+
+  var lastused = JSON.parse(localStorage.getItem('lastCamOperation'));
+
   if (toolpathsInScene[i].userData.camOperation) {
     $('#tPasses' + i).val(toolpathsInScene[i].userData.camPasses);
     $('#toperation' + i).val(toolpathsInScene[i].userData.camOperation).prop('selected', true)
@@ -690,41 +693,43 @@ function setupJob(i) {
       }, 200);
     }
     typeofOperation(toolpathsInScene[i].userData.camOperation, i);
-  } else {
+  } else if (lastused) {
     // if we don't already have an Operation, perhaps we can pull from last-used values to make it easier
-    var lastused = JSON.parse(localStorage.getItem('lastCamOperation'));
-    if (lastused) {
-      // console.log(lastused)
-      $('#ttooldia' + i).val(lastused.camToolDia);
-      $('#tstepover' + i).val(lastused.camStepover);
-      $('#tclearanceHeight' + i).val(lastused.camZClearance);
-      $('#tdragoffset' + i).val(lastused.camDragOffset);
-      $('#tspotsize' + i).val(lastused.camSpotSize);
-      $('#tfillAngle' + i).val(lastused.camFillAngle);
-      $('#tpwr' + i).val(lastused.camLaserPower);
-      $('#trpm' + i).val(lastused.camSpindleRpm);
-      $('#tzstep' + i).val(lastused.camZStep);
-      $('#tzdepth' + i).val(lastused.camZDepth);
-      $('#tspeed' + i).val(lastused.camFeedrate);
-      $('#tplungespeed' + i).val(lastused.camPlungerate);
-      $('#tplasmakerf' + i).val(lastused.camPlasmaKerf);
-      $('#tplasmazheight' + i).val(lastused.camPlasmaZHeight);
-      $('#tplasmapierceheight' + i).val(lastused.camPlasmaPierceHeight);
-      $('#tplasmapiercedelay' + i).val(lastused.camPlasmaPierceDelay);
-      $('#tplasmaleadin' + i).val(lastused.camPlasmaLeadinDist);
-      $('#tstartHeight' + i).val(lastused.camZStart);
-      $('#tPasses' + i).val(lastused.camPasses);
-      $('#tplasmaihs' + i).val(lastused.camPlasmaIHS);
-      // $('#tunion' + i).val(lastused.camUnion);
-      $('#tdirection' + i).val(lastused.camDirection);
-      $('#tspotsize' + i).val(lastused.camSpotSize);
-      $('#tfillAngle' + i).val(lastused.camFillAngle);
-      //$('#tabdepth' + i).val(lastused.camTabDepth);
-      //$('#tabWidth' + i).val(lastused.camTabWidth);
-      //$('#tabSpace' + i).val(lastused.camTabSpace);
-      //$('#tRampPlunge' + i).val(lastused.tRampPlunge);
-      $('#tpenup' + i).val(lastused.camPenUp);
-      $('#tpendown' + i).val(lastused.camPenDown);
+    // console.log(lastused)
+    $('#ttooldia' + i).val(lastused.camToolDia);
+    $('#tstepover' + i).val(lastused.camStepover);
+    $('#tclearanceHeight' + i).val(lastused.camZClearance);
+    $('#tdragoffset' + i).val(lastused.camDragOffset);
+    $('#tspotsize' + i).val(lastused.camSpotSize);
+    $('#tfillAngle' + i).val(lastused.camFillAngle);
+    $('#tpwr' + i).val(lastused.camLaserPower);
+    $('#trpm' + i).val(lastused.camSpindleRpm);
+    $('#tzstep' + i).val(lastused.camZStep);
+    $('#tzdepth' + i).val(lastused.camZDepth);
+    $('#tspeed' + i).val(lastused.camFeedrate);
+    $('#tplungespeed' + i).val(lastused.camPlungerate);
+    $('#tplasmakerf' + i).val(lastused.camPlasmaKerf);
+    $('#tplasmazheight' + i).val(lastused.camPlasmaZHeight);
+    $('#tplasmapierceheight' + i).val(lastused.camPlasmaPierceHeight);
+    $('#tplasmapiercedelay' + i).val(lastused.camPlasmaPierceDelay);
+    $('#tplasmaleadin' + i).val(lastused.camPlasmaLeadinDist);
+    $('#tstartHeight' + i).val(lastused.camZStart);
+    $('#tPasses' + i).val(lastused.camPasses);
+    $('#tplasmaihs' + i).val(lastused.camPlasmaIHS);
+    // $('#tunion' + i).val(lastused.camUnion);
+    $('#tdirection' + i).val(lastused.camDirection);
+    $('#tspotsize' + i).val(lastused.camSpotSize);
+    $('#tfillAngle' + i).val(lastused.camFillAngle);
+    //$('#tabdepth' + i).val(lastused.camTabDepth);
+    //$('#tabWidth' + i).val(lastused.camTabWidth);
+    //$('#tabSpace' + i).val(lastused.camTabSpace);
+    //$('#tRampPlunge' + i).val(lastused.tRampPlunge);
+    $('#tpenup' + i).val(lastused.camPenUp);
+    $('#tpendown' + i).val(lastused.camPenDown);
+  } else {
+    if ($("#hasPlasma").is(':checked')) {
+      // If user has LEAD1010 Plasma, lets force first time use to use IHS
+      $('#tplasmaihs' + i).val("Yes");
     }
   };
 }
