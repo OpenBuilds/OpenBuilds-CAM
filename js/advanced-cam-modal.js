@@ -485,8 +485,8 @@ function setupJob(i) {
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="far fa-arrow-alt-circle-down fa-fw"></i></span>
             <select class="cam-form-field cam-form-field-right active-border" id="tplasmaihs` + i + `" objectseq="` + i + `" style="width: 280px; border-left: solid 1px #ccc; padding: 0px; padding-left: 10px;">
-              <option selected>No</option>
-              <option>Yes</option>
+              <option>No</option>
+              <option selected>Yes</option>
             </select>
           </div>
         </td>
