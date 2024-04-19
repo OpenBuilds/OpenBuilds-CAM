@@ -38,7 +38,7 @@ function addMergedLines() {
   // get it as Clipper paths
   var newClipperPaths = getClipperPaths(toolpath);
   console.log(JSON.stringify(newClipperPaths))
-  var sortedPaths = sortClipperPath(newClipperPaths)
+  var sortedPaths = sortClipperPaths(newClipperPaths)
   console.log(JSON.stringify(sortedPaths))
 
   var fileObject = new THREE.Group();
@@ -124,71 +124,171 @@ function addMergedLines() {
 //   return flattenedPath;
 // }
 
-function sortClipperPath(clipperPath, threshold = 0.1) {
+// function sortClipperPath(clipperPath, threshold = 0.1) {
+//   // Create a map to store the starting and ending points of each segment
+//   const startPoints = new Map();
+//   const endPoints = new Map();
+//
+//   // Helper function to check if two points are approximately equal within the threshold
+//   const arePointsApproximatelyEqual = (point1, point2) => {
+//     return Math.abs(point1.X - point2.X) < threshold && Math.abs(point1.Y - point2.Y) < threshold;
+//   };
+//
+//   // Iterate through each segment and store their start and end points
+//   clipperPath.forEach(segment => {
+//     const startPoint = segment[0];
+//     const endPoint = segment[1];
+//
+//     const startPointKey = `${startPoint.X},${startPoint.Y}`;
+//     const endPointKey = `${endPoint.X},${endPoint.Y}`;
+//
+//     // Store start and end points in respective maps
+//     if (!startPoints.has(startPointKey)) {
+//       startPoints.set(startPointKey, segment);
+//     }
+//     if (!endPoints.has(endPointKey)) {
+//       endPoints.set(endPointKey, segment);
+//     }
+//   });
+//
+//   // Reorder the segments to form a continuous path
+//   const sortedPath = [];
+//   let currentSegment = clipperPath[0];
+//   sortedPath.push(currentSegment);
+//   clipperPath.splice(0, 1); // Remove the first segment from the original array
+//
+//   while (clipperPath.length > 0) {
+//     const endPoint = currentSegment[1];
+//     const endPointKey = `${endPoint.X},${endPoint.Y}`;
+//
+//     // Find the next segment whose start point approximately matches the current segment's end point
+//     let nextSegment = null;
+//     for (const [key, segment] of startPoints) {
+//       const startPoint = segment[0];
+//       if (arePointsApproximatelyEqual(startPoint, endPoint)) {
+//         nextSegment = segment;
+//         break;
+//       }
+//     }
+//
+//     // If next segment is found, add it to the sorted path and remove it from the original array
+//     if (nextSegment) {
+//       sortedPath.push(nextSegment);
+//       clipperPath.splice(clipperPath.indexOf(nextSegment), 1);
+//       currentSegment = nextSegment;
+//     } else {
+//       // If no next segment is found, break the loop
+//       break;
+//     }
+//   }
+//
+//   // Flatten the sorted path into a single array
+//   const flattenedPath = sortedPath.reduce((acc, segment) => {
+//     acc.push(segment[0], segment[1]);
+//     return acc;
+//   }, []);
+//
+//   return flattenedPath;
+// }
+
+function sortClipperPaths(clipperPaths, threshold = 0.1) {
   // Create a map to store the starting and ending points of each segment
   const startPoints = new Map();
   const endPoints = new Map();
 
   // Helper function to check if two points are approximately equal within the threshold
   const arePointsApproximatelyEqual = (point1, point2) => {
-    return Math.abs(point1.X - point2.X) < threshold && Math.abs(point1.Y - point2.Y) < threshold;
+    return point1 && point2 && Math.abs(point1.X - point2.X) < threshold && Math.abs(point1.Y - point2.Y) < threshold;
   };
 
-  // Iterate through each segment and store their start and end points
-  clipperPath.forEach(segment => {
-    const startPoint = segment[0];
-    const endPoint = segment[1];
+  // Populate startPoints and endPoints maps for all segments
+  clipperPaths.forEach(path => {
+    path.forEach(segment => {
+      const startPoint = segment[0];
+      const endPoint = segment[1];
 
-    const startPointKey = `${startPoint.X},${startPoint.Y}`;
-    const endPointKey = `${endPoint.X},${endPoint.Y}`;
+      const startPointKey = startPoint ? `${startPoint.X},${startPoint.Y}` : null;
+      const endPointKey = endPoint ? `${endPoint.X},${endPoint.Y}` : null;
 
-    // Store start and end points in respective maps
-    if (!startPoints.has(startPointKey)) {
-      startPoints.set(startPointKey, segment);
-    }
-    if (!endPoints.has(endPointKey)) {
-      endPoints.set(endPointKey, segment);
-    }
+      // Store start and end points in respective maps
+      if (startPointKey && !startPoints.has(startPointKey)) {
+        startPoints.set(startPointKey, segment);
+      }
+      if (endPointKey && !endPoints.has(endPointKey)) {
+        endPoints.set(endPointKey, segment);
+      }
+    });
   });
 
-  // Reorder the segments to form a continuous path
-  const sortedPath = [];
-  let currentSegment = clipperPath[0];
-  sortedPath.push(currentSegment);
-  clipperPath.splice(0, 1); // Remove the first segment from the original array
+  // Reorder the segments to form continuous paths
+  const sortedPaths = [];
 
-  while (clipperPath.length > 0) {
-    const endPoint = currentSegment[1];
-    const endPointKey = `${endPoint.X},${endPoint.Y}`;
+  // Function to find the closest unmatched point
+  const findClosestUnmatchedPoint = (point, pointsMap, usedSegments) => {
+    let closestDistance = Infinity;
+    let closestSegment = null;
 
-    // Find the next segment whose start point approximately matches the current segment's end point
-    let nextSegment = null;
-    for (const [key, segment] of startPoints) {
-      const startPoint = segment[0];
-      if (arePointsApproximatelyEqual(startPoint, endPoint)) {
-        nextSegment = segment;
+    for (const [key, segment] of pointsMap) {
+      if (!usedSegments.has(segment)) {
+        const startPoint = segment[0];
+        if (!startPoint) continue; // Skip if startPoint is undefined
+        const distance = Math.sqrt(Math.pow(startPoint.X - point.X, 2) + Math.pow(startPoint.Y - point.Y, 2));
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestSegment = segment;
+        }
+      }
+    }
+    return closestSegment;
+  };
+
+  // Iterate through each path
+  clipperPaths.forEach(path => {
+    const usedSegments = new Set(); // Tracks used segments in the current path
+    const sortedPath = [];
+
+    let currentSegment = path[0];
+    sortedPath.push(currentSegment);
+    usedSegments.add(currentSegment);
+
+    // Process each segment in the path
+    while (sortedPath.length < path.length) {
+      const endPoint = currentSegment[1];
+      if (!endPoint) break; // Exit loop if endPoint is undefined
+      const endPointKey = `${endPoint.X},${endPoint.Y}`;
+
+      // Find the next segment whose start point approximately matches the current segment's end point
+      let nextSegment = null;
+      if (startPoints.has(endPointKey)) {
+        nextSegment = startPoints.get(endPointKey);
+      } else {
+        // If no exact match found, find the closest unmatched point
+        nextSegment = findClosestUnmatchedPoint(endPoint, startPoints, usedSegments);
+      }
+
+      // If next segment is found, add it to the sorted path
+      if (nextSegment) {
+        sortedPath.push(nextSegment);
+        usedSegments.add(nextSegment);
+        currentSegment = nextSegment;
+      } else {
+        // If no next segment is found, break the loop
         break;
       }
     }
 
-    // If next segment is found, add it to the sorted path and remove it from the original array
-    if (nextSegment) {
-      sortedPath.push(nextSegment);
-      clipperPath.splice(clipperPath.indexOf(nextSegment), 1);
-      currentSegment = nextSegment;
-    } else {
-      // If no next segment is found, break the loop
-      break;
-    }
-  }
+    sortedPaths.push(sortedPath);
+  });
 
-  // Flatten the sorted path into a single array
-  const flattenedPath = sortedPath.reduce((acc, segment) => {
-    acc.push(segment[0], segment[1]);
-    return acc;
-  }, []);
+  // Flatten the sorted paths into single arrays
+  const flattenedPaths = sortedPaths.map(path => {
+    return path.reduce((acc, segment) => {
+      acc.push(segment[0], segment[1]);
+      return acc;
+    }, []);
+  });
 
-  return flattenedPath;
+  return flattenedPaths;
 }
 
 
