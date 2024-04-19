@@ -171,7 +171,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, spindleRpm, la
     $('#gcodesavebtn2').addClass('primary');
   } else {
     console.log(toolpathGrp)
-    if (toolpathsInScene[index].userData.camOperation.indexOf('CNC') == 0 || toolpathGrp.userData.camOperation.indexOf('Drill') == 0) {
+    if (toolpathsInScene[index].userData.camOperation.indexOf('CNC') == 0 || toolpathsInScene[index].userData.camOperation.indexOf('Drill') == 0) {
       g += `M3 S` + spindleRpm + `; Start Spindle\n`
       g += `G4 P8; Wait 8 seconds for spindle to spin up to speed\n`
     }
