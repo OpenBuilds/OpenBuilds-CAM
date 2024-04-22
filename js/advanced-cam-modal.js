@@ -703,7 +703,13 @@ function setupJob(i) {
     $('#tspotsize' + i).val(lastused.camSpotSize);
     $('#tfillAngle' + i).val(lastused.camFillAngle);
     $('#tpwr' + i).val(lastused.camLaserPower);
-    $('#trpm' + i).val(lastused.camSpindleRpm);
+    if (lastused.camSpindleRpm > 0) {
+      $('#trpm' + i).val(lastused.camSpindleRpm);
+    } else if ($("#scommandscale").val() > 0) {
+      $('#trpm' + i).val($("#scommandscale").val());
+    } else {
+      $('#trpm' + i).val(1000);
+    }
     $('#tzstep' + i).val(lastused.camZStep);
     $('#tzdepth' + i).val(lastused.camZDepth);
     $('#tspeed' + i).val(lastused.camFeedrate);
