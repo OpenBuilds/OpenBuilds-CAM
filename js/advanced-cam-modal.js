@@ -419,7 +419,7 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
-      <tr class="inputcnc inputpocket inputdrill">
+      <tr class="inputcnc inputplasma inputpocket inputdrill">
         <td>Feedrate: Plunge</td>
         <td>
           <div class="input-addon">
