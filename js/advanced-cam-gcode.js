@@ -336,7 +336,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, spindleRpm, la
 
             if (!rampplunge) {
               // console.log("Direct Plunge")
-              g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
+              g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "; Direct Plunge\n "; // Plunge!!!!
             } else {
               // console.log("Ramp Plunge")
               // console.log(xpos, xpos2, ypos, ypos2)
@@ -360,9 +360,9 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, spindleRpm, la
                 }
                 // console.log(zdelta)
                 if (lastxyz.z) {
-                  g += "\n" + g0 + " Z" + lastxyz.z + "\n"; // G0 to Z0 then Plunge!
+                  g += "\n" + g0 + " Z" + lastxyz.z + "; Position for Plunge\n "; // G0 to Z0 then Plunge!
                 } else {
-                  g += "\n" + g0 + " Z" + 0 + "\n"; // G0 to Z0 then Plunge!
+                  g += "\n" + g0 + " Z" + 0 + "; Position for Plunge\n"; // G0 to Z0 then Plunge!
                 }
                 g += g1 + " F" + plungeSpeed;
                 g += " X" + npt[0].toFixed(4) + " Y" + npt[1].toFixed(4) + " Z" + (zpos - (zdelta / 2)).toFixed(4) + "\n"; // Move to XY position
@@ -411,7 +411,16 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, spindleRpm, la
               g += " X" + xpos.toFixed(4);
               g += " Y" + ypos.toFixed(4);
               g += " Z" + zpos.toFixed(4);
-              g += " " + s + laserPwr + "\n";
+
+              if (localStorage.getItem("hasSpindle") == 'true') {
+                if (toolpathsInScene[index].userData.camOperation.indexOf('CNC') == 0 || toolpathsInScene[index].userData.camOperation.indexOf('Drill') == 0) {
+                  g += " " + s + spindleRpm + "\n";
+                }
+              } else {
+                g += " " + s + laserPwr + "\n";
+              }
+
+
             }
             // end move
           }
