@@ -48,61 +48,67 @@ function makeGcodeExec() {
         // console.log(toolpathsInScene[j].userData.visible)
         if (toolpathsInScene[j].userData.visible) {
 
-          // todo: Settings params
-          var rapidSpeed = 1000;
-          var toolon = "";
-          var tooloff = "";
-          // toolpath settings is applied to the parent Toolpath.  Each child in the "toolpath" is processed with the same settings
-          if (toolpathsInScene[j].userData.camOperation.indexOf('Drill') == 0) {
-            // for Drilling, feed at Plunge Rate for the entire drill feed
-            var Feedrate = toolpathsInScene[j].userData.camPlungerate;
+          if (toolpathsInScene[j].userData.camOperation == undefined) {
+            console.log(`Toolpath Error: Toolpath-` + j + ` has not been configured! Please configure the toolpath before creating GCODE`)
           } else {
-            var Feedrate = toolpathsInScene[j].userData.camFeedrate;
-          }
-          var Plungerate = toolpathsInScene[j].userData.camPlungerate;
-          var LaserPower = toolpathsInScene[j].userData.camLaserPower;
-          var SpindleRPM = toolpathsInScene[j].userData.camSpindleRpm;
-          var ZClearance = toolpathsInScene[j].userData.camZClearance;
-          var PlasmaIHS = toolpathsInScene[j].userData.camPlasmaIHS;
-          var rampplunge = toolpathsInScene[j].userData.tRampPlunge == "Yes" ? true : false;
-          var Passes = toolpathsInScene[j].userData.camPasses;
-
-          if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
-            toolon = "M3S" + toolpathsInScene[j].userData.camPenDown + "\nG4 P0.5";
-            tooloff = "M3S" + toolpathsInScene[j].userData.camPenUp + "\nG4 P0.5";
-            ZClearance = 0;
-          }
-
-          if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') == 0) {
-            toolon = "M3S" + $("#scommandscale").val();
-            tooloff = "M5";
-          }
-
-          if (parseInt(Passes) && toolpathsInScene[j].userData.camOperation.indexOf('Laser') == 0) {
-            var g = ""
-            var gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, SpindleRPM, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
-            for (k = 0; k < Passes; k++) {
-              g += '; Pass ' + k + "\n"
-              g += gcode
+            // todo: Settings params
+            var rapidSpeed = 1000;
+            var toolon = "";
+            var tooloff = "";
+            // toolpath settings is applied to the parent Toolpath.  Each child in the "toolpath" is processed with the same settings
+            if (toolpathsInScene[j].userData.camOperation.indexOf('Drill') == 0) {
+              // for Drilling, feed at Plunge Rate for the entire drill feed
+              var Feedrate = toolpathsInScene[j].userData.camPlungerate;
+            } else {
+              var Feedrate = toolpathsInScene[j].userData.camFeedrate;
             }
-            toolpathsInScene[j].userData.gcode = g;
-          } else {
-            toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, SpindleRPM, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
+            var Plungerate = toolpathsInScene[j].userData.camPlungerate;
+            var LaserPower = toolpathsInScene[j].userData.camLaserPower;
+            var SpindleRPM = toolpathsInScene[j].userData.camSpindleRpm;
+            var ZClearance = toolpathsInScene[j].userData.camZClearance;
+            var PlasmaIHS = toolpathsInScene[j].userData.camPlasmaIHS;
+            var rampplunge = toolpathsInScene[j].userData.tRampPlunge == "Yes" ? true : false;
+            var Passes = toolpathsInScene[j].userData.camPasses;
+
+            if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
+              toolon = "M3S" + toolpathsInScene[j].userData.camPenDown + "\nG4 P0.5";
+              tooloff = "M3S" + toolpathsInScene[j].userData.camPenUp + "\nG4 P0.5";
+              ZClearance = 0;
+            }
+
+            if (toolpathsInScene[j].userData.camOperation.indexOf('Plasma') == 0) {
+              toolon = "M3S" + $("#scommandscale").val();
+              tooloff = "M5";
+            }
+
+            if (parseInt(Passes) && toolpathsInScene[j].userData.camOperation.indexOf('Laser') == 0) {
+              var g = ""
+              var gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, SpindleRPM, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
+              for (k = 0; k < Passes; k++) {
+                g += '; Pass ' + k + "\n"
+                g += gcode
+              }
+              toolpathsInScene[j].userData.gcode = g;
+            } else {
+              toolpathsInScene[j].userData.gcode = generateGcode(j, toolpathsInScene[j].userData.inflated, Feedrate, Plungerate, SpindleRPM, LaserPower, rapidSpeed, toolon, tooloff, ZClearance, false, PlasmaIHS, rampplunge);
+            }
+
+
+
+            $("#savetpgcode").removeClass("disabled");
+            $("#exportGcodeMenu").removeClass("disabled");
+
+            //   var template = `
+            // <form class="form-horizontal">
+            // 	<label for="gcode` + i + `" class="control-label">` + toolpathsInScene[j].name + `</label>
+            // 	<textarea id="gcode` + i + `" spellcheck="false" style="width: 100%; height: 80px;" placeholder="processing..." disabled></textarea>
+            // </form>`
+            //   $('#gcodejobs').append(template);
+            $('#gcode' + i).val(toolpathsInScene[j].userData.gcode);
           }
-
-
-
-          $("#savetpgcode").removeClass("disabled");
-          $("#exportGcodeMenu").removeClass("disabled");
-
-          //   var template = `
-          // <form class="form-horizontal">
-          // 	<label for="gcode` + i + `" class="control-label">` + toolpathsInScene[j].name + `</label>
-          // 	<textarea id="gcode` + i + `" spellcheck="false" style="width: 100%; height: 80px;" placeholder="processing..." disabled></textarea>
-          // </form>`
-          //   $('#gcodejobs').append(template);
-          $('#gcode' + i).val(toolpathsInScene[j].userData.gcode);
         }
+
+
       }
 
       var startgcode = document.getElementById('startgcode').value;
@@ -162,7 +168,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, spindleRpm, la
   var IHScommand = document.getElementById('ihsgcode').value; // or "G0 " + clearanceHeight + "\nG38.2 Z-30 F100\nG10 P2 L1 Z0" // Plasma IHS
 
   if (!toolpathGrp) {
-    var message = `Toolpath Error: One or more of your toolpaths is not configured.  You need to configure the toolpaths, before generating GCODE`
+    var message = `Toolpath Error: One or more of your toolpaths is not configured.  You need to configure the toolpaths (toolpath-` + index + `), before generating GCODE`
     Metro.toast.create(message, null, 4000, 'bg-red');
     $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
     $("#generatetpgcode").prop('disabled', false);

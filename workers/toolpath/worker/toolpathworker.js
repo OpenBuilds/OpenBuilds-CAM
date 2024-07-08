@@ -341,7 +341,7 @@ if (typeof window == "undefined") { // Only run as worker
 
 
   function workerGetInflatePath(paths, delta, joinType) {
-    console.log(JSON.stringify(paths));
+    //console.log(JSON.stringify(paths));
     var scale = 10000;
     ClipperLib.JS.Clean(paths, 2);
     ClipperLib.JS.ScaleUpPaths(paths, scale);
@@ -567,11 +567,11 @@ if (typeof window == "undefined") { // Only run as worker
 
         if (config.leadInPaths.length == config.paths.length) {
           var pointIndex = 0
-          console.log(config.leadInPaths[i][0])
+          //console.log(config.leadInPaths[i][0])
           config.leadInPaths[i].sort(function(a, b) {
             return distanceFormula(a.X, config.paths[i][0].X, a.Y, config.paths[i][0].Y) - distanceFormula(b.X, config.paths[i][0].X, b.Y, config.paths[i][0].Y)
           })
-          console.log(config.leadInPaths[i][0])
+          //console.log(config.leadInPaths[i][0])
 
 
           lineUnionGeo.vertices.push(new THREE.Vector3(config.leadInPaths[i][pointIndex].X, config.leadInPaths[i][pointIndex].Y, config.z));
@@ -759,7 +759,7 @@ if (typeof window == "undefined") { // Only run as worker
       if (config.name) {
         lineUnion.name = config.name;
       }
-      console.log(lineUnionGeo)
+      //console.log(lineUnionGeo)
       group.add(lineUnion);
       clipperPaths.push(clipperArr);
       clipperTabsPaths.push(clipperTabsArr);

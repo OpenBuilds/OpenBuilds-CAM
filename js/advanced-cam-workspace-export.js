@@ -198,7 +198,7 @@ function initExportworkspace() {
 }
 
 function readWorkspace(evt) {
-  console.log(evt)
+  //console.log(evt)
   var files = evt.target.files || evt.dataTransfer.files;
   for (var i = 0; i < files.length; i++) {
     loadWorkspace(files[i]);
@@ -214,7 +214,7 @@ function loadWorkspace(f) {
       r.readAsText(f);
       r.onload = function(event) {
         parseLoadWorkspace(this.result)
-        console.log(this.result)
+        //console.log(this.result)
       };
       $('.workspaceTitle').html(' - ' + f.name)
     } else {
