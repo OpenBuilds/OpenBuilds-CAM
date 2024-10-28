@@ -31,38 +31,78 @@
 		<link type="text/css" rel="stylesheet" media="all" href="css/splash.css" />
 
 		<link rel="manifest" href="/manifest.json">
+
+		<style>
+			/* Navbar container */
+			.navbar {
+				background-color: #000;
+				height: 48px;
+				display: flex;
+				align-items: center;
+				padding: 0 20px;
+				margin: 0px;
+			}
+
+			/* Navbar links styled as tabs */
+			.navbar a {
+				color: #fff;
+				font-family: "Open Sans", Helvetica, Arial, sans-serif;
+				font-size: 13px;
+				text-decoration: none;
+				padding: 0 15px;
+				height: 48px;
+				line-height: 48px;
+				display: inline-block;
+			}
+
+			/* Hover effect */
+			.navbar a:hover {
+				background-color: #ff0000;
+			}
+
+			/* Hover effect */
+			.navbar a.active {
+				background-color: #ff0000;
+			}
+
+			.bg-obred {
+				background-color: #ff0000;
+			}
+
+			.bd-obred {
+				border-color: #ff0000;
+			}
+
+			.fg-obred {
+				color: #ff0000;
+			}
+
+			.ob-button {
+				display: inline-block;
+				font-weight: 400;
+				text-align: center;
+				white-space: nowrap;
+				vertical-align: middle;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				border: 1px solid transparent;
+				padding: 0 0.75rem;
+				font-size: 0.875rem;
+				line-height: 34px;
+				height: 36px;
+				-webkit-transition: all 0.15s ease-in-out;
+				transition: all 0.15s ease-in-out;
+
+				cursor: pointer;
+				outline: none;
+				position: relative;
+			}
+		</style>
 	</head>
 
 	<body>
-
-		<div id="splash">
-			<center>
-				<div id="openbuildslogosplash" style="display: none;">
-					<h1 style="position: fixed; top: 100px; left: 50%; transform: translateX(-50%); ">OpenBuilds<sup>&reg;</sup>&nbsp;CAM</h1>
-					<div id="loading-icon">
-
-						<div id="load-ring">
-						</div>
-
-						<div id="load-ring-second">
-						</div>
-
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 98">
-							<g inkscape:groupmode="layer" id="layer2" inkscape:label="Layer 2">
-								<circle style="opacity:1;mix-blend-mode:normal;fill:#ffffff;fill-opacity:0.995984;stroke:none;stroke-width:0.319262;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0;paint-order:markers fill stroke"
-									id="path831" cx="48.947918" cy="48.947918" r="48.947918" />
-							</g>
-							<g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1">
-								<path style="fill:#000001;fill-opacity:1;stroke:#000000;stroke-width:0.229295;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.911647"
-									d="M 41.724417,97.153288 C 7.8893711,91.663168 -10.237781,54.730442 6.3414223,25.063074 26.776851,-11.504743 81.11003,-6.9263244 94.989281,32.533036 107.17501,67.177604 77.660443,102.9843 41.724417,97.153288 Z M 55.162218,96.560784 C 95.32486,90.947675 111.21754,42.386841 82.127307,14.167626 55.380558,-11.778279 10.298455,1.9142827 2.0101952,38.501195 -5.2419835,70.514495 22.74975,101.09073 55.162218,96.560784 Z M 42.182578,93.476472 C 9.1990746,88.070933 -6.9110156,50.983155 11.721752,23.351259 32.448727,-7.386274 80.17692,-0.74575393 91.738625,34.484165 102.2852,66.620893 75.182263,98.88467 42.182578,93.476472 Z M 54.570245,92.896884 C 93.037603,87.506128 107.01684,40.083184 77.571669,14.867181 52.771124,-6.3713026 13.410171,6.5282892 5.8636505,38.367737 -1.3026826,68.603134 24.198734,97.153079 54.570245,92.896884 Z M 22.50714,76.745813 c -2.582254,-2.591301 -3.580353,-3.737705 -3.447408,-3.959646 0.102919,-0.171814 1.253755,-1.734022 2.557416,-3.471574 2.959106,-3.943998 2.831963,-3.351577 1.353331,-6.30587 -0.692345,-1.383306 -1.487151,-3.38747 -1.766228,-4.453697 -0.507417,-1.9386 -0.507417,-1.9386 -5.112847,-2.617838 -4.605429,-0.679246 -4.605429,-0.679246 -4.667005,-5.905418 -0.07272,-6.173513 -0.691801,-5.377613 4.757698,-6.116861 4.539836,-0.615844 4.581587,-0.62648 4.581587,-1.167306 0,-0.724698 2.103504,-6.013126 2.891228,-7.26883 0.744033,-1.186071 0.744033,-1.186071 -1.875373,-4.687366 -1.440674,-1.925718 -2.619416,-3.717415 -2.619416,-3.981556 0,-0.59059 6.574282,-7.246076 7.157667,-7.246076 0.21686,0 1.991928,1.18683 3.9446,2.6374 3.550318,2.637401 3.550318,2.637401 4.623465,1.95545 1.187355,-0.754526 6.735496,-2.986039 7.424101,-2.986039 0.520725,0 0.523557,-0.01117 1.134836,-4.476117 0.259259,-1.893743 0.52804,-3.729112 0.597288,-4.078599 0.125906,-0.63543 0.125906,-0.63543 5.432877,-0.573861 5.898639,0.06842 5.237039,-0.673108 6.328134,7.092769 0.278368,1.981218 0.278368,1.981218 2.263012,2.502502 1.091554,0.286707 3.147561,1.109758 4.568893,1.829007 2.584255,1.307721 2.584255,1.307721 6.052337,-1.297396 1.907452,-1.432813 3.632184,-2.605116 3.832737,-2.605116 0.609089,0 7.437248,7.005672 7.265439,7.45432 -0.08044,0.210054 -1.284882,1.91745 -2.676528,3.794212 -2.530262,3.412282 -2.530262,3.412282 -1.182107,6.124452 0.741475,1.491682 1.541984,3.473845 1.778882,4.404799 0.519566,2.041688 0.291772,1.92349 4.909286,2.547246 1.952889,0.263802 3.834207,0.536384 4.180687,0.60572 0.629976,0.126076 0.629976,0.126076 0.629976,5.373814 0,2.886256 -0.08218,5.298613 -0.182559,5.360791 -0.100404,0.0622 -2.16211,0.395457 -4.58158,0.740611 -3.219365,0.459265 -4.399028,0.710261 -4.399028,0.935994 0,0.608912 -2.332174,6.408243 -2.991702,7.439316 -0.861763,1.347275 -1.064718,0.842053 1.960849,4.881042 1.448926,1.934239 2.634407,3.664094 2.634407,3.844116 0,0.406131 -6.881496,7.322863 -7.28556,7.322863 -0.161312,0 -1.909062,-1.202796 -3.883907,-2.67287 -3.590622,-2.672868 -3.590622,-2.672868 -4.285617,-2.258903 -1.837138,1.094257 -2.35653,1.329923 -2.667528,1.210342 -0.312455,-0.120143 -8.231627,-16.77286 -8.218372,-17.281897 0.0035,-0.126249 0.530958,-0.539429 1.172603,-0.918176 8.021633,-4.734996 5.224846,-17.444302 -4.057459,-18.43813 -10.613507,-1.13636 -15.509433,13.098568 -6.354186,18.474803 1.334743,0.783797 1.469237,0.328271 -2.804465,9.498405 -4.53297,9.726451 -3.958097,8.96937 -6.020406,7.928701 -0.895717,-0.451993 -1.665128,-0.821805 -1.709813,-0.821805 -0.04468,0 -1.662643,1.187898 -3.595462,2.639765 -1.932808,1.451867 -3.626716,2.639765 -3.764234,2.639765 -0.137506,0 -1.885554,-1.641275 -3.884546,-3.647258 z"
-									id="path24" sodipodi:nodetypes="csscssssscsscsscsscssscsssssssssssssssssssscsssssscsssscsccssssssss" />
-							</g>
-						</svg>
-					</div>
-
-				</div>
-			</center>
-		</div>
 
 		<!-- container1 Drog Container wraps all other content -->
 		<div id="container1">
@@ -73,9 +113,14 @@
 			<div data-role="splitter" data-split-sizes="80,20" data-min-sizes="480,400" class="h-100">
 				<div id="col1" style="overflow: hidden;">
 					<div class="window drop-shadow" style="height: calc(100% - 10px); overflow: hidden;">
-						<div class="window-caption bg-openbuilds">
-							<span class="icon" style="top: -2px;"><img src="icon-transparent.png" /></span>
-							<span class="title">OpenBuilds CAM <span class="workspaceTitle"></span></span>
+						<div class="window-caption bg-black" style="height: 90px; padding: 10px;">
+							<img src="images/OpenBuildsCAM.svg" height="70" alt="OpenBuilds CAM" />
+							<div class="navbar">
+								<a href="https://us.openbuilds.com" target="_blank">Part Store</a>
+								<a href="https://docs.openbuilds.com" target="_blank">Documentation</a>
+								<a href="https://builds.openbuilds.com" target="_blank">Community</a>
+								<a href="https://support.openbuilds.com" target="_blank">Support</a>
+							</div>
 						</div>
 						<div class="window-content pt-2" style="overflow:hidden; ">
 							<nav data-role="ribbonmenu">
@@ -214,6 +259,18 @@
 											</div>
 											<span class="title">Undo/Redo</span>
 										</div>
+										<div class="group">
+
+											<div id="ddThemeButton">
+												<button id="btnTheme" class="ribbon-button" onclick="Theme.toggle();">
+													<span class="icon" id="currentThemeIcon">
+														<i class="fas fa-paint-brush"></i>
+													</span>
+													<span class="caption" id="currentThemeName">Dark<br>Mode</span>
+												</button>
+											</div>
+											<span class="title">Theme</span>
+										</div>
 
 
 
@@ -285,7 +342,6 @@
 														<i class="fas fa-paint-brush"></i>
 													</span>
 													<span class="caption" id="currentThemeName">Dark<br>Mode</span>
-													<span class="h6 badge bg-green fg-white"> <i class="fas fa-brush  fa-spin"></i> New!</span>
 												</button>
 											</div>
 											<span class="title">Theme</span>
@@ -369,7 +425,7 @@
 
 					<div data-role="splitter" data-split-mode="vertical" data-split-sizes="25,55,10,10" data-min-sizes="200,200,100,110" class="h-100">
 						<div id="renderDocuments" class="window drop-shadow">
-							<div class="window-caption bg-openbuilds">
+							<div class="window-caption bg-black">
 								<i class="far fa-file-alt fa-fw ml-1 mr-1"></i>
 								<span class="title">1. Documents <span class="workspaceTitle"></span></span>
 							</div>
@@ -393,7 +449,7 @@
 										<p class="text-secondary text-center mt-3">Please load some vectors from DXF (Polylines) or SVG (Paths); or Images (Traceable); or insert a Shape, Icon or some Text using the built-in tools to get started
 										</p>
 										<p class="text-center">
-											<button class="button success drop-shadow" style="width: 300px;" title="Open Drawing" onclick="$('#file').click();"><span class="far fa-folder-open fa-fw icon"></span>Open Drawing</button>
+											<button class="ob-button bg-obred fg-white drop-shadow" style="width: 300px;" title="Open Drawing" onclick="$('#file').click();"><span class="far fa-folder-open fa-fw icon"></span>Open Drawing</button>
 										</p>
 
 
@@ -406,7 +462,7 @@
 
 						</div>
 						<div class="window drop-shadow mt-2">
-							<div class="window-caption bg-openbuilds">
+							<div class="window-caption bg-black">
 								<i class="fas fa-tasks fa-fw ml-1 mr-1"></i>
 								<span class="title">2. Configure Toolpaths</span>
 								<div class="buttons">
@@ -438,7 +494,7 @@
 						</div>
 
 						<div class="window drop-shadow mt-2">
-							<div class="window-caption bg-openbuilds">
+							<div class="window-caption bg-black">
 								<i class="fa fa-cubes fa-fw ml-1 mr-1"></i>
 								<span class="title">3. Create G-code</span>
 								<div class="buttons">
@@ -450,7 +506,7 @@
 						</div>
 
 						<div class="window drop-shadow mt-2">
-							<div class="window-caption bg-openbuilds">
+							<div class="window-caption bg-black">
 								<i class="fa fa-save fa-fw ml-1 mr-1"></i>
 								<span class="title">4. Export G-code</span>
 								<div class="buttons">
@@ -528,95 +584,6 @@
 					<button class="button js-dialog-close primary">Close</button>
 				</div>
 			</div>
-
-
-			<!-- <div class="dialog" data-overlay-click-close="true" data-role="dialog" id="gearGenModal" data-width="600" data-to-top="true">
-			<div class="dialog-title">Gear Generator</div>
-			<div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
-				<div id="viewer" style="display: none;"></div>
-				<form data-role="validator" id="gearGen">
-					<div class="row border-bottom bd-gray">
-						<label class="cell-sm-2">Gear Type:</label>
-						<div class="cell-sm-10">
-							<input name="geartype" type="radio" data-role="radio" data-caption="Gearset: External" value="external" checked onchange="gearType($(this).val())">
-							<input name="geartype" type="radio" data-role="radio" data-caption="Gearset: Rack and Pinion" value="rack" onchange="gearType($(this).val())">
-							<input name="geartype" type="radio" data-role="radio" data-caption="Gearset: Internal" value="internal" onchange="gearType($(this).val())">
-							<input name="geartype" type="radio" data-role="radio" data-caption="Single Gear" value="single" onchange="gearType($(this).val())">
-						</div>
-					</div>
-
-
-					<div class="row">
-						<label class="cell-sm-4"></label>
-						<div class="cell-sm-4 ">
-							<center><small id="gear1title">Gear 1</small></center>
-						</div>
-						<div class="cell-sm-4">
-							<center><small id="gear2title">Gear 2</small></center>
-						</div>
-					</div>
-					<div class="row">
-						<label class="cell-sm-4">toothCount<br><small>(Number of teeth per gear)</small></label>
-						<div class="cell-sm-4 pt-2">
-							<input id="toothCount1" data-role="input" type="number" value="45" data-append="x" data-clear-button="false" step="any">
-						</div>
-						<div class="cell-sm-4 pt-2">
-							<input id="toothCount2" data-role="input" type="number" value="50" data-append="x" data-clear-button="false" step="any">
-						</div>
-					</div>
-					<div class="row border-bottom bd-gray">
-						<label class="cell-sm-4">centerHoleDiameter<br><small>(0 for no hole)</small></label>
-						<div class="cell-sm-4 pt-2">
-							<input id="centerHoleDiameter1" data-role="input" type="number" value="20" data-append="mm" data-clear-button="false" min="0" max="200"  step="any">
-						</div>
-						<div class="cell-sm-4 pt-2">
-							<input id="centerHoleDiameter2" data-role="input" type="number" value="20" data-append="mm" data-clear-button="false" min="0" max="200"  step="any">
-						</div>
-					</div>
-					<div class="row border-bottom bd-gray">
-						<label class="cell-sm-8">circularPitch<br><small>(the circumference of the pitch circle divided by the number of teeth)</small></label>
-						<div class="cell-sm-4 pt-2">
-							<input id="circularPitch" data-role="input" type="number" value="8" data-clear-button="false" step="any">
-						</div>
-					</div>
-					<div class="row border-bottom bd-gray">
-						<label class="cell-sm-8">pressureAngle<br><small>(common values are 14.5, 20 and 25 degrees)</small></label>
-						<div class="cell-sm-4 pt-2">
-							<input id="pressureAngle" data-role="input" type="number" value="20" data-append="deg" data-clear-button="false" step="any">
-						</div>
-					</div>
-					<div>
-						<input type="checkbox" data-role="switch" data-caption="Advanced Settings" id="advancedGear">
-					</div>
-					<div data-role="collapse" data-collapsed="true" data-toggle-element="#advancedGear">
-						<div class="row border-bottom bd-gray">
-							<label class="cell-sm-8">profileShift<br><small>(indicates what portion of gear one's addendum height should be shifted to gear two. E.g., a value of 0.1 means the adddendum of gear two is increased by a factor of 1.1 while the height of the addendum of gear one is reduced to 0.9 of its normal height.)</small></label>
-							<div class="cell-sm-4 pt-2">
-								<input id="profileShift" data-role="input" type="number" value="0" data-clear-button="false" step="any">
-							</div>
-						</div>
-						<div class="row border-bottom bd-gray">
-							<label class="cell-sm-8">resolution<br><small>Number of segments per 360 degree of rotation (only used for circles and arcs); 90 is plenty</small></label>
-							<div class="cell-sm-4 pt-2">
-								<input id="resolution" data-role="input" type="number" value="30" data-clear-button="false" step="any">
-							</div>
-						</div>
-						<div class="row border-bottom bd-gray">
-							<label class="cell-sm-8">stepsPerToothAngle<br><small>Rotation steps per tooth angle when assembling the tooth profile (3 = draft, 10 = good quality). Increasing the value will result in smoother profiles at the cost of significantly higher calcucation time. Increase in small increments and check the result by zooming in.</small></label>
-							<div class="cell-sm-4 pt-2">
-								<input id="stepsPerToothAngle" data-role="input" type="number" value="3" data-clear-button="false" step="any">
-							</div>
-						</div>
-					</div>
-				</form>
-				<br>
-			</div>
-			<div class="dialog-actions">
-				<button class="button js-dialog-close">Close</button>
-				<button class="button success js-dialog-close" onclick="createGear();">Create Gears</button>
-			</div>
-		</div>
-	</div> -->
 
 	</body>
 

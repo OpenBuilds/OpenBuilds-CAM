@@ -25,12 +25,6 @@ $(document).ready(function() {
   initExportworkspace();
 
 
-  $('#openbuildslogosplash').fadeIn(100);
-  setTimeout(function() {
-    $('#splash').fadeOut(500);
-  }, 1400)
-
-
   //File -> Open
   var fileOpen = document.getElementById('file');
   fileOpen.addEventListener('change', readFile, false);
