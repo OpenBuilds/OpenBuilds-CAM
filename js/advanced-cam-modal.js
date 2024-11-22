@@ -178,6 +178,20 @@ function initAdvancedCAM() {
     } else if (id.indexOf('tpenup') == 0) {
       // $('#svgUnion').text(newval);
       updateCamUserData(objectseq);
+    } else if (id.indexOf('tpendownz') == 0) {
+      // $('#svgUnion').text(newval);
+      updateCamUserData(objectseq);
+    } else if (id.indexOf('tpenupz') == 0) {
+      // $('#svgUnion').text(newval);
+      updateCamUserData(objectseq);
+    } else if (id.indexOf('tplottertype') == 0) {
+      console.log('Value for ' + id + ' changed to ' + newval + ' for object ' + objectseq);
+      updateCamUserData(objectseq);
+      if (newval == "Z-Axis") {
+        plotterModeZ(i)
+      } else {
+        plotterModeServo(i)
+      }
     }
 
   });
@@ -222,8 +236,11 @@ function updateCamUserData(i) {
   toolpathsInScene[i].userData.camTabWidth = $('#tabWidth' + i).val();
   toolpathsInScene[i].userData.camTabSpace = $('#tabSpace' + i).val();
   toolpathsInScene[i].userData.tRampPlunge = $('#tRampPlunge' + i).val();
+  toolpathsInScene[i].userData.plotterType = $('#tplottertype' + i).val();
   toolpathsInScene[i].userData.camPenUp = $('#tpenup' + i).val();
   toolpathsInScene[i].userData.camPenDown = $('#tpendown' + i).val();
+  toolpathsInScene[i].userData.camPenUpZ = $('#tpenupz' + i).val();
+  toolpathsInScene[i].userData.camPenDownZ = $('#tpendownz' + i).val();
   toolpathsInScene[i].userData.advanced = $('#advanced' + i).is(":checked");; // Marlin, Stepcraft, Mach3, LinuxCNC
   toolpathsInScene[i].name = $('#tOpName' + i).val();
   $('#statusTitle').html('Configure Toolpath: ' + toolpathsInScene[i].userData.camOperation);
@@ -491,8 +508,22 @@ function setupJob(i) {
           </div>
         </td>
       </tr>
+
       <tr class="inputplotter inputpenraster">
-        <td>Plotter: Pen Up</td>
+        <td>Plotter: Type</td>
+        <td>
+          <div class="input-addon">
+            <span class="input-addon-label-left active-border"><i class="far fa-edit fa-fw"></i></span>
+            <select class="cam-form-field cam-form-field-right active-border" id="tplottertype` + i + `" objectseq="` + i + `" style="width: 280px; border-left: solid 1px #ccc; padding: 0px; padding-left: 10px;">
+              <option selected>Z-Axis</option>
+              <option>RC Servo</option>
+            </select>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="inputplotter inputpenraster inputpenservo">
+        <td>Pen Up S-Value</td>
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="far fa-edit fa-fw"></i></span>
@@ -502,13 +533,35 @@ function setupJob(i) {
         </td>
       </tr>
 
-      <tr class="inputplotter inputpenraster">
-        <td>Plotter: Pen Down</td>
+      <tr class="inputplotter inputpenraster inputpenservo">
+        <td>Pen Down S-Value</td>
         <td>
           <div class="input-addon">
             <span class="input-addon-label-left active-border"><i class="fas fa-edit fa-fw"></i></span>
             <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0" id="tpendown` + i + `" objectseq="` + i + `" min="0" step="any">
             <span class="input-addon-label-right active-border">M3Sxxx</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="inputplotter inputpenraster inputpenz">
+        <td>Pen Up Z-position</td>
+        <td>
+          <div class="input-addon">
+            <span class="input-addon-label-left active-border"><i class="far fa-edit fa-fw"></i></span>
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="5" id="tpenupz` + i + `" objectseq="` + i + `" min="0" step="any">
+            <span class="input-addon-label-right active-border">mm</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="inputplotter inputpenraster inputpenz">
+        <td>Pen Down Z-position</td>
+        <td>
+          <div class="input-addon">
+            <span class="input-addon-label-left active-border"><i class="fas fa-edit fa-fw"></i></span>
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="0" id="tpendownz` + i + `" objectseq="` + i + `" min="0" step="any">
+            <span class="input-addon-label-right active-border">mm</span>
           </div>
         </td>
       </tr>
@@ -668,8 +721,11 @@ function setupJob(i) {
     $('#tabdepth' + i).val(toolpathsInScene[i].userData.camTabDepth);
     $('#tabWidth' + i).val(toolpathsInScene[i].userData.camTabWidth);
     $('#tabSpace' + i).val(toolpathsInScene[i].userData.camTabSpace);
+    $('#tplottertype' + i).val(toolpathsInScene[i].userData.plotterType).prop('selected', true);
     $('#tpenup' + i).val(toolpathsInScene[i].userData.camPenUp);
     $('#tpendown' + i).val(toolpathsInScene[i].userData.camPenDown);
+    $('#tpenupz' + i).val(toolpathsInScene[i].userData.camPenUpZ);
+    $('#tpendownz' + i).val(toolpathsInScene[i].userData.camPenDownZ);
     if (toolpathsInScene[i].userData.tRampPlunge) {
       $('#tRampPlunge' + i).val(toolpathsInScene[i].userData.tRampPlunge).prop('selected', true);
     } else {
@@ -730,8 +786,11 @@ function setupJob(i) {
     //$('#tabWidth' + i).val(lastused.camTabWidth);
     //$('#tabSpace' + i).val(lastused.camTabSpace);
     //$('#tRampPlunge' + i).val(lastused.tRampPlunge);
+    $('#tplottertype' + i).val(lastused.plotterType).prop('selected', true);
     $('#tpenup' + i).val(lastused.camPenUp);
     $('#tpendown' + i).val(lastused.camPenDown);
+    $('#tpenupz' + i).val(lastused.camPenUpZ);
+    $('#tpendownz' + i).val(lastused.camPenDownZ);
   } else {
     if ($("#hasPlasma").is(':checked')) {
       // If user has LEAD1010 Plasma, lets force first time use to use IHS
@@ -932,6 +991,12 @@ function plotterMode(i) {
   $('.inputdragknife').hide();
   $('.inputpenraster').hide();
   $('.inputplotter').show();
+  if ($('#tplottertype' + i).val() == "Z-Axis") {
+    plotterModeZ(i)
+  } else {
+    plotterModeServo(i)
+  }
+
 };
 
 function penRasterMode(i) {
@@ -944,4 +1009,20 @@ function penRasterMode(i) {
   $('.inputplotter').hide();
   $('.inputlaserraster').hide();
   $('.inputpenraster').show();
+  if ($('#tplottertype' + i).val() == "Z-Axis") {
+    plotterModeZ(i)
+  } else {
+    plotterModeServo(i)
+  }
 };
+
+function plotterModeZ(i) {
+  $('.inputpenservo').hide();
+  $('.inputpenz').show();
+}
+
+function plotterModeServo(i) {
+  $('.inputpenservo').show();
+  $('.inputpenz').hide();
+
+}

@@ -71,8 +71,13 @@ function makeGcodeExec() {
             var Passes = toolpathsInScene[j].userData.camPasses;
 
             if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
-              toolon = "M3S" + toolpathsInScene[j].userData.camPenDown + "\nG4 P0.5";
-              tooloff = "M3S" + toolpathsInScene[j].userData.camPenUp + "\nG4 P0.5";
+              if (toolpathsInScene[j].userData.plotterType == "Z-Axis") {
+                toolon = "G0 Z" + toolpathsInScene[j].userData.camPenDownZ + " ; Activate Pen";
+                tooloff = "G0 Z" + toolpathsInScene[j].userData.camPenUpZ + " ; Lift Pen";
+              } else {
+                toolon = "M3S" + toolpathsInScene[j].userData.camPenDown + "\nG4 P0.5";
+                tooloff = "M3S" + toolpathsInScene[j].userData.camPenUp + "\nG4 P0.5";
+              }
               ZClearance = 0;
             }
 
@@ -149,6 +154,12 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, spindleRpm, la
     g += "; Drag Knife Swivel Offset: " + toolpathsInScene[index].userData.camDragOffset + "\n";
   } else if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
     g += "; Pen Diameter: " + toolpathsInScene[index].userData.camToolDia + "\n";
+  }
+
+  if (toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
+    if (toolpathsInScene[j].userData.plotterType == "Z-Axis") {
+      clearanceHeight = toolpathsInScene[j].userData.camPenUpZ;
+    }
   }
 
 
@@ -338,52 +349,53 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, spindleRpm, la
 
 
 
-            // then G1 plunge into material
+            // then G1 plunge into material if not a pen
 
-            if (!rampplunge) {
-              // console.log("Direct Plunge")
-              g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "; Direct Plunge\n "; // Plunge!!!!
-            } else {
-              // console.log("Ramp Plunge")
-              // console.log(xpos, xpos2, ypos, ypos2)
-              var d = distanceFormula(xpos, xpos2, ypos, ypos2)
-              if (d > (toolDia * 5)) {
-                // console.log("Ramp Plunge: Long enough")
-                // We can do ramp in our own little space - easiest
-                var deltaX = xpos2 - xpos;
-                var deltaY = ypos2 - ypos;
-                // get the line angle
-                var ang = Math.atan2(deltaY, deltaX);
-                // convert it to degrees for later math with addDegree
-                ang = ang * 180 / Math.PI;
-
-                var npt = [xpos, ypos]
-                npt = newPointFromDistanceAndAngle(npt, ang, (toolDia * 5));
-                if (lastxyz.z) {
-                  var zdelta = zpos - lastxyz.z;
-                } else {
-                  var zdelta = zpos - 0;
-                }
-                // console.log(zdelta)
-                if (lastxyz.z) {
-                  g += "\n" + g0 + " Z" + lastxyz.z + "; Position for Plunge\n "; // G0 to Z0 then Plunge!
-                } else {
-                  g += "\n" + g0 + " Z" + 0 + "; Position for Plunge\n"; // G0 to Z0 then Plunge!
-                }
-                g += g1 + " F" + plungeSpeed;
-                g += " X" + npt[0].toFixed(4) + " Y" + npt[1].toFixed(4) + " Z" + (zpos - (zdelta / 2)).toFixed(4) + "\n"; // Move to XY position
-                g += g1 + " F" + plungeSpeed;
-                g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + " Z" + zpos.toFixed(4) + "\n"; // Move to XY position
+            if (!toolpathsInScene[j].userData.camOperation.indexOf('Pen') == 0) {
+              if (!rampplunge) {
+                // console.log("Direct Plunge")
+                g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "; Direct Plunge\n "; // Plunge!!!!
               } else {
-                console.error("Ramp Plunge: Too short:" + d)
-                // Too short, either include next segment or something else
-              }
-              // g += g1 + " F" + feedrate
-              // g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + "\n"; // Move to XY position
-              // g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
-            }
+                // console.log("Ramp Plunge")
+                // console.log(xpos, xpos2, ypos, ypos2)
+                var d = distanceFormula(xpos, xpos2, ypos, ypos2)
+                if (d > (toolDia * 5)) {
+                  // console.log("Ramp Plunge: Long enough")
+                  // We can do ramp in our own little space - easiest
+                  var deltaX = xpos2 - xpos;
+                  var deltaY = ypos2 - ypos;
+                  // get the line angle
+                  var ang = Math.atan2(deltaY, deltaX);
+                  // convert it to degrees for later math with addDegree
+                  ang = ang * 180 / Math.PI;
 
-            isAtClearanceHeight = false;
+                  var npt = [xpos, ypos]
+                  npt = newPointFromDistanceAndAngle(npt, ang, (toolDia * 5));
+                  if (lastxyz.z) {
+                    var zdelta = zpos - lastxyz.z;
+                  } else {
+                    var zdelta = zpos - 0;
+                  }
+                  // console.log(zdelta)
+                  if (lastxyz.z) {
+                    g += "\n" + g0 + " Z" + lastxyz.z + "; Position for Plunge\n "; // G0 to Z0 then Plunge!
+                  } else {
+                    g += "\n" + g0 + " Z" + 0 + "; Position for Plunge\n"; // G0 to Z0 then Plunge!
+                  }
+                  g += g1 + " F" + plungeSpeed;
+                  g += " X" + npt[0].toFixed(4) + " Y" + npt[1].toFixed(4) + " Z" + (zpos - (zdelta / 2)).toFixed(4) + "\n"; // Move to XY position
+                  g += g1 + " F" + plungeSpeed;
+                  g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + " Z" + zpos.toFixed(4) + "\n"; // Move to XY position
+                } else {
+                  console.error("Ramp Plunge: Too short:" + d)
+                  // Too short, either include next segment or something else
+                }
+                // g += g1 + " F" + feedrate
+                // g += " X" + xpos.toFixed(4) + " Y" + ypos.toFixed(4) + "\n"; // Move to XY position
+                // g += g1 + " F" + plungeSpeed + " Z" + zpos.toFixed(4) + "\n"; // Plunge!!!!
+              }
+              isAtClearanceHeight = false;
+            }
 
           } else {
             // console.log("Subsequent Point", xpos, ypos, zpos, optimisedVertices[i]);
@@ -405,7 +417,8 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, spindleRpm, la
               g += g1 + feedrate;
               g += " X" + xpos.toFixed(4);
               g += " Y" + ypos.toFixed(4);
-              g += " Z" + zpos.toFixed(4) + "\n";
+              //g += " Z" + zpos.toFixed(4) + "\n"; // Don't use Z from toolpath, use Z from pen up/down toolon/tooloff commands
+              g += "\n";
             } else if (sOnSeperateLine) {
               g += s + laserPwr + "\n";
               g += g1 + feedrate;

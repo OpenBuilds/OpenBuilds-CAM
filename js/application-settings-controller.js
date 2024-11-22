@@ -258,6 +258,17 @@ function selectToolhead() {
     localStorage.setItem("hasLaser", false);
   }
 
+  if ($("#hasPenPlotter").is(':checked')) {
+    // console.log('Add Laser Dynamic')
+    // startcode += "; Plotter does not need specific startup\n"
+    // endcode += "; Plotter does not need specific end\n"
+    //$('#scommandscale').val(1000);
+    localStorage.setItem("hasPenPlotter", true);
+  } else {
+    localStorage.setItem("hasPenPlotter", false);
+  }
+
+
   if ($("#hasDust").is(':checked')) {
     // console.log('Add Misting')
     startcode += "M8; Coolant Output On - turns on Dust Extractor if wired\n"
@@ -461,6 +472,9 @@ function setMachineButton(type) {
   if (localStorage.getItem("hasLaser") == 'true') {
     $("#hasLaser").attr('checked', true)
   }
+  if (localStorage.getItem("hasPenPlotter") == 'true') {
+    $("#hasPenPlotter").attr('checked', true)
+  }
 
   // workaround for Lead Plasma specifically (not quite a modular machine, has its own picture on front page overlay)
   if (type == "leadmachine1010" && localStorage.getItem("hasPlasma") == 'true') {
@@ -474,7 +488,7 @@ $(document).ready(function() {
   var modal = `
   <!-- Settings Modal -->
 
-  <div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="settingsmodal" data-width="730" data-to-top="true">
+  <div class="dialog dark" data-overlay-click-close="true" data-role="dialog" id="settingsmodal" data-width="830" data-to-top="true">
     <div class="dialog-title">Application Settings</div>
     <div class="dialog-content" style="max-height: calc(100vh - 200px);overflow-y: auto; overflow-x: hidden;">
       <form>
@@ -567,6 +581,11 @@ $(document).ready(function() {
                   <input type="checkbox" onchange="selectToolhead()" id="hasLaser" />
                   <label for="hasLaser"><img src="./images/laser.png" /></label>
                   <div class="image-checkbox-text">Laser Diode Module</div>
+                </li>
+                <li>
+                  <input type="checkbox" onchange="selectToolhead()" id="hasPenPlotter" />
+                  <label for="hasPenPlotter"><img src="./images/plotter.png" /></label>
+                  <div class="image-checkbox-text">Pen Lift<br>Mechanism</div>
                 </li>
                 <li>
                   <input type="checkbox" onchange="selectToolhead()" id="hasDust" />
