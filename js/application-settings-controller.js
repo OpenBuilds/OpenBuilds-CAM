@@ -585,7 +585,7 @@ $(document).ready(function() {
                 <li>
                   <input type="checkbox" onchange="selectToolhead()" id="hasPenPlotter" />
                   <label for="hasPenPlotter"><img src="./images/plotter.png" /></label>
-                  <div class="image-checkbox-text">Pen Lift<br>Mechanism</div>
+                  <div class="image-checkbox-text">SCRIBE<br>Pen Lifter</div>
                 </li>
                 <li>
                   <input type="checkbox" onchange="selectToolhead()" id="hasDust" />
