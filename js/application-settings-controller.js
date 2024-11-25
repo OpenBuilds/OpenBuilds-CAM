@@ -195,8 +195,42 @@ window.parseBoolean = function(string) {
 // Settings Dialog
 
 
-function selectToolhead() {
+function selectToolhead(type) {
   console.log(this)
+
+  console.log("Selecting toolhead type: ", type)
+  if (type == 'router' && $("#hasRouter").is(':checked')) {
+    // $('#hasRouter').prop('checked', false);
+    $('#hasPlasma').prop('checked', false);
+    $('#hasLaser').prop('checked', false);
+    $('#hasPenPlotter').prop('checked', false);
+    $('#hasSpindle').prop('checked', false);
+  } else if (type == 'plasma' && $("#hasPlasma").is(':checked')) {
+    $('#hasRouter').prop('checked', false);
+    // $('#hasPlasma').prop('checked', false);
+    $('#hasLaser').prop('checked', false);
+    $('#hasPenPlotter').prop('checked', false);
+    $('#hasSpindle').prop('checked', false);
+  } else if (type == 'laser' && $("#hasLaser").is(':checked')) {
+    $('#hasRouter').prop('checked', false);
+    $('#hasPlasma').prop('checked', false);
+    // $('#hasLaser').prop('checked', false);
+    $('#hasPenPlotter').prop('checked', false);
+    $('#hasSpindle').prop('checked', false);
+  } else if (type == 'penPlotter' && $("#hasPenPlotter").is(':checked')) {
+    $('#hasRouter').prop('checked', false);
+    $('#hasPlasma').prop('checked', false);
+    $('#hasLaser').prop('checked', false);
+    // $('#hasPenPlotter').prop('checked', false);
+    $('#hasSpindle').prop('checked', false);
+  } else if (type == 'spindle' && $("#hasSpindle").is(':checked')) {
+    $('#hasRouter').prop('checked', false);
+    $('#hasPlasma').prop('checked', false);
+    $('#hasLaser').prop('checked', false);
+    $('#hasPenPlotter').prop('checked', false);
+    // $('#hasSpindle').prop('checked', false);
+  }
+
   // Default grbl parameters
   var tplscommand = `S`;
   $('#scommand').val(tplscommand);
@@ -568,49 +602,36 @@ $(document).ready(function() {
 
               <ul class="image-checkbox-ul">
                 <li>
-                  <input type="checkbox" onchange="selectToolhead()" id="hasRouter"  />
+                  <input type="checkbox" onchange="selectToolhead('router')" id="hasRouter"  />
                   <label for="hasRouter"><img src="./images/router11.png" /></label>
                   <div class="image-checkbox-text">RoutER11 with IoT Relay</div>
                 </li>
                 <li>
-                  <input type="checkbox" onchange="selectToolhead()" id="hasPlasma" />
+                  <input type="checkbox" onchange="selectToolhead('plasma')" id="hasPlasma" />
                   <label for="hasPlasma"><img src="./images/leadplasma.png" /></label>
                   <div class="image-checkbox-text">LEAD 1010 Plasma Add-On</div>
                 </li>
                 <li>
-                  <input type="checkbox" onchange="selectToolhead()" id="hasLaser" />
+                  <input type="checkbox" onchange="selectToolhead('laser')" id="hasLaser" />
                   <label for="hasLaser"><img src="./images/laser.png" /></label>
                   <div class="image-checkbox-text">Laser Diode Module</div>
                 </li>
                 <li>
-                  <input type="checkbox" onchange="selectToolhead()" id="hasPenPlotter" />
+                  <input type="checkbox" onchange="selectToolhead('penPlotter')" id="hasPenPlotter" />
                   <label for="hasPenPlotter"><img src="./images/plotter.png" /></label>
                   <div class="image-checkbox-text">SCRIBE<br>Pen Lifter</div>
                 </li>
                 <li>
-                  <input type="checkbox" onchange="selectToolhead()" id="hasDust" />
-                  <label for="hasDust"><img src="./images/dustshoe.png" /></label>
-                  <div class="image-checkbox-text">Dust Shoe with Extractor</div>
-                </li>
-                <li>
-                  <input type="checkbox" onchange="selectToolhead()" id="hasSpindle" />
+                  <input type="checkbox" onchange="selectToolhead('spindle')" id="hasSpindle" />
                   <label for="hasSpindle"><img src="./images/vfd.png" /></label>
                   <div class="image-checkbox-text">Variable Speed Spindle</div>
                 </li>
+                <li>
+                  <input type="checkbox" onchange="selectToolhead('dust')" id="hasDust" />
+                  <label for="hasDust"><img src="./images/dustshoe.png" /></label>
+                  <div class="image-checkbox-text">Dust Shoe with Extractor</div>
+                </li>
               </ul>
-
-              <!-- select data-filter="false" data-on-change="selectToolhead();" id="toolheadSelect" data-role="select" title="" multiple class="secondary">
-
-                    <option data-template="<span class='icon fas fas fa-tag' data-fa-transform='rotate-225'></span> $1" value="spindleonoff">Turn Spindle on and Off (M3/M5)</option>
-                    <option data-template="<span class='icon fas fa-broom' data-fa-transform='rotate--45'></span> $1" value="plasma">Turn Plasma on and Off</option>
-                    <option data-template="<span class='icon fas fa-broom' data-fa-transform='rotate--45'></span> $1" value="plasmaihs">Turn Plasma on and Off: With Touch Off</option>
-                    <option data-template="<span class='icon fas fa-circle'></span> $1" value="laserm3">Turn Laser on and Off: Constant Power (M3/M5)</option>
-                    <option data-template="<span class='icon fas fa-adjust'></span> $1" value="laserm4">Turn Laser on and Off: Dynamic  Power (M4/M5)</option>
-                    <option data-template="<span class='icon fas fa-edit'></span> $1" value="plotter">Plotter Pen Up/Down (M3S<min> / M3S<max>)</option>
-                    <option data-template="<span class='icon fas fa-tint'></span> $1" value="misting">Enable Misting/Cooling: (M8/M9)</option>
-
-              </select -->
-
 
             </li>
 
