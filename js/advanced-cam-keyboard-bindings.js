@@ -26,13 +26,14 @@ $(document).keydown(function(e) {
     } else if (e.which === 65 && e.ctrlKey && e.shiftKey) { // Press ctrl+shift+a Unselect All
       // console.log('control + shift + a');
       if (mouseState != "scale") {
-        selectNone();
+        $('#selectNone').click();
         return false;
       };
     } else if (e.which === 65 && e.ctrlKey) { // Press ctrl+a to Select All
       // console.log('control + a');
       if (mouseState != "scale") {
-        selectAll();
+        // selectAll();
+        $('#selectAll').click();
         return false;
       };
     };
