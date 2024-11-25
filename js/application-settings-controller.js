@@ -261,7 +261,7 @@ function selectToolhead() {
   if ($("#hasPenPlotter").is(':checked')) {
     // console.log('Add Laser Dynamic')
     // startcode += "; Plotter does not need specific startup\n"
-    endcode += "G0 X0 Z0; Move back to start Position\n"
+    endcode += "G0 X0 Y0; Move back to start Position\n"
     //$('#scommandscale').val(1000);
     localStorage.setItem("hasPenPlotter", true);
   } else {
