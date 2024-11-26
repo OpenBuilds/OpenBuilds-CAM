@@ -376,6 +376,7 @@ function selectMachine(type) {
     var xaxis = 863
     var yaxis = 609
     var zaxis = 0
+    selectToolhead('penPlotter');
     //$('#toolheadSelect').data('select').val('laserm4')
   } else if (type == "minimill") {
     var xaxis = 120
