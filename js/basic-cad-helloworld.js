@@ -14,7 +14,9 @@ function helloWorldLaser() {
     parseLoadWorkspace(data)
     resetView();
     fillTree();
-    setTimeout(function() {makeGcode();}, 500)
+    setTimeout(function() {
+      makeGcode();
+    }, 500)
 
   });
 }
@@ -24,7 +26,9 @@ function helloWorldDragKnife() {
     parseLoadWorkspace(data)
     resetView();
     fillTree();
-    setTimeout(function() {makeGcode();}, 500)
+    setTimeout(function() {
+      makeGcode();
+    }, 500)
   });
 }
 
@@ -33,6 +37,19 @@ function helloWorldPlasma() {
     parseLoadWorkspace(data)
     resetView();
     fillTree();
-    setTimeout(function() {makeGcode();}, 500)
+    setTimeout(function() {
+      makeGcode();
+    }, 500)
+  });
+}
+
+function helloWorldPen() {
+  $.get("./workspace/helloworldpen.obc?date=" + new Date().getTime(), function(data) {
+    parseLoadWorkspace(data)
+    resetView();
+    fillTree();
+    setTimeout(function() {
+      makeGcode();
+    }, 500)
   });
 }
