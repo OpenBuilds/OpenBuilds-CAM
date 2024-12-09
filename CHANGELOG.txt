@@ -1,3 +1,4 @@
+09 Dec 2024:  Added Pen Plotter Servo Pen Move Time Parameter
 02 Dec 2024:  Added Pen Plotter Hello World
 25 Nov 2024:  Added ACRO A1 profile and Scribe toolhead
 28 Oct 2024:  Updated main logo
