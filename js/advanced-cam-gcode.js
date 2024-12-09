@@ -75,8 +75,9 @@ function makeGcodeExec() {
                 toolon = "G0 Z" + toolpathsInScene[j].userData.camPenDownZ + " ; Activate Pen";
                 tooloff = "G0 Z" + toolpathsInScene[j].userData.camPenUpZ + " ; Lift Pen";
               } else {
-                toolon = "M3S" + toolpathsInScene[j].userData.camPenDown + "\nG4 P0.5";
-                tooloff = "M3S" + toolpathsInScene[j].userData.camPenUp + "\nG4 P0.5";
+                var penMoveTime = toolpathsInScene[j].userData.camPenTime / 1000;
+                toolon = "M3S" + toolpathsInScene[j].userData.camPenDown + "\nG4 P" + penMoveTime + "; Move Servo";
+                tooloff = "M3S" + toolpathsInScene[j].userData.camPenUp + "\nG4 P" + penMoveTime + "; Move Servo";
               }
               ZClearance = 0;
             }

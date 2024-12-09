@@ -175,6 +175,9 @@ function initAdvancedCAM() {
     } else if (id.indexOf('tpendown') == 0) {
       // $('#svgUnion').text(newval);
       updateCamUserData(objectseq);
+    } else if (id.indexOf('tpentime') == 0) {
+      // $('#svgUnion').text(newval);
+      updateCamUserData(objectseq);
     } else if (id.indexOf('tpenup') == 0) {
       // $('#svgUnion').text(newval);
       updateCamUserData(objectseq);
@@ -239,6 +242,7 @@ function updateCamUserData(i) {
   toolpathsInScene[i].userData.plotterType = $('#tplottertype' + i).val();
   toolpathsInScene[i].userData.camPenUp = $('#tpenup' + i).val();
   toolpathsInScene[i].userData.camPenDown = $('#tpendown' + i).val();
+  toolpathsInScene[i].userData.camPenTime = $('#tpentime' + i).val();
   toolpathsInScene[i].userData.camPenUpZ = $('#tpenupz' + i).val();
   toolpathsInScene[i].userData.camPenDownZ = $('#tpendownz' + i).val();
   toolpathsInScene[i].userData.advanced = $('#advanced' + i).is(":checked");; // Marlin, Stepcraft, Mach3, LinuxCNC
@@ -544,6 +548,17 @@ function setupJob(i) {
         </td>
       </tr>
 
+      <tr class="inputplotter inputpenraster inputpenservo">
+        <td>Pen Move Time</td>
+        <td>
+          <div class="input-addon">
+            <span class="input-addon-label-left active-border"><i class="fas fa-clock fa-fw"></i></span>
+            <input data-role="input" data-clear-button="false" type="number" class="cam-form-field active-border" value="500" id="tpentime` + i + `" objectseq="` + i + `" min="0" step="any">
+            <span class="input-addon-label-right active-border">ms</span>
+          </div>
+        </td>
+      </tr>
+
       <tr class="inputplotter inputpenraster inputpenz">
         <td>Pen Up Z-position</td>
         <td>
@@ -724,8 +739,21 @@ function setupJob(i) {
     $('#tplottertype' + i).val(toolpathsInScene[i].userData.plotterType).prop('selected', true);
     $('#tpenup' + i).val(toolpathsInScene[i].userData.camPenUp);
     $('#tpendown' + i).val(toolpathsInScene[i].userData.camPenDown);
-    $('#tpenupz' + i).val(toolpathsInScene[i].userData.camPenUpZ);
-    $('#tpendownz' + i).val(toolpathsInScene[i].userData.camPenDownZ);
+    if (toolpathsInScene[i].userData.camPenTime) {
+      $('#tpentime' + i).val(toolpathsInScene[i].userData.camPenTime);
+    } else {
+      $('#tpentime' + i).val(500); // good default for SCRIBE
+    }
+    if (toolpathsInScene[i].userData.camPenUpZ) {
+      $('#tpenupz' + i).val(toolpathsInScene[i].userData.camPenUpZ);
+    } else {
+      $('#tpenupz' + i).val(3); // good default for SCRIBE
+    }
+    if (toolpathsInScene[i].userData.camPenDownZ) {
+      $('#tpendownz' + i).val(toolpathsInScene[i].userData.camPenDownZ);
+    } else {
+      $('#tpendownz' + i).val(-1); // good default for SCRIBE
+    }
     if (toolpathsInScene[i].userData.tRampPlunge) {
       $('#tRampPlunge' + i).val(toolpathsInScene[i].userData.tRampPlunge).prop('selected', true);
     } else {
@@ -788,6 +816,7 @@ function setupJob(i) {
     //$('#tRampPlunge' + i).val(lastused.tRampPlunge);
     $('#tplottertype' + i).val(lastused.plotterType).prop('selected', true);
     $('#tpenup' + i).val(lastused.camPenUp);
+    $('#tpentime' + i).val(lasstused.camPenTime);
     $('#tpendown' + i).val(lastused.camPenDown);
     $('#tpenupz' + i).val(lastused.camPenUpZ);
     $('#tpendownz' + i).val(lastused.camPenDownZ);
