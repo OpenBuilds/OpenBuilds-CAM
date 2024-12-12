@@ -44,7 +44,18 @@ function helloWorldPlasma() {
 }
 
 function helloWorldPen() {
-  $.get("./workspace/helloworldpen.obc?date=" + new Date().getTime(), function(data) {
+  $.get("./workspace/helloworldpen-servo.obc?date=" + new Date().getTime(), function(data) {
+    parseLoadWorkspace(data)
+    resetView();
+    fillTree();
+    setTimeout(function() {
+      makeGcode();
+    }, 500)
+  });
+}
+
+function helloWorldPenZ() {
+  $.get("./workspace/helloworldpen-z.obc?date=" + new Date().getTime(), function(data) {
     parseLoadWorkspace(data)
     resetView();
     fillTree();
