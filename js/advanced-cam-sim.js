@@ -54,7 +54,7 @@ function simSpeed() {
 function sim(startindex) {
   if (typeof(object) == 'undefined' || !scene.getObjectByName('gcodeobject')) {
     console.log('No Gcode in Preview yet')
-    var message = `No Gcode in Preview yet: Please setup toolpaths, and generate GCODE before running simulation`
+    var message = `No Gcode in Preview yet: Please setup toolpaths, and generate G-Code before running simulation`
     Metro.toast.create(message, null, 10000, 'bg-red');
     simstop()
   } else {

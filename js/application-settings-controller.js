@@ -547,7 +547,7 @@ $(document).ready(function() {
             </li>
 
             <li>
-              <h6>Add-Ons Installed<br><small>Telling us what kind of attachments the machine has, allows us to setup the GCODE to control these devices correctly from within the job</small></h6>
+              <h6>Add-Ons Installed<br><small>Telling us what kind of attachments the machine has, allows us to setup the G-Code to control these devices correctly from within the job</small></h6>
 
               <ul class="image-checkbox-ul">
                 <li>

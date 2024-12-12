@@ -49,7 +49,7 @@ function makeGcodeExec() {
         if (toolpathsInScene[j].userData.visible) {
 
           if (toolpathsInScene[j].userData.camOperation == undefined) {
-            console.log(`Toolpath Error: Toolpath-` + j + ` has not been configured! Please configure the toolpath before creating GCODE`)
+            console.log(`Toolpath Error: Toolpath-` + j + ` has not been configured! Please configure the toolpath before creating G-Code`)
           } else {
             // todo: Settings params
             var rapidSpeed = 1000;
@@ -128,7 +128,7 @@ function makeGcodeExec() {
     }, 100);
 
   } else {
-    var message = `Toolpath Error: No Toolpaths added yet.  You need to select some entities, add them to a new toolpath, and configure the toolpath, before generating GCODE`
+    var message = `Toolpath Error: No Toolpaths added yet.  You need to select some entities, add them to a new toolpath, and configure the toolpath, before generating G-Code`
     Metro.toast.create(message, null, 4000, 'bg-red');
   }
 }
@@ -180,7 +180,7 @@ function generateGcode(index, toolpathGrp, cutSpeed, plungeSpeed, spindleRpm, la
   var IHScommand = document.getElementById('ihsgcode').value; // or "G0 " + clearanceHeight + "\nG38.2 Z-30 F100\nG10 P2 L1 Z0" // Plasma IHS
 
   if (!toolpathGrp) {
-    var message = `Toolpath Error: One or more of your toolpaths is not configured.  You need to configure the toolpaths (toolpath-` + index + `), before generating GCODE`
+    var message = `Toolpath Error: One or more of your toolpaths is not configured.  You need to configure the toolpaths (toolpath-` + index + `), before generating G-Code`
     Metro.toast.create(message, null, 4000, 'bg-red');
     $("#generatetpgcode").html("<i class='fa fa-cubes' aria-hidden='true'></i> Generate G-Code");
     $("#generatetpgcode").prop('disabled', false);

@@ -3,16 +3,16 @@
 25 Nov 2024:  Added ACRO A1 profile and Scribe toolhead
 28 Oct 2024:  Updated main logo
 18 Apr 2024:  Fixed bug related to Drill Plunge feedrate, Minor cosmetic tweaks, Improvements to new Settings page, added Machine type overlay Image, Updated Plasma Hello World OBC file,
-16 Apr 2024:  Modified right-column stack to show as a step by step wizard (4 steps: Document > Toolpath > Generate Gcode > Export Gcode)
+16 Apr 2024:  Modified right-column stack to show as a step by step wizard (4 steps: Document > Toolpath > Generate G-Code > Export G-Code)
 10 Apr 2024:  Dark Mode, Iconography Library, Reselect and toolpath management tools, UI enhancements, New Settings page, Added LEAD Plasma Add-On support
-19 Sep 2023:  Disable CONTROL integration.  Use the SAVE GCODE button please
+19 Sep 2023:  Disable CONTROL integration.  Use the SAVE G-Code button please
 16 Jun 2023:  Added X32 option to Board selection
 5 June 2023:  Updated Analytics V4 ID
 14 Jun 2022:  Fixed SVG DPI for Inkscape 1.2 SVGs
 04 Apr 2021:  Fixed bug with Pocketing Z on unmerged geometry: https://openbuilds.com/threads/large-z-dive-when-cnc-pocketing.17704/
 16 Mar 2021:  Improved Plasma Lead-In Algorithm
 21 Jan 2021:  Updated Laser Hello World
-09 Dec 2020:  Added GCODE Preview, Fixed backspace inside input issue, Updated Metro4, Revamped the Plasma CAM (note changes to IHS - update your profiles if you were using Plasma IHS), Minor cosmetic updates
+09 Dec 2020:  Added G-Code Preview, Fixed backspace inside input issue, Updated Metro4, Revamped the Plasma CAM (note changes to IHS - update your profiles if you were using Plasma IHS), Minor cosmetic updates
 02 Nov 2020:  Update placeholder text for IHS
 09 Sep 2020:  Added profile for LEAD1515
 15 Jul 2020:  Added support for Inkscape 1.x's 96DPI to fix #67
@@ -20,23 +20,23 @@
 10 Feb 2020:  Fixed double-back moves back with Open Ended vectors on no-offset operations, Fixed bug in Laser Rasterfill
 06 Feb 2020:  Added LEAD1010 with Laser profile
 04 Feb 2020:  Fixed update check to comply with Github deprecations: https://developer.github.com/changes/2019-11-05-deprecated-passwords-and-authorizations-api/
-07 Oct 2019:  Added support for Open Ended Vectors with more than 2 points to GCODE generator due to bug
-02 Oct 2019:  Added support for Open Ended Vectors with more than 2 points to GCODE generator
+07 Oct 2019:  Added support for Open Ended Vectors with more than 2 points to G-Code generator due to bug
+02 Oct 2019:  Added support for Open Ended Vectors with more than 2 points to G-Code generator
 31 Jul 2019:  Updated Settings -> Machine Profile dropdown Menu
 23 Jul 2019:  Added Pen Plotter: Lines Fill operation type
 18 Jul 2019:  Fixed bug with Ramp Plunges
 11 Jul 2019:  Fixed Tab Height bug, added improvements to Pen Plotter operations, added Angle setting to Laser Raster
 01 Jul 2019:  Moved Toolpath Calculation to WebWorkers
-24 Jun 2019:  Moved Gcode Preview to WebWorker
+24 Jun 2019:  Moved G-Code Preview to WebWorker
 14 Jun 2019:  Added Beta of Servo based Pen Plotter CAM
-29 Apr 2019:  Added Delete Selection button #49, Added Workspace and Gcode naming #51, Added .OBC file support via CONTROL
+29 Apr 2019:  Added Delete Selection button #49, Added Workspace and G-Code naming #51, Added .OBC file support via CONTROL
 25 Apr 2019:  Added Splines, Insert to DXF Parser
 17 Apr 2019:  Fixed cut direction for Outside Cuts
 25 Feb 2019:  Added OpenBuilds BlackBox 4X Profile
 19 Feb 2019:  Fixed CNC Hello World file
 04 Feb 2019:  Fixed Keyboard Binding Bug
 28 Jan 2019:  Updated Licence AGPL3
-21 Jan 2019:  Added comment with endmill diameter to GCODE Output
+21 Jan 2019:  Added comment with endmill diameter to G-Code Output
 11 Jan 2019:  Added a "Disable Tool-Width Preview checkbox" to the Settings modal
 10 Jan 2019:  Added more artwork to the Parts Library
 09 Jan 2019:  Added more artwork to the Parts Library
@@ -57,7 +57,7 @@
 27 Dec 2018:  Fixed transform hover-artifacts
 27 Dec 2018:  Fixed MacOS Delete keybinding
 20 Dec 2018:  Don't show Merge Geometry option on Raster Fill operations, invalid use case
-10 Dec 2018:  Fixed bug with Laser Fill Gcode
+10 Dec 2018:  Fixed bug with Laser Fill G-Code
 05 Dec 2018:  New consolidated File menu for workspace, save, open, etc
 03 Dec 2018:  New HelloWorld workspace as per demo video
 28 Nov 2018:  Fixed Option/Ctrl keybinding for MacOS
@@ -105,7 +105,7 @@
 09 Aug 2018:  CSS Updates
 08 Aug 2018:  Auto Detect driver updates
 08 Aug 2018:  Inproved Machine Driver integration
-02 Aug 2018:  Improved error reporting for Gcode Generation
+02 Aug 2018:  Improved error reporting for G-Code Generation
 02 Aug 2018:  Added delete button to Document Tree entities
 01 Aug 2018:  Improved Machine Driver integration
 01 Aug 2018:  Simplied Driver Integration detection code
@@ -125,7 +125,7 @@
 27 Jul 2018:  Work on Parametric Apps (unfinished)
 27 Jul 2018:  Updated Font-Awesome
 26 Jul 2018:  Added git-auth API
-26 Jul 2018:  Fix for Send Gcode button
+26 Jul 2018:  Fix for Send G-Code button
 26 Jul 2018:  Improved Machine Driver integration
 26 Jul 2018:  Fix for Websocket Scanner
 26 Jul 2018:  Implemented 1-2-3 Setup Wizard
@@ -137,9 +137,9 @@
 25 Jul 2018:  Go-live of new Metro based theme
 25 Jul 2018:  Cleanup settings Dialog
 25 Jul 2018:  Migrate from Bootstrap to Metro
-19 Jul 2018:  Force G21 gcode
+19 Jul 2018:  Force G21 G-Code
 03 Jul 2018:  Beta of LAN scan (http)
-29 Jun 2018:  API for sending Gcode to Driver
+29 Jun 2018:  API for sending G-Code to Driver
 18 Jun 2018:  Fixed uppercase bug
 15 Jun 2018:  Fix for z-moves
 15 Jun 2018:  Added Parts Library
@@ -170,12 +170,12 @@
 17 May 2018:  Optimised G0 moves
 16 May 2018:  Font Awesome 5 upgrade
 16 May 2018:  New SVG Library
-16 May 2018:  Fixed optimisation routine in Gcode optimiser
+16 May 2018:  Fixed optimisation routine in G-Code optimiser
 14 May 2018:  Fixed Typos
 14 May 2018:  Improved Pocket Operation with new mesh preview
 14 May 2018:  Added tabs preview mesh
 14 May 2018:  Improved Tabs: More tabs on long sections
-14 May 2018:  Fixed Gcode export bugs
+14 May 2018:  Fixed G-Code export bugs
 13 May 2018:  Fixed Pocketing issue - was adding too many finishing passes
 13 May 2018:  Experimental Tabs
 10 May 2018:  Improvements to toolpath calculation
@@ -197,7 +197,7 @@
 23 Apr 2018:  UI enhancements
 19 Apr 2018:  Fixed maximum zoom and skydome bug
 19 Apr 2018:  Implemented Internal CAD
-19 Apr 2018:  Fixes to Gcode generator (z-safe bug)
+19 Apr 2018:  Fixes to G-Code generator (z-safe bug)
 18 Apr 2018:  Implemented Simulator
 18 Apr 2018:  Optimised Pockets
 18 Apr 2018:  Settings Modal

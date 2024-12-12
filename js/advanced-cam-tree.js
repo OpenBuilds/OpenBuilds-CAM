@@ -91,9 +91,9 @@ function fillTree() {
 
 
         if (toolpathsInScene[i].userData.visible) {
-          toolp += `<button class="tool-button warning" data-tooltip="tooltip" data-placement="bottom" title="Hide toolpath and exclude from GCODE generation" onclick="toggleToolpathVisibility(` + i + `, false);"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></button>`
+          toolp += `<button class="tool-button warning" data-tooltip="tooltip" data-placement="bottom" title="Hide toolpath and exclude from G-Code generation" onclick="toggleToolpathVisibility(` + i + `, false);"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></button>`
         } else {
-          toolp += `<button class="tool-button alert" data-tooltip="tooltip" data-placement="bottom" title="Show toolpath and include in GCODE generation" onclick="toggleToolpathVisibility(` + i + `, true);"><i class="fa fa-fw fa-eye" aria-hidden="true"></i></button>`
+          toolp += `<button class="tool-button alert" data-tooltip="tooltip" data-placement="bottom" title="Show toolpath and include in G-Code generation" onclick="toggleToolpathVisibility(` + i + `, true);"><i class="fa fa-fw fa-eye" aria-hidden="true"></i></button>`
         }
 
         toolp += `<button class="tool-button alert" data-tooltip="tooltip" data-placement="bottom" title="Delete toolpath" onclick="storeUndo(); toolpathsInScene.splice('` + i + `', 1); fillTree();"><i class="fa fa-times fa-fw" aria-hidden="true"></i></button>`
