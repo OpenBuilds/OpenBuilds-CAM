@@ -88,7 +88,7 @@ var getFont = function(url) {
 function getFontList() {
   return new RSVP.Promise(
     function(resolve, reject) {
-      $.get('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB6CfNzjx-T-iGR4-1ECG1bmZ0eNU-4cTU', function(result) {
+      $.get('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCx9m5LJdE0eljjfS-6UMymK2uoeqhFzuo', function(result) {
         resolve(result.items);
       });
     });
